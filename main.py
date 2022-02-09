@@ -7,6 +7,9 @@
 # PRISM API interface by Chris Winstead: 
 # https://github.com/fluentverification/usu_importance_sampling
 
+# Issue: package parser not found
+# [ npm install java-parser --save-dev ] was not helpful
+
 
 # Import functions from local files
 import getfiles as gf
@@ -40,10 +43,15 @@ if __name__ == "__main__":
   # That step should go here when it is developed.
 
   # Have the PRISM API walk along the path, reporting enabled transitions
+
   # Find the intersection of all enabled transitions
+  
   # Build paths with the enabled transitions commuted
+  
   # Test the commuted paths in PRISM (for dev stage)
+  
   # Modify the IVy model to exclude these paths (find an efficient way)
+  
   # Repeat with the new IVy model
 
 
