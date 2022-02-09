@@ -1,0 +1,3402 @@
+
+Isolate this:
+
+********************************************************************************
+
+This version has been modified by Landon Taylor. landon.jeffrey.taylor@usu.edu
+The ABCModelChecker function is using 'pdr -qt -L pdr_log.txt'. For more info,
+install abc, and on the command line use 'abc' > 'pdr --help'
+
+********************************************************************************
+
+model.ivy: line 239: Model checking invariant
+
+Instantiating quantifiers (see logfiles/ivy_mc_1644440732.log for instantiations)...
+Expanding schemata...
+Instantiating axioms...
+file name: aigerfiles/1644440732.aag
+aigtoaig_path:/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/aigtoaig
+abc_path: /usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc
+using cmd ['/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc', '-c', 'read_aiger aigerfiles/1644440732.aig; pdr -qt -L aigerfiles/1644440732_pdr.log; write_aiger_cex  aigerfiles/1644440732.out']
+
+Model checker output:
+--------------------------------------------------------------------------------
+ABC command line: "read_aiger aigerfiles/1644440732.aig; pdr -qt -L aigerfiles/1644440732_pdr.log; write_aiger_cex  aigerfiles/1644440732.out".
+
+Output 0 of miter "aigerfiles/1644440732" was asserted in frame 20.  Time =     1.01 sec
+--------------------------------------------------------------------------------
+
+FAIL
+
+Counterexample trace follows...
+********************************************************************************
+
+Counterexample follows:
+--------------------------------------------------------------------------------
+err_flag := false
+
+model.ivy: line 67: spec.s1 := 1:bv8
+
+[
+    spec.s1 = 1
+]
+model.ivy: line 68: spec.s2 := 50:bv8
+
+[
+    spec.s2 = 50
+]
+model.ivy: line 69: spec.s3 := 0:bv8
+
+[
+    spec.s3 = 0
+]
+model.ivy: line 70: spec.s4 := 1:bv8
+
+[
+    spec.s4 = 1
+]
+model.ivy: line 71: spec.s5 := 50:bv8
+
+[
+    spec.s5 = 50
+]
+model.ivy: line 72: spec.s6 := 0:bv8
+
+[
+    spec.s6 = 0
+]
+model.ivy: line 74: spec.r1 := 0:bv8
+
+[
+    spec.r1 = 0
+]
+model.ivy: line 75: spec.r2 := 0:bv8
+
+[
+    spec.r2 = 0
+]
+model.ivy: line 76: spec.r3 := 0:bv8
+
+[
+    spec.r3 = 0
+]
+model.ivy: line 77: spec.r4 := 0:bv8
+
+[
+    spec.r4 = 0
+]
+model.ivy: line 78: spec.r5 := 0:bv8
+
+[
+    spec.r5 = 0
+]
+model.ivy: line 79: spec.r6 := 0:bv8
+
+[
+    spec.r6 = 0
+]
+model.ivy: line 81: spec.q1 := 0:bv8
+
+[
+    spec.q1 = 0
+]
+model.ivy: line 82: spec.q2 := 0:bv8
+
+[
+    spec.q2 = 0
+]
+model.ivy: line 83: spec.q3 := 0:bv8
+
+[
+    spec.q3 = 0
+]
+model.ivy: line 84: spec.q4 := 0:bv8
+
+[
+    spec.q4 = 0
+]
+model.ivy: line 85: spec.q5 := 0:bv8
+
+[
+    spec.q5 = 0
+]
+model.ivy: line 86: spec.q6 := 0:bv8
+
+[
+    spec.q6 = 0
+]
+model.ivy: line 88: spec.p1 := 0:bv8
+
+[
+    spec.p1 = 0
+]
+model.ivy: line 89: spec.p2 := 0:bv8
+
+[
+    spec.p2 = 0
+]
+model.ivy: line 90: spec.p3 := 0:bv8
+
+[
+    spec.p3 = 0
+]
+model.ivy: line 91: spec.p4 := 0:bv8
+
+[
+    spec.p4 = 0
+]
+model.ivy: line 92: spec.p5 := 0:bv8
+
+[
+    spec.p5 = 0
+]
+model.ivy: line 93: spec.p6 := 0:bv8
+
+[
+    spec.p6 = 0
+]
+model.ivy: line 95: spec.o1 := 0:bv8
+
+[
+    spec.o1 = 0
+]
+model.ivy: line 96: spec.o2 := 0:bv8
+
+[
+    spec.o2 = 0
+]
+model.ivy: line 97: spec.o3 := 0:bv8
+
+[
+    spec.o3 = 0
+]
+model.ivy: line 98: spec.o4 := 0:bv8
+
+[
+    spec.o4 = 0
+]
+model.ivy: line 99: spec.o5 := 0:bv8
+
+[
+    spec.o5 = 0
+]
+model.ivy: line 100: spec.o6 := 0:bv8
+
+[
+    spec.o6 = 0
+]
+model.ivy: line 102: spec.n1 := 0:bv8
+
+[
+    spec.n1 = 0
+]
+model.ivy: line 103: spec.n2 := 0:bv8
+
+[
+    spec.n2 = 0
+]
+model.ivy: line 104: spec.n3 := 0:bv8
+
+[
+    spec.n3 = 0
+]
+model.ivy: line 105: spec.n4 := 0:bv8
+
+[
+    spec.n4 = 0
+]
+model.ivy: line 106: spec.n5 := 0:bv8
+
+[
+    spec.n5 = 0
+]
+model.ivy: line 107: spec.n6 := 0:bv8
+
+[
+    spec.n6 = 0
+]
+model.ivy: line 109: spec.m1 := 0:bv8
+
+[
+    spec.m1 = 0
+]
+model.ivy: line 110: spec.m2 := 0:bv8
+
+[
+    spec.m2 = 0
+]
+model.ivy: line 111: spec.m3 := 0:bv8
+
+[
+    spec.m3 = 0
+]
+model.ivy: line 112: spec.m4 := 0:bv8
+
+[
+    spec.m4 = 0
+]
+model.ivy: line 113: spec.m5 := 0:bv8
+
+[
+    spec.m5 = 0
+]
+model.ivy: line 114: spec.m6 := 0:bv8
+
+[
+    spec.m6 = 0
+]
+model.ivy: line 116: spec.l1 := 0:bv8
+
+[
+    spec.l1 = 0
+]
+model.ivy: line 117: spec.l2 := 0:bv8
+
+[
+    spec.l2 = 0
+]
+model.ivy: line 118: spec.l3 := 0:bv8
+
+[
+    spec.l3 = 0
+]
+model.ivy: line 119: spec.l4 := 0:bv8
+
+[
+    spec.l4 = 0
+]
+model.ivy: line 120: spec.l5 := 0:bv8
+
+[
+    spec.l5 = 0
+]
+model.ivy: line 121: spec.l6 := 0:bv8
+
+[
+    spec.l6 = 0
+]
+__init := true
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    model.ivy: line 205: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        [
+            spec.r1 = 1
+        ]
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        [
+            spec.r2 = 50
+        ]
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 1
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        [
+            spec.r5 = 50
+        ]
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        model.ivy: line 206: spec.s4 := spec.s4 - 1
+
+        [
+            spec.s4 = 0
+        ]
+        model.ivy: line 207: spec.s5 := spec.s5 - 1
+
+        [
+            spec.s5 = 49
+        ]
+        model.ivy: line 208: spec.s6 := spec.s6 + 1
+
+        [
+            spec.s6 = 1
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    model.ivy: line 223: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        [
+            spec.q1 = 1
+        ]
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        [
+            spec.q2 = 50
+        ]
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 1
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        [
+            spec.q5 = 50
+        ]
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 0
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        [
+            spec.r5 = 49
+        ]
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 1
+        ]
+        model.ivy: line 224: spec.s4 := spec.s4 + 1
+
+        [
+            spec.s4 = 1
+        ]
+        model.ivy: line 225: spec.s2 := spec.s2 + 1
+
+        [
+            spec.s2 = 51
+        ]
+        model.ivy: line 226: spec.s6 := spec.s6 - 1
+
+        [
+            spec.s6 = 0
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    model.ivy: line 205: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        [
+            spec.p1 = 1
+        ]
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        [
+            spec.p2 = 50
+        ]
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 1
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        [
+            spec.p5 = 50
+        ]
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 0
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        [
+            spec.q5 = 49
+        ]
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 1
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        [
+            spec.r2 = 51
+        ]
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 1
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 0
+        ]
+        model.ivy: line 206: spec.s4 := spec.s4 - 1
+
+        [
+            spec.s4 = 0
+        ]
+        model.ivy: line 207: spec.s5 := spec.s5 - 1
+
+        [
+            spec.s5 = 48
+        ]
+        model.ivy: line 208: spec.s6 := spec.s6 + 1
+
+        [
+            spec.s6 = 1
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    model.ivy: line 223: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        [
+            spec.o1 = 1
+        ]
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        [
+            spec.o2 = 50
+        ]
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 1
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        [
+            spec.o5 = 50
+        ]
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 0
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        [
+            spec.p5 = 49
+        ]
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 1
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        [
+            spec.q2 = 51
+        ]
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 1
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 0
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 0
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        [
+            spec.r5 = 48
+        ]
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 1
+        ]
+        model.ivy: line 224: spec.s4 := spec.s4 + 1
+
+        [
+            spec.s4 = 1
+        ]
+        model.ivy: line 225: spec.s2 := spec.s2 + 1
+
+        [
+            spec.s2 = 52
+        ]
+        model.ivy: line 226: spec.s6 := spec.s6 - 1
+
+        [
+            spec.s6 = 0
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    model.ivy: line 205: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        [
+            spec.n1 = 1
+        ]
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        [
+            spec.n2 = 50
+        ]
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 1
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        [
+            spec.n5 = 50
+        ]
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 0
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        [
+            spec.o5 = 49
+        ]
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 1
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        [
+            spec.p2 = 51
+        ]
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 1
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 0
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 0
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        [
+            spec.q5 = 48
+        ]
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 1
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        [
+            spec.r2 = 52
+        ]
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 1
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 0
+        ]
+        model.ivy: line 206: spec.s4 := spec.s4 - 1
+
+        [
+            spec.s4 = 0
+        ]
+        model.ivy: line 207: spec.s5 := spec.s5 - 1
+
+        [
+            spec.s5 = 47
+        ]
+        model.ivy: line 208: spec.s6 := spec.s6 + 1
+
+        [
+            spec.s6 = 1
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    model.ivy: line 223: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        [
+            spec.m1 = 1
+        ]
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        [
+            spec.m2 = 50
+        ]
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 1
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        [
+            spec.m5 = 50
+        ]
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 0
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        [
+            spec.n5 = 49
+        ]
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 1
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        [
+            spec.o2 = 51
+        ]
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 1
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 0
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 0
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        [
+            spec.p5 = 48
+        ]
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 1
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        [
+            spec.q2 = 52
+        ]
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 1
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 0
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 0
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        [
+            spec.r5 = 47
+        ]
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 1
+        ]
+        model.ivy: line 224: spec.s4 := spec.s4 + 1
+
+        [
+            spec.s4 = 1
+        ]
+        model.ivy: line 225: spec.s2 := spec.s2 + 1
+
+        [
+            spec.s2 = 53
+        ]
+        model.ivy: line 226: spec.s6 := spec.s6 - 1
+
+        [
+            spec.s6 = 0
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    model.ivy: line 205: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        [
+            spec.l1 = 1
+        ]
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        [
+            spec.l2 = 50
+        ]
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 1
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        [
+            spec.l5 = 50
+        ]
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 0
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        [
+            spec.m5 = 49
+        ]
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 1
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        [
+            spec.n2 = 51
+        ]
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 1
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 0
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 0
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        [
+            spec.o5 = 48
+        ]
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 1
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        [
+            spec.p2 = 52
+        ]
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 1
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 0
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 0
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        [
+            spec.q5 = 47
+        ]
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 1
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        [
+            spec.r2 = 53
+        ]
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 1
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 0
+        ]
+        model.ivy: line 206: spec.s4 := spec.s4 - 1
+
+        [
+            spec.s4 = 0
+        ]
+        model.ivy: line 207: spec.s5 := spec.s5 - 1
+
+        [
+            spec.s5 = 46
+        ]
+        model.ivy: line 208: spec.s6 := spec.s6 + 1
+
+        [
+            spec.s6 = 1
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    model.ivy: line 223: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 0
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        [
+            spec.l5 = 49
+        ]
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 1
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        [
+            spec.m2 = 51
+        ]
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 1
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 0
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 0
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        [
+            spec.n5 = 48
+        ]
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 1
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        [
+            spec.o2 = 52
+        ]
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 1
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 0
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 0
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        [
+            spec.p5 = 47
+        ]
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 1
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        [
+            spec.q2 = 53
+        ]
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 1
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 0
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 0
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        [
+            spec.r5 = 46
+        ]
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 1
+        ]
+        model.ivy: line 224: spec.s4 := spec.s4 + 1
+
+        [
+            spec.s4 = 1
+        ]
+        model.ivy: line 225: spec.s2 := spec.s2 + 1
+
+        [
+            spec.s2 = 54
+        ]
+        model.ivy: line 226: spec.s6 := spec.s6 - 1
+
+        [
+            spec.s6 = 0
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    model.ivy: line 205: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        [
+            spec.l2 = 51
+        ]
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 1
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 0
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 0
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        [
+            spec.m5 = 48
+        ]
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 1
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        [
+            spec.n2 = 52
+        ]
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 1
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 0
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 0
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        [
+            spec.o5 = 47
+        ]
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 1
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        [
+            spec.p2 = 53
+        ]
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 1
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 0
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 0
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        [
+            spec.q5 = 46
+        ]
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 1
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        [
+            spec.r2 = 54
+        ]
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 1
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 0
+        ]
+        model.ivy: line 206: spec.s4 := spec.s4 - 1
+
+        [
+            spec.s4 = 0
+        ]
+        model.ivy: line 207: spec.s5 := spec.s5 - 1
+
+        [
+            spec.s5 = 45
+        ]
+        model.ivy: line 208: spec.s6 := spec.s6 + 1
+
+        [
+            spec.s6 = 1
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    model.ivy: line 223: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 0
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        [
+            spec.l5 = 48
+        ]
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 1
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        [
+            spec.m2 = 52
+        ]
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 1
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 0
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 0
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        [
+            spec.n5 = 47
+        ]
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 1
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        [
+            spec.o2 = 53
+        ]
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 1
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 0
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 0
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        [
+            spec.p5 = 46
+        ]
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 1
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        [
+            spec.q2 = 54
+        ]
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 1
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 0
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 0
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        [
+            spec.r5 = 45
+        ]
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 1
+        ]
+        model.ivy: line 224: spec.s4 := spec.s4 + 1
+
+        [
+            spec.s4 = 1
+        ]
+        model.ivy: line 225: spec.s2 := spec.s2 + 1
+
+        [
+            spec.s2 = 55
+        ]
+        model.ivy: line 226: spec.s6 := spec.s6 - 1
+
+        [
+            spec.s6 = 0
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    model.ivy: line 205: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        [
+            spec.l2 = 52
+        ]
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 1
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 0
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 0
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        [
+            spec.m5 = 47
+        ]
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 1
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        [
+            spec.n2 = 53
+        ]
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 1
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 0
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 0
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        [
+            spec.o5 = 46
+        ]
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 1
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        [
+            spec.p2 = 54
+        ]
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 1
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 0
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 0
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        [
+            spec.q5 = 45
+        ]
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 1
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        [
+            spec.r2 = 55
+        ]
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 1
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 0
+        ]
+        model.ivy: line 206: spec.s4 := spec.s4 - 1
+
+        [
+            spec.s4 = 0
+        ]
+        model.ivy: line 207: spec.s5 := spec.s5 - 1
+
+        [
+            spec.s5 = 44
+        ]
+        model.ivy: line 208: spec.s6 := spec.s6 + 1
+
+        [
+            spec.s6 = 1
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    model.ivy: line 223: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 0
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        [
+            spec.l5 = 47
+        ]
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 1
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        [
+            spec.m2 = 53
+        ]
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 1
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 0
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 0
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        [
+            spec.n5 = 46
+        ]
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 1
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        [
+            spec.o2 = 54
+        ]
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 1
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 0
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 0
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        [
+            spec.p5 = 45
+        ]
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 1
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        [
+            spec.q2 = 55
+        ]
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 1
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 0
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 0
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        [
+            spec.r5 = 44
+        ]
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 1
+        ]
+        model.ivy: line 224: spec.s4 := spec.s4 + 1
+
+        [
+            spec.s4 = 1
+        ]
+        model.ivy: line 225: spec.s2 := spec.s2 + 1
+
+        [
+            spec.s2 = 56
+        ]
+        model.ivy: line 226: spec.s6 := spec.s6 - 1
+
+        [
+            spec.s6 = 0
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    model.ivy: line 205: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        [
+            spec.l2 = 53
+        ]
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 1
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 0
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 0
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        [
+            spec.m5 = 46
+        ]
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 1
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        [
+            spec.n2 = 54
+        ]
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 1
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 0
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 0
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        [
+            spec.o5 = 45
+        ]
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 1
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        [
+            spec.p2 = 55
+        ]
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 1
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 0
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 0
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        [
+            spec.q5 = 44
+        ]
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 1
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        [
+            spec.r2 = 56
+        ]
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 1
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 0
+        ]
+        model.ivy: line 206: spec.s4 := spec.s4 - 1
+
+        [
+            spec.s4 = 0
+        ]
+        model.ivy: line 207: spec.s5 := spec.s5 - 1
+
+        [
+            spec.s5 = 43
+        ]
+        model.ivy: line 208: spec.s6 := spec.s6 + 1
+
+        [
+            spec.s6 = 1
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    model.ivy: line 223: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 0
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        [
+            spec.l5 = 46
+        ]
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 1
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        [
+            spec.m2 = 54
+        ]
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 1
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 0
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 0
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        [
+            spec.n5 = 45
+        ]
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 1
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        [
+            spec.o2 = 55
+        ]
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 1
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 0
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 0
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        [
+            spec.p5 = 44
+        ]
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 1
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        [
+            spec.q2 = 56
+        ]
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 1
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 0
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 0
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        [
+            spec.r5 = 43
+        ]
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 1
+        ]
+        model.ivy: line 224: spec.s4 := spec.s4 + 1
+
+        [
+            spec.s4 = 1
+        ]
+        model.ivy: line 225: spec.s2 := spec.s2 + 1
+
+        [
+            spec.s2 = 57
+        ]
+        model.ivy: line 226: spec.s6 := spec.s6 - 1
+
+        [
+            spec.s6 = 0
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    model.ivy: line 205: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        [
+            spec.l2 = 54
+        ]
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 1
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 0
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 0
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        [
+            spec.m5 = 45
+        ]
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 1
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        [
+            spec.n2 = 55
+        ]
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 1
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 0
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 0
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        [
+            spec.o5 = 44
+        ]
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 1
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        [
+            spec.p2 = 56
+        ]
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 1
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 0
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 0
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        [
+            spec.q5 = 43
+        ]
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 1
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        [
+            spec.r2 = 57
+        ]
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 1
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 0
+        ]
+        model.ivy: line 206: spec.s4 := spec.s4 - 1
+
+        [
+            spec.s4 = 0
+        ]
+        model.ivy: line 207: spec.s5 := spec.s5 - 1
+
+        [
+            spec.s5 = 42
+        ]
+        model.ivy: line 208: spec.s6 := spec.s6 + 1
+
+        [
+            spec.s6 = 1
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    model.ivy: line 223: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 0
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        [
+            spec.l5 = 45
+        ]
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 1
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        [
+            spec.m2 = 55
+        ]
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 1
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 0
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 0
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        [
+            spec.n5 = 44
+        ]
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 1
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        [
+            spec.o2 = 56
+        ]
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 1
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 0
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 0
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        [
+            spec.p5 = 43
+        ]
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 1
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        [
+            spec.q2 = 57
+        ]
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 1
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 0
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 0
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        [
+            spec.r5 = 42
+        ]
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 1
+        ]
+        model.ivy: line 224: spec.s4 := spec.s4 + 1
+
+        [
+            spec.s4 = 1
+        ]
+        model.ivy: line 225: spec.s2 := spec.s2 + 1
+
+        [
+            spec.s2 = 58
+        ]
+        model.ivy: line 226: spec.s6 := spec.s6 - 1
+
+        [
+            spec.s6 = 0
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    model.ivy: line 205: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        [
+            spec.l2 = 55
+        ]
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 1
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 0
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 0
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        [
+            spec.m5 = 44
+        ]
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 1
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        [
+            spec.n2 = 56
+        ]
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 1
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 0
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 0
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        [
+            spec.o5 = 43
+        ]
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 1
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        [
+            spec.p2 = 57
+        ]
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 1
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 0
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 0
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        [
+            spec.q5 = 42
+        ]
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 1
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        [
+            spec.r2 = 58
+        ]
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 1
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 0
+        ]
+        model.ivy: line 206: spec.s4 := spec.s4 - 1
+
+        [
+            spec.s4 = 0
+        ]
+        model.ivy: line 207: spec.s5 := spec.s5 - 1
+
+        [
+            spec.s5 = 41
+        ]
+        model.ivy: line 208: spec.s6 := spec.s6 + 1
+
+        [
+            spec.s6 = 1
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    model.ivy: line 223: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 0
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        [
+            spec.l5 = 44
+        ]
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 1
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        [
+            spec.m2 = 56
+        ]
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 1
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 0
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 0
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        [
+            spec.n5 = 43
+        ]
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 1
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        [
+            spec.o2 = 57
+        ]
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 1
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 0
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 0
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        [
+            spec.p5 = 42
+        ]
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 1
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        [
+            spec.q2 = 58
+        ]
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 1
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 0
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 0
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        [
+            spec.r5 = 41
+        ]
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 1
+        ]
+        model.ivy: line 224: spec.s4 := spec.s4 + 1
+
+        [
+            spec.s4 = 1
+        ]
+        model.ivy: line 225: spec.s2 := spec.s2 + 1
+
+        [
+            spec.s2 = 59
+        ]
+        model.ivy: line 226: spec.s6 := spec.s6 - 1
+
+        [
+            spec.s6 = 0
+        ]
+    }
+
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    model.ivy: line 205: call spec.snake
+    {
+        model.ivy: line 126: spec.l1 := spec.m1
+
+        model.ivy: line 127: spec.l2 := spec.m2
+
+        [
+            spec.l2 = 56
+        ]
+        model.ivy: line 128: spec.l3 := spec.m3
+
+        model.ivy: line 129: spec.l4 := spec.m4
+
+        [
+            spec.l4 = 1
+        ]
+        model.ivy: line 130: spec.l5 := spec.m5
+
+        model.ivy: line 131: spec.l6 := spec.m6
+
+        [
+            spec.l6 = 0
+        ]
+        model.ivy: line 133: spec.m1 := spec.n1
+
+        model.ivy: line 134: spec.m2 := spec.n2
+
+        model.ivy: line 135: spec.m3 := spec.n3
+
+        model.ivy: line 136: spec.m4 := spec.n4
+
+        [
+            spec.m4 = 0
+        ]
+        model.ivy: line 137: spec.m5 := spec.n5
+
+        [
+            spec.m5 = 43
+        ]
+        model.ivy: line 138: spec.m6 := spec.n6
+
+        [
+            spec.m6 = 1
+        ]
+        model.ivy: line 140: spec.n1 := spec.o1
+
+        model.ivy: line 141: spec.n2 := spec.o2
+
+        [
+            spec.n2 = 57
+        ]
+        model.ivy: line 142: spec.n3 := spec.o3
+
+        model.ivy: line 143: spec.n4 := spec.o4
+
+        [
+            spec.n4 = 1
+        ]
+        model.ivy: line 144: spec.n5 := spec.o5
+
+        model.ivy: line 145: spec.n6 := spec.o6
+
+        [
+            spec.n6 = 0
+        ]
+        model.ivy: line 147: spec.o1 := spec.p1
+
+        model.ivy: line 148: spec.o2 := spec.p2
+
+        model.ivy: line 149: spec.o3 := spec.p3
+
+        model.ivy: line 150: spec.o4 := spec.p4
+
+        [
+            spec.o4 = 0
+        ]
+        model.ivy: line 151: spec.o5 := spec.p5
+
+        [
+            spec.o5 = 42
+        ]
+        model.ivy: line 152: spec.o6 := spec.p6
+
+        [
+            spec.o6 = 1
+        ]
+        model.ivy: line 154: spec.p1 := spec.q1
+
+        model.ivy: line 155: spec.p2 := spec.q2
+
+        [
+            spec.p2 = 58
+        ]
+        model.ivy: line 156: spec.p3 := spec.q3
+
+        model.ivy: line 157: spec.p4 := spec.q4
+
+        [
+            spec.p4 = 1
+        ]
+        model.ivy: line 158: spec.p5 := spec.q5
+
+        model.ivy: line 159: spec.p6 := spec.q6
+
+        [
+            spec.p6 = 0
+        ]
+        model.ivy: line 161: spec.q1 := spec.r1
+
+        model.ivy: line 162: spec.q2 := spec.r2
+
+        model.ivy: line 163: spec.q3 := spec.r3
+
+        model.ivy: line 164: spec.q4 := spec.r4
+
+        [
+            spec.q4 = 0
+        ]
+        model.ivy: line 165: spec.q5 := spec.r5
+
+        [
+            spec.q5 = 41
+        ]
+        model.ivy: line 166: spec.q6 := spec.r6
+
+        [
+            spec.q6 = 1
+        ]
+        model.ivy: line 168: spec.r1 := spec.s1
+
+        model.ivy: line 169: spec.r2 := spec.s2
+
+        [
+            spec.r2 = 59
+        ]
+        model.ivy: line 170: spec.r3 := spec.s3
+
+        model.ivy: line 171: spec.r4 := spec.s4
+
+        [
+            spec.r4 = 1
+        ]
+        model.ivy: line 172: spec.r5 := spec.s5
+
+        model.ivy: line 173: spec.r6 := spec.s6
+
+        [
+            spec.r6 = 0
+        ]
+        model.ivy: line 206: spec.s4 := spec.s4 - 1
+
+        [
+            spec.s4 = 0
+        ]
+        model.ivy: line 207: spec.s5 := spec.s5 - 1
+
+        [
+            spec.s5 = 40
+        ]
+        model.ivy: line 208: spec.s6 := spec.s6 + 1
+
+        [
+            spec.s6 = 1
+        ]
+    }
+
+}
+
+
+--------------------------------------------------------------------------------
+
+********************************************************************************
