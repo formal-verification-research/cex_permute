@@ -10,6 +10,8 @@
 # Issue: package parser not found
 # [ npm install java-parser --save-dev ] was not helpful
 
+# Parser also included here:
+# https://github.com/prismmodelchecker/prism-ext/tree/master/prism/src/prism
 
 # Import functions from local files
 import getfiles as gf
