@@ -48,8 +48,12 @@ if __name__ == "__main__":
 
   # Find the intersection of all enabled transitions
   
+  # Iteratively find the intersection rather than getting them all
+
   # Build paths with the enabled transitions commuted
-  
+
+  # Maybe joost-pieter's thing about storing a model instead of states
+
   # Test the commuted paths in PRISM (for dev stage)
   
   # Modify the IVy model to exclude these paths (find an efficient way)
