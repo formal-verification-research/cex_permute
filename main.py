@@ -19,48 +19,53 @@
 import getfiles as gf
 import ivy
 import prism_api
+import commute
 
 from subprocess import check_output
 
 # Main procedure
 if __name__ == "__main__":
+
+  gf.cleanup()
   
   print(80*"*")
   print("Welcome to the counterexample permutation explorer.")
   print(80*"*")
 
   # Get the names of files
-  ivyfile = gf.get_ivyfile()
-  prismfile = gf.get_prismfile()
+  ivy_file = gf.get_ivy_file()
+  prism_file = gf.get_prism_file()
   
   # Run ivy_check to get the seed counterexample
   print("Running ivy_check on your model...")
-  # ivyresult = ivy.check(ivyfile)
+  # ivyresult = ivy.check(ivy_file)
 
   # Extract the transition path from the counterexample
   print("Finding the counterexample transition path...")
-  # ivypath = ivy.get_path(ivyresult)
+  ## ivy_path = ivy.get_path(ivyresult)
+  with open("model.trace") as t:
+    ivy_path = t.read() 
 
   # Save the path to a ivyfile.trace
-  # with open(str(ivyfile).split(".")[0] + ".trace", 'w') as trace:
-  #   trace.write(ivypath)
+  with open(str(ivy_file).split(".")[0] + ".trace", 'w') as trace:
+    trace.write(ivy_path)
 
   # TODO: There may be a way to remove transitions from a path.
   # That step should go here when it is developed.
 
   # Have the PRISM API walk along the path, reporting enabled transitions
-  # api_result = check_output(['java', 'temp'])
-
+  ## api_result = check_output(['java', 'temp'])
   with open("dummy_result.txt") as result:
     api_result = result.read()
 
-  prism_api.get_intersection(api_result)  
-
   # Find the intersection of all enabled transitions
+  intersection = prism_api.get_intersection(api_result)  
   
   # Iteratively find the intersection rather than getting them all
+  # This feature may be complicated to add because we call java
 
   # Build paths with the enabled transitions commuted
+  commute.commute(ivy_path, intersection)
 
   # Maybe joost-pieter's thing about storing a model instead of states
 
@@ -70,13 +75,4 @@ if __name__ == "__main__":
   
   # Repeat with the new IVy model
 
-
-"""
-TODO
-
-_   Install and check the PRISM API on Archibald
-_   Find out how to remotely log into a home computer
-_   Find out how to get a list of enabled transitions for each state
-_   
-
-"""
+  gf.cleanup()
