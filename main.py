@@ -9,6 +9,8 @@
 
 # Issue: package parser not found
 # [ npm install java-parser --save-dev ] was not helpful
+# Issue mostly resolved.
+# TODO: Add issue resolution description to issue tracker
 
 # Parser also included here:
 # https://github.com/prismmodelchecker/prism-ext/tree/master/prism/src/prism
@@ -16,7 +18,9 @@
 # Import functions from local files
 import getfiles as gf
 import ivy
+import prism_api
 
+from subprocess import check_output
 
 # Main procedure
 if __name__ == "__main__":
@@ -31,20 +35,26 @@ if __name__ == "__main__":
   
   # Run ivy_check to get the seed counterexample
   print("Running ivy_check on your model...")
-  ivyresult = ivy.check(ivyfile)
+  # ivyresult = ivy.check(ivyfile)
 
   # Extract the transition path from the counterexample
   print("Finding the counterexample transition path...")
-  ivypath = ivy.get_path(ivyresult)
+  # ivypath = ivy.get_path(ivyresult)
 
   # Save the path to a ivyfile.trace
-  with open(str(ivyfile).split(".")[0] + ".trace", 'w') as trace:
-    trace.write(ivypath)
+  # with open(str(ivyfile).split(".")[0] + ".trace", 'w') as trace:
+  #   trace.write(ivypath)
 
   # TODO: There may be a way to remove transitions from a path.
   # That step should go here when it is developed.
 
   # Have the PRISM API walk along the path, reporting enabled transitions
+  # api_result = check_output(['java', 'temp'])
+
+  with open("dummy_result.txt") as result:
+    api_result = result.read()
+
+  prism_api.get_intersection(api_result)  
 
   # Find the intersection of all enabled transitions
   

@@ -1,5 +1,8 @@
 import os
 
+# TODO: os.system is depreciated.
+# Use subprocess instead
+
 # CALL_HINT = "call ext:"
 CALL_HINT = "call ext:spec."
 
