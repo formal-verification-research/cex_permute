@@ -21,7 +21,7 @@ public class SimulateModel
 {
   public static void main(String[] args)
   {
-    new SimulateModel().run()
+    new SimulateModel().run();
   }
 
   public void run()
