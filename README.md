@@ -23,3 +23,7 @@ $ python main.py ivy_model.ivy prism_model.sm
 - `ivy.py` interacts with the IVy model checker.
 - `prism-api.py` interacts with the PRISM model checker API.
 - `commute.py` handles the actual commuting algorithm.
+
+## Model Assumptions
+- Model does not include constants without setting their values
+- 
