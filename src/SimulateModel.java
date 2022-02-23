@@ -62,6 +62,8 @@ public class SimulateModel
 			sim.automaticTransition();
 			System.out.println("A random path (3 steps):");
 			System.out.println(sim.getPath());
+			System.out.println("A random path (longer description):");
+      sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
       
       // follow the transitions
       // TODO: read in the transitions and follow them
