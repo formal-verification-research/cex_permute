@@ -16,6 +16,7 @@ CLASS_FILES = $(JAVA_FILES:%.java=classes/%.class)
 default: all
 
 all: init $(CLASS_FILES)
+	test
 
 init:
 	@mkdir -p classes

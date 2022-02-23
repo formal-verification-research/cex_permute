@@ -68,6 +68,14 @@ public class SimulateModel
       // follow the transitions
       // TODO: read in the transitions and follow them
 
+      // get path probability
+      System.out.println("Path Probability:");
+      double pathProbability = 1.0;
+      for (int idx=0; idx<sim.getNumTransitions(); idx++) {
+				pathProbability *= sim.getTransitionProbability(idx);
+			}
+      System.out.println(pathProbability)
+
       // close PRISM
       prism.closeDown();
     } 
