@@ -52,8 +52,8 @@ public class SimulateModel
       SimulatorEngine sim = prism.getSimulator();
 
       // create a new path
-      // sim.createNewPath();
-      sim.createNewOnTheFlyPath(); // recommended for efficiency
+      sim.createNewPath();
+      // sim.createNewOnTheFlyPath(); // recommended for efficiency
       sim.initialisePath(null);
 
       // for now, do 3 random steps
