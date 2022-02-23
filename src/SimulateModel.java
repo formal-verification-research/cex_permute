@@ -74,7 +74,7 @@ public class SimulateModel
       for (int idx=0; idx<sim.getNumTransitions(); idx++) {
 				pathProbability *= sim.getTransitionProbability(idx);
 			}
-      System.out.println(pathProbability)
+      System.out.println(pathProbability);
 
       // close PRISM
       prism.closeDown();
