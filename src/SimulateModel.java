@@ -3,6 +3,10 @@ package simulate;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import parser.Values;
 import parser.ast.Expression;
 import parser.ast.ModulesFile;
@@ -95,7 +99,7 @@ public class SimulateModel
         totalRate = 0.0;
         for (int idx=0; idx<sim.getNumTransitions(); idx++) {
           System.out.printf("tr %d: %s %f\n",idx,sim.getTransitionActionString(idx),sim.getTransitionProbability(idx));
-				  total_rate += sim.getTransitionProbability(idx);
+				  totalRate += sim.getTransitionProbability(idx);
         }
         for (int idx=0; idx<sim.getNumTransitions(); idx++) {
 				String s1 = String.format("[%s]",tr_st[tdx]);
@@ -110,7 +114,7 @@ public class SimulateModel
 			    }			    
 			    double transition_probability = sim.getTransitionProbability(index)/total_rate;
 			    System.out.printf("\n======= tr %s (%d) %e ===========\n",tr_st[tdx],index,transition_probability);
-			    path_probability *= transition_probability;
+			    pathProbability *= transition_probability;
 			    sim.manualTransition(index);
       }
 
