@@ -22,6 +22,7 @@ def get_intersection(trace):
         # print("curr_enabled = " + str(curr_enabled))
         # print("last_enabled = " + str(last_enabled))
         for transition in line.split(" "):
+            t = transition.replace("]","").replace("[","")
             if transition in last_enabled:
                 curr_enabled.append(transition)
     

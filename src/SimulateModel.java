@@ -102,7 +102,7 @@ public class SimulateModel
         totalRate = 0.0;
         for (int idx=0; idx < sim.getNumTransitions(); idx++) {
           // System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
-          System.out.printf("%s ", sim.getTransitionActionString(idx));
+          System.out.printf("%s ", sim.getTransitionActionString(idx).replace("[","").replace("]",""));
 				  totalRate += sim.getTransitionProbability(idx);
         }
         for (int idx=0; idx<sim.getNumTransitions(); idx++) {
@@ -115,7 +115,7 @@ public class SimulateModel
 			  }
         double transition_probability = sim.getTransitionProbability(index) / totalRate;
         // System.out.printf("\n======= tr %s (%d) %e ===========\n\n", tr_st[tdx], index, transition_probability);
-        // System.out.printf("\n", tr_st[tdx], index, transition_probability);
+        System.out.printf("\n");
         pathProbability *= transition_probability;
         sim.manualTransition(index);
       }
