@@ -17,6 +17,8 @@ def get_intersection(trace):
         if "pathProbability " in line:
             print("path probability found: " + line.split("pathProbability ")[1])
             break
+        if "bin/run" in line or "length" in line:
+            continue
         last_enabled = curr_enabled
         curr_enabled = []
         # print("curr_enabled = " + str(curr_enabled))
