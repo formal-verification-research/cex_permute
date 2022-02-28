@@ -118,6 +118,11 @@ public class SimulateModel
         sim.manualTransition(index);
       }
 
+      System.out.println(sim.getPath());
+			
+			sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
+			System.out.printf("Path probability: %e\n", path_probability);
+
 
       // get path probability, dummy attempt
       // System.out.println("Path Probability:");
