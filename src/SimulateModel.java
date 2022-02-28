@@ -57,10 +57,11 @@ public class SimulateModel
       sim.initialisePath(null);
 
       // for now, do 3 random steps
-      sim.automaticTransition();
-			sim.automaticTransition();
-			sim.automaticTransition();
-			System.out.println("A random path (3 steps):");
+      for (int i=0; i<10; i++) {
+        sim.automaticTransition();
+      }
+
+			System.out.println("A random path (10 steps):");
 			System.out.println(sim.getPath());
 			System.out.println("A random path (longer description):");
       sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
