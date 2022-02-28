@@ -69,6 +69,8 @@ if __name__ == "__main__":
 
   # Find the intersection of all enabled transitions
   intersection = prism_api.get_intersection(api_result)  
+
+  print(intersection)
   
   # Iteratively find the intersection rather than getting them all
   # This feature may be complicated to add because we call java
