@@ -51,34 +51,80 @@ public class SimulateModel
       prism.loadModelIntoSimulator();
       SimulatorEngine sim = prism.getSimulator();
 
-      // create a new path
-      sim.createNewPath();
-      // sim.createNewOnTheFlyPath(); // recommended for efficiency
-      sim.initialisePath(null);
+      // // create a new path
+      // sim.createNewPath();
 
-      // for now, do 3 random steps
-      for (int i=0; i<10; i++) {
-        sim.automaticTransition();
-      }
+      // // sim.createNewOnTheFlyPath(); // recommended for efficiency
+      // sim.initialisePath(null);
 
-			System.out.println("A random path (10 steps):");
-			System.out.println(sim.getPath());
-			System.out.println("A random path (longer description):");
-      sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
+      // // for now, do 3 random steps
+      // for (int i=0; i<10; i++) {
+      //   sim.automaticTransition();
+      // }
+
+			// System.out.println("A random path (10 steps):");
+			// System.out.println(sim.getPath());
+
+			// System.out.println("A random path (longer description):");
+      // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
       
       // follow the transitions
       // TODO: read in the transitions and follow them
+		
+      // Read in the first line of the trace as a string
+			FileReader fr = new FileReader("model.trace");
+			BufferedReader br=new BufferedReader(fr);
+			String x;
+			x = br.readLine(); 
+			
+      // Break the string into a transition set
+			String[] tr_st=x.split("\\s+"); 
 
-      // get path probability
-      System.out.println("Path Probability:");
+      // create a new path
+      sim.createNewPath();
+
+      // sim.createNewOnTheFlyPath(); // recommended for efficiency
+      sim.initialisePath(null);
+
+      // Take each transition and collect the rates
+      int index;
       double pathProbability = 1.0;
-      for (int idx=0; idx<sim.getNumTransitions(); idx++) {
-        System.out.println(pathProbability + "*=" + sim.getTransitionProbability(idx));
-        pathProbability *= sim.getTransitionProbability(idx);
-        System.out.println(sim.getTransitionProbability(idx));
-        System.out.println(pathProbability);
-        System.out.println("");
-			}
+      double totalRate = 0.0;
+      for (int tdx=1; tdx < tr_st.length; txd++) {
+        index = -1;
+        totalRate = 0.0;
+        for (int idx=0; idx<sim.getNumTransitions(); idx++) {
+          System.out.printf("tr %d: %s %f\n",idx,sim.getTransitionActionString(idx),sim.getTransitionProbability(idx));
+				  total_rate += sim.getTransitionProbability(idx);
+        }
+        for (int idx=0; idx<sim.getNumTransitions(); idx++) {
+				String s1 = String.format("[%s]",tr_st[tdx]);
+				String s2 = sim.getTransitionActionString(idx);
+				System.out.printf("%d:%s=%s?",idx,s1,s2);
+				if (s1.equalsIgnoreCase(s2)) {
+				    index = idx;
+				    System.out.printf(" yes.");
+				    break;
+				}
+				System.out.printf("\n");
+			    }			    
+			    double transition_probability = sim.getTransitionProbability(index)/total_rate;
+			    System.out.printf("\n======= tr %s (%d) %e ===========\n",tr_st[tdx],index,transition_probability);
+			    path_probability *= transition_probability;
+			    sim.manualTransition(index);
+      }
+
+
+      // get path probability, dummy attempt
+      // System.out.println("Path Probability:");
+      // double pathProbability = 1.0;
+      // for (int idx=0; idx<sim.getNumTransitions(); idx++) {
+      //   System.out.println(pathProbability + "*=" + sim.getTransitionProbability(idx));
+      //   pathProbability *= sim.getTransitionProbability(idx);
+      //   System.out.println(sim.getTransitionProbability(idx));
+      //   System.out.println(pathProbability);
+      //   System.out.println("");
+			// }
       
 
       // close PRISM
