@@ -121,7 +121,7 @@ public class SimulateModel
       System.out.println(sim.getPath());
 			
 			sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
-			System.out.printf("Path probability: %e\n", path_probability);
+			System.out.printf("Path probability: %e\n", pathProbability);
 
 
       // get path probability, dummy attempt
