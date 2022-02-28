@@ -5,6 +5,11 @@ import java.io.FileNotFoundException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
+
 import java.io.IOException;
 
 import parser.Values;
@@ -18,6 +23,7 @@ import prism.PrismLog;
 import prism.PrismPrintStreamLog;
 
 import simulator.SimulatorEngine;
+
 
 /**
 Based in large part on prism-api/src/SimulateModel.java
@@ -77,10 +83,13 @@ public class SimulateModel
 		
       // Read in the first line of the trace as a string
 			FileReader fr = new FileReader("model.trace");
-			BufferedReader br=new BufferedReader(fr);
+			BufferedReader br = new BufferedReader(fr);
 			String x;
 			x = br.readLine(); 
-			
+
+      // Prepare an output file for the trace
+      Writer fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("model.result"), "utf-8"));
+
       // Break the string into a transition set
 			String[] tr_st=x.split("\\s+"); 
 
@@ -94,26 +103,27 @@ public class SimulateModel
       int index;
       double pathProbability = 1.0;
       double totalRate = 0.0;
+      System.out.printf("%d length\n", tr_st.length);
       for (int tdx=0; tdx < tr_st.length; tdx++) {
         index = 0;
         totalRate = 0.0;
-        for (int idx=0; idx<sim.getNumTransitions(); idx++) {
+        for (int idx=0; idx < sim.getNumTransitions(); idx++) {
           System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
+          wr.write("%s ", sim.getTransitionActionString(idx));
+          System.out.printf("%s ", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
 				  totalRate += sim.getTransitionProbability(idx);
         }
+          wr.write("\n", sim.getTransitionActionString(idx));
         for (int idx=0; idx<sim.getNumTransitions(); idx++) {
           String s1 = String.format("[%s]",tr_st[tdx]);
           String s2 = sim.getTransitionActionString(idx);
-          // System.out.printf("%d:%s=%s?",idx,s1,s2);
           if (s1.equalsIgnoreCase(s2)) {
               index = idx;
-              // System.out.printf(" yes.");
               break;
           }
-          // System.out.printf("\n");
-			  }			    
+			  }
         double transition_probability = sim.getTransitionProbability(index) / totalRate;
-        System.out.printf("\n======= tr %s (%d) %e ===========\n",tr_st[tdx],index,transition_probability);
+        System.out.printf("\n======= tr %s (%d) %e ===========\n\n", tr_st[tdx], index, transition_probability);
         pathProbability *= transition_probability;
         sim.manualTransition(index);
       }
