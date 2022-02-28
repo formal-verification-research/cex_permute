@@ -142,5 +142,9 @@ public class SimulateModel
 			System.out.println("Error: " + e.getMessage());
 			System.exit(1);
 		}
+    catch (IOException e) {
+      System.out.println("Error: " + e.getMessage());
+			System.exit(1);
+    }
   }
 }
