@@ -77,7 +77,7 @@ public class SimulateModel
         pathProbability *= sim.getTransitionProbability(idx);
         System.out.println(sim.getTransitionProbability(idx));
         System.out.println(pathProbability);
-        System.out.println("")
+        System.out.println("");
 			}
       
 
