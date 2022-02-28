@@ -114,7 +114,7 @@ public class SimulateModel
           System.out.printf("%s ", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
 				  totalRate += sim.getTransitionProbability(idx);
         }
-          fw.write("\n", sim.getTransitionActionString(idx));
+          fw.write("\n");
         for (int idx=0; idx<sim.getNumTransitions(); idx++) {
           String s1 = String.format("[%s]",tr_st[tdx]);
           String s2 = sim.getTransitionActionString(idx);
