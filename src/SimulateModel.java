@@ -115,15 +115,15 @@ public class SimulateModel
 			  }
         double transition_probability = sim.getTransitionProbability(index) / totalRate;
         // System.out.printf("\n======= tr %s (%d) %e ===========\n\n", tr_st[tdx], index, transition_probability);
-        System.out.printf("\n", tr_st[tdx], index, transition_probability);
+        // System.out.printf("\n", tr_st[tdx], index, transition_probability);
         pathProbability *= transition_probability;
         sim.manualTransition(index);
       }
 
-      System.out.println(sim.getPath());
+      // System.out.println(sim.getPath());
 			
 			sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
-			System.out.printf("Path probability: %e\n", pathProbability);
+			System.out.printf("pathProbability %e\n", pathProbability);
 
 
       // get path probability, dummy attempt
