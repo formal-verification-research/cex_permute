@@ -6,11 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-import java.io.Writer;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.io.FileOutputStream;
-
 import java.io.IOException;
 
 import parser.Values;
@@ -88,9 +83,6 @@ public class SimulateModel
 			String x;
 			x = br.readLine(); 
 
-      // Prepare an output file for the trace
-      Writer fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("model.result"), "utf-8"));
-
       // Break the string into a transition set
 			String[] tr_st=x.split("\\s+"); 
 
@@ -109,12 +101,10 @@ public class SimulateModel
         index = 0;
         totalRate = 0.0;
         for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-          System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
-          fw.write("%s ", sim.getTransitionActionString(idx));
-          System.out.printf("%s ", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
+          // System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
+          System.out.printf("%s ", sim.getTransitionActionString(idx));
 				  totalRate += sim.getTransitionProbability(idx);
         }
-          fw.write("\n");
         for (int idx=0; idx<sim.getNumTransitions(); idx++) {
           String s1 = String.format("[%s]",tr_st[tdx]);
           String s2 = sim.getTransitionActionString(idx);
@@ -124,7 +114,8 @@ public class SimulateModel
           }
 			  }
         double transition_probability = sim.getTransitionProbability(index) / totalRate;
-        System.out.printf("\n======= tr %s (%d) %e ===========\n\n", tr_st[tdx], index, transition_probability);
+        // System.out.printf("\n======= tr %s (%d) %e ===========\n\n", tr_st[tdx], index, transition_probability);
+        System.out.printf("\n", tr_st[tdx], index, transition_probability);
         pathProbability *= transition_probability;
         sim.manualTransition(index);
       }

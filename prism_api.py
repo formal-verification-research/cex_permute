@@ -14,6 +14,9 @@ def get_intersection(trace):
     for line in trace.split("\n"):
         if "TARGET" in line:
             break
+        if "totalProbability " in line:
+            print("probability found: " + line.split("totalProbability ")[1])
+            break
         last_enabled = curr_enabled
         curr_enabled = []
         # print("curr_enabled = " + str(curr_enabled))
