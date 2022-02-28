@@ -95,10 +95,10 @@ public class SimulateModel
       double pathProbability = 1.0;
       double totalRate = 0.0;
       for (int tdx=1; tdx < tr_st.length; tdx++) {
-        index = -1;
+        index = 0;
         totalRate = 0.0;
         for (int idx=0; idx<sim.getNumTransitions(); idx++) {
-          System.out.printf("tr %d: %s %f\n",idx,sim.getTransitionActionString(idx),sim.getTransitionProbability(idx));
+          System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
 				  totalRate += sim.getTransitionProbability(idx);
         }
         for (int idx=0; idx<sim.getNumTransitions(); idx++) {
