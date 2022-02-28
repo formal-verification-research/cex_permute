@@ -16,12 +16,13 @@
 # https://github.com/prismmodelchecker/prism-ext/tree/master/prism/src/prism
 
 # Import functions from local files
+from asyncio import subprocess
 import getfiles as gf
 import ivy
 import prism_api
 import commute
 
-from subprocess import check_output
+from subprocess import CalledProcessError, check_output
 
 # Main procedure
 if __name__ == "__main__":
@@ -55,8 +56,16 @@ if __name__ == "__main__":
 
   # Have the PRISM API walk along the path, reporting enabled transitions
   ## api_result = check_output(['java', 'temp'])
-  with open("dummy_result.txt") as result:
-    api_result = result.read()
+  # with open("dummy_result.txt") as result:
+
+  try:
+    result = subprocess.check_output("make test")
+  except CalledProcessError:
+    print("CalledProcessError!")
+    quit()
+
+  # api_result = result.read()
+  api_result = result
 
   # Find the intersection of all enabled transitions
   intersection = prism_api.get_intersection(api_result)  
