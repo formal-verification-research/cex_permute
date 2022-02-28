@@ -110,11 +110,11 @@ public class SimulateModel
         totalRate = 0.0;
         for (int idx=0; idx < sim.getNumTransitions(); idx++) {
           System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
-          wr.write("%s ", sim.getTransitionActionString(idx));
+          fw.write("%s ", sim.getTransitionActionString(idx));
           System.out.printf("%s ", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
 				  totalRate += sim.getTransitionProbability(idx);
         }
-          wr.write("\n", sim.getTransitionActionString(idx));
+          fw.write("\n", sim.getTransitionActionString(idx));
         for (int idx=0; idx<sim.getNumTransitions(); idx++) {
           String s1 = String.format("[%s]",tr_st[tdx]);
           String s2 = sim.getTransitionActionString(idx);
