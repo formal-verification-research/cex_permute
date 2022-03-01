@@ -16,7 +16,8 @@
 # https://github.com/prismmodelchecker/prism-ext/tree/master/prism/src/prism
 
 # Import functions from local files
-from asyncio import subprocess
+# from asyncio import subprocess
+import subprocess
 import getfiles as gf
 import ivy
 import prism_api
