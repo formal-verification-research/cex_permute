@@ -84,6 +84,8 @@ if __name__ == "__main__":
   # Build paths with the enabled transitions commuted
   commute.commute(ivy_path, intersection)
 
+  # TODO Check the permuted paths with the prism api somehow
+
   # Maybe joost-pieter's thing about storing a model instead of states
 
   # Test the commuted paths in PRISM (for dev stage)
