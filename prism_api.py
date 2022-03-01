@@ -12,7 +12,7 @@ def get_intersection(trace):
     # TODO make a better binary file
     for line in trace_a.split("\n"):
         if "bin" not in line and "length" not in line:
-            trace = trace + "\n" + line
+            trace = trace + line + "\n"
     print("TRACE BELOW:")
     print(80*"*")
     print(trace)
