@@ -10,4 +10,4 @@ def get_prism_file():
   return "model.sm"
 
 def cleanup():
-  subprocess.run(['rm' '-rf' 'aigerfiles' 'logfiles'])
+  subprocess.run(['rm','-rf','aigerfiles','logfiles'])
