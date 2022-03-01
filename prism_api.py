@@ -2,6 +2,8 @@
 
 def get_intersection(trace):
 
+    trace = trace.replace("]","").replace("[","")
+
     last_enabled = []
     curr_enabled = []
 
@@ -10,6 +12,8 @@ def get_intersection(trace):
     #     print("ERROR THROWN BY prism_api.py")
 
     curr_enabled = trace.split("\n")[0].split(" ")
+    print("curr enabled")
+    print(curr_enabled)
 
     for line in trace.split("\n"):
         if "TARGET" in line:
@@ -24,7 +28,6 @@ def get_intersection(trace):
         # print("curr_enabled = " + str(curr_enabled))
         # print("last_enabled = " + str(last_enabled))
         for transition in line.split(" "):
-            t = transition.replace("]","").replace("[","")
             if transition in last_enabled:
                 curr_enabled.append(transition)
     
