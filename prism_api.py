@@ -12,6 +12,7 @@ def get_intersection(trace):
     trace_a = trace.split("\n")
     for line in trace_a:
         if "bin/run" in line or "length" in line:
+            print("delete " + line)
             del line
     trace = '\n'.join(trace_a)
 
