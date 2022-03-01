@@ -2,19 +2,17 @@
 
 def get_intersection(trace):
 
-    trace = trace.replace("]","").replace("[","")
+    trace_a = trace.replace("]","").replace("[","")
+    trace = ""
 
     last_enabled = []
     curr_enabled = []
 
     # Clean up after the binary file
     # TODO make a better binary file
-    trace_a = trace.split("\n")
-    for line in trace_a:
-        if "bin" in line or "length" in line:
-            print("delete " + line)
-            del line
-    trace = '\n'.join(trace_a)
+    for line in trace_a.split("\n"):
+        if "bin" not in line and "length" not in line:
+            trace = trace + "\n" + line
 
     # if "TARGET" not in trace:
     #     print("ERROR: DOES NOT APPEAR TO REACH TARGET.")
