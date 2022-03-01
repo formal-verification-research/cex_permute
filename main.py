@@ -23,6 +23,8 @@ import ivy
 import prism_api
 import commute
 
+import os
+
 from subprocess import CalledProcessError, check_output
 
 # Main procedure
@@ -57,16 +59,18 @@ if __name__ == "__main__":
 
   # Have the PRISM API walk along the path, reporting enabled transitions
   ## api_result = check_output(['java', 'temp'])
-  # with open("dummy_result.txt") as result:
 
   try:
-    result = subprocess.check_output(['make','test'])
-  except CalledProcessError:
-    print("CalledProcessError!")
+    os.system("make test > model.result")
+    # result = subprocess.check_output(['make','test'])
+    # result = subprocess.check_output(['make','test'])
+  except:
+    print("os.system Error!")
     quit()
 
   # api_result = result.read()
-  api_result = result
+  with open("model.result") as result:
+    api_result = result.read()
 
   # Find the intersection of all enabled transitions
   intersection = prism_api.get_intersection(api_result)  
