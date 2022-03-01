@@ -1,0 +1,22 @@
+PRISM_DIR=../prism PRISM_MAINCLASS=simulate.SimulateModel bin/run
+19 length
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+pathProbability 8.042021e-29
