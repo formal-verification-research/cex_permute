@@ -61,6 +61,7 @@ if __name__ == "__main__":
   ## api_result = check_output(['java', 'temp'])
 
   try:
+    os.system("make")
     os.system("make test > model.result")
     # result = subprocess.check_output(['make','test'])
     # result = subprocess.check_output(['make','test'])

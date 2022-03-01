@@ -5,9 +5,9 @@ def get_intersection(trace):
     last_enabled = []
     curr_enabled = []
 
-    if "TARGET" not in trace:
-        print("ERROR: DOES NOT APPEAR TO REACH TARGET.")
-        print("ERROR THROWN BY prism_api.py")
+    # if "TARGET" not in trace:
+    #     print("ERROR: DOES NOT APPEAR TO REACH TARGET.")
+    #     print("ERROR THROWN BY prism_api.py")
 
     curr_enabled = trace.split("\n")[0].split(" ")
 
