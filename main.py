@@ -59,7 +59,7 @@ if __name__ == "__main__":
   # with open("dummy_result.txt") as result:
 
   try:
-    result = subprocess.check_output("make test")
+    result = subprocess.check_output(['make','test'])
   except CalledProcessError:
     print("CalledProcessError!")
     quit()
