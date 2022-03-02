@@ -76,10 +76,9 @@ public class SimulateModel
       // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
       
       // follow the transitions
-      // TODO: read in the transitions and follow them
 		
       // Read in the first line of the trace as a string
-			FileReader fr = new FileReader("model.trace");
+			FileReader fr = new FileReader("forprism.trace");
 			BufferedReader br = new BufferedReader(fr);
 			String x;
 			x = br.readLine(); 
