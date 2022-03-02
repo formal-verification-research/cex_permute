@@ -3,7 +3,7 @@
 def commute(trace, intersection):
   with open("commuted.trace", 'w') as commuted:
     # Get individual moves
-    t = trace.replace("\t\t", "\t").split("\t")
+    t = trace.replace("\t\t", "\t").rstrip().lstrip().split("\t")
     # Remove any empty spots in t
     while "" in t:
       t.remove("")
