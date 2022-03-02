@@ -1,0 +1,405 @@
+\subsubsection*{Automated Threshold Selection for Predicate
+	Abstraction for CTMCs}
+Use the toggle swith model as an example
+(\url{https://github.com/fluentverification/Critical-Values-Prototype/blob/master/ToggleSwitch/control.prism}). 
+\begin{enumerate}
+	\item Starting with 
+	
+\end{enumerate}  
+
+
+Given a CTMC model \model{} and the following transient CSL property
+\cslEventually, this method aims at efficiently providing the estimated lower
+and upper probability bound, \probMin{} and \probMax, for the path
+formula \eventuallyFull, respectively. The proposed method is expected
+to work well for highly concurrent model \model{}. 
+
+\subsubsection*{Procedure for generating paths reaching target
+	states.}
+This procedure can provide a lower probability bound for reaching a
+state satisfying \targetSt.
+
+\begin{enumerate}
+	\item Generate the first shortest counterexample path from the
+	equivalent non-deterministic model \nondetermModel{} of \model{} using PDR. This path starts
+	from the initial state \initSt: \ensuremath{\path = \pathFull} and
+	the formula \targetSt{} holds in its last state
+	\ensuremath{\lastSt=\state{n}}, i.e., \ensuremath{\lastSt \models \targetSt}. 
+	\item Construct the set of independent transitions (including empty
+	set), \indp{\path}, for path \path\ as \ensuremath{\indp{\path} = \en{\initSt} \cap \en{\state{1}} \cap \dots \cap
+		\en{\state{i}} \cap \dots \cap \en{\state{n}}}. Denote
+	\en{\state{i}} as the set of enabled transitions in state \state{i}. Essentially, each
+	transition \ensuremath{\tran{\alpha} \in \indp{\path}} is enabled in \emph{every} state,
+	i.e., \ensuremath{\initSt, \state{1}, \dots, \state{n}} of path
+	\path. Therefore, \tran{\alpha} is independent of transitions \tran{0}
+	through \tran{n-1}. Also, we need to confirm that executing
+	\ensuremath{\tran{\alpha}} from the last state of \path{} reaches
+	a target state: \ensuremath{\lastSt=\state{n}
+		\xrightarrow{\tran{\alpha}} \state{n+1}} and
+	\ensuremath{\state{n+1} \models \targetSt}. 
+	\item If \ensuremath{\indp{\path} \neq \emptyset}, consider each transition \ensuremath{\tran{\alpha} \in
+		\indp{\path}} and path \ensuremath{\path = \pathFull}. Figure~\ref{fig-interleaveOneTran} illustrates all
+	possible path interleavings between \ensuremath{\tran{\alpha}} and
+	transitions in \path. There are a total of $(n+1)$ unique paths in this
+	figure from \initSt{} to \stAlt. Figure~\ref{fig-interleaveTwoTrans} shows the
+	full interleaving of two mutually independent transitions 
+	\ensuremath{\tran{\alpha}, \tran{\beta}} and transitions in
+	\path. Nodes with the same identifier (e.g., \stAlta{0},
+	\stAlta{1}, etc.) represent the same state. There are a total of
+	$(n+2)(n+1)$, i.e., $n^2+3n+2$, unique paths in this
+	figure from \initSt{} to \stAlta.
+	% n=0, 2
+	% n=1, 6
+	% n=2, 12
+	% n=3, 20
+	% 1. s0, s1, s2, s3, u3, w3
+	% 2. s0, s1, s2, u2, u3, w3
+	% 3. s0, s1, s2, u2, w2, w3
+	% 4. s0, s1, u1, u2, u3, w3
+	% 5. s0, s1, u1, u2, w2, w3
+	% 6. s0, s1, u1, w1, w2, w3
+	% 7. s0, u0, u1, u2, u3, w3
+	% 8. s0, u0, u1, u2, w2, w3
+	% 9. s0, u0, u1, w1, w2, w3
+	% 10. s0, u0, w0, w1, w2, w3
+	% Symmetrically, there are 10 paths to reach w3 through the v-states.
+	\begin{itemize}
+		\item \textcolor{blue}{How to efficiently enumerate all paths
+			from \initSt{} to \stAlt{} illustrated in both figures? To
+			calculate the sum of probabilities of all these paths, do we
+			have to enumerate all such paths and simulate each one at a
+			time? Note that each transition's rate (and hence
+			probability) is dependent on its source state. For example,
+			executing \ensuremath{\tran{\alpha}} in \initSt{} can have
+			different rate (and therefore probability) than executing it
+			in \state{n}.}
+		\item \textcolor{blue}{How can the method from the previous step be generalized to $k$
+			mutually independent transitions in \indp{\path}?} 
+	\end{itemize}  
+	
+	\item Otherwise, i.e., \ensuremath{\indp{\path} = \emptyset}, construct \indp{\path} from the last $k$
+	transitions of \path: \ensuremath{\indp{\path} = \en{\state{i}}
+		\cap \en{\state{i+1}} \dots \cap \en{\state{i+(k-1)}}} where
+	\ensuremath{\state{i+(k-1)} = \lastSt} and
+	\ensuremath{\en{\state{i-1}} \cap \en{\state{i}}
+		\cap \en{\state{i+1}} \dots \cap \en{\state{i+(k-1)}} =
+		\emptyset}. Then permute every transition in \indp{\path} from
+	state \state{i} to \state{i+(k-1)}. \textcolor{orange}{Need to add more
+		details.}
+	
+	\item When generating the next shortest counterexample path
+	\ensuremath{\path^{\prime}}, choose an outgoing transition \ensuremath{\tran{0}^{\prime}} from
+	the initial state \initSt that is \emph{not} in \indp{\path}. If
+	\ensuremath{\tran{0}^{\prime}} does not exist, try to find such a
+	transition in the next state \state{1}, and so on, until such a
+	transition is found.
+	
+	\item To model check CSL property with upper time bound, consider
+	Riley's algorithm to essentially limit the length of generated
+	counterexample paths.
+	
+	\item Repeat the above steps.
+\end{enumerate}
+
+To improve efficiency in reconstructing paths, we consider transitions
+beyond those in \ensuremath{\indp{\rho}}. \textcolor{OliveGreen}{Determine independence for a finite
+	sequence \ensuremath{\tranSeq{i_{1}}{i_{n}}} w.r.t. all
+	transitions along a path returned by PDR, even if not every transition in the
+	sequence \ensuremath{\tranSeq{i_{1}}{i_{n}}} is independent of all transitions in
+	\pathFull, as long as the first transition
+	\ensuremath{\tran{i_{1}}} is an independent transition w.r.t. every
+	transition in \pathFull.} For example, in the six-reaction model,
+transition sequence \ensuremath{\tran{R_{1}}, \tran{R_{2}}} can be executed at any state in the following
+shortest path returned by PDR, such that \ensuremath{\state{n} \models
+	\targetSt{}}:\\ \ensuremath{\initSt
+	\underbrace{\xrightarrow{\tran{R_{4}}} \state{1}
+		\xrightarrow{\tran{R_{6}}} \state{2} \xrightarrow{\tran{R_{4}}}
+		\state{3} \xrightarrow{\tran{R_{6}}} \state{4} \dots}_{\text{\tran{R_{4}}
+			and \tran{R_{6}} repeatedly execute 9 times}} \xrightarrow{\tran{R_{4}}} \state{n}}. Transition
+\ensuremath{\tran{R_{1}}} is enabled in every state along this path,
+but \ensuremath{\tran{R_{2}}} is not. However, executing
+\ensuremath{\tran{R_{1}}} enables \ensuremath{\tran{R_{2}}} and then
+executing \ensuremath{\tran{R_{2}}} \emph{does not} alter the
+enabledness of \ensuremath{\tran{R_{4}}} or \ensuremath{\tran{R_{6}}}
+in every state along this path. Similarly sequence
+\ensuremath{\tran{R_{1}}, \tran{R_{3}}} is also such a
+sequence. \textcolor{orange}{Consider building a dependency graph for
+	syntactic transitions in the PRISM model, as defined in Def. 4.2 of Valmari2011\_CanStubbornSetsBeOptimal\_journal.pdf.}
+
+\subsubsection*{Procedure for generating paths reaching non-target
+	states. }
+This procedure attempts to provide an \emph{upper} probability bound for reaching the
+target state set. Since the CSL property \cslEventually\ is of interest,
+then this procedure finds and reconstructs paths that reach states
+satisfying \ensuremath{\lnot\targetSt}. Using the steps above, we can
+find the lower probability bound for
+\ensuremath{\prob(\eventuallyNot)}, \ensuremath{\prob_{min}
+	(\eventuallyNot)}. From the principle of duality, we know that
+\ensuremath{\eventually = \lnot \alwaysNot}. If one execution (i.e., a
+path) satisfies \eventually, then it does not satisfy \alwaysNot, and
+vice versa. Therefore, \ensuremath{\prob(\eventually) = 1 -
+	\prob(\alwaysNot)}. Therefore, \ensuremath{\probMax{\eventually} =
+	1- \probMin{\alwaysNot}}. We can use the procedure for generating
+paths reaching target states described above with the target state set
+satisfying \alwaysNot. Then we can potentially calculate
+\ensuremath{\probMin{\alwaysNot}} to obtain \ensuremath{\probMax{\eventually}}.
+
+Our assumption is that \eventuallyFull\ is a rare event, so evaluating
+\cslEventually\ directly in STAMINA may incur challenges. However,
+since \ensuremath{\prob(\eventually) = 1 - \prob(\alwaysNot)}, we can
+use STAMINA to obtain a probability window for
+\ensuremath{\cslAlwaysNot}: \ensuremath{[ \probMin{\alwaysNot},
+	\probMax{\alwaysNot} ]}. 
+
+\begin{figure}[tbhp]
+	\begin{tikzpicture}
+		%%% state-transition from s0 to sn
+		\node (s0_h0) {\ensuremath{\state{} = \initSt}};
+		\node (t0_h0) [right of=s0_h0, label=above:\tran{0}] {};
+		\node (s1_h0) [right of=t0_h0] {\state{1}};
+		\node (t1_h0) [right of=s1_h0, label=above: \tran{1}] {};
+		\node (s2_h0) [right of=t1_h0] {\state{2}};
+		\node (t2_h0) [right of=s2_h0, label=above: \tran{2}] {};
+		\node (ddd1) [right of=t2_h0] {$\cdots$}; % For the dots, do the same
+		\node (tnm2_h0) [right of=ddd1, label=above:\tran{n-2}] {};
+		\node (snm1_h0) [right of=tnm2_h0] {\state{n-1}};
+		\node (tn_h0) [right of=snm1_h0, label=above:\tran{n-1}] {};  
+		\node (sn_h0) [right of=tn_h0] {\state{n}};
+		% Draw horizontal arrows
+		\draw [arrow] (s0_h0) -- (s1_h0);
+		\draw [arrow] (s1_h0) -- (s2_h0);
+		\draw [arrow] (s2_h0) -- (ddd1);		
+		\draw [arrow] (ddd1) -- (snm1_h0);
+		\draw [arrow] (snm1_h0) -- (sn_h0);
+		
+		%%% state-transition one row below s0 ... sn
+		% Use the below of, left of, right of, etc... to place nodes. Or you can use coordinates                
+		\node (t0_v0) [below of=s0_h0, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (s0_hm1) [below of=t0_v0] {\stAlt{0}};
+		\node (t1_v0) [below of=s1_h0, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (s1_hm1) [below of=t1_v0] {\stAlt{1}};
+		\node (t2_v0) [below of=s2_h0, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (s2_hm1) [below of=t2_v0] {\stAlt{2}};
+		% Blank node used to create proper spacing between the dots
+		\node (blank) [below of=ddd1] {};
+		\node (ddd2) [below of=blank] {$\cdots$};
+		\node (t3_v0) [below of=snm1_h0, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (snm1_hm1) [below of=t3_v0] {\stAlt{n-1}};
+		\node (t4_v0) [below of=sn_h0, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (sn_hm1) [below of=t4_v0] {\ensuremath{\stAlt{n} = \stAlt{}}};
+		% Draw vertical arrows
+		% Syntax for arrow is \draw [arrow-style (in our case ``arrow'')] (from) -- (to)
+		\draw [arrow] (s0_h0) -- (s0_hm1);
+		\draw [arrow] (s1_h0) -- (s1_hm1);
+		\draw [arrow] (s2_h0) -- (s2_hm1);
+		\draw [arrow] (snm1_h0) -- (snm1_hm1);
+		\draw [arrow] (sn_h0) -- (sn_hm1);
+		% Draw horizontal arrows
+		\node (t0_hn1) [right of=s0_hm1, label=above:\tran{0}] {};
+		\draw [arrow] (s0_hm1) -- (s1_hm1);
+		\node (t1_hn1) [right of=s1_hm1, label=above:\tran{1}] {};
+		\draw [arrow] (s1_hm1) -- (s2_hm1);
+		\node (t2_hn1) [right of=s2_hm1, label=above:\tran{2}] {};
+		\draw [arrow] (s2_hm1) -- (ddd2);
+		\node (tnm2_hn1) [right of=ddd2, label=above:\tran{n-2}] {};
+		\draw [arrow] (ddd2) -- (snm1_hm1);
+		\node (tn_hn1) [right of=snm1_hm1, label=above:\tran{n-1}] {};
+		\draw [arrow] (snm1_hm1) -- (sn_hm1);
+	\end{tikzpicture}
+	\caption{Interleaving of \ensuremath{\tran{\alpha}} and transitions in \path, where \ensuremath{\tran{\alpha} \in
+			\indp{\path}} and \ensuremath{\path = \pathFull}.}
+	\label{fig-interleaveOneTran}
+\end{figure}
+
+\begin{figure}[tbhp]
+	\begin{tikzpicture}[node distance = 1cm] % Adjust the distance here for more or less spacing
+		% Each corner is a node
+		% Even the \tran{\alpha} and \tran should be nodes
+		% HOWEVER, we will use the label=position:value to place them not in
+		% the lines.
+		%%% state-transition from s0 to sn
+		\node (s0_h0) {\ensuremath{\state{} = \initSt}};
+		\node (t0_h0) [right of=s0_h0, label=above:\tran{0}] {};
+		\node (s1_h0) [right of=t0_h0] {\state{1}};
+		\node (t1_h0) [right of=s1_h0, label=above: \tran{1}] {};
+		\node (s2_h0) [right of=t1_h0] {\state{2}};
+		\node (t2_h0) [right of=s2_h0, label=above: \tran{2}] {};
+		\node (ddd1) [right of=t2_h0] {$\cdots$}; % For the dots, do the same
+		\node (tnm2_h0) [right of=ddd1, label=above:\tran{n-2}] {};
+		\node (snm1_h0) [right of=tnm2_h0] {\state{n-1}};
+		\node (tn_h0) [right of=snm1_h0, label=above:\tran{n-1}] {};  
+		\node (sn_h0) [right of=tn_h0] {\state{n}};
+		% Draw horizontal arrows
+		\draw [arrow] (s0_h0) -- (s1_h0);
+		\draw [arrow] (s1_h0) -- (s2_h0);
+		\draw [arrow] (s2_h0) -- (ddd1);		
+		\draw [arrow] (ddd1) -- (snm1_h0);
+		\draw [arrow] (snm1_h0) -- (sn_h0);
+		
+		%%% state-transition one row below s0 ... sn
+		% Use the below of, left of, right of, etc... to place nodes. Or you can use coordinates                
+		\node (t0_v0) [below of=s0_h0, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (s0_hm1) [below of=t0_v0] {\stAlt{0}};
+		\node (t1_v0) [below of=s1_h0, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (s1_hm1) [below of=t1_v0] {\stAlt{1}};
+		\node (t2_v0) [below of=s2_h0, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (s2_hm1) [below of=t2_v0] {\stAlt{2}};
+		% Blank node used to create proper spacing between the dots
+		\node (blank) [below of=ddd1] {};
+		\node (ddd2) [below of=blank] {$\cdots$};
+		\node (t3_v0) [below of=snm1_h0, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (snm1_hm1) [below of=t3_v0] {\stAlt{n-1}};
+		\node (t4_v0) [below of=sn_h0, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (sn_hm1) [below of=t4_v0] {\ensuremath{\stAlt{n}}};
+		% Draw vertical arrows
+		% Syntax for arrow is \draw [arrow-style (in our case ``arrow'')] (from) -- (to)
+		\draw [arrow] (s0_h0) -- (s0_hm1);
+		\draw [arrow] (s1_h0) -- (s1_hm1);
+		\draw [arrow] (s2_h0) -- (s2_hm1);
+		\draw [arrow] (snm1_h0) -- (snm1_hm1);
+		\draw [arrow] (sn_h0) -- (sn_hm1);
+		% Draw horizontal arrows
+		\node (t0_hn1) [right of=s0_hm1, label=above:\tran{0}] {};
+		\draw [arrow] (s0_hm1) -- (s1_hm1);
+		\node (t1_hn1) [right of=s1_hm1, label=above:\tran{1}] {};
+		\draw [arrow] (s1_hm1) -- (s2_hm1);
+		\node (t2_hn1) [right of=s2_hm1, label=above:\tran{2}] {};
+		\draw [arrow] (s2_hm1) -- (ddd2);
+		\node (tnm2_hn1) [right of=ddd2, label=above:\tran{n-2}] {};
+		\draw [arrow] (ddd2) -- (snm1_hm1);
+		\node (tn_hn1) [right of=snm1_hm1, label=above:\tran{n-1}] {};
+		\draw [arrow] (snm1_hm1) -- (sn_hm1);
+		
+		%%% state-transition two rows below s0 ... sn
+		% Use the below of, left of, right of, etc... to place nodes. Or you can use coordinates                
+		\node (t0_v1) [below of=s0_hm1, label=left:\ensuremath{\tran{\beta}}] {};
+		\node (s0_hm2) [below of=t0_v1] {\stAlta{0}};
+		\node (t1_v1) [below of=s1_hm1, label=left:\ensuremath{\tran{\beta}}] {};
+		\node (s1_hm2) [below of=t1_v1] {\stAlta{1}};
+		\node (t2_v1) [below of=s2_hm1, label=left:\ensuremath{\tran{\beta}}] {};
+		\node (s2_hm2) [below of=t2_v1] {\stAlta{2}};
+		% Blank node used to create proper spacing between the dots
+		\node (blank2) [below of=ddd2] {};
+		\node (ddd3) [below of=blank2] {$\cdots$};
+		\node (t3_v1) [below of=snm1_hm1, label=left:\ensuremath{\tran{\beta}}] {};
+		\node (snm1_hm2) [below of=t3_v1] {\stAlta{n-1}};
+		\node (t4_v1) [below of=sn_hm1, label=left:\ensuremath{\tran{\beta}}] {};
+		\node (sn_hm2) [below of=t4_v1] {\ensuremath{\stAlta{n} = \stAlta{}}};
+		% Draw vertical arrows
+		% Syntax for arrow is \draw [arrow-style (in our case ``arrow'')] (from) -- (to)
+		\draw [arrow] (s0_hm1) -- (s0_hm2);
+		\draw [arrow] (s1_hm1) -- (s1_hm2);
+		\draw [arrow] (s2_hm1) -- (s2_hm2);
+		\draw [arrow] (snm1_hm1) -- (snm1_hm2);
+		\draw [arrow] (sn_hm1) -- (sn_hm2);
+		% Draw horizontal arrows
+		\node (t0_hn1) [right of=s0_hm2, label=above:\tran{0}] {};
+		\draw [arrow] (s0_hm2) -- (s1_hm2);
+		\node (t1_hn1) [right of=s1_hm2, label=above:\tran{1}] {};
+		\draw [arrow] (s1_hm2) -- (s2_hm2);
+		\node (t2_hn1) [right of=s2_hm2, label=above:\tran{2}] {};
+		\draw [arrow] (s2_hm2) -- (ddd3);
+		\node (tnm2_hn1) [right of=ddd3, label=above:\tran{n-2}] {};
+		\draw [arrow] (ddd3) -- (snm1_hm2);
+		\node (tn_hn1) [right of=snm1_hm2, label=above:\tran{n-1}] {};
+		\draw [arrow] (snm1_hm2) -- (sn_hm2);
+		
+		%%% state-transition one row ABOVE s0 ... sn
+		% Use the below of, left of, right of, etc... to place nodes. Or you can use coordinates                
+		\node (t0_v2) [above of=s0_h0, label=left:\ensuremath{\tran{\beta}}] {};
+		\node (s0_hp1) [above of=t0_v2] {\stAltb{0}};
+		\node (t1_v2) [above of=s1_h0, label=left:\ensuremath{\tran{\beta}}] {};
+		\node (s1_hp1) [above of=t1_v2] {\stAltb{1}};
+		\node (t2_v2) [above of=s2_h0, label=left:\ensuremath{\tran{\beta}}] {};
+		\node (s2_hp1) [above of=t2_v2] {\stAltb{2}};
+		% Blank node used to create proper spacing between the dots
+		\node (blank3) [above of=ddd1] {};
+		\node (ddd3) [above of=blank3] {$\cdots$};
+		\node (t3_v2) [above of=snm1_h0, label=left:\ensuremath{\tran{\beta}}] {};
+		\node (snm1_hp1) [above of=t3_v2] {\stAltb{n-1}};
+		\node (t4_v2) [above of=sn_h0, label=left:\ensuremath{\tran{\beta}}] {};
+		\node (sn_hp1) [above of=t4_v2] {\ensuremath{\stAltb{n}}};
+		% Draw vertical arrows
+		% Syntax for arrow is \draw [arrow-style (in our case ``arrow'')] (from) -- (to)
+		\draw [arrow] (s0_h0) -- (s0_hp1);
+		\draw [arrow] (s1_h0) -- (s1_hp1);
+		\draw [arrow] (s2_h0) -- (s2_hp1);
+		\draw [arrow] (snm1_h0) -- (snm1_hp1);
+		\draw [arrow] (sn_h0) -- (sn_hp1);
+		% Draw horizontal arrows
+		\node (t0_hp1) [right of=s0_hp1, label=above:\tran{0}] {};
+		\draw [arrow] (s0_hp1) -- (s1_hp1);
+		\node (t1_hp1) [right of=s1_hp1, label=above:\tran{1}] {};
+		\draw [arrow] (s1_hp1) -- (s2_hp1);
+		\node (t2_hp1) [right of=s2_hp1, label=above:\tran{2}] {};
+		\draw [arrow] (s2_hp1) -- (ddd3);
+		\node (tnm2_hp1) [right of=ddd3, label=above:\tran{n-2}] {};
+		\draw [arrow] (ddd3) -- (snm1_hp1);
+		\node (tn_hp1) [right of=snm1_hm1, label=above:\tran{n-1}] {};
+		\draw [arrow] (snm1_hp1) -- (sn_hp1);
+		
+		%%% state-transition two rows ABOVE s0 ... sn
+		% Use the below of, left of, right of, etc... to place nodes. Or you can use coordinates                
+		\node (t0_v3) [above of=s0_hp1, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (s0_hp2) [above of=t0_v3] {\stAlta{0}};
+		\node (t1_v3) [above of=s1_hp1, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (s1_hp2) [above of=t1_v3] {\stAlta{1}};
+		\node (t2_v3) [above of=s2_hp1, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (s2_hp2) [above of=t2_v3] {\stAlta{2}};
+		% Blank node used to create proper spacing between the dots
+		\node (blank4) [above of=ddd3] {};
+		\node (ddd4) [above of=blank4] {$\cdots$};
+		\node (t3_v3) [above of=snm1_hp1, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (snm1_hp2) [above of=t3_v3] {\stAlta{n-1}};
+		\node (t4_v3) [above of=sn_hp1, label=left:\ensuremath{\tran{\alpha}}] {};
+		\node (sn_hp2) [above of=t4_v3] {\ensuremath{\stAlta{n} = \stAlta{}}};
+		% Draw vertical arrows
+		% Syntax for arrow is \draw [arrow-style (in our case ``arrow'')] (from) -- (to)
+		\draw [arrow] (s0_hp1) -- (s0_hp2);
+		\draw [arrow] (s1_hp1) -- (s1_hp2);
+		\draw [arrow] (s2_hp1) -- (s2_hp2);
+		\draw [arrow] (snm1_hp1) -- (snm1_hp2);
+		\draw [arrow] (sn_hp1) -- (sn_hp2);
+		% Draw horizontal arrows
+		\node (t0_hp1) [right of=s0_hp2, label=above:\tran{0}] {};
+		\draw [arrow] (s0_hp2) -- (s1_hp2);
+		\node (t1_hp1) [right of=s1_hp2, label=above:\tran{1}] {};
+		\draw [arrow] (s1_hp2) -- (s2_hp2);
+		\node (t2_hp1) [right of=s2_hp2, label=above:\tran{2}] {};
+		\draw [arrow] (s2_hp2) -- (ddd4);
+		\node (tnm2_hp1) [right of=ddd4, label=above:\tran{n-2}] {};
+		\draw [arrow] (ddd4) -- (snm1_hp2);
+		\node (tn_hp1) [right of=snm1_hm1, label=above:\tran{n-1}] {};
+		\draw [arrow] (snm1_hp2) -- (sn_hp2);
+	\end{tikzpicture}
+	\caption{Interleaving of \ensuremath{\tran{\alpha}, \tran{\beta},} and
+		transitions in \path, where \ensuremath{\tran{\alpha}, \tran{\beta} \in
+			\indp{\path}} and \ensuremath{\path = \pathFull}. Note that \tran{\alpha} and
+		\tran{\beta} are also assumed to be independent of each other.}
+	\label{fig-interleaveTwoTrans}
+\end{figure}
+
+\subsubsection*{Optimize PDR's counterexample generation with
+	permutation of independent transitions.} For the 300 traces PDR
+generated for the six-reaction model, many of them can be produced by
+permuting transition r\_one at different locations of the first (i.e.,
+the shortest) path returned by PDR. 
+
+
+\subsubsection*{Can independent transition relation help inductive
+	invariant generation for PDR and/or PrIC3?} Need to look into
+whether and how an independent transition informs about one step
+relative inductiveness.
+
+\subsubsection*{Assume-guarantee view of chemical reaction network?}
+Use the six-reaction model as an example. Based on the initial
+condition and the property of interest \targetSt, we first identify
+transition(s) that can help to reach a target state satisfying
+\targetSt. 
+
+If we model each reaction as a separate object in IVy, can we use
+assume-guarantee reasoning to check for reachability and generate paths?
+
+Utilize mutual induction (like the ping-pong example) between R4 and
+its environment, i.e., composition of other five objects, up to $k$
+steps?

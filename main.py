@@ -77,7 +77,12 @@ if __name__ == "__main__":
   intersection = prism_api.get_intersection(api_result)  
 
   print(intersection)
-  
+
+  # check if intersection is empty
+
+  # TODO Find out if t_alpha will get you to a target state
+  # Maybe just do this in the Java script... whatever's more efficient
+
   # Iteratively find the intersection rather than getting them all
   # This feature may be complicated to add because we call java
 

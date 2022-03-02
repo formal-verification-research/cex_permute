@@ -22,6 +22,7 @@ import simulator.SimulatorEngine;
 
 
 /**
+Produced by Landon Taylor in early 2022
 Based in large part on prism-api/src/SimulateModel.java
 */
 
@@ -97,6 +98,7 @@ public class SimulateModel
       double pathProbability = 1.0;
       double totalRate = 0.0;
       System.out.printf("%d length\n", tr_st.length);
+
       for (int tdx=0; tdx < tr_st.length; tdx++) {
         index = 0;
         totalRate = 0.0;
@@ -104,8 +106,8 @@ public class SimulateModel
           // System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
           System.out.printf("%s ", sim.getTransitionActionString(idx).replace("[","").replace("]",""));
 				  totalRate += sim.getTransitionProbability(idx);
-        }
-        for (int idx=0; idx<sim.getNumTransitions(); idx++) {
+        } // try combining these
+        for (int idx=0; idx < sim.getNumTransitions(); idx++) {
           String s1 = String.format("[%s]",tr_st[tdx]);
           String s2 = sim.getTransitionActionString(idx);
           if (s1.equalsIgnoreCase(s2)) {
