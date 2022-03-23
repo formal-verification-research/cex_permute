@@ -58,6 +58,7 @@ if __name__ == "__main__":
 
   # Have the PRISM API walk along the path, reporting enabled transitions
   try:
+    # recompile the java in case of updates
     os.system("make")
     os.system("make test > prism.result")
     # using depreciated os.system because subprocess was not working
@@ -76,23 +77,38 @@ if __name__ == "__main__":
   # Find the intersection of all enabled transitions
   intersection = prism_api.get_intersection(api_result)  
   
-  # TODO for some reason, blanks keep appearing in the intersection
-  print(intersection)
-
+  # for some reason, blanks keep appearing in the intersection
   while "" in intersection:
     intersection.remove("")
-    print("removed one blank")
+  print("Path Intersection:", intersection)
 
   # check if intersection is empty
   if len(intersection) < 1:
     print("No intersections found. Bummer.")
-  else:
-    # Build paths with the enabled transitions commuted
-    print(intersection)
-    commute.commute(ivy_path, intersection)
+    print("Single path probability:", pathP)
+    print("Exiting without errors.")
+    quit()
   
-  # TODO Find out if t_alpha will get you to a target state
+  
+  # Build paths with the enabled transitions commuted
+  commute.commute(ivy_path, intersection)
+  
+  # Find out if t_alpha will get you to a target state
   # Maybe just do this in the Java script... whatever's more efficient
+  for t_alpha in intersection:
+    newpath = ivy_path + " " + t_alpha
+    with open("forprism.trace", "w") as temp_path:
+      temp_path.write(newpath)
+    try:
+      os.system("make test > prism.result")
+    except:
+      print("os.system Error in commuted trace!")
+      continue
+    with open("prism.result") as result:
+      if "ERR_TAR_NO_RCH" in result:
+        print("Commuting", t_alpha, "does not lead to a target state.")
+        intersection.remove(t_alpha)
+        print("Removed", t_alpha, "from inspection.")
 
   # Go through the traces, accumulate probability
   # This may be better to do in Java actually...

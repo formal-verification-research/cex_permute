@@ -86,6 +86,11 @@ public class SimulateModel
       // Break the string into a transition set
 			String[] tr_st=x.split("\\s+"); 
 
+      FileReader fr_p = new FileReader("model.csl");
+			BufferedReader br_p = new BufferedReader(fr_p);
+      String x_p;
+			x_p = br_p.readLine();
+
       // create a new path
       sim.createNewPath();
 
@@ -121,10 +126,19 @@ public class SimulateModel
         sim.manualTransition(index);
       }
 
+      Expression target = prism.parsePropertiesString(x_p).getProperty(0);
+      if (!target.evaluateBoolean(sim.getCurrentState())) {
+        System.out.printf("target state not reached ERR_TAR_NO_RCH\nProbability not counted\n");
+			  System.out.printf("pathProbability %e\n", 0.0);
+      }
+      else {
+			  System.out.printf("Path Reaches Target :)\n");
+			  System.out.printf("pathProbability %e\n", pathProbability);
+      }
+
       // System.out.println(sim.getPath());
 			
 			// sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
-			System.out.printf("pathProbability %e\n", pathProbability);
 
 
       // get path probability, dummy attempt
