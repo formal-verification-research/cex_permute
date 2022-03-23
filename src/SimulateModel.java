@@ -129,11 +129,11 @@ public class SimulateModel
       Expression target = prism.parsePropertiesString(x_p).getProperty(0);
 
       if (!target.evaluateBoolean(sim.getCurrentState())) {
-        System.out.printf("target state not reached ERR_TAR_NO_RCH\nProbability not counted\n");
+        System.out.printf(">> target state not reached ERR_TAR_NO_RCH\n>> Probability not counted\n");
 			  sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
       }
       else {
-			  System.out.printf("Path Reaches Target :)\n");
+			  System.out.printf(">> Path Reaches Target :)\n");
 			  System.out.printf("pathProbability %e\n", pathProbability);
       }
 

@@ -27,7 +27,7 @@ def get_intersection(trace):
     # print(curr_enabled)
 
     for line in trace.split("\n"):
-        if "TARGET" in line:
+        if ">>" in line:
             break
         if "pathProbability " in line:
             print("path probability found: " + line.split("pathProbability ")[1])
