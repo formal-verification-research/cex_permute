@@ -70,7 +70,7 @@ if __name__ == "__main__":
   with open("prism.result") as result:
     api_result = result.read()
 
-  # multiply in the probability
+  # add in the probability
   pathP.readProbabilityFromString(api_result)
 
   # Find the intersection of all enabled transitions
@@ -105,7 +105,7 @@ if __name__ == "__main__":
       # commute in the new traces
       with open("prism.result") as result:
         api_result = result.read()
-      # multiply in the probability
+      # add in the probability
       pathP.readProbabilityFromString(api_result)
 
   # Maybe joost-pieter's thing about storing a model instead of states

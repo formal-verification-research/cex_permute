@@ -1,7 +1,7 @@
 
 class pathProb():
   def __init__(self):
-    self.prob = 1.0
+    self.prob = 0.0
 
   def accumulate(self, x):
     self.prob = self.prob * x
@@ -11,5 +11,5 @@ class pathProb():
       print("ERROR: pathProbability not in input file.")
     else:
       newProb = float(s.split("pathProbability ").strip()[1])
-      self.prob = self.prob * newProb
+      self.prob = self.prob + newProb
       print("newProb", newProb, "self.prob", self.prob)
