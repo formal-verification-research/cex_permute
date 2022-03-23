@@ -23,8 +23,8 @@ def get_intersection(trace):
     #     print("ERROR THROWN BY prism_api.py")
 
     curr_enabled = trace.split("\n")[0].split(" ")
-    print("curr enabled")
-    print(curr_enabled)
+    # print("curr enabled")
+    # print(curr_enabled)
 
     for line in trace.split("\n"):
         if "TARGET" in line:
