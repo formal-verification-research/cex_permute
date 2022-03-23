@@ -109,6 +109,9 @@ if __name__ == "__main__":
         print("Commuting", t_alpha, "does not lead to a target state.")
         intersection.remove(t_alpha)
         print("Removed", t_alpha, "from inspection.")
+      else:
+        print("Commuting", t_alpha, "leads to a target state :)")
+
 
   # Go through the traces, accumulate probability
   # This may be better to do in Java actually...
