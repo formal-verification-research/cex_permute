@@ -105,7 +105,7 @@ if __name__ == "__main__":
       print("os.system Error in commuted trace!")
       continue
     with open("prism.result") as result:
-      if "ERR_TAR_NO_RCH" in result:
+      if "ERR_TAR_NO_RCH" in result.read():
         print("Commuting", t_alpha, "does not lead to a target state.")
         intersection.remove(t_alpha)
         print("Removed", t_alpha, "from inspection.")
