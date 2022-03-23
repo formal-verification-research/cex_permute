@@ -75,13 +75,20 @@ if __name__ == "__main__":
 
   # Find the intersection of all enabled transitions
   intersection = prism_api.get_intersection(api_result)  
+  
+  # TODO for some reason, blanks keep appearing in the intersection
   print(intersection)
+
+  while "" in intersection:
+    intersection.remove("")
+    print("removed one blank")
 
   # check if intersection is empty
   if len(intersection) < 1:
     print("No intersections found. Bummer.")
   else:
     # Build paths with the enabled transitions commuted
+    print(intersection)
     commute.commute(ivy_path, intersection)
   
   # TODO Find out if t_alpha will get you to a target state
