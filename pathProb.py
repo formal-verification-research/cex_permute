@@ -11,9 +11,9 @@ class pathProb():
       print("ERROR: pathProbability not in input file.")
     else:
       print()
-      print("Prior Probability:", '%.10E' % self.prob)
+      print("  Prior Probability:", '%.10E' % self.prob)
       newProb = float(s.split("pathProbability ")[1].strip())
       self.prob = self.prob + newProb
-      print("Path Probability: ", '%.10E' % newProb)
-      print("Total Probability:", '%.10E' % self.prob)
+      print("  Path Probability: ", '%.10E' % newProb)
+      print("  Total Probability:", '%.10E' % self.prob)
       print()

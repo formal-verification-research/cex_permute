@@ -135,7 +135,7 @@ if __name__ == "__main__":
       pathP.readProbabilityFromString(api_result)
 
   print(80*"=")
-  print("Final Probability:",pathP.prob)
+  print("  Final Probability:", '%.10E' % pathP.prob)
   print(80*"=")
   print("Exiting without error.")
   print(80*"=")
