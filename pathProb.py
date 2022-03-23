@@ -10,7 +10,7 @@ class pathProb():
     if "pathProbability " not in s:
       print("ERROR: pathProbability not in input file.")
     else:
-      print("Prior Probability:", newProb)
+      print("Prior Probability:", self.prob)
       newProb = float(s.split("pathProbability ")[1].strip())
       self.prob = self.prob + newProb
       print("Path Probability: ", newProb)

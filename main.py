@@ -134,6 +134,12 @@ if __name__ == "__main__":
       # add in the probability
       pathP.readProbabilityFromString(api_result)
 
+  print(80*"=")
+  print("Final Probability:",pathP.prob)
+  print(80*"=")
+  print("Exiting without error.")
+  print(80*"=")
+
   # Maybe joost-pieter's thing about storing a model instead of states
   
   # Modify the IVy model to exclude these paths (find an efficient way)
