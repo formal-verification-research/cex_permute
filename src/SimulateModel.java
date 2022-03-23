@@ -130,7 +130,7 @@ public class SimulateModel
 
       if (!target.evaluateBoolean(sim.getCurrentState())) {
         System.out.printf("target state not reached ERR_TAR_NO_RCH\nProbability not counted\n");
-			  System.out.printf(sim.getCurrentState());
+			  sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
       }
       else {
 			  System.out.printf("Path Reaches Target :)\n");
