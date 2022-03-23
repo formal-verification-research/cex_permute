@@ -72,6 +72,7 @@ if __name__ == "__main__":
     api_result = result.read()
 
   # add in the probability
+  # TODO: Does prism api read in the probabilities or the rates with getTransitionProbability???
   pathP.readProbabilityFromString(api_result)
 
   # Find the intersection of all enabled transitions
@@ -88,8 +89,7 @@ if __name__ == "__main__":
     print("Single path probability:", pathP)
     print("Exiting without errors.")
     quit()
-  
-  
+    
   # Build paths with the enabled transitions commuted
   commute.commute(ivy_path, intersection)
   
