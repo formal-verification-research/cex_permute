@@ -1,4 +1,4 @@
-s5 == 40
+s5 = 40
 
 // get the probability by other means
 // here we just want a binary property
