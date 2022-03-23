@@ -127,6 +127,7 @@ public class SimulateModel
       }
 
       Expression target = prism.parsePropertiesString(x_p).getProperty(0);
+      
       if (!target.evaluateBoolean(sim.getCurrentState())) {
         System.out.printf("target state not reached ERR_TAR_NO_RCH\nProbability not counted\n");
 			  System.out.printf("pathProbability %e\n", 0.0);
@@ -157,15 +158,15 @@ public class SimulateModel
       prism.closeDown();
     } 
     catch (FileNotFoundException e) {
-			System.out.println("Error: " + e.getMessage());
+			System.out.println("FileNotFound Error: " + e.getMessage());
 			System.exit(1);
 		} 
     catch (PrismException e) {
-			System.out.println("Error: " + e.getMessage());
+			System.out.println("PrismException Error: " + e.getMessage());
 			System.exit(1);
 		}
     catch (IOException e) {
-      System.out.println("Error: " + e.getMessage());
+      System.out.println("IOException Error: " + e.getMessage());
 			System.exit(1);
     }
   }
