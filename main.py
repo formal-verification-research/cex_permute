@@ -134,6 +134,8 @@ if __name__ == "__main__":
       pathP.readProbabilityFromString(api_result)
 
 
+  input("\n\nCLICK ENTER TO PROCEED TO 1-TRANSITION SYSTEM\n\n")
+
   # Force an extra enabled transition from each state, try to get a path
   # TODO add more heuristics here
   print("Finding novel paths by branching out 1 transition")
