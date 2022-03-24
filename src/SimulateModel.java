@@ -83,79 +83,110 @@ public class SimulateModel
 			String x;
 			x = br.readLine(); 
 
-      // Break the string into a transition set
-			String[] tr_st=x.split("\\s+"); 
+      // create a new ivy file with that initial state
 
-      FileReader fr_p = new FileReader("model.csl");
-			BufferedReader br_p = new BufferedReader(fr_p);
-      String x_p;
-			x_p = br_p.readLine();
-
-      // create a new path
-      sim.createNewPath();
-
-      // sim.createNewOnTheFlyPath(); // recommended for efficiency
-      sim.initialisePath(null);
-
-      // Take each transition and collect the rates
-      int index;
-      double pathProbability = 1.0;
-      double totalRate = 0.0;
-      System.out.printf("%d length\n", tr_st.length);
-
-      for (int tdx=0; tdx < tr_st.length; tdx++) {
-        index = 0;
-        totalRate = 0.0;
-        for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-          // System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
-          System.out.printf("%s ", sim.getTransitionActionString(idx).replace("[","").replace("]",""));
-				  totalRate += sim.getTransitionProbability(idx);
-        } // try combining these
-        for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-          String s1 = String.format("[%s]",tr_st[tdx]);
-          String s2 = sim.getTransitionActionString(idx);
-          if (s1.equalsIgnoreCase(s2)) {
-              index = idx;
-              break;
+      // Look for CHANGE_IVY_INITIAL_STATE in first line
+      // to indicate we want a new IVy model
+      if (x.contains("CHANGE_IVY_INITIAL_STATE")) {
+        // read the trace from the next line
+        x = br.readline();
+        // Break the string into a transition set
+			  String[] tr_st=x.split("\\s+"); 
+        // create a new path
+        sim.createNewPath();
+        sim.initialisePath(null);
+        // walk along the path
+        for (int tdx=0; tdx < tr_st.length; tdx++) {
+          index = 0;
+          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
+            String s1 = String.format("[%s]",tr_st[tdx]);
+            String s2 = sim.getTransitionActionString(idx);
+            if (s1.equalsIgnoreCase(s2)) {
+                index = idx;
+                break;
+            }
           }
-			  }
-        double transition_probability = sim.getTransitionProbability(index) / totalRate;
-        // System.out.printf("\n======= tr %s (%d) %e ===========\n\n", tr_st[tdx], index, transition_probability);
-        System.out.printf("\n");
-        pathProbability *= transition_probability;
-        sim.manualTransition(index);
+          sim.manualTransition(index);
+        }
+        // print the state (hopefully)
+        sim.getCurrentState().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
       }
-
-      Expression target = prism.parsePropertiesString(x_p).getProperty(0);
-
-      if (!target.evaluateBoolean(sim.getCurrentState())) {
-        System.out.printf(">> target state not reached ERR_TAR_NO_RCH\n>> Probability not counted\n");
-			  sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
-      }
+      // if it's just a regular model
       else {
-			  System.out.printf(">> Path Reaches Target :)\n");
-			  System.out.printf("pathProbability %e\n", pathProbability);
+        // Break the string into a transition set
+        String[] tr_st=x.split("\\s+"); 
+
+        FileReader fr_p = new FileReader("model.csl");
+        BufferedReader br_p = new BufferedReader(fr_p);
+        String x_p;
+        x_p = br_p.readLine();
+
+        // create a new path
+        sim.createNewPath();
+
+        // sim.createNewOnTheFlyPath(); // recommended for efficiency
+        sim.initialisePath(null);
+
+        // Take each transition and collect the rates
+        int index;
+        double pathProbability = 1.0;
+        double totalRate = 0.0;
+        System.out.printf("%d length\n", tr_st.length);
+
+        for (int tdx=0; tdx < tr_st.length; tdx++) {
+          index = 0;
+          totalRate = 0.0;
+          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
+            // System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
+            System.out.printf("%s ", sim.getTransitionActionString(idx).replace("[","").replace("]",""));
+            totalRate += sim.getTransitionProbability(idx);
+          } // try combining these
+          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
+            String s1 = String.format("[%s]",tr_st[tdx]);
+            String s2 = sim.getTransitionActionString(idx);
+            if (s1.equalsIgnoreCase(s2)) {
+                index = idx;
+                break;
+            }
+          }
+          double transition_probability = sim.getTransitionProbability(index) / totalRate;
+          // System.out.printf("\n======= tr %s (%d) %e ===========\n\n", tr_st[tdx], index, transition_probability);
+          System.out.printf("\n");
+          pathProbability *= transition_probability;
+          sim.manualTransition(index);
+        }
+
+        Expression target = prism.parsePropertiesString(x_p).getProperty(0);
+
+        if (!target.evaluateBoolean(sim.getCurrentState())) {
+          System.out.printf(">> target state not reached ERR_TAR_NO_RCH\n>> Probability not counted\n");
+          sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
+        }
+        else {
+          System.out.printf(">> Path Reaches Target :)\n");
+          System.out.printf("pathProbability %e\n", pathProbability);
+        }
+
+        // System.out.println(sim.getPath());
+        
+        // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
+
+
+        // get path probability, dummy attempt
+        // System.out.println("Path Probability:");
+        // double pathProbability = 1.0;
+        // for (int idx=0; idx<sim.getNumTransitions(); idx++) {
+        //   System.out.println(pathProbability + "*=" + sim.getTransitionProbability(idx));
+        //   pathProbability *= sim.getTransitionProbability(idx);
+        //   System.out.println(sim.getTransitionProbability(idx));
+        //   System.out.println(pathProbability);
+        //   System.out.println("");
+        // }
+        
+
+        // close PRISM
+        prism.closeDown();
       }
-
-      // System.out.println(sim.getPath());
-			
-			// sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
-
-
-      // get path probability, dummy attempt
-      // System.out.println("Path Probability:");
-      // double pathProbability = 1.0;
-      // for (int idx=0; idx<sim.getNumTransitions(); idx++) {
-      //   System.out.println(pathProbability + "*=" + sim.getTransitionProbability(idx));
-      //   pathProbability *= sim.getTransitionProbability(idx);
-      //   System.out.println(sim.getTransitionProbability(idx));
-      //   System.out.println(pathProbability);
-      //   System.out.println("");
-			// }
-      
-
-      // close PRISM
-      prism.closeDown();
     } 
     catch (FileNotFoundException e) {
 			System.out.println("FileNotFound Error: " + e.getMessage());

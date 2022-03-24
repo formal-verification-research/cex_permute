@@ -22,3 +22,6 @@ def get_path(logf):
     for item in trace:
       final_trace = final_trace + (item + "\t")
     return final_trace
+
+def new_initial_state_6react():
+  
