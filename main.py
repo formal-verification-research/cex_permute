@@ -206,6 +206,7 @@ if __name__ == "__main__":
       # pathP.readProbabilityFromString(api_result)
     # add the transition to the list for the next time around
     prefix_transitions = prefix_transitions + orig_path[t] + "\t"
+    input("Click enter to try from the next state")
     
 
 
