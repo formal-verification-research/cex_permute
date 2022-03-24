@@ -111,8 +111,8 @@ public class SimulateModel
         // print the full trace
         // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
         // print the state (hopefully)
-        System.out.println(sim.getPath());
-        System.out.println(sim.getState());
+        // System.out.println(sim.getPath());
+        System.out.println(sim.getCurrentState());
       }
       // if it's just a regular model
       else {
