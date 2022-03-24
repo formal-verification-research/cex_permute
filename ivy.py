@@ -37,8 +37,8 @@ def new_initial_state(i_state, old, new):
   i_ivy = i_ivy + "  s4 := " + i[3] + ";\n"
   i_ivy = i_ivy + "  s5 := " + i[4] + ";\n"
   i_ivy = i_ivy + "  s6 := " + i[5] + ";\n"
-  i_ivy = i_ivy + "} #init\n\n"
-  i_ivy = "\n\n#END GENERATED TEXT\n"
+  i_ivy = i_ivy + "} #init"
+  i_ivy = i_ivy + "\n\n#END GENERATED TEXT\n"
 
   old_str = old.read()
   new_str = re.sub(r'after init\s+\{[^}]*\}\s+#init', i_ivy, old_str)
