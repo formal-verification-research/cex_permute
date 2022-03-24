@@ -1,12 +1,14 @@
 import subprocess
 import re
+import os
 
 # CALL_HINT = "call ext:"
 CALL_HINT = "call ext:spec."
 
 def check(ivyfile):
-  print("ivy_check trace=true " + str(ivyfile) + " > " + str(ivyfile).split(".")[0] + ".log")
-  subprocess.run("ivy_check trace=true " + str(ivyfile) + " > " + str(ivyfile).split(".")[0] + ".log")
+  ivy_command = "ivy_check trace=true " + str(ivyfile) + " > " + str(ivyfile).split(".")[0] + ".log"
+  print(ivy_command)
+  subprocess.run(ivy_command)
   subprocess.run("rm -rf aigerfiles logfiles ivy_mc.log")
   return str(ivyfile).split(".")[0] + ".log"
   # with open(str(ivyfile).split(".")[0] + ".log") as log:

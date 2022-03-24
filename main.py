@@ -192,8 +192,10 @@ if __name__ == "__main__":
           ivy.new_initial_state(initial_state, old_ivyfile, new_ivyfile)
       # get the ivy model with the new initial state from prism
       new_ivy_result = ivy.check(av_tran + ".ivy")
+      print(new_ivy_result)
       # parse the new path
       ivy_path = ivy.get_path(new_ivy_result)
+      print(ivy_path)
       # get the probability from prism
       with open("forprism.trace", 'w') as trace:
         trace.write(ivy_path)
