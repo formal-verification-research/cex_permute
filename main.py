@@ -144,7 +144,7 @@ if __name__ == "__main__":
     orig_path.remove("")
   # set up a rolling list of transitions, with a flag to tell PRISM we want an
   # IVy model with the new "initial state" rather than a probability
-  prefix_transitions = "CHANGE_IVY_INITIAL_STATE\n"
+  prefix_transitions = "CHANGE_IVY_INITIAL_STATE\t"
   # loop through the transitions, start from initial state and end before target
   for t in range(len(orig_path) - 1):
     # get next available transitions from list of available transitions

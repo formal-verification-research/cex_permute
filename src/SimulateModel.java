@@ -82,23 +82,19 @@ public class SimulateModel
 			BufferedReader br = new BufferedReader(fr);
 			String x;
 			x = br.readLine();
-      System.out.printf("FIRST READLINE LN 84: %s", x);
 
       // create a new ivy file with that initial state
 
       // Look for CHANGE_IVY_INITIAL_STATE in first line
       // to indicate we want a new IVy model
       if (x.contains("CHANGE_IVY_INITIAL_STATE")) {
-        // read the trace from the next line
-        x = br.readline();
-        System.out.printf("SECOND READLINE LN 93: %s", x);
         // Break the string into a transition set
 			  String[] tr_st = x.split("\\s+"); 
         // create a new path
         sim.createNewPath();
         sim.initialisePath(null);
         // walk along the path
-        for (int tdx=0; tdx < tr_st.length; tdx++) {
+        for (int tdx=1; tdx < tr_st.length; tdx++) {
           index = 0;
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
             String s1 = String.format("[%s]",tr_st[tdx]);
