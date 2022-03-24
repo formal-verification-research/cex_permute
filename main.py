@@ -134,7 +134,7 @@ if __name__ == "__main__":
       pathP.readProbabilityFromString(api_result)
 
 
-  input("\n\nCLICK ENTER TO PROCEED TO 1-TRANSITION SYSTEM\n\n")
+  # input("\n\nCLICK ENTER TO PROCEED TO 1-TRANSITION SYSTEM\n\n")
 
   # Force an extra enabled transition from each state, try to get a path
   # TODO add more heuristics here
@@ -185,6 +185,8 @@ if __name__ == "__main__":
       print(initial_state)
       print("END INITIAL STATE ---------------------------------")
       # write the new ivy model
+      with open(av_tran + ".log", "w") as new_ivyfile:
+        pass
       with open(av_tran + ".ivy", "w") as new_ivyfile:
         with open(ivy_file) as old_ivyfile:
           ivy.new_initial_state(initial_state, old_ivyfile, new_ivyfile)
@@ -207,7 +209,7 @@ if __name__ == "__main__":
       pathP.readProbabilityFromString(api_result)
     # add the transition to the list for the next time around
     prefix_transitions = prefix_transitions + orig_path[t] + "\t"
-    input("Click enter to try from the next state")
+    # input("Click enter to try from the next state")
     
 
 
