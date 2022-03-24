@@ -185,11 +185,9 @@ if __name__ == "__main__":
       print(initial_state)
       print("END INITIAL STATE ---------------------------------")
       # write the new ivy model
-      # with open(av_tran + ".ivy", "w") as new_ivyfile:
-      #   with open(ivy_file) as old_ivyfile:
-      #     for line in old_ivyfile:
-      #       if "after init {" in line:
-              
+      with open(av_tran + ".ivy", "w") as new_ivyfile:
+        with open(ivy_file) as old_ivyfile:
+          ivy.new_initial_state(initial_state, old_ivyfile, new_ivyfile)
       # # get the ivy model with the new initial state from prism
       # new_ivy_result = ivy.check(av_tran + ".ivy")
       # # parse the new path
