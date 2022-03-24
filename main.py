@@ -188,23 +188,23 @@ if __name__ == "__main__":
       with open(av_tran + ".ivy", "w") as new_ivyfile:
         with open(ivy_file) as old_ivyfile:
           ivy.new_initial_state(initial_state, old_ivyfile, new_ivyfile)
-      # # get the ivy model with the new initial state from prism
-      # new_ivy_result = ivy.check(av_tran + ".ivy")
-      # # parse the new path
-      # ivy_path = ivy.get_path(new_ivy_result)
-      # # get the probability from prism
-      # with open("forprism.trace", 'w') as trace:
-      #   trace.write(ivy_path)
-      # try:
-      #   os.system("make test > prism.result")
-      # except:
-      #   print("os.system Error in available transition trace! transition", av_tran)
-      #   continue
-      # # api_result = result.read()
-      # with open("prism.result") as result:
-      #   api_result = result.read()
-      # # add in the probability
-      # pathP.readProbabilityFromString(api_result)
+      # get the ivy model with the new initial state from prism
+      new_ivy_result = ivy.check(av_tran + ".ivy")
+      # parse the new path
+      ivy_path = ivy.get_path(new_ivy_result)
+      # get the probability from prism
+      with open("forprism.trace", 'w') as trace:
+        trace.write(ivy_path)
+      try:
+        os.system("make test > prism.result")
+      except:
+        print("os.system Error in available transition trace! transition", av_tran)
+        continue
+      # api_result = result.read()
+      with open("prism.result") as result:
+        api_result = result.read()
+      # add in the probability
+      pathP.readProbabilityFromString(api_result)
     # add the transition to the list for the next time around
     prefix_transitions = prefix_transitions + orig_path[t] + "\t"
     input("Click enter to try from the next state")
