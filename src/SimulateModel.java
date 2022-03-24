@@ -93,6 +93,8 @@ public class SimulateModel
         // create a new path
         sim.createNewPath();
         sim.initialisePath(null);
+
+        int index;
         // walk along the path
         for (int tdx=1; tdx < tr_st.length; tdx++) {
           index = 0;
