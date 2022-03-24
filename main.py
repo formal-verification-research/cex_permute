@@ -151,6 +151,9 @@ if __name__ == "__main__":
   for t in range(len(orig_path) - 1):
     # get next available transitions from list of available transitions
     available = prism_api.get_available(api_result, t)
+    # clean up available
+    while "" in available:
+      available.remove("")
     print("available transitions ", available)
     # exclusions (commented out for debug purposes)
     # # don't do the commuted transition
