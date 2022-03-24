@@ -81,7 +81,8 @@ public class SimulateModel
 			FileReader fr = new FileReader("forprism.trace");
 			BufferedReader br = new BufferedReader(fr);
 			String x;
-			x = br.readLine(); 
+			x = br.readLine();
+      System.out.printf("FIRST READLINE LN 84: %s", x);
 
       // create a new ivy file with that initial state
 
@@ -90,8 +91,9 @@ public class SimulateModel
       if (x.contains("CHANGE_IVY_INITIAL_STATE")) {
         // read the trace from the next line
         x = br.readline();
+        System.out.printf("SECOND READLINE LN 93: %s", x);
         // Break the string into a transition set
-			  String[] tr_st=x.split("\\s+"); 
+			  String[] tr_st = x.split("\\s+"); 
         // create a new path
         sim.createNewPath();
         sim.initialisePath(null);
