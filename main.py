@@ -167,6 +167,7 @@ if __name__ == "__main__":
       new_prefix_trace = prefix_transitions + av_tran
       with open("forprism.trace", "w") as forprism:
         forprism.write(new_prefix_trace)
+        print("new_prefix_trace", new_prefix_trace)
       # get the state from the prism simulation
       try:
         os.system("make test > stepexplore.state")

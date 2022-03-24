@@ -108,8 +108,8 @@ public class SimulateModel
           }
           sim.manualTransition(index);
         }
-        // print the state (hopefully)
-        sim.getCurrentState().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
+        // print the full trace
+        sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
       }
       // if it's just a regular model
       else {
