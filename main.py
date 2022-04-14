@@ -156,13 +156,13 @@ if __name__ == "__main__":
       available.remove("")
     print("available transitions ", available)
     # exclusions (commented out for debug purposes)
-    # # don't do the commuted transition
-    # for i in intersection:
-    #   if i in available:
-    #     available.remove(i)
-    # # don't do an already-taken transition
-    # if orig_path[t] in available:
-    #   available.remove(orig_path[t])
+    # don't do the commuted transition
+    for i in intersection:
+      if i in available:
+        available.remove(i)
+    # don't do an already-taken transition
+    if orig_path[t] in available:
+      available.remove(orig_path[t])
     # if you can't try a transition, move on
     if len(available) == 0:
       continue
@@ -191,14 +191,18 @@ if __name__ == "__main__":
         with open(ivy_file) as old_ivyfile:
           ivy.new_initial_state(initial_state, old_ivyfile, new_ivyfile)
       # get the ivy model with the new initial state from prism
-      new_ivy_result = ivy.check(av_tran + ".ivy")
-      print(new_ivy_result)
+      new_ivyfile_name = av_tran + ".ivy"
+      print(new_ivyfile_name)
+      new_ivy_result = ivy.check(new_ivyfile_name)
+      # print(new_ivy_result)
       # parse the new path
       ivy_path = ivy.get_path(new_ivy_result)
-      print(ivy_path)
+      print("ivy_path", ivy_path)
+      forprism_path = new_prefix_trace.replace("CHANGE_IVY_INITIAL_STATE\t","") + "\t" + ivy_path
+      print("forprism_path > ", forprism_path)
       # get the probability from prism
       with open("forprism.trace", 'w') as trace:
-        trace.write(ivy_path)
+        trace.write(forprism_path)
       try:
         os.system("make test > prism.result")
       except:
@@ -209,6 +213,7 @@ if __name__ == "__main__":
         api_result = result.read()
       # add in the probability
       pathP.readProbabilityFromString(api_result)
+      # input("PAUSE #1. PRESS ENTER TO KEEP GOING.")
     # add the transition to the list for the next time around
     prefix_transitions = prefix_transitions + orig_path[t] + "\t"
     # input("Click enter to try from the next state")

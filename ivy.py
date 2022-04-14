@@ -8,8 +8,11 @@ CALL_HINT = "call ext:spec."
 def check(ivyfile):
   ivy_command = "ivy_check trace=true " + str(ivyfile) + " > " + str(ivyfile).split(".")[0] + ".log"
   print(ivy_command)
-  subprocess.run(ivy_command)
-  subprocess.run("rm -rf aigerfiles logfiles ivy_mc.log")
+  os.system(ivy_command)
+  # subprocess.run(ivy_command)
+  remove_command = "rm -rf aigerfiles logfiles ivy_mc.log"
+  os.system(remove_command)
+  # subprocess.run("rm -rf aigerfiles logfiles ivy_mc.log")
   return str(ivyfile).split(".")[0] + ".log"
   # with open(str(ivyfile).split(".")[0] + ".log") as log:
   #   return log.read()
@@ -47,7 +50,7 @@ def new_initial_state(i_state, old, new):
 
   print("*")
   print("NEW INITIALIZATION IN IVY")
-  print(new_str)
+  print(i_ivy.replace("\n"," | "))
   print("END NEW INITIALIZATION IN IVY")
   print("*")
 

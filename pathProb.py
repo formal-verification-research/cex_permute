@@ -8,7 +8,10 @@ class pathProb():
 
   def readProbabilityFromString(self, s):
     if "pathProbability " not in s:
-      print("ERROR: pathProbability not in input file.")
+      print(80*"*")
+      print("ERROR: pathProbability not in input file:")
+      print(s)
+      print(80*"*")
     else:
       print()
       print("  Prior Probability:", '%.10E' % self.prob)
