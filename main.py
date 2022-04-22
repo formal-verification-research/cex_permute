@@ -137,6 +137,7 @@ if __name__ == "__main__":
       # Try commuting here (we're using forprism_path because it's the
       # full path with the prefix; we already update the flag so prism
       # does the right thing.)
+      input("HERE")
       api_result = prism_api.getEnabledTransitions(forprism_path)
       intersection = commute.commutePath(forprism_path, api_result, pathP)
 
