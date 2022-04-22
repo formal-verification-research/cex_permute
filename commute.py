@@ -33,7 +33,7 @@ def commute(trace, intersection):
 # Take in a string path from IVy, commute, and give back a total probability.
 def commutePath(ivy_path, pathP):
   print("commutePath initialized.")
-  print(">>", ivy_path)
+  print(">>", ivy_path.replace("\t"," "))
   # Save the path to forprism.trace (name mandatory)
   with open("forprism.trace", 'w') as trace:
     trace.write(ivy_path)
@@ -73,7 +73,7 @@ def commutePath(ivy_path, pathP):
     quit()
     
   # Build paths with the enabled transitions commuted
-  commute.commute(ivy_path, intersection)
+  commute(ivy_path, intersection)
   
   # Find out if t_alpha will get you to a target state
   # Maybe just do this in the Java script... whatever's more efficient
