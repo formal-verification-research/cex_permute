@@ -1,0 +1,259 @@
+(javac -classpath "../prism/classes:../prism/lib/*:../prism/prism/classes:../prism/prism/lib/*" -d classes src/./SimulateModel.java)
+********************************************************************************
+Welcome to the counterexample permutation explorer.
+********************************************************************************
+Running ivy_check on your model...
+Finding the counterexample transition path...
+commutePath initialized.
+>> r_four r_six r_four r_six r_four r_six r_four r_six r_four r_six r_four r_six r_four r_six r_four r_six r_four r_six r_four 
+Prism Returns the first time:
+
+  Prior Probability: 0.0000000000E+00
+  Path Probability:  8.0420210000E-29
+  Total Probability: 8.0420210000E-29
+
+TRACE BELOW:
+********************************************************************************
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+>> Path Reaches Target :)
+pathProbability 8.042021e-29
+
+
+********************************************************************************
+['r_one', '']
+Path Intersection: ['r_one']
+Commuting r_one leads to a target state :)
+Prism Returns the second time:
+trace >> r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 8.0420210000E-29
+  Path Probability:  3.2584730000E-13
+  Total Probability: 3.2584730000E-13
+
+Prism Returns the second time:
+trace >> r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 3.2584730000E-13
+  Path Probability:  3.2584730000E-13
+  Total Probability: 6.5169460000E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.5169460000E-13
+  Path Probability:  7.3120140000E-15
+  Total Probability: 6.5900661400E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.5900661400E-13
+  Path Probability:  7.0313220000E-15
+  Total Probability: 6.6603793600E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6603793600E-13
+  Path Probability:  1.5772220000E-16
+  Total Probability: 6.6619565820E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6619565820E-13
+  Path Probability:  1.4584110000E-16
+  Total Probability: 6.6634149930E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634149930E-13
+  Path Probability:  3.2702050000E-18
+  Total Probability: 6.6634476950E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634476950E-13
+  Path Probability:  2.9075210000E-18
+  Total Probability: 6.6634767703E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634767703E-13
+  Path Probability:  6.5172360000E-20
+  Total Probability: 6.6634774220E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634774220E-13
+  Path Probability:  5.5709940000E-20
+  Total Probability: 6.6634779791E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634779791E-13
+  Path Probability:  1.2483150000E-21
+  Total Probability: 6.6634779916E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634779916E-13
+  Path Probability:  1.0257990000E-21
+  Total Probability: 6.6634780018E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634780018E-13
+  Path Probability:  2.2977900000E-23
+  Total Probability: 6.6634780021E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634780021E-13
+  Path Probability:  1.8148920000E-23
+  Total Probability: 6.6634780022E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634780022E-13
+  Path Probability:  4.0640620000E-25
+  Total Probability: 6.6634780022E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634780022E-13
+  Path Probability:  3.0847700000E-25
+  Total Probability: 6.6634780022E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	
+
+
+  Prior Probability: 6.6634780022E-13
+  Path Probability:  6.9055560000E-27
+  Total Probability: 6.6634780022E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	
+
+
+  Prior Probability: 6.6634780022E-13
+  Path Probability:  5.0360310000E-27
+  Total Probability: 6.6634780022E-13
+
+Prism Returns the second time:
+trace >> r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	
+
+
+  Prior Probability: 6.6634780022E-13
+  Path Probability:  1.1270290000E-28
+  Total Probability: 6.6634780022E-13
+
+Modified Probability 6.663478002242676e-13
+Finding novel paths by branching out 1 transition
+available transitions  ['r_one', 'r_four']
+available transitions  ['r_one', 'r_five', 'r_six']
+new_prefix_trace CHANGE_IVY_INITIAL_STATE	r_five
+INITIAL STATE -------------------------------------
+PRISM_DIR=../prism PRISM_MAINCLASS=simulate.SimulateModel bin/run
+(0,49,1,1,50,0)
+
+END INITIAL STATE ---------------------------------
+*
+NEW INITIALIZATION IN IVY
+ |  | #GENERATED BY ivy.new_initial_state FUNCTION | after init { |   s1 := 0; |   s2 := 49; |   s3 := 1; |   s4 := 1; |   s5 := 50; |   s6 := 0; | } #init |  | #END GENERATED TEXT | 
+END NEW INITIALIZATION IN IVY
+*
+r_five.ivy
+ivy_check trace=true r_five.ivy > r_five.log
+ivy_path r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+forprism_path >  r_five	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	
+
+  Prior Probability: 6.6634780022E-13
+  Path Probability:  3.2584730000E-13
+  Total Probability: 9.9219510022E-13
+
+commutePath initialized.
+>> r_five r_four r_six r_four r_six r_four r_six r_four r_six r_four r_six r_four r_six r_four r_six r_four r_six r_four r_six r_four 
+Prism Returns the first time:
+
+  Prior Probability: 9.9219510022E-13
+  Path Probability:  3.2584730000E-13
+  Total Probability: 1.3180424002E-12
+
+TRACE BELOW:
+********************************************************************************
+r_one r_four 
+r_two r_three r_four 
+r_two r_three r_five r_six 
+r_two r_three r_four 
+r_two r_three r_five r_six 
+r_two r_three r_four 
+r_two r_three r_five r_six 
+r_two r_three r_four 
+r_two r_three r_five r_six 
+r_two r_three r_four 
+r_two r_three r_five r_six 
+r_two r_three r_four 
+r_two r_three r_five r_six 
+r_two r_three r_four 
+r_two r_three r_five r_six 
+r_two r_three r_four 
+r_two r_three r_five r_six 
+r_two r_three r_four 
+r_two r_three r_five r_six 
+r_two r_three r_four 
+>> Path Reaches Target :)
+pathProbability 3.258473e-13
+
+
+********************************************************************************
+['']
+Path Intersection: []
+No intersections found. Bummer.
+Single path probability: <pathProb.pathProb object at 0x7fe2b3e01400>
+Exiting without errors.

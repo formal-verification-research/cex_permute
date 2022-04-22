@@ -10,19 +10,19 @@ The ABCModelChecker function is using 'pdr -qt -L pdr_log.txt'. For more info,
 install abc, and on the command line use 'abc' > 'pdr --help'
 r_five.ivy: line 89: Model checking invariant
 
-Instantiating quantifiers (see logfiles/ivy_mc_1649976146.log for instantiations)...
+Instantiating quantifiers (see logfiles/ivy_mc_1650652836.log for instantiations)...
 Expanding schemata...
 Instantiating axioms...
-file name: aigerfiles/1649976146.aag
+file name: aigerfiles/1650652836.aag
 aigtoaig_path:/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/aigtoaig
 abc_path: /usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc
-using cmd ['/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc', '-c', 'read_aiger aigerfiles/1649976146.aig; pdr -qt -L aigerfiles/1649976146_pdr.log; write_aiger_cex  aigerfiles/1649976146.out']
+using cmd ['/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc', '-c', 'read_aiger aigerfiles/1650652836.aig; pdr -qt -L aigerfiles/1650652836_pdr.log; write_aiger_cex  aigerfiles/1650652836.out']
 
 Model checker output:
 --------------------------------------------------------------------------------
-ABC command line: "read_aiger aigerfiles/1649976146.aig; pdr -qt -L aigerfiles/1649976146_pdr.log; write_aiger_cex  aigerfiles/1649976146.out".
+ABC command line: "read_aiger aigerfiles/1650652836.aig; pdr -qt -L aigerfiles/1650652836_pdr.log; write_aiger_cex  aigerfiles/1650652836.out".
 
-Output 0 of miter "aigerfiles/1649976146" was asserted in frame 6.  Time =     0.23 sec
+Output 0 of miter "aigerfiles/1650652836" was asserted in frame 20.  Time =     9.98 sec
 --------------------------------------------------------------------------------
 
 FAIL
@@ -39,10 +39,10 @@ r_five.ivy: line 21: spec.s1 := 0:bv8
 [
     spec.s1 = 0
 ]
-r_five.ivy: line 22: spec.s2 := 56:bv8
+r_five.ivy: line 22: spec.s2 := 49:bv8
 
 [
-    spec.s2 = 56
+    spec.s2 = 49
 ]
 r_five.ivy: line 23: spec.s3 := 1:bv8
 
@@ -54,10 +54,10 @@ r_five.ivy: line 24: spec.s4 := 1:bv8
 [
     spec.s4 = 1
 ]
-r_five.ivy: line 25: spec.s5 := 43:bv8
+r_five.ivy: line 25: spec.s5 := 50:bv8
 
 [
-    spec.s5 = 43
+    spec.s5 = 50
 ]
 r_five.ivy: line 26: spec.s6 := 0:bv8
 
@@ -65,6 +65,314 @@ r_five.ivy: line 26: spec.s6 := 0:bv8
     spec.s6 = 0
 ]
 __init := true
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    r_five.ivy: line 58: spec.s4 := spec.s4 - 1
+
+    [
+        spec.s4 = 0
+    ]
+    r_five.ivy: line 59: spec.s5 := spec.s5 - 1
+
+    [
+        spec.s5 = 49
+    ]
+    r_five.ivy: line 60: spec.s6 := spec.s6 + 1
+
+    [
+        spec.s6 = 1
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    r_five.ivy: line 74: spec.s4 := spec.s4 + 1
+
+    [
+        spec.s4 = 1
+    ]
+    r_five.ivy: line 75: spec.s2 := spec.s2 + 1
+
+    [
+        spec.s2 = 50
+    ]
+    r_five.ivy: line 76: spec.s6 := spec.s6 - 1
+
+    [
+        spec.s6 = 0
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    r_five.ivy: line 58: spec.s4 := spec.s4 - 1
+
+    [
+        spec.s4 = 0
+    ]
+    r_five.ivy: line 59: spec.s5 := spec.s5 - 1
+
+    [
+        spec.s5 = 48
+    ]
+    r_five.ivy: line 60: spec.s6 := spec.s6 + 1
+
+    [
+        spec.s6 = 1
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    r_five.ivy: line 74: spec.s4 := spec.s4 + 1
+
+    [
+        spec.s4 = 1
+    ]
+    r_five.ivy: line 75: spec.s2 := spec.s2 + 1
+
+    [
+        spec.s2 = 51
+    ]
+    r_five.ivy: line 76: spec.s6 := spec.s6 - 1
+
+    [
+        spec.s6 = 0
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    r_five.ivy: line 58: spec.s4 := spec.s4 - 1
+
+    [
+        spec.s4 = 0
+    ]
+    r_five.ivy: line 59: spec.s5 := spec.s5 - 1
+
+    [
+        spec.s5 = 47
+    ]
+    r_five.ivy: line 60: spec.s6 := spec.s6 + 1
+
+    [
+        spec.s6 = 1
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    r_five.ivy: line 74: spec.s4 := spec.s4 + 1
+
+    [
+        spec.s4 = 1
+    ]
+    r_five.ivy: line 75: spec.s2 := spec.s2 + 1
+
+    [
+        spec.s2 = 52
+    ]
+    r_five.ivy: line 76: spec.s6 := spec.s6 - 1
+
+    [
+        spec.s6 = 0
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    r_five.ivy: line 58: spec.s4 := spec.s4 - 1
+
+    [
+        spec.s4 = 0
+    ]
+    r_five.ivy: line 59: spec.s5 := spec.s5 - 1
+
+    [
+        spec.s5 = 46
+    ]
+    r_five.ivy: line 60: spec.s6 := spec.s6 + 1
+
+    [
+        spec.s6 = 1
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    r_five.ivy: line 74: spec.s4 := spec.s4 + 1
+
+    [
+        spec.s4 = 1
+    ]
+    r_five.ivy: line 75: spec.s2 := spec.s2 + 1
+
+    [
+        spec.s2 = 53
+    ]
+    r_five.ivy: line 76: spec.s6 := spec.s6 - 1
+
+    [
+        spec.s6 = 0
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    r_five.ivy: line 58: spec.s4 := spec.s4 - 1
+
+    [
+        spec.s4 = 0
+    ]
+    r_five.ivy: line 59: spec.s5 := spec.s5 - 1
+
+    [
+        spec.s5 = 45
+    ]
+    r_five.ivy: line 60: spec.s6 := spec.s6 + 1
+
+    [
+        spec.s6 = 1
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    r_five.ivy: line 74: spec.s4 := spec.s4 + 1
+
+    [
+        spec.s4 = 1
+    ]
+    r_five.ivy: line 75: spec.s2 := spec.s2 + 1
+
+    [
+        spec.s2 = 54
+    ]
+    r_five.ivy: line 76: spec.s6 := spec.s6 - 1
+
+    [
+        spec.s6 = 0
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    r_five.ivy: line 58: spec.s4 := spec.s4 - 1
+
+    [
+        spec.s4 = 0
+    ]
+    r_five.ivy: line 59: spec.s5 := spec.s5 - 1
+
+    [
+        spec.s5 = 44
+    ]
+    r_five.ivy: line 60: spec.s6 := spec.s6 + 1
+
+    [
+        spec.s6 = 1
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    r_five.ivy: line 74: spec.s4 := spec.s4 + 1
+
+    [
+        spec.s4 = 1
+    ]
+    r_five.ivy: line 75: spec.s2 := spec.s2 + 1
+
+    [
+        spec.s2 = 55
+    ]
+    r_five.ivy: line 76: spec.s6 := spec.s6 - 1
+
+    [
+        spec.s6 = 0
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_four
+
+{
+    r_five.ivy: line 58: spec.s4 := spec.s4 - 1
+
+    [
+        spec.s4 = 0
+    ]
+    r_five.ivy: line 59: spec.s5 := spec.s5 - 1
+
+    [
+        spec.s5 = 43
+    ]
+    r_five.ivy: line 60: spec.s6 := spec.s6 + 1
+
+    [
+        spec.s6 = 1
+    ]
+}
+
+err_flag := false
+
+call ext:spec.r_six
+
+{
+    r_five.ivy: line 74: spec.s4 := spec.s4 + 1
+
+    [
+        spec.s4 = 1
+    ]
+    r_five.ivy: line 75: spec.s2 := spec.s2 + 1
+
+    [
+        spec.s2 = 56
+    ]
+    r_five.ivy: line 76: spec.s6 := spec.s6 - 1
+
+    [
+        spec.s6 = 0
+    ]
+}
 
 err_flag := false
 
