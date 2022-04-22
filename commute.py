@@ -70,8 +70,9 @@ def commutePath(ivy_path, api_result, pathP):
 
   # check if intersection is empty
   if len(intersection) < 1:
-    print("No intersections found. Bummer.")
+    print("No intersections found.")
     print("Single path probability:", pathP.prob)
+    return intersection
     # quit()
     
   # Build paths with the enabled transitions commuted

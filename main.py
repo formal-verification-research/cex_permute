@@ -72,11 +72,16 @@ if __name__ == "__main__":
   # TODO add more heuristics here
   print("Finding novel paths by branching out 1 transition")
   printerr("Now finding novel paths by branching out 1 transition")
+
   # get the transitions in order
   orig_path = ivy_path.split("\t")
+  printerr(len(orig_path), "is length of original path")
+
   # clean up the list
   while "" in orig_path:
     orig_path.remove("")
+
+  printerr(len(orig_path), "is length of original path after cleaning")
   # set up a rolling list of transitions, with a flag to tell PRISM we want an
   # IVy model with the new "initial state" rather than a probability
   prefix_transitions = "CHANGE_IVY_INITIAL_STATE\t"
