@@ -54,10 +54,10 @@ def get_available(trace, index):
     for line in trace_a.split("\n"):
         if "bin" not in line and "length" not in line and ">>" not in line and "pathProbability" not in line:
             trace = trace + line + "\n"
-    print("ALL AVAILABLE TRANSITIONS BELOW:")
-    print(80*"*")
-    print(trace)
-    print(80*"*")
+    # print("ALL AVAILABLE TRANSITIONS BELOW:")
+    # print(80*"*")
+    # print(trace)
+    # print(80*"*")
 
     available = trace.split("\n")[index].split(" ")
 
