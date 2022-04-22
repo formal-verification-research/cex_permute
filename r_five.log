@@ -10,19 +10,19 @@ The ABCModelChecker function is using 'pdr -qt -L pdr_log.txt'. For more info,
 install abc, and on the command line use 'abc' > 'pdr --help'
 r_five.ivy: line 89: Model checking invariant
 
-Instantiating quantifiers (see logfiles/ivy_mc_1650655144.log for instantiations)...
+Instantiating quantifiers (see logfiles/ivy_mc_1650655373.log for instantiations)...
 Expanding schemata...
 Instantiating axioms...
-file name: aigerfiles/1650655144.aag
+file name: aigerfiles/1650655373.aag
 aigtoaig_path:/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/aigtoaig
 abc_path: /usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc
-using cmd ['/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc', '-c', 'read_aiger aigerfiles/1650655144.aig; pdr -qt -L aigerfiles/1650655144_pdr.log; write_aiger_cex  aigerfiles/1650655144.out']
+using cmd ['/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc', '-c', 'read_aiger aigerfiles/1650655373.aig; pdr -qt -L aigerfiles/1650655373_pdr.log; write_aiger_cex  aigerfiles/1650655373.out']
 
 Model checker output:
 --------------------------------------------------------------------------------
-ABC command line: "read_aiger aigerfiles/1650655144.aig; pdr -qt -L aigerfiles/1650655144_pdr.log; write_aiger_cex  aigerfiles/1650655144.out".
+ABC command line: "read_aiger aigerfiles/1650655373.aig; pdr -qt -L aigerfiles/1650655373_pdr.log; write_aiger_cex  aigerfiles/1650655373.out".
 
-Output 0 of miter "aigerfiles/1650655144" was asserted in frame 20.  Time =     9.89 sec
+Output 0 of miter "aigerfiles/1650655373" was asserted in frame 20.  Time =     4.81 sec
 --------------------------------------------------------------------------------
 
 FAIL
@@ -34,20 +34,20 @@ Counterexample follows:
 --------------------------------------------------------------------------------
 err_flag := false
 
-r_five.ivy: line 21: spec.s1 := 0:bv8
+r_five.ivy: line 21: spec.s1 := 1:bv8
 
 [
-    spec.s1 = 0
+    spec.s1 = 1
 ]
-r_five.ivy: line 22: spec.s2 := 49:bv8
+r_five.ivy: line 22: spec.s2 := 50:bv8
 
 [
-    spec.s2 = 49
+    spec.s2 = 50
 ]
-r_five.ivy: line 23: spec.s3 := 1:bv8
+r_five.ivy: line 23: spec.s3 := 0:bv8
 
 [
-    spec.s3 = 1
+    spec.s3 = 0
 ]
 r_five.ivy: line 24: spec.s4 := 1:bv8
 
@@ -101,7 +101,7 @@ call ext:spec.r_six
     r_five.ivy: line 75: spec.s2 := spec.s2 + 1
 
     [
-        spec.s2 = 50
+        spec.s2 = 51
     ]
     r_five.ivy: line 76: spec.s6 := spec.s6 - 1
 
@@ -145,7 +145,7 @@ call ext:spec.r_six
     r_five.ivy: line 75: spec.s2 := spec.s2 + 1
 
     [
-        spec.s2 = 51
+        spec.s2 = 52
     ]
     r_five.ivy: line 76: spec.s6 := spec.s6 - 1
 
@@ -189,7 +189,7 @@ call ext:spec.r_six
     r_five.ivy: line 75: spec.s2 := spec.s2 + 1
 
     [
-        spec.s2 = 52
+        spec.s2 = 53
     ]
     r_five.ivy: line 76: spec.s6 := spec.s6 - 1
 
@@ -233,7 +233,7 @@ call ext:spec.r_six
     r_five.ivy: line 75: spec.s2 := spec.s2 + 1
 
     [
-        spec.s2 = 53
+        spec.s2 = 54
     ]
     r_five.ivy: line 76: spec.s6 := spec.s6 - 1
 
@@ -277,7 +277,7 @@ call ext:spec.r_six
     r_five.ivy: line 75: spec.s2 := spec.s2 + 1
 
     [
-        spec.s2 = 54
+        spec.s2 = 55
     ]
     r_five.ivy: line 76: spec.s6 := spec.s6 - 1
 
@@ -321,7 +321,7 @@ call ext:spec.r_six
     r_five.ivy: line 75: spec.s2 := spec.s2 + 1
 
     [
-        spec.s2 = 55
+        spec.s2 = 56
     ]
     r_five.ivy: line 76: spec.s6 := spec.s6 - 1
 
@@ -365,7 +365,7 @@ call ext:spec.r_six
     r_five.ivy: line 75: spec.s2 := spec.s2 + 1
 
     [
-        spec.s2 = 56
+        spec.s2 = 57
     ]
     r_five.ivy: line 76: spec.s6 := spec.s6 - 1
 
@@ -409,7 +409,7 @@ call ext:spec.r_six
     r_five.ivy: line 75: spec.s2 := spec.s2 + 1
 
     [
-        spec.s2 = 57
+        spec.s2 = 58
     ]
     r_five.ivy: line 76: spec.s6 := spec.s6 - 1
 
@@ -453,7 +453,7 @@ call ext:spec.r_six
     r_five.ivy: line 75: spec.s2 := spec.s2 + 1
 
     [
-        spec.s2 = 58
+        spec.s2 = 59
     ]
     r_five.ivy: line 76: spec.s6 := spec.s6 - 1
 

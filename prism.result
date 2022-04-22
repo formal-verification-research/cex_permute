@@ -1,24 +1,26 @@
 PRISM_DIR=../prism PRISM_MAINCLASS=simulate.SimulateModel bin/run
-20 length
+22 length
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
 r_one r_four 
 r_two r_three r_four 
-r_two r_three r_five r_six 
-r_two r_three r_four 
-r_two r_three r_five r_six 
-r_two r_three r_four 
-r_two r_three r_five r_six 
-r_two r_three r_four 
-r_two r_three r_five r_six 
-r_two r_three r_four 
-r_two r_three r_five r_six 
-r_two r_three r_four 
-r_two r_three r_five r_six 
-r_two r_three r_four 
-r_two r_three r_five r_six 
-r_two r_three r_four 
-r_two r_three r_five r_six 
-r_two r_three r_four 
-r_two r_three r_five r_six 
-r_two r_three r_four 
 >> Path Reaches Target :)
-pathProbability 3.258473e-13
+pathProbability 1.102768e-30

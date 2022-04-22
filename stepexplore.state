@@ -1,2 +1,2 @@
 PRISM_DIR=../prism PRISM_MAINCLASS=simulate.SimulateModel bin/run
-(0,49,1,1,50,0)
+(1,50,0,1,50,0)
