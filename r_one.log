@@ -10,19 +10,19 @@ The ABCModelChecker function is using 'pdr -qt -L pdr_log.txt'. For more info,
 install abc, and on the command line use 'abc' > 'pdr --help'
 r_one.ivy: line 89: Model checking invariant
 
-Instantiating quantifiers (see logfiles/ivy_mc_1650654027.log for instantiations)...
+Instantiating quantifiers (see logfiles/ivy_mc_1650654776.log for instantiations)...
 Expanding schemata...
 Instantiating axioms...
-file name: aigerfiles/1650654027.aag
+file name: aigerfiles/1650654776.aag
 aigtoaig_path:/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/aigtoaig
 abc_path: /usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc
-using cmd ['/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc', '-c', 'read_aiger aigerfiles/1650654027.aig; pdr -qt -L aigerfiles/1650654027_pdr.log; write_aiger_cex  aigerfiles/1650654027.out']
+using cmd ['/usr/local/lib/python2.7/dist-packages/ms_ivy-1.7.0-py2.7.egg/ivy/bin/abc', '-c', 'read_aiger aigerfiles/1650654776.aig; pdr -qt -L aigerfiles/1650654776_pdr.log; write_aiger_cex  aigerfiles/1650654776.out']
 
 Model checker output:
 --------------------------------------------------------------------------------
-ABC command line: "read_aiger aigerfiles/1650654027.aig; pdr -qt -L aigerfiles/1650654027_pdr.log; write_aiger_cex  aigerfiles/1650654027.out".
+ABC command line: "read_aiger aigerfiles/1650654776.aig; pdr -qt -L aigerfiles/1650654776_pdr.log; write_aiger_cex  aigerfiles/1650654776.out".
 
-Output 0 of miter "aigerfiles/1650654027" was asserted in frame 5.  Time =     0.16 sec
+Output 0 of miter "aigerfiles/1650654776" was asserted in frame 5.  Time =     0.16 sec
 --------------------------------------------------------------------------------
 
 FAIL
