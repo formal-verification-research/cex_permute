@@ -49,9 +49,11 @@ if __name__ == "__main__":
     ivy_path = t.read() 
 
   # TODO Check if we're doing pass by reference
-  intersection = commute.commutePath(ivy_path, pathP)
+  api_result = prism_api.getEnabledTransitions(ivy_path)
+  intersection = commute.commutePath(ivy_path, api_result, pathP)
   # pathP = commute.commutePath(ivy_path, pathP)
 
+  print("Modified Probability", pathP.prob)
   # input("\n\nCLICK ENTER TO PROCEED TO 1-TRANSITION SYSTEM\n\n")
 
   # Force an extra enabled transition from each state, try to get a path

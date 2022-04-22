@@ -77,3 +77,23 @@ def get_available(trace, index):
     
     # print(str(curr_enabled))
     return available
+
+
+def getEnabledTransitions(ivy_path):
+    # Save the path to forprism.trace (name mandatory)
+    with open("forprism.trace", 'w') as trace:
+        trace.write(ivy_path)
+
+    # Have the PRISM API walk along the path, reporting enabled transitions
+    try:
+        # recompile the java in case of updates
+        os.system("make test > prism.result")
+        # using depreciated os.system because subprocess was not working
+        # result = subprocess.check_output(['make','test'])
+    except:
+        print("os.system Error!")
+        quit()
+
+    # api_result = result.read()
+    with open("prism.result") as result:
+        return result.read()

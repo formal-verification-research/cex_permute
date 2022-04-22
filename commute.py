@@ -31,26 +31,29 @@ def commute(trace, intersection):
 
 
 # Take in a string path from IVy, commute, and give back a total probability.
-def commutePath(ivy_path, pathP):
+def commutePath(ivy_path, api_result, pathP):
   print("commutePath initialized.")
   print(">>", ivy_path.replace("\t"," "))
-  # Save the path to forprism.trace (name mandatory)
-  with open("forprism.trace", 'w') as trace:
-    trace.write(ivy_path)
 
-  # Have the PRISM API walk along the path, reporting enabled transitions
-  try:
-    # recompile the java in case of updates
-    os.system("make test > prism.result")
-    # using depreciated os.system because subprocess was not working
-    # result = subprocess.check_output(['make','test'])
-  except:
-    print("os.system Error!")
-    quit()
+  #### THE FOLLOWING WAS MOVED INTO ITS OWN FUNCTION CALLED BEFORE COMMUTEPATH
+  # # Save the path to forprism.trace (name mandatory)
+  # with open("forprism.trace", 'w') as trace:
+  #   trace.write(ivy_path)
 
-  # api_result = result.read()
-  with open("prism.result") as result:
-    api_result = result.read()
+  # # Have the PRISM API walk along the path, reporting enabled transitions
+  # try:
+  #   # recompile the java in case of updates
+  #   os.system("make test > prism.result")
+  #   # using depreciated os.system because subprocess was not working
+  #   # result = subprocess.check_output(['make','test'])
+  # except:
+  #   print("os.system Error!")
+  #   quit()
+
+  # # api_result = result.read()
+  # with open("prism.result") as result:
+  #   api_result = result.read()
+  ###########################################################################
 
   # add in the probability
   # TODO: Does prism api read in the probabilities or the rates with getTransitionProbability???
@@ -115,6 +118,7 @@ def commutePath(ivy_path, pathP):
         api_result = result.read()
       # add in the probability
       print("Prism Returns the second time:")
+      print("trace >>", trace)
       pathP.readProbabilityFromString(api_result)
 
   return intersection
