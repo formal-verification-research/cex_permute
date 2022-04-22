@@ -49,7 +49,7 @@ if __name__ == "__main__":
     ivy_path = t.read() 
 
   # TODO Check if we're doing pass by reference
-  commute.commutePath(ivy_path, pathP)
+  intersection = commute.commutePath(ivy_path, pathP)
   # pathP = commute.commutePath(ivy_path, pathP)
 
   # input("\n\nCLICK ENTER TO PROCEED TO 1-TRANSITION SYSTEM\n\n")

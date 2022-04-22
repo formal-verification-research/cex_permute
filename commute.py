@@ -112,3 +112,5 @@ def commutePath(ivy_path, pathP):
         api_result = result.read()
       # add in the probability
       pathP.readProbabilityFromString(api_result)
+
+  return intersection
