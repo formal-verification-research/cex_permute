@@ -32,6 +32,8 @@ def commute(trace, intersection):
 
 # Take in a string path from IVy, commute, and give back a total probability.
 def commutePath(ivy_path, pathP):
+  print("commutePath initialized.")
+  print(">>", ivy_path)
   # Save the path to forprism.trace (name mandatory)
   with open("forprism.trace", 'w') as trace:
     trace.write(ivy_path)
@@ -52,6 +54,7 @@ def commutePath(ivy_path, pathP):
 
   # add in the probability
   # TODO: Does prism api read in the probabilities or the rates with getTransitionProbability???
+  print("Prism Returns the first time:")
   pathP.readProbabilityFromString(api_result)
 
   # Find the intersection of all enabled transitions
@@ -111,6 +114,7 @@ def commutePath(ivy_path, pathP):
       with open("prism.result") as result:
         api_result = result.read()
       # add in the probability
+      print("Prism Returns the second time:")
       pathP.readProbabilityFromString(api_result)
 
   return intersection
