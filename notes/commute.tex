@@ -1,23 +1,19 @@
-\subsubsection*{Automated Threshold Selection for Predicate
-	Abstraction for CTMCs}
-Use the toggle swith model as an example
-(\url{https://github.com/fluentverification/Critical-Values-Prototype/blob/master/ToggleSwitch/control.prism}). 
-\begin{enumerate}
-	\item Starting with 
-	
-\end{enumerate}  
+\subsection{Transition commutation for efficient path generation}
+
+For highly concurrent CTMC models such as genetic circuit
+an chemical reaction network models, each chemical reaction is usually
+represented by a transition. As soon as reactants meet the
+stoichiometry requirement of a reaction, it is enabled to occur,
+albeit with very low probability. It is often the case that
+many transitions in a model are enabled in every state. Utilizing this
+fact of these models, we propose the following novel procedure for
+generating paths leading to target states by commuting independent
+transition(s) derived from a seed path. 
 
 
-Given a CTMC model \model{} and the following transient CSL property
-\cslEventually, this method aims at efficiently providing the estimated lower
-and upper probability bound, \probMin{} and \probMax, for the path
-formula \eventuallyFull, respectively. The proposed method is expected
-to work well for highly concurrent model \model{}. 
 
-\subsubsection*{Procedure for generating paths reaching target
-	states.}
-This procedure can provide a lower probability bound for reaching a
-state satisfying \targetSt.
+
+
 
 \begin{enumerate}
 	\item Generate the first shortest counterexample path from the
@@ -124,7 +120,12 @@ enabledness of \ensuremath{\tran{R_{4}}} or \ensuremath{\tran{R_{6}}}
 in every state along this path. Similarly sequence
 \ensuremath{\tran{R_{1}}, \tran{R_{3}}} is also such a
 sequence. \textcolor{orange}{Consider building a dependency graph for
-	syntactic transitions in the PRISM model, as defined in Def. 4.2 of Valmari2011\_CanStubbornSetsBeOptimal\_journal.pdf.}
+	syntactic transitions in the PRISM model, as defined in
+	Def. 4.2 of
+	Valmari2011\_CanStubbornSetsBeOptimal\_journal.pdf.}
+
+\textcolor{blue}{This procedure can provide a lower probability bound for reaching a
+	state satisfying \targetSt.}
 
 \subsubsection*{Procedure for generating paths reaching non-target
 	states. }
@@ -403,3 +404,7 @@ assume-guarantee reasoning to check for reachability and generate paths?
 Utilize mutual induction (like the ping-pong example) between R4 and
 its environment, i.e., composition of other five objects, up to $k$
 steps?
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "notes"
+%%% End:

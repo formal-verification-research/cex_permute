@@ -1,37 +1,36 @@
 \documentclass[11pt]{article}
 
 \input{packages}
-
 \input{ctmcCommands}
-
 \input{NoCCommands}
-
 \input{plotCommands}
-
 
 \title{Efficient Counterexample Generation Through Permutation of Independent Transitions}
 \author{Zhen Zhang and Landon Taylor}
 \date{DRAFT - NOTES ONLY}
 
 \begin{document}
-
-\maketitle
-\tableofcontents
-
-\newpage
 	
-\section{Counterexample Commuting}
-
-\input{commute}
-
-\newpage
-
-\section{Very Different Counterexamples}
-
-\input{differentCEX}
-
-\newpage
-
-
-
+	\maketitle
+	\tableofcontents
+	
+	\newpage
+	
+	\input{summary}
+	
+	\section{Commuting Independent Transitions for Path Generation}
+	\input{commute}
+	\newpage
+	
+	\section{Very Different Counterexamples}
+	\input{differentCEX}
+	\newpage
+	
+	\section{Combining Methods into an Algorithm}
+	\input{morePathAlgorithm}
+	\newpage
+	
+	\section{Automated Threshold Selection for Predicate Abstraction for CTMCs}
+	\input{thresholdSelection}
+	
 \end{document}

@@ -30,8 +30,8 @@
 \newcommand{\ctmc}{\ensuremath{\mathcal{C}}}
 \newcommand{\probOp}{\ensuremath{\mathsf{P}}}
 \newcommand{\prob}{\ensuremath{\mathit{prob}}}
-\newcommand{\probMin}[1]{\ensuremath{\prob_{min} (#1)}}
-\newcommand{\probMax}[1]{\ensuremath{\prob_{max} (#1)}}
+\newcommand{\probMin}[1]{\ensuremath{\probOp_{min} (#1)}}
+\newcommand{\probMax}[1]{\ensuremath{\probOp_{max} (#1)}}
 \newcommand{\cslPath}{\ensuremath{\mathtt{\phi}}}
 \newcommand{\cslExact}{\probOp_{=?} (\cslPath)}
 \newcommand{\csl}{\ensuremath{\probOp_{\thicksim p} (\cslPath)}}
@@ -42,15 +42,15 @@
 \newcommand{\cslUntil}{\ensuremath{\probOp_{=?} (\untilFull)}}
 % \newcommand{\cslUntil}{\prob_{<p} (\untilFull)}
 \newcommand{\untilUnbounded}{\ensuremath{\preUntil \, \until \,
-		\postUntil}}
+\postUntil}}
 % \newcommand{\untilEventually}{\ensuremath{ true \, \until \,
-		% \postUntil}}
+% \postUntil}}
 \newcommand{\targetSt}{\ensuremath{\Phi}} % state formula representing
 % the target reachable state
 \newcommand{\eventually}{\ensuremath{\Diamond \targetSt}}
 \newcommand{\eventuallyNot}{\ensuremath{\Diamond \lnot\targetSt}}
 \newcommand{\eventuallyFull}{\ensuremath{\Diamond^{[0, T]} \,
-		\targetSt}}
+\targetSt}}
 \newcommand{\cslEventually}{\ensuremath{\probOp_{=?} (\eventuallyFull)}}
 \newcommand{\always}{\ensuremath{\square \targetSt}}
 \newcommand{\alwaysNot}{\ensuremath{\square \lnot\targetSt}}

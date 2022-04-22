@@ -1,0 +1,71 @@
+Algorithm~\ref{morepaths} is proposed to quickly generate as many paths as possible.
+
+Let $T$ represent the set of all target states.
+Let $\tau \in T$ represent the index of any state falling in the target set.
+Let $\sigma$ represent any counterexample path from $s_0$ to $s_\tau$.
+A counterexample path is a set of states $s_k$ and transitions $t_k$.
+Let the transitions of $\sigma$ be numbered as: \ensuremath{\pathFull}.
+Let $C$ represent the cone consisting of the set of counterexample paths.
+Let $En(s_k)$ represent the set of all enabled transitions which are not fired in state k.
+Let $E$ represent the set of all $En(s_k)$.
+Let $G$ represent a graph of states produced by firing transitions in $E$.
+Let $T_c$ represent the set of transitions which may be commuted.
+Let $P$ represent the total accumulated probability of reaching the target state.
+Let $T_{alt}$ represent alternate transitions toward new initial states.
+
+\begin{algorithm}
+	\caption{Generate many counterexample paths}\label{morepaths}
+	\begin{algorithmic}
+%		\Require $\exists \sigma s.t. \sigma \neq \emptyset$
+		\Ensure $C,G,E \gets \emptyset$
+		\Procedure{Main}{}
+			\State Generate $\sigma$ in IVy
+			\State $[C,G] \gets $ \Call{Commute}{$\sigma$}
+			\While{\Call{Prob}{C} $<$ threshold}
+				\State $[C,G] \gets$ \Call{NewInit}{$\sigma, G$}
+			\EndWhile
+			
+		\EndProcedure
+		\State
+		\Procedure{Commute}{$\sigma$}
+			\State $C \gets C \cup \sigma$; $G, E \gets \emptyset$
+			\ForAll{states $s_k \in \sigma$}
+				\State Find $En(s_k)$ in \textsc{Prism}; $E \gets E \cup En(s_k)$
+			\EndFor
+			\State $T_c \gets $ Intersection of all $En(s_k) \in E$
+			\ForAll{transitions $t_k \in T_c$}
+				\If{firing $t_k$ after $\sigma$ does not reach a target state}
+					\State Remove $t_k$ from $T_c$
+				\Else
+					\State Remove $t_k$ from $G$
+				\EndIf
+			\EndFor
+			\ForAll{transitions $t_k \in T_c$}
+				\State Commute $t_k$ in $\sigma$
+			\EndFor
+			\ForAll{transitions $t_k \in E$}
+				\State Fire $t_k$ and add resultant state to $G$
+			\EndFor
+			\State \Return $[C,G]$
+		\EndProcedure
+		\State
+		\Procedure{NewInit}{$\sigma, G$}
+			\ForAll{states $s_k \in G$ such that $s_k \notin \sigma$}
+				\State Build IVy model with prefix $\sigma_0$ and initial state $s_k$
+				\State From IVy, obtain counterexample path $\sigma_k$
+				\State Add $\sigma_k$ to $C$
+				\State $[C,G] \gets $ \Call{Commute}{$\sigma_k$}
+%				\State $C \gets$ \Call{Commute}{$\sigma'$} $\cup ~C$
+			\EndFor
+		\EndProcedure
+		\State 
+		\Procedure{Prob}{$C$}
+			\State Use \textsc{Prism} to calculate $P$
+			\If{$P$ greater than probability bound}
+				\State \Return $P$ and Exit
+			\Else 
+				\State \Return $P$
+			\EndIf 
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
