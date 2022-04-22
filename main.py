@@ -38,6 +38,9 @@ if __name__ == "__main__":
   print(80*"*")
   print("Welcome to the counterexample permutation explorer.")
   print(80*"*")
+  printerr(80*"*")
+  printerr("Welcome to the counterexample permutation explorer.")
+  printerr(80*"*")
 
   # Set ourselves up to start gathering probability
   pathP = pathProb.pathProb()
