@@ -103,6 +103,10 @@ if __name__ == "__main__":
       available.remove(orig_path[t])
     # if you can't try a transition, move on
     if len(available) == 0:
+      print("No available transitions remain after filtering. Moving on.")
+      prefix_transitions = prefix_transitions + orig_path[t] + "\t"
+      print("Prefix transitions now", prefix_transitions)
+      printerr("Prefix transitions now", prefix_transitions, "length", len(prefix_transitions))
       continue
     # for each available transition
     for av_tran in available:
