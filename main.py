@@ -51,6 +51,7 @@ if __name__ == "__main__":
   
   # Run ivy_check to get the seed counterexample
   print("Running ivy_check on your model...")
+  printerr("Running ivy_check on your model...")
   # ivyresult = ivy.check(ivy_file)
 
   # Extract the transition path from the counterexample
@@ -64,12 +65,13 @@ if __name__ == "__main__":
   intersection = commute.commutePath(ivy_path, api_result, pathP)
   # pathP = commute.commutePath(ivy_path, pathP)
 
-  print("Modified Probability", pathP.prob)
+  printerr("Finished Commuting. Probability now", pathP.prob)
   # input("\n\nCLICK ENTER TO PROCEED TO 1-TRANSITION SYSTEM\n\n")
 
   # Force an extra enabled transition from each state, try to get a path
   # TODO add more heuristics here
   print("Finding novel paths by branching out 1 transition")
+  printerr("Now finding novel paths by branching out 1 transition")
   # get the transitions in order
   orig_path = ivy_path.split("\t")
   # clean up the list
@@ -148,20 +150,18 @@ if __name__ == "__main__":
       # Try commuting here (we're using forprism_path because it's the
       # full path with the prefix; we already update the flag so prism
       # does the right thing.)
-      printerr("HERE - Click Enter")
-      input("HERE")
+      printerr("Completed one alternate transition. Attempting to commute.")
+      print("Completed one alternate transition. Attempting to commute.")
       api_result = prism_api.getEnabledTransitions(forprism_path)
       intersection = commute.commutePath(forprism_path, api_result, pathP)
 
       # input("PAUSE #1. PRESS ENTER TO KEEP GOING.")
     # add the transition to the list for the next time around
     prefix_transitions = prefix_transitions + orig_path[t] + "\t"
+    print("Prefix transitions now", prefix_transitions)
+    printerr("Prefix transitions now", prefix_transitions)
     # input("Click enter to try from the next state")
     
-
-
-
-
 
 
   print(80*"=")
