@@ -169,8 +169,7 @@ if __name__ == "__main__":
     prefix_transitions = prefix_transitions + orig_path[t] + "\t"
     print("Prefix transitions now", prefix_transitions)
     printerr("Prefix transitions now", prefix_transitions, "length", len(prefix_transitions))
-    # TODO remove this once we figure out the bug
-    quit()
+    # quit()
     # input("Click enter to try from the next state")
     
 
