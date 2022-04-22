@@ -133,6 +133,13 @@ if __name__ == "__main__":
         api_result = result.read()
       # add in the probability
       pathP.readProbabilityFromString(api_result)
+
+      # Try commuting here (we're using forprism_path because it's the
+      # full path with the prefix; we already update the flag so prism
+      # does the right thing.)
+      api_result = prism_api.getEnabledTransitions(forprism_path)
+      intersection = commute.commutePath(forprism_path, api_result, pathP)
+
       # input("PAUSE #1. PRESS ENTER TO KEEP GOING.")
     # add the transition to the list for the next time around
     prefix_transitions = prefix_transitions + orig_path[t] + "\t"
