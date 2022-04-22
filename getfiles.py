@@ -2,6 +2,7 @@
 # May be more sophisticated soon.
 
 import subprocess
+import os
 
 def get_ivy_file():
   return "model.ivy"
@@ -11,3 +12,7 @@ def get_prism_file():
 
 def cleanup():
   subprocess.run(['rm','-rf','aigerfiles','logfiles'])
+  try:
+    os.system("make")
+  except:
+    print("FAILURE FAILURE FAILURE -- CLEANUP COULD NOT MAKE PRISM")
