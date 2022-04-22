@@ -80,8 +80,8 @@ if __name__ == "__main__":
   # clean up the list
   while "" in orig_path:
     orig_path.remove("")
-
   printerr(len(orig_path), "is length of original path after cleaning")
+
   # set up a rolling list of transitions, with a flag to tell PRISM we want an
   # IVy model with the new "initial state" rather than a probability
   prefix_transitions = "CHANGE_IVY_INITIAL_STATE\t"
@@ -164,7 +164,7 @@ if __name__ == "__main__":
     # add the transition to the list for the next time around
     prefix_transitions = prefix_transitions + orig_path[t] + "\t"
     print("Prefix transitions now", prefix_transitions)
-    printerr("Prefix transitions now", prefix_transitions)
+    printerr("Prefix transitions now", prefix_transitions, "length", len(prefix_transitions))
     # input("Click enter to try from the next state")
     
 
