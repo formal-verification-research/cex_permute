@@ -22,6 +22,14 @@ import pathProb
 import os
 # from subprocess import CalledProcessError, check_output
 
+import sys
+ 
+def printerr(*a):
+    # Here a is the array holding the objects
+    # passed as the argument of the function
+    print(*a, file = sys.stderr)
+ 
+
 # Main procedure
 if __name__ == "__main__":
 
@@ -137,6 +145,7 @@ if __name__ == "__main__":
       # Try commuting here (we're using forprism_path because it's the
       # full path with the prefix; we already update the flag so prism
       # does the right thing.)
+      printerr("HERE - Click Enter")
       input("HERE")
       api_result = prism_api.getEnabledTransitions(forprism_path)
       intersection = commute.commutePath(forprism_path, api_result, pathP)
@@ -157,6 +166,11 @@ if __name__ == "__main__":
   print(80*"=")
   print("Exiting without error.")
   print(80*"=")
+  printerr(80*"=")
+  printerr("  Final Probability:", '%.10E' % pathP.prob)
+  printerr(80*"=")
+  printerr("Exiting without error.")
+  printerr(80*"=")
 
   # Maybe joost-pieter's thing about storing a model instead of states
   
