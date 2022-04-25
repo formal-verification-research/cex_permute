@@ -28,16 +28,12 @@ def printerr(*a):
     # Here a is the array holding the objects
     # passed as the argument of the function
     print(*a, file = sys.stderr)
- 
 
 # Main procedure
 if __name__ == "__main__":
 
   gf.cleanup()
   
-  print(80*"*")
-  print("Welcome to the counterexample permutation explorer.")
-  print(80*"*")
   printerr(80*"*")
   printerr("Welcome to the counterexample permutation explorer.")
   printerr(80*"*")
@@ -50,8 +46,8 @@ if __name__ == "__main__":
   prism_file = gf.get_prism_file()
   
   # Run ivy_check to get the seed counterexample
-  print("Running ivy_check on your model...")
-  printerr("Running ivy_check on your model...")
+  print("Running ivy_check on the model...")
+  printerr("Running ivy_check on the model...")
   # ivyresult = ivy.check(ivy_file)
 
   # Extract the transition path from the counterexample
@@ -60,7 +56,6 @@ if __name__ == "__main__":
   with open("model.trace") as t:
     ivy_path = t.read() 
 
-  # TODO Check if we're doing pass by reference
   api_result = prism_api.getEnabledTransitions(ivy_path)
   intersection = commute.commutePath(ivy_path, api_result, pathP)
   # pathP = commute.commutePath(ivy_path, pathP)
