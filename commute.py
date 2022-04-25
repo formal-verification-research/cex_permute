@@ -50,6 +50,11 @@ def commutePath(ivy_path, api_result, ivy_file, pathP):
   intersection = prism_api.get_intersection(api_result)
 
   utils.printall("Branching")
+  utils.printall("ivy_path", ivy_path)
+  utils.printall("api_result", api_result)
+  utils.printall("intersection", intersection)
+  utils.printall("ivy_file", ivy_file)
+  utils.printall("pathP.prob", pathP.prob)
   branch.branch(ivy_path, api_result, intersection, ivy_file, pathP)
   
   # for some reason, blanks keep appearing in the intersection
