@@ -73,7 +73,7 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP):
 
       # Write a temporary IVy model with new initial state
       with open(ivy_file) as original_ivyfile:
-        ivy.new_initial_state(initial_state, original_ivyfile, temp_ivyfile, temp_log)
+        ivy.new_initial_state(initial_state, original_ivyfile, temp_ivyfile)
 
       # # write the new ivy model
       # with open(av_tran + ".log", "w") as new_ivyfile:
