@@ -3,6 +3,7 @@ import utils
 import os
 import tempfile
 import ivy
+import commute
 
 def branch(orig_path, api_result, intersection, ivy_file, pathP):
   # set up a rolling list of transitions, with a flag to tell PRISM we want an
@@ -123,6 +124,10 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP):
 
       # add in the probability
       pathP.readProbabilityFromString(api_result)
+
+      # Commute after finding a new path
+      api_result = prism_api.getEnabledTransitions(forprism_path)
+      intersection = commute.commutePath(forprism_path, api_result, pathP)
       # input("PAUSE #1. PRESS ENTER TO KEEP GOING.")
 
     # add the transition to the list for the next time around
