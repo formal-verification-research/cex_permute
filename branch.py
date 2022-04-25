@@ -4,7 +4,7 @@ import os
 import tempfile
 import ivy
 
-def branch(orig_path, intersection, ivy_file, pathP):
+def branch(orig_path, api_result, intersection, ivy_file, pathP):
   # set up a rolling list of transitions, with a flag to tell PRISM we want an
   # IVy model with the new "initial state" rather than a probability
   prefix_transitions = "CHANGE_IVY_INITIAL_STATE\t"
@@ -128,6 +128,6 @@ def branch(orig_path, intersection, ivy_file, pathP):
     # add the transition to the list for the next time around
     prefix_transitions = prefix_transitions + orig_path[t] + "\t"
     utils.printall("Prefix transitions now", prefix_transitions)
-    
+
     # quit()
     # input("Click enter to try from the next state")

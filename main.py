@@ -76,7 +76,7 @@ if __name__ == "__main__":
   while "" in orig_path:
     orig_path.remove("")
 
-  branch.branch(orig_path, intersection, ivy_file, pathP)
+  branch.branch(orig_path, api_result, intersection, ivy_file, pathP)
 
   # # set up a rolling list of transitions, with a flag to tell PRISM we want an
   # # IVy model with the new "initial state" rather than a probability
