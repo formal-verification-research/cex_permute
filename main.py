@@ -36,7 +36,7 @@ if __name__ == "__main__":
     os.system("mkdir results")
 
   # Set up temp files for 
-  temp_result = tempfile.NamedTemporaryFile(mode="w+")
+  # temp_result = tempfile.NamedTemporaryFile(mode="w+")
 
   utils.printall(80*"*","\nWelcome to the counterexample permutation explorer.\n",80*"*")
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
   # Run ivy_check to get the seed counterexample
   utils.printall("Running ivy_check on the model...")
   # ivyresult = ivy.check(ivy_file, temp_result)
-  ivy_path = ivy.check(ivy_file, temp_result)
+  ivy_path = ivy.check(ivy_file)
 
   # Extract the transition path from the counterexample
   # print("Finding the counterexample transition path...")
