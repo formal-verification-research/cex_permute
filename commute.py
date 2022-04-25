@@ -6,6 +6,8 @@ import commute
 import pathProb
 import os
 import tempfile
+import utils
+import branch
 
 
 # Merged into commutePath to help with some logistics
@@ -34,7 +36,7 @@ import tempfile
 
 
 # Take in a string path from IVy, commute, and give back a total probability.
-def commutePath(ivy_path, api_result, pathP):
+def commutePath(ivy_path, api_result, ivy_file, pathP):
   print("commutePath initialized.")
   print(">>", ivy_path.replace("\t"," "))
 
@@ -46,6 +48,9 @@ def commutePath(ivy_path, api_result, pathP):
 
   # Find the intersection of all enabled transitions
   intersection = prism_api.get_intersection(api_result)
+
+  utils.printall("Branching")
+  branch.branch(ivy_path, api_result, intersection, ivy_file, pathP)
   
   # for some reason, blanks keep appearing in the intersection
   while "" in intersection:
@@ -127,8 +132,10 @@ def commutePath(ivy_path, api_result, pathP):
     temp_result.seek(0)
     # api_result = temp_result.read()
 
+    utils.printall("Commuting")
+
     api_result = prism_api.getEnabledTransitions(commuted_path)
-    nested_intersection = commute.commutePath(commuted_path, api_result, pathP)
+    nested_intersection = commute.commutePath(commuted_path, api_result, ivy_file, pathP)
 
     # add in the probability -- removed due to recursive function call instead
     # print("Prism Returns the second time:")

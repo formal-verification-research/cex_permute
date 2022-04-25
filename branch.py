@@ -127,7 +127,7 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP):
 
       # Commute after finding a new path
       api_result = prism_api.getEnabledTransitions(forprism_path)
-      intersection = commute.commutePath(forprism_path, api_result, pathP)
+      intersection = commute.commutePath(forprism_path, api_result, ivy_file, pathP)
       # input("PAUSE #1. PRESS ENTER TO KEEP GOING.")
 
     # add the transition to the list for the next time around
