@@ -20,9 +20,8 @@ import prism_api
 import commute
 import pathProb
 import os
-# from subprocess import CalledProcessError, check_output
-
 import sys
+import tempfile
  
 def printerr(*a):
     # Here a is the array holding the objects
@@ -33,6 +32,9 @@ def printerr(*a):
 if __name__ == "__main__":
 
   gf.cleanup()
+
+  # Set up temp files for 
+  temp_result = tempfile.NamedTemporaryFile(mode="w+")
   
   printerr(80*"*")
   printerr("Welcome to the counterexample permutation explorer.")
@@ -48,13 +50,14 @@ if __name__ == "__main__":
   # Run ivy_check to get the seed counterexample
   print("Running ivy_check on the model...")
   printerr("Running ivy_check on the model...")
-  # ivyresult = ivy.check(ivy_file)
+  # ivyresult = ivy.check(ivy_file, temp_result)
+  ivy.check(ivy_file, temp_result)
 
   # Extract the transition path from the counterexample
   print("Finding the counterexample transition path...")
-  ## ivy_path = ivy.get_path(ivyresult)
-  with open("model.trace") as t:
-    ivy_path = t.read() 
+  ivy_path = ivy.get_path(temp_result)
+  # with open("model.trace") as t:
+  #   ivy_path = t.read() 
 
   api_result = prism_api.getEnabledTransitions(ivy_path)
   intersection = commute.commutePath(ivy_path, api_result, pathP)
