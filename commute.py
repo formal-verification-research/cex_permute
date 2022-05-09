@@ -157,6 +157,7 @@ def commutePath(ivy_path, api_result, ivy_file, pathP, depth=0):
     # pathP.readProbabilityFromString(api_result)
   
   commuted_paths.close()
+  print("CLOSED FILE COMMUTE2")
 
 
   return intersection
