@@ -48,7 +48,7 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP):
       
       # set up a temp file to catch results
       temp_result = tempfile.NamedTemporaryFile(mode="w+")
-      print("NEW FILE OOO")
+      print("NEW FILE BRANCH1")
 
       # get the state from the prism simulation
       try:
@@ -69,29 +69,30 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP):
       print("END INITIAL STATE ---------------------------------")
 
       # set up a temp file to catch ivy_check results
-      temp_log = tempfile.NamedTemporaryFile(mode="w+")
-      print("NEW FILE BRANCH1")
+      # temp_log = tempfile.NamedTemporaryFile(mode="w+")
+      # print("NEW FILE BRANCH1")
       # set up a temp file to provide a temporary ivy model
-      temp_ivyfile = tempfile.NamedTemporaryFile(mode="w+")
-      print("NEW FILE BRANCH2")
+      with tempfile.NamedTemporaryFile(mode="w+") as temp_ivyfile:
+      # temp_ivyfile = tempfile.NamedTemporaryFile(mode="w+")
+        # print("NEW FILE BRANCH2")
 
-      # Write a temporary IVy model with new initial state
-      with open(ivy_file) as original_ivyfile:
-        ivy.new_initial_state(initial_state, original_ivyfile, temp_ivyfile)
+        # Write a temporary IVy model with new initial state
+        with open(ivy_file) as original_ivyfile:
+          ivy.new_initial_state(initial_state, original_ivyfile, temp_ivyfile)
 
-      # # write the new ivy model
-      # with open(av_tran + ".log", "w") as new_ivyfile:
-      #   pass
-      # with open(av_tran + ".ivy", "w") as new_ivyfile:
-      #   with open(ivy_file) as original_ivyfile:
-      #     ivy.new_initial_state(initial_state, original_ivyfile, new_ivyfile)
+        # # write the new ivy model
+        # with open(av_tran + ".log", "w") as new_ivyfile:
+        #   pass
+        # with open(av_tran + ".ivy", "w") as new_ivyfile:
+        #   with open(ivy_file) as original_ivyfile:
+        #     ivy.new_initial_state(initial_state, original_ivyfile, new_ivyfile)
 
-      # get the ivy model with the new initial state from prism
-      # new_ivyfile_name = av_tran + ".ivy"
-      # print(new_ivyfile_name)
+        # get the ivy model with the new initial state from prism
+        # new_ivyfile_name = av_tran + ".ivy"
+        # print(new_ivyfile_name)
 
-      # Check and parse the new IVy results
-      ivy_path = ivy.check(temp_ivyfile.name)
+        # Check and parse the new IVy results
+        ivy_path = ivy.check(temp_ivyfile.name)
 
       # print(new_ivy_result)
       # parse the new path
@@ -120,6 +121,9 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP):
       # Read in the file result
       temp_result.seek(0)
       api_result = temp_result.read()
+      
+      temp_result.close()
+      print("CLOSED FILE BRANCH1")
 
       # api_result = result.read()
       # with open("prism.result") as result:

@@ -156,6 +156,9 @@ def commutePath(ivy_path, api_result, ivy_file, pathP, depth=0):
     # print("trace >>", trace)
     # pathP.readProbabilityFromString(api_result)
   
+  temp_result.close()
+  print("CLOSED FILE COMMUTE1")
+
   commuted_paths.close()
   print("CLOSED FILE COMMUTE2")
 

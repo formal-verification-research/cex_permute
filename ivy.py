@@ -27,6 +27,8 @@ def check(ivyfile):
   final_trace = ""
   for item in trace:
     final_trace = final_trace + (item + "\t")
+  temp_result.close()
+  print("CLOSED FILE IVY1")
   return final_trace
 
 
