@@ -9,7 +9,7 @@ import tempfile
 import utils
 import branch
 
-MAX_DEPTH = 10
+MAX_DEPTH = 1
 
 # Merged into commutePath to help with some logistics
 # Commute the discovered transitions (intersection) throughout the trace.
