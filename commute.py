@@ -41,12 +41,10 @@ def commutePath(ivy_path, api_result, ivy_file, pathP, depth=0):
   print("commutePath initialized.")
   print(">>", ivy_path.replace("\t"," "))
 
-    # check if intersection is empty
+  # check if intersection is empty
   if depth == MAX_DEPTH:
     print("Max recursion depth reached.")
     return []
-
-  depth = depth + 1
 
   temp_result = tempfile.NamedTemporaryFile(mode="w+")
 
@@ -149,7 +147,7 @@ def commutePath(ivy_path, api_result, ivy_file, pathP, depth=0):
     utils.printall("Commuting")
 
     api_result = prism_api.getEnabledTransitions(commuted_path)
-    nested_intersection = commute.commutePath(commuted_path, api_result, ivy_file, pathP)
+    nested_intersection = commute.commutePath(commuted_path, api_result, ivy_file, pathP, depth + 1)
 
     # add in the probability -- removed due to recursive function call instead
     # print("Prism Returns the second time:")
