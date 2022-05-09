@@ -9,6 +9,7 @@ import tempfile
 import utils
 import branch
 
+MAX_DEPTH = 10
 
 # Merged into commutePath to help with some logistics
 # Commute the discovered transitions (intersection) throughout the trace.
@@ -36,9 +37,16 @@ import branch
 
 
 # Take in a string path from IVy, commute, and give back a total probability.
-def commutePath(ivy_path, api_result, ivy_file, pathP):
+def commutePath(ivy_path, api_result, ivy_file, pathP, depth=0):
   print("commutePath initialized.")
   print(">>", ivy_path.replace("\t"," "))
+
+    # check if intersection is empty
+  if depth == MAX_DEPTH:
+    print("Max recursion depth reached.")
+    return []
+
+  depth = depth + 1
 
   temp_result = tempfile.NamedTemporaryFile(mode="w+")
 
