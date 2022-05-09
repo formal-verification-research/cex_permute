@@ -47,6 +47,7 @@ def commutePath(ivy_path, api_result, ivy_file, pathP, depth=0):
     return []
 
   temp_result = tempfile.NamedTemporaryFile(mode="w+")
+  print("NEW FILE COMMUTE1")
 
   # add in the probability
   print("Prism Returns the first time during this function call:")
@@ -102,6 +103,7 @@ def commutePath(ivy_path, api_result, ivy_file, pathP, depth=0):
   # commute(ivy_path, intersection)
 
   commuted_paths = tempfile.NamedTemporaryFile(mode="w+")
+  print("NEW FILE COMMUTE2")
 
   # Get individual moves
   t = ivy_path.replace("\t\t", "\t").rstrip().lstrip().split("\t")
@@ -153,6 +155,8 @@ def commutePath(ivy_path, api_result, ivy_file, pathP, depth=0):
     # print("Prism Returns the second time:")
     # print("trace >>", trace)
     # pathP.readProbabilityFromString(api_result)
+  
+  commuted_paths.close()
 
 
   return intersection

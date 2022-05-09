@@ -48,6 +48,7 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP):
       
       # set up a temp file to catch results
       temp_result = tempfile.NamedTemporaryFile(mode="w+")
+      print("NEW FILE OOO")
 
       # get the state from the prism simulation
       try:
@@ -69,8 +70,10 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP):
 
       # set up a temp file to catch ivy_check results
       temp_log = tempfile.NamedTemporaryFile(mode="w+")
+      print("NEW FILE BRANCH1")
       # set up a temp file to provide a temporary ivy model
       temp_ivyfile = tempfile.NamedTemporaryFile(mode="w+")
+      print("NEW FILE BRANCH2")
 
       # Write a temporary IVy model with new initial state
       with open(ivy_file) as original_ivyfile:

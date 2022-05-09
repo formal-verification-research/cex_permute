@@ -9,6 +9,7 @@ def check(ivyfile):
 
   # set up a temp file to catch results
   temp_result = tempfile.NamedTemporaryFile(mode="w+")
+  print("NEW FILE IVY1")
 
   # set up IVy commands and get the path from IVy
   ivy_command = "ivy_check trace=true " + str(ivyfile) + " > " + temp_result.name
