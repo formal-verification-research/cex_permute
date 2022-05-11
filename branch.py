@@ -144,7 +144,7 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP, depth=0):
       # input("PAUSE #1. PRESS ENTER TO KEEP GOING.")
 
     # add the transition to the list for the next time around
-    prefix_transitions = prefix_transitions + orig_path[t] + "\t"
+    prefix_transitions = prefix_transitions + split_orig_path[t] + "\t"
     utils.printall("Prefix transitions now", prefix_transitions)
 
     # quit()
