@@ -5,7 +5,10 @@ import tempfile
 import ivy
 import commute
 
-def branch(orig_path, api_result, intersection, ivy_file, pathP):
+
+# New feature: pass in the depth of commuting so that we don't exceed max recursion depth again.
+
+def branch(orig_path, api_result, intersection, ivy_file, pathP, depth=0):
   # set up a rolling list of transitions, with a flag to tell PRISM we want an
   # IVy model with the new "initial state" rather than a probability
   prefix_transitions = "CHANGE_IVY_INITIAL_STATE\t"
@@ -134,7 +137,7 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP):
 
       # Commute after finding a new path
       api_result = prism_api.getEnabledTransitions(forprism_path)
-      intersection = commute.commutePath(forprism_path, api_result, ivy_file, pathP)
+      intersection = commute.commutePath(forprism_path, api_result, ivy_file, pathP, depth)
       # input("PAUSE #1. PRESS ENTER TO KEEP GOING.")
 
     # add the transition to the list for the next time around

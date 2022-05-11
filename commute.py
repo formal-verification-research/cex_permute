@@ -63,7 +63,7 @@ def commutePath(ivy_path, api_result, ivy_file, pathP, depth=0):
   utils.printall("ivy_file", ivy_file)
   utils.printall("pathP.prob", pathP.prob)
   
-  branch.branch(ivy_path, api_result, intersection, ivy_file, pathP)
+  branch.branch(ivy_path, api_result, intersection, ivy_file, pathP, depth)
   
   # for some reason, blanks keep appearing in the intersection
   while "" in intersection:
