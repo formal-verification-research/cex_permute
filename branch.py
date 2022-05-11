@@ -13,8 +13,11 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP, depth=0):
   # IVy model with the new "initial state" rather than a probability
   prefix_transitions = "CHANGE_IVY_INITIAL_STATE\t"
 
+  split_orig_path = orig_path.split("\t")
+  utils.printall("split_orig_path", split_orig_path)
+
   # loop through the transitions, start from initial state and end before target
-  for t in range(len(orig_path) - 1):
+  for t in range(len(split_orig_path) - 1):
     # get next available transitions from list of available transitions
     available = prism_api.get_available(api_result, t)
 
@@ -30,13 +33,13 @@ def branch(orig_path, api_result, intersection, ivy_file, pathP, depth=0):
         available.remove(i)
 
     # don't want to consider an already-taken transition
-    if orig_path[t] in available:
-      available.remove(orig_path[t])
+    if split_orig_path[t] in available:
+      available.remove(split_orig_path[t])
     
     # if you can't try any transition, move on
     if len(available) == 0:
       utils.printall("No available transitions remain after filtering. Moving on.")
-      prefix_transitions = prefix_transitions + orig_path[t] + "\t"
+      prefix_transitions = prefix_transitions + split_orig_path[t] + "\t"
       utils.printall("Prefix transitions now", prefix_transitions, "length", len(prefix_transitions.split("\t")))
       continue
 
