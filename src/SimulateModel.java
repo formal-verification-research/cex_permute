@@ -58,23 +58,6 @@ public class SimulateModel
       prism.loadModelIntoSimulator();
       SimulatorEngine sim = prism.getSimulator();
 
-      // // create a new path
-      // sim.createNewPath();
-
-      // // sim.createNewOnTheFlyPath(); // recommended for efficiency
-      // sim.initialisePath(null);
-
-      // // for now, do 3 random steps
-      // for (int i=0; i<10; i++) {
-      //   sim.automaticTransition();
-      // }
-
-			// System.out.println("A random path (10 steps):");
-			// System.out.println(sim.getPath());
-
-			// System.out.println("A random path (longer description):");
-      // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
-      
       // follow the transitions
 		
       // Read in the first line of the trace as a string
@@ -97,6 +80,45 @@ public class SimulateModel
         int index;
         // walk along the path
         for (int tdx=1; tdx < tr_st.length; tdx++) {
+          index = 0;
+          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
+            String s1 = String.format("[%s]",tr_st[tdx]);
+            String s2 = sim.getTransitionActionString(idx);
+            if (s1.equalsIgnoreCase(s2)) {
+                index = idx;
+                break;
+            }
+          }
+          sim.manualTransition(index);
+        }
+        // print the full trace
+        // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
+        // print the state (hopefully)
+        // System.out.println(sim.getPath());
+        System.out.println(sim.getCurrentState());
+      }
+      else if (x.contains("BUILD_MODEL")) {
+        // Break the string into a transition set
+			  String[] tr_st = x.split("\\s+"); 
+        // create a new path
+        sim.createNewPath();
+        sim.initialisePath(null);
+
+        // set up a rolling state index to add new states
+        int rollingStateIndex = 0;
+
+        // TODO: BUILD AN ABSORBING STATE
+
+        /*
+          Order of path analysis:
+          0) Build absorbing state, gathering its probability at each step
+          1) Go along the path firing t_alpha from s_i
+          2) Go along the original path, getting the probability of t_alpha
+        */
+
+        int index;
+        // walk along the path (0 is BUILD MODEL, 1 is commuted transition)
+        for (int tdx=2; tdx < tr_st.length; tdx++) {
           index = 0;
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
             String s1 = String.format("[%s]",tr_st[tdx]);
