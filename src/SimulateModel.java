@@ -104,7 +104,11 @@ public class SimulateModel
         // Break the string into a transition set
 			  String[] tr_st = x.split("\\s+");
         System.out.println("Split: ");
-        System.out.println(tr_st);
+
+        for (int tdx=2; tdx < tr_st.length; tdx++) {
+          System.out.println(String.format("[%s]",tr_st[tdx]));
+        }
+
         // create a new path
         sim.createNewPath();
         sim.initialisePath(null);
