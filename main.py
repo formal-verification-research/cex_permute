@@ -22,7 +22,15 @@ import sys
 import tempfile
 import utils
 import branch
- 
+
+
+def buildmodel():
+  # copy in the dummy file, for testing only.
+  with open("dummy_build_model.txt") as t:
+    with open("forprism.trace", "w") as p:
+      p.write(t.read())
+  
+
 
 
 # Main procedure
@@ -30,6 +38,11 @@ if __name__ == "__main__":
 
   # Clean up the folders we're working in
   utils.cleanup()
+
+  # Test the "build model" function
+  buildmodel()
+  utils.printall("BUILT MODEL. NOW QUITTING.")
+  quit()
 
   # Set up necessary folders
   if not os.path.exists("results"):
