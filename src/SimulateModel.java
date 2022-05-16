@@ -155,7 +155,7 @@ public class SimulateModel
           }
         }
         // todo: don't hard code this in.
-        states.add(new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]})
+        states.add(new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]});
         rollingStateIndex++;
         
         /*
@@ -196,7 +196,7 @@ public class SimulateModel
             }
             // vv[i] = Integer.valueOf((String) templist[i]);
           }
-          states.add(new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]})
+          states.add(new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]});
           rollingStateIndex++;
           // System.out.println(Arrays.toString(vv));
         }
