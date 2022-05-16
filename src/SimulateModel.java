@@ -101,7 +101,10 @@ public class SimulateModel
         System.out.println(sim.getCurrentState());
       }
       else if (x.contains("BUILD_MODEL")) {
-        // Break the string into its parts (BUILD_MODEL\nCOMMUTABLE\nPATH)
+        // Break the string into its parts 
+        // BUILD_MODEL
+        // COMMUTABLE (tab-sep)
+        // PATH (tab-sep)
         
         String x_commute = br.readLine();
         String[] commute = x_commute.split("\\s+");
@@ -146,8 +149,8 @@ public class SimulateModel
         */
 
         int index;
-        // walk along the path (0 is BUILD MODEL, 1 is commuted transition)
-        for (int tdx=2; tdx < tr_st.length; tdx++) {
+        // walk along the original path, getting probabilities as we go
+        for (int tdx=0; tdx < tr_st.length; tdx++) {
           index = 0;
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
             String s1 = String.format("[%s]",tr_st[tdx]);
@@ -158,14 +161,14 @@ public class SimulateModel
             }
           }
           sim.manualTransition(index);
+          System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
+          System.out.println(sim.getCurrentState());
+          System.out.println(sim.getCurrentState().getClass().getName());
         }
         // print the full trace
         // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
         // print the state (hopefully)
         // System.out.println(sim.getPath());
-        System.out.println("sim.getCurrentState");
-        System.out.println(sim.getCurrentState());
-        System.out.println(sim.getCurrentState().getClass().getName());
       }
       // if it's just a regular model
       else {
