@@ -175,7 +175,7 @@ public class SimulateModel
               varValues[i] = (Integer) templist[i];
             }
             else if (templist[i] instanceof String) {
-              varValues[i] = Integer.parseInt(templist[i]);
+              varValues[i] = Integer.parseInt((String) templist[i]);
             }
             // varValues[i] = Integer.valueOf((String) templist[i]);
           }
