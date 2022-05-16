@@ -163,7 +163,9 @@ public class SimulateModel
           sim.manualTransition(index);
           System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
           System.out.println(sim.getCurrentState());
-          System.out.println(sim.getCurrentState().getClass().getName());
+          System.out.println("State Values (found at parser->State.java, line 41");
+          int[] templist = sim.getCurrentState().varValues.clone();
+          System.out.println(templist);
         }
         // print the full trace
         // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
