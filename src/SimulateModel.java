@@ -180,7 +180,8 @@ public class SimulateModel
           sim.manualTransition(index);
           System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
           System.out.println(sim.getCurrentState());
-          System.out.println("State Values (found at parser->State.java, line 41");
+          System.out.println("State Values");
+          // (found at parser->State.java, line 41");
           Object[] templist = sim.getCurrentState().varValues;
           int[] vv = new int[templist.length]; // vv for varValues
           for (int i = 0; i < templist.length; i++) {
