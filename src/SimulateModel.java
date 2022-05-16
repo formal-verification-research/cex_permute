@@ -170,7 +170,7 @@ public class SimulateModel
             // Assuming Object varValues is a string with integer contents
             varValues[i] = Integer.valueOf((String) templist[i]);
           }
-          System.out.println(varValues);
+          System.out.println(Arrays.toString(varValues));
         }
         // print the full trace
         // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
