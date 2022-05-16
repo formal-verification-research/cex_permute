@@ -8,6 +8,9 @@ import java.io.FileReader;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import parser.Values;
 import parser.ast.Expression;
 import parser.ast.ModulesFile;
