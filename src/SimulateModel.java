@@ -164,8 +164,13 @@ public class SimulateModel
           System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
           System.out.println(sim.getCurrentState());
           System.out.println("State Values (found at parser->State.java, line 41");
-          Object[] templist = sim.getCurrentState().varValues.clone();
-          System.out.println(templist);
+          Object[] templist = sim.getCurrentState().varValues;
+          int[] varValues = new int[templist.length];
+          for (int i = 0, i < templist.length, i++) {
+            // Assuming Object varValues is a string with integer contents
+            varValues[i] = Integer.valueOf((String) templist[i]);
+          }
+          System.out.println(varValues);
         }
         // print the full trace
         // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
