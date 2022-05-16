@@ -164,7 +164,7 @@ public class SimulateModel
           System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
           System.out.println(sim.getCurrentState());
           System.out.println("State Values (found at parser->State.java, line 41");
-          int[] templist = sim.getCurrentState().varValues.clone();
+          Object[] templist = sim.getCurrentState().varValues.clone();
           System.out.println(templist);
         }
         // print the full trace
