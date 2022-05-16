@@ -30,7 +30,7 @@ def buildmodel():
     with open("forprism.trace", "w") as p:
       p.write(t.read())
   try:
-    os.system("make test > prism.result")
+    os.system("make test")
   except:
     print("os.system Error in buildModel()")
     return
