@@ -143,19 +143,19 @@ public class SimulateModel
         rollingStateIndex++;
 
         // Make the initial state (should be currentstate at this point)
-        Object[] templist = sim.getCurrentState().varValues;
-        int[] vv = new int[templist.length];
-        for (int i = 0; i < templist.length; i++) {
+        Object[] tl = sim.getCurrentState().varValues;
+        int[] varv = new int[tl.length];
+        for (int i = 0; i < tl.length; i++) {
           // Check if Object is an Integer or a String
-          if (templist[i] instanceof Integer) {
-            vv[i] = (Integer) templist[i];
+          if (tl[i] instanceof Integer) {
+            varv[i] = (Integer) tl[i];
           }
-          else if (templist[i] instanceof String) {
-            vv[i] = Integer.parseInt((String) templist[i]);
+          else if (tl[i] instanceof String) {
+            varv[i] = Integer.parseInt((String) tl[i]);
           }
         }
         // todo: don't hard code this in.
-        states.add(new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]});
+        states.add(new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]});
         rollingStateIndex++;
         
         /*
