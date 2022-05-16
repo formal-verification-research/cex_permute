@@ -140,7 +140,24 @@ public class SimulateModel
         // the six-reaction model. Eventually fix this.
 
         states.add(new int[]{-1,-1,-1,-1,-1,-1});
+        rollingStateIndex++;
 
+        // Make the initial state (should be currentstate at this point)
+        Object[] templist = sim.getCurrentState().varValues;
+        int[] vv = new int[templist.length];
+        for (int i = 0; i < templist.length; i++) {
+          // Check if Object is an Integer or a String
+          if (templist[i] instanceof Integer) {
+            vv[i] = (Integer) templist[i];
+          }
+          else if (templist[i] instanceof String) {
+            vv[i] = Integer.parseInt((String) templist[i]);
+          }
+        }
+        // todo: don't hard code this in.
+        states.add(new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]})
+        rollingStateIndex++;
+        
         /*
           Order of path analysis:
           0) Build absorbing state, gathering its probability at each step
@@ -165,22 +182,33 @@ public class SimulateModel
           System.out.println(sim.getCurrentState());
           System.out.println("State Values (found at parser->State.java, line 41");
           Object[] templist = sim.getCurrentState().varValues;
-          int[] varValues = new int[templist.length];
+          int[] vv = new int[templist.length]; // vv for varValues
           for (int i = 0; i < templist.length; i++) {
-            // Check if Object varValues is an Integer or a String
-            System.out.println(templist[i].getClass().getName());
-            System.out.println(templist[i]);
-
+            // Check if Object vv is an Integer or a String
+            // System.out.println(templist[i].getClass().getName());
+            // System.out.println(templist[i]);
             if (templist[i] instanceof Integer) {
-              varValues[i] = (Integer) templist[i];
+              vv[i] = (Integer) templist[i];
             }
             else if (templist[i] instanceof String) {
-              varValues[i] = Integer.parseInt((String) templist[i]);
+              vv[i] = Integer.parseInt((String) templist[i]);
             }
-            // varValues[i] = Integer.valueOf((String) templist[i]);
+            // vv[i] = Integer.valueOf((String) templist[i]);
           }
-          // System.out.println(Arrays.toString(varValues));
+          states.add(new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]})
+          rollingStateIndex++;
+          // System.out.println(Arrays.toString(vv));
         }
+
+        // Print the states along the original path
+        System.out.println("States along Original Path");
+        for (int i = 0; i < rollingStateIndex-1; i++) {
+          System.out.println(String.format("%2d: [%d %d %d %d %d %d]", i, states[i][0], states[i][1], states[i][2], states[i][3], states[i][4], states[i][5]));
+        }
+        System.out.println("Original Path Complete.");
+        
+
+
         // print the full trace
         // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
         // print the state (hopefully)
