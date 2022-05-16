@@ -103,7 +103,7 @@ public class SimulateModel
       else if (x.contains("BUILD_MODEL")) {
         // Break the string into its parts (BUILD_MODEL\nCOMMUTABLE\nPATH)
         
-        x_commute = br.readLine();
+        String x_commute = br.readLine();
         String[] commute = x_commute.split("\\s+");
         
         System.out.println("Commutable Transitions: ");
@@ -111,7 +111,7 @@ public class SimulateModel
           System.out.println(String.format("%d _%s_", cmx, commute[cmx]));
         }
 
-        x_path = br.readLine();
+        String x_path = br.readLine();
 			  String[] tr_st = x_path.split("\\s+");
         
         System.out.println("Original Path with Indices: ");
