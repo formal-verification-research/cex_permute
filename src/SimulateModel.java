@@ -105,8 +105,8 @@ public class SimulateModel
 			  String[] tr_st = x.split("\\s+");
         System.out.println("Split: ");
 
-        for (int tdx=2; tdx < tr_st.length; tdx++) {
-          System.out.println(String.format("[%s]",tr_st[tdx]));
+        for (int tdx=0; tdx < tr_st.length; tdx++) {
+          System.out.println(String.format("%d [%s]",tdx, tr_st[tdx]));
         }
 
         // create a new path
