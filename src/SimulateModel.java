@@ -203,7 +203,7 @@ public class SimulateModel
 
         // Print the states along the original path
         System.out.println("States along Original Path");
-        for (int i = 0; i < rollingStateIndex-1; i++) {
+        for (int i = 0; i < rollingStateIndex; i++) {
           System.out.println(String.format("%2d: [%d %d %d %d %d %d]", i, states.get(i)[0], states.get(i)[1], states.get(i)[2], states.get(i)[3], states.get(i)[4], states.get(i)[5]));
         }
         System.out.println("Original Path Complete.");
