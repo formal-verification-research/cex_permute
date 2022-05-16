@@ -108,7 +108,7 @@ public class SimulateModel
         // todo: currently assuming that there are no duplicate states
         // todo: currently assuming only one commuted transition
 
-        List<Int[]> states = new ArrayList<Int[]>();
+        List<Integer[]> states = new ArrayList<Integer[]>();
 
         // set up a rolling state index to add new states
         int rollingStateIndex = 0;
@@ -117,7 +117,7 @@ public class SimulateModel
         // TODO: For now, we just hard-coded the absorbing state to match 
         // the six-reaction model. Eventually fix this.
 
-        states.add(new Int[]{-1,-1,-1,-1,-1,-1});
+        states.add(new Integer[]{-1,-1,-1,-1,-1,-1});
 
         /*
           Order of path analysis:
