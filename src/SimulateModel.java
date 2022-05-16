@@ -103,8 +103,8 @@ public class SimulateModel
       else if (x.contains("BUILD_MODEL")) {
         // Break the string into a transition set
 			  String[] tr_st = x.split("\\s+");
-        System.out.println("Split: ")
-        System.out.println(tr_st)
+        System.out.println("Split: ");
+        System.out.println(tr_st);
         // create a new path
         sim.createNewPath();
         sim.initialisePath(null);
