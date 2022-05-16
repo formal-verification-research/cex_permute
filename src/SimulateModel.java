@@ -166,7 +166,7 @@ public class SimulateModel
           System.out.println("State Values (found at parser->State.java, line 41");
           Object[] templist = sim.getCurrentState().varValues;
           int[] varValues = new int[templist.length];
-          for (int i = 0, i < templist.length, i++) {
+          for (int i = 0; i < templist.length; i++) {
             // Assuming Object varValues is a string with integer contents
             varValues[i] = Integer.valueOf((String) templist[i]);
           }
