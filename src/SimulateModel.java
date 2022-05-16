@@ -111,7 +111,7 @@ public class SimulateModel
         // todo: currently assuming that there are no duplicate states
         // todo: currently assuming only one commuted transition
 
-        List<int[]> states = new ArrayList<int[]>();
+        ArrayList<int[]> states = new ArrayList<int[]>();
 
         // set up a rolling state index to add new states
         int rollingStateIndex = 0;
