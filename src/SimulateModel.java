@@ -204,7 +204,7 @@ public class SimulateModel
         // Print the states along the original path
         System.out.println("States along Original Path");
         for (int i = 0; i < rollingStateIndex-1; i++) {
-          System.out.println(String.format("%2d: [%d %d %d %d %d %d]", i, states[i][0], states[i][1], states[i][2], states[i][3], states[i][4], states[i][5]));
+          System.out.println(String.format("%2d: [%d %d %d %d %d %d]", i, state.get(i)[0], state.get(i)[1], state.get(i)[2], state.get(i)[3], state.get(i)[4], state.get(i)[5]));
         }
         System.out.println("Original Path Complete.");
         
