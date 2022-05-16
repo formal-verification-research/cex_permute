@@ -108,7 +108,7 @@ public class SimulateModel
         // todo: currently assuming that there are no duplicate states
         // todo: currently assuming only one commuted transition
 
-        List<Int[]> states = new ArrayList<Int[]>
+        List<Int[]> states = new ArrayList<Int[]>;
 
         // set up a rolling state index to add new states
         int rollingStateIndex = 0;
@@ -117,7 +117,7 @@ public class SimulateModel
         // TODO: For now, we just hard-coded the absorbing state to match 
         // the six-reaction model. Eventually fix this.
 
-        states.add(new Int[]{-1,-1,-1,-1,-1,-1})
+        states.add(new Int[]{-1,-1,-1,-1,-1,-1});
 
         /*
           Order of path analysis:
@@ -144,7 +144,7 @@ public class SimulateModel
         // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
         // print the state (hopefully)
         // System.out.println(sim.getPath());
-        System.out.println("sim.getCurrentState")
+        System.out.println("sim.getCurrentState");
         System.out.println(sim.getCurrentState());
         System.out.println(sim.getCurrentState().getClass().getName());
       }
