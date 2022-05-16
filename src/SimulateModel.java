@@ -101,11 +101,18 @@ public class SimulateModel
         System.out.println(sim.getCurrentState());
       }
       else if (x.contains("BUILD_MODEL")) {
-        // Break the string into a transition set
-        String[] tr_st = x.split("\\r?\\n?\\s+");
-			  // String[] tr_st = x.split("\\s+");
-        System.out.println("Split: ");
+        // Break the string into its parts (BUILD_MODEL\nCOMMUTABLE\nPATH)
+        x_commute = br.readLine();
+        String[] commute = x_commute.split("\\s+");
+        System.out.println("Commutable Transitions: ");
+        for (int cmx=0; cmx < tr_st.length; cmx++) {
+          System.out.println(String.format("%d _%s_", cmx, commute[cmx]));
+        }
 
+        x_path = br.readLine();
+			  String[] tr_st = x_path.split("\\s+");
+        
+        System.out.println("Original Path with Indices: ");
         for (int tdx=0; tdx < tr_st.length; tdx++) {
           System.out.println(String.format("%d [%s]",tdx, tr_st[tdx]));
         }
