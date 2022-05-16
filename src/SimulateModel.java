@@ -132,6 +132,9 @@ public class SimulateModel
 
         ArrayList<int[]> states = new ArrayList<int[]>();
 
+        // todo: make an arraylist of transitions
+        // <[from to rate] ... >
+
         // set up a rolling state index to add new states
         int rollingStateIndex = 0;
 
