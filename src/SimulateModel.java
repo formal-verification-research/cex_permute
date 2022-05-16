@@ -167,9 +167,16 @@ public class SimulateModel
           Object[] templist = sim.getCurrentState().varValues;
           int[] varValues = new int[templist.length];
           for (int i = 0; i < templist.length; i++) {
-            // Assuming Object varValues is a string with integer contents
+            // Check if Object varValues is an Integer or a String
             System.out.println(templist[i].getClass().getName());
             System.out.println(templist[i]);
+
+            if (templist[i] instanceof Integer) {
+              varValues[i] = (Integer) templist[i];
+            }
+            else if (templist[i] instanceof String) {
+              varValues[i] = Integer.parseInt(templist[i]);
+            }
             // varValues[i] = Integer.valueOf((String) templist[i]);
           }
           // System.out.println(Arrays.toString(varValues));
