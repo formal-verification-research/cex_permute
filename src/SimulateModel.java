@@ -273,7 +273,7 @@ public class SimulateModel
             }
             // vv[i] = Integer.valueOf((String) templist[i]);
           }
-          states.add(rollingStateIndex, new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]}, 0.0);
+          states.add(new State(rollingStateIndex, new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]}, 0.0));
           // System.out.println(Arrays.toString(vv));
         }
 
