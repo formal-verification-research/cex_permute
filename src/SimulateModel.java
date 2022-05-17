@@ -177,8 +177,8 @@ public class SimulateModel
         String x_path = br.readLine();
 			  String[] tr_st = x_path.split("\\s+");
         
-        // n is the length of the original path
-        int n = tr_st.length;
+        // n is the length of the original path (in STATES, not transitions)
+        int n = tr_st.length + 1;
         System.out.println("n (length of original path) = " + n);
 
         System.out.println("Original Path with Indices: ");
@@ -390,6 +390,22 @@ public class SimulateModel
           states.add(new State(rollingStateIndex, new int[]{vv1[0],vv1[1],vv1[2],vv1[3],vv1[4],vv1[5]}, 0.0));
           // System.out.println(Arrays.toString(vv1));
         }
+
+        // walk along the original path once more, checking that t_alpha gets us to state n+k
+        // resources at SimulatorEngine.java, line 493
+
+        // start at state 2 (with 0 as absorb state)
+        // for now, just get the backtracked state to test it out
+
+        System.out.println("BACKTRACKING!!! to state 2")
+
+        sim.backTrackTo(2);
+        System.out.println(sim.getCurrentState());
+
+        
+
+
+
 
         // Print the states along the original path
         System.out.println("States along Original Path");
