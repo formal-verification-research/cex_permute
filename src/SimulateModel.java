@@ -74,7 +74,7 @@ public class SimulateModel
       String temp = index + " [";
       for (int i=0; i<vars.length; i++) {
         if (i>0) temp += ",";
-        temp += (String) vars[i]; 
+        temp += vars[i]; 
       }
       temp += ("] (" + totalRate + ")");
       return temp;
