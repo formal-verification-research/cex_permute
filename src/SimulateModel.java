@@ -62,11 +62,13 @@ public class SimulateModel
     public int index;
     public int[] vars;
     public double totalRate;
+    public ArrayList<Transition> outgoing;
 
     public State(int index, int[] vars, double totalRate) {
       this.index = index;
       this.vars = vars;
       this.totalRate = totalRate;
+      this.outgoing = new ArrayList<Transition>();
     }
 
     @Override
@@ -78,6 +80,11 @@ public class SimulateModel
       }
       temp += ("] (" + totalRate + ")");
       return temp;
+    }
+
+    public double addRate(double p) {
+      this.totalRate += p;
+      return this.totalRate;
     }
   }
 
@@ -176,7 +183,8 @@ public class SimulateModel
         // todo: currently assuming only one commuted transition
         // todo: not yet dealing with commuting
 
-        ArrayList<int[]> states = new ArrayList<int[]>();
+        // ArrayList<int[]> states = new ArrayList<int[]>();
+        ArrayList<State> states = new ArrayList<State>();
 
         // set up the transitions for the state graph
         ArrayList<Transition> transitions = new ArrayList<Transition>();
@@ -191,7 +199,8 @@ public class SimulateModel
         // TODO: For now, we just hard-coded the absorbing state to match 
         // the six-reaction model. Eventually fix this.
 
-        states.add(new int[]{-1,-1,-1,-1,-1,-1});
+        // states.add(new int[]{-1,-1,-1,-1,-1,-1});
+        states.add(new State(rollingStateIndex, new int[]{-1,-1,-1,-1,-1,-1}, 0.0));
         rollingStateIndex++;
 
         // Make the initial state (should be currentstate at this point)
@@ -207,8 +216,8 @@ public class SimulateModel
           }
         }
         // todo: don't hard code this in.
-        states.add(new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]});
-        rollingStateIndex++;
+        // states.add(new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]});
+        states.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]}, 0.0));
         
         /*
           Order of path analysis:
@@ -218,14 +227,12 @@ public class SimulateModel
         */
 
         int index;
-        double totalRate;
         // walk along the original path, getting probabilities as we go
         for (int tdx=0; tdx < tr_st.length; tdx++) {
           index = 0;
-          totalRate = 0.0;
           // get the total rate
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            totalRate += sim.getTransitionProbability(idx);
+            states.get(rollingStateIndex).addRate(sim.getTransitionProbability(idx));
             // todo: save the total outgoing rate in a state object
             // todo: make states an object, not an int array.
           } 
@@ -242,8 +249,12 @@ public class SimulateModel
           double transition_rate = sim.getTransitionProbability(index);
           System.out.printf("sim.getTransitionProbability() = ");
           System.out.println(sim.getTransitionProbability(index));
-          transitions.add(new Transition(rollingStateIndex-1,rollingStateIndex,transition_rate,index,sim.getTransitionActionString(index)));
+          transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim.getTransitionActionString(index)));
+
+          // fire the transition
           sim.manualTransition(index);
+          rollingStateIndex++;
+          
           System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
           System.out.println(sim.getCurrentState());
           System.out.println("State Values");
@@ -262,8 +273,7 @@ public class SimulateModel
             }
             // vv[i] = Integer.valueOf((String) templist[i]);
           }
-          states.add(new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]});
-          rollingStateIndex++;
+          states.add(rollingStateIndex, new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]}, 0.0);
           // System.out.println(Arrays.toString(vv));
         }
 
