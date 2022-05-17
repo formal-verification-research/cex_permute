@@ -399,7 +399,7 @@ public class SimulateModel
 
         System.out.println("BACKTRACKING!!! to state 2");
 
-        sim.backTrackTo(2);
+        sim.backtrackTo(2);
         System.out.println(sim.getCurrentState());
 
         
