@@ -247,7 +247,7 @@ public class SimulateModel
 
         // Print the transitions along the original path
         System.out.println("Transitions along Original Path");
-        for (int i = 0; i < transitions.length; i++) {
+        for (int i = 0; i < transitions.size(); i++) {
           System.out.println(transitions.get(i));
         }
         System.out.println("Original Path Transitions Complete.");
