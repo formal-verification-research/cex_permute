@@ -213,6 +213,8 @@ public class SimulateModel
             }
           }
           double transition_rate = sim.getTransitionProbability(index);
+          System.out.printf("sim.getTransitionProbability() = ")
+          System.out.println(sim.getTransitionProbability(index))
           transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate));
           sim.manualTransition(index);
           System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
