@@ -374,19 +374,19 @@ public class SimulateModel
           System.out.println(sim2.getCurrentState());
           System.out.println("State Values");
           // (found at parser->State.java, line 41");
-          Object[] templist = sim2.getCurrentState().varValues;
-          int[] vv1 = new int[templist.length]; // vv1 for varValues
-          for (int i = 0; i < templist.length; i++) {
+          Object[] templist1 = sim2.getCurrentState().varValues;
+          int[] vv1 = new int[templist1.length]; // vv1 for varValues
+          for (int i = 0; i < templist1.length; i++) {
             // Check if Object vv1 is an Integer or a String
-            // System.out.println(templist[i].getClass().getName());
-            // System.out.println(templist[i]);
-            if (templist[i] instanceof Integer) {
-              vv1[i] = (Integer) templist[i];
+            // System.out.println(templist1[i].getClass().getName());
+            // System.out.println(templist1[i]);
+            if (templist1[i] instanceof Integer) {
+              vv1[i] = (Integer) templist1[i];
             }
-            else if (templist[i] instanceof String) {
-              vv1[i] = Integer.parseInt((String) templist[i]);
+            else if (templist1[i] instanceof String) {
+              vv1[i] = Integer.parseInt((String) templist1[i]);
             }
-            // vv1[i] = Integer.valueOf((String) templist[i]);
+            // vv1[i] = Integer.valueOf((String) templist1[i]);
           }
           states.add(new State(rollingStateIndex, new int[]{vv1[0],vv1[1],vv1[2],vv1[3],vv1[4],vv1[5]}, 0.0));
           // System.out.println(Arrays.toString(vv1));
