@@ -63,7 +63,7 @@ public class SimulateModel
     public int[] vars;
     public double totalRate;
 
-    public State(int index; int[] vars; double totalRate) {
+    public State(int index, int[] vars, double totalRate) {
       this.index = index;
       this.vars = vars;
       this.totalRate = totalRate;
