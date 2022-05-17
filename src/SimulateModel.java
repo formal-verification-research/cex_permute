@@ -290,6 +290,11 @@ public class SimulateModel
           // System.out.println(Arrays.toString(vv));
         }
 
+        System.out.println("BACKTRACKING!!! to state 2");
+
+        sim.backtrackTo(2);
+        System.out.println(sim.getCurrentState());
+
         // start over and walk along the commuted path, doing the same thing.
 
         // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
@@ -397,10 +402,7 @@ public class SimulateModel
         // start at state 2 (with 0 as absorb state)
         // for now, just get the backtracked state to test it out
 
-        System.out.println("BACKTRACKING!!! to state 2");
-
-        sim.backtrackTo(2);
-        System.out.println(sim.getCurrentState());
+        
 
         
 
