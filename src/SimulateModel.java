@@ -281,7 +281,7 @@ public class SimulateModel
           }
           commutedStates.add(new State(-2, new int[]{vval_c[0],vval_c[1],vval_c[2],vval_c[3],vval_c[4],vval_c[5]}, 0.0));
 
-          // todo: check the index I'm backtracking to
+          // go back to the original path
           sim.backtrackTo(rollingStateIndex-1);
           
 
@@ -433,13 +433,18 @@ public class SimulateModel
           // System.out.println(Arrays.toString(vv1));
         }
 
-        // walk along the original path once more, checking that t_alpha gets us to state n+k
-        // resources at SimulatorEngine.java, line 493
+        // check that t_alpha truly is independent
 
-        // start at state 2 (with 0 as absorb state)
-        // for now, just get the backtracked state to test it out
-
-        
+        for (int k = 1; k < commutedStates.size(); k++) {
+          if (!states.get(n+k).equals(commutedStates.get(k))) {
+            System.out.println("STATES NOT EQUAL. DETAILS ON NEXT LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println("State " + n+k + " does not equal commuted state " + k);
+          }
+          else {
+            System.out.println("State " + n+k + " equals commuted state " + k);
+          }
+        }
+  
 
         
 
