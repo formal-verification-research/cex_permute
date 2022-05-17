@@ -198,6 +198,10 @@ public class SimulateModel
         // ArrayList<int[]> states = new ArrayList<int[]>();
         ArrayList<State> states = new ArrayList<State>();
 
+        // Make an array of commuted states to cross-check the 
+        // independent transition attribute
+        ArrayList<State> commutedStates = new ArrayList<State>();      
+        
         // set up the transitions for the state graph
         ArrayList<Transition> transitions = new ArrayList<Transition>();
 
@@ -230,6 +234,7 @@ public class SimulateModel
         // todo: don't hard code this in.
         // states.add(new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]});
         states.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]}, 0.0));
+        commutedStates.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]}, 0.0));
         
         /*
           Order of path analysis:
@@ -249,6 +254,38 @@ public class SimulateModel
             // todo: save the total outgoing rate in a state object
             // todo: make states an object, not an int array.
           } 
+
+          // get the value for the s_k(prime) to cross-check later
+          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
+            String s1 = String.format("[%s]",commute[0]);
+            String s2 = sim.getTransitionActionString(idx);
+            if (s1.equalsIgnoreCase(s2)) {
+                index = idx;
+                break;
+            }
+          }
+          sim.manualTransition(index);
+          Object[] templist_c = sim.getCurrentState().varValues;
+          int[] vval_c = new int[templist_c.length]; // vval_c for varValues
+          for (int i = 0; i < templist_c.length; i++) {
+            // Check if Object vval_c is an Integer or a String
+            // System.out.println(templist_c[i].getClass().getName());
+            // System.out.println(templist_c[i]);
+            if (templist_c[i] instanceof Integer) {
+              vval_c[i] = (Integer) templist_c[i];
+            }
+            else if (templist_c[i] instanceof String) {
+              vval_c[i] = Integer.parseInt((String) templist_c[i]);
+            }
+            // vval_c[i] = Integer.valueOf((String) templist_c[i]);
+          }
+          commutedStates.add(new State(-2, new int[]{vval_c[0],vval_c[1],vval_c[2],vval_c[3],vval_c[4],vval_c[5]}, 0.0));
+
+          // todo: check the index I'm backtracking to
+          sim.backtrackTo(rollingStateIndex-1)
+          
+
+          index=0;
           // the loops are separate because we want to get the total probability.
           // we stop the next loop once we find our transition.
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
@@ -415,6 +452,13 @@ public class SimulateModel
           System.out.println(states.get(i));
         }
         System.out.println("Original Path States Complete.");
+
+        // Print the states along the commuted check path
+        System.out.println("States along Commuted Check Path");
+        for (int i = 0; i < commutedStates.size(); i++) {
+          System.out.println(commutedStates.get(i));
+        }
+        System.out.println("Commuted Check Path States Complete.");
 
         // Print the transitions along the original path
         System.out.println("Transitions along Original Path");
