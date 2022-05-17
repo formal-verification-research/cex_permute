@@ -191,9 +191,11 @@ public class SimulateModel
         */
 
         int index;
+        double totalRate;
         // walk along the original path, getting probabilities as we go
         for (int tdx=0; tdx < tr_st.length; tdx++) {
           index = 0;
+          totalRate = 0.0;
           // get the total rate
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
             totalRate += sim.getTransitionProbability(idx);
