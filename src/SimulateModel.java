@@ -434,15 +434,21 @@ public class SimulateModel
         }
 
         // check that t_alpha truly is independent
+        boolean commutedCheck = true;
 
         for (int k = 1; k < commutedStates.size(); k++) {
           if (!states.get(n+k).equals(commutedStates.get(k))) {
             System.out.println("STATES NOT EQUAL. DETAILS ON NEXT LINE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            System.out.println("State " + n+k + " does not equal commuted state " + k);
+            System.out.println("State " + (n+k) + " does not equal commuted state " + k);
+            commutedCheck = false;
           }
           else {
-            System.out.println("State " + n+k + " equals commuted state " + k);
+            System.out.println("State " + (n+k) + " equals commuted state " + k);
           }
+        }
+
+        if (!commutedCheck) {
+          throw SimulatorException;
         }
   
 
