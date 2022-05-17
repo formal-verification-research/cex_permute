@@ -397,7 +397,7 @@ public class SimulateModel
         // start at state 2 (with 0 as absorb state)
         // for now, just get the backtracked state to test it out
 
-        System.out.println("BACKTRACKING!!! to state 2")
+        System.out.println("BACKTRACKING!!! to state 2");
 
         sim.backTrackTo(2);
         System.out.println(sim.getCurrentState());
