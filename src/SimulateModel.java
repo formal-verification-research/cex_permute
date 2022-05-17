@@ -36,6 +36,24 @@ public class SimulateModel
     new SimulateModel().run();
   }
 
+  public class Transition {
+    public int from;
+    public int to;
+    public double rate;
+
+    public Transition(int f, int t, double r) {
+      this.from = f;
+      this.to = t;
+      this.rate = r;
+    }
+
+    @Override
+    public String toString() {
+      return this.from + " " + this.to + " " + this.rate;
+    }
+
+  }
+
   public void run()
   {
     try {
@@ -126,11 +144,15 @@ public class SimulateModel
         sim.createNewPath();
         sim.initialisePath(null);
 
-        // set up the state graph in a list for now
+        // set up the states for the state graph in a list for now
         // todo: currently assuming that there are no duplicate states
         // todo: currently assuming only one commuted transition
+        // todo: not yet dealing with commuting
 
         ArrayList<int[]> states = new ArrayList<int[]>();
+
+        // set up the transitions for the state graph
+        ArrayList<Transition[]> transitions = new ArrayList<Transition[]>();
 
         // todo: make an arraylist of transitions
         // <[from to rate] ... >
@@ -172,6 +194,14 @@ public class SimulateModel
         // walk along the original path, getting probabilities as we go
         for (int tdx=0; tdx < tr_st.length; tdx++) {
           index = 0;
+          // get the total rate
+          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
+            totalRate += sim.getTransitionProbability(idx);
+            // todo: save the total outgoing rate in a state object
+            // todo: make states an object, not an int array.
+          } 
+          // the loops are separate because we want to get the total probability.
+          // we stop the next loop once we find our transition.
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
             String s1 = String.format("[%s]",tr_st[tdx]);
             String s2 = sim.getTransitionActionString(idx);
@@ -180,6 +210,8 @@ public class SimulateModel
                 break;
             }
           }
+          double transition_rate = sim.getTransitionProbability(index);
+          transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate));
           sim.manualTransition(index);
           System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
           System.out.println(sim.getCurrentState());
@@ -204,15 +236,23 @@ public class SimulateModel
           // System.out.println(Arrays.toString(vv));
         }
 
+
+
         // Print the states along the original path
         System.out.println("States along Original Path");
         for (int i = 0; i < rollingStateIndex; i++) {
           System.out.println(String.format("%2d: [%d %d %d %d %d %d]", i, states.get(i)[0], states.get(i)[1], states.get(i)[2], states.get(i)[3], states.get(i)[4], states.get(i)[5]));
         }
-        System.out.println("Original Path Complete.");
+        System.out.println("Original Path States Complete.");
+
+        // Print the transitions along the original path
+        System.out.println("Transitions along Original Path");
+        for (int i = 0; i < transitions.length; i++) {
+          System.out.println(transitions.get(i));
+        }
+        System.out.println("Original Path Transitions Complete.");
+
         
-
-
         // print the full trace
         // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
         // print the state (hopefully)
