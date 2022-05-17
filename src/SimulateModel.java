@@ -434,7 +434,7 @@ public class SimulateModel
         }
 
         // check that t_alpha truly is independent
-        boolean commutedCheck = true;
+        boolean commutedCheck = false; // todo: false was to debug. set to true;
 
         for (int k = 1; k < commutedStates.size(); k++) {
           if (!states.get(n+k).equals(commutedStates.get(k))) {
@@ -447,15 +447,13 @@ public class SimulateModel
           }
         }
 
+        // if the transition was not independent, remove the extra path.
         if (!commutedCheck) {
-          throw SimulatorException;
+          System.out.println("ERROR: TRANSITION WAS NOT ACTUALLY INDEPENDENT!!!");
+          for (int i = n; i <= rollingStateIndex; i++) {
+            states.remove(i);
+          }
         }
-  
-
-        
-
-
-
 
         // Print the states along the original path
         System.out.println("States along Original Path");
