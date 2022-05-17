@@ -179,7 +179,7 @@ public class SimulateModel
         
         // n is the length of the original path
         int n = tr_st.length;
-        System.out.println("n (length of original path) = " + n)
+        System.out.println("n (length of original path) = " + n);
 
         System.out.println("Original Path with Indices: ");
         for (int tdx=0; tdx < tr_st.length; tdx++) {
