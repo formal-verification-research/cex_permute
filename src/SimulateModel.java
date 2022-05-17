@@ -39,6 +39,8 @@ public class SimulateModel
   public class Transition {
     public int from;
     public int to;
+    public int transitionIndex = 0;
+    public String transitionName = "t";
     public double rate;
 
     public Transition(int f, int t, double r) {
@@ -47,9 +49,17 @@ public class SimulateModel
       this.rate = r;
     }
 
+    public Transition(int f, int t, double r, int i, String n) {
+      this.from = f;
+      this.to = t;
+      this.rate = r;
+      this.transitionIndex = i;
+      this.transitionName = n;
+    }
+
     @Override
     public String toString() {
-      return this.from + " " + this.to + " " + this.rate;
+      return this.from + " " + this.to + " " + this.rate + " (" + this.transitionIndex + "_" + this.transitionName;
     }
 
   }
@@ -215,7 +225,7 @@ public class SimulateModel
           double transition_rate = sim.getTransitionProbability(index);
           System.out.printf("sim.getTransitionProbability() = ");
           System.out.println(sim.getTransitionProbability(index));
-          transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate));
+          transitions.add(new Transition(rollingStateIndex-1,rollingStateIndex,transition_rate,index,sim.getTransitionActionString(index)));
           sim.manualTransition(index);
           System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
           System.out.println(sim.getCurrentState());
@@ -252,7 +262,7 @@ public class SimulateModel
         // Print the transitions along the original path
         System.out.println("Transitions along Original Path");
         for (int i = 0; i < transitions.size(); i++) {
-          System.out.println(transitions.get(i));
+          System.out.println(String.format("%d -- %s", i, transitions.get(i));
         }
         System.out.println("Original Path Transitions Complete.");
 
