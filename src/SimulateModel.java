@@ -320,10 +320,7 @@ public class SimulateModel
         // fire the commuted transition
         sim2.manualTransition(index);
         rollingStateIndex++;
-          
-        System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
-        System.out.println(sim2.getCurrentState());
-        System.out.println("State Values");
+
         // (found at parser->State.java, line 41");
         Object[] templist = sim2.getCurrentState().varValues;
         int[] vv = new int[templist.length]; // vv for varValues
@@ -361,7 +358,7 @@ public class SimulateModel
                 break;
             }
           }
-          double transition_rate = sim2.getTransitionProbability(index);
+          transition_rate = sim2.getTransitionProbability(index);
           System.out.printf("sim2.getTransitionProbability() = ");
           System.out.println(sim2.getTransitionProbability(index));
           transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
