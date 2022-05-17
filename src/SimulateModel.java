@@ -43,12 +43,6 @@ public class SimulateModel
     public String transitionName = "t";
     public double rate;
 
-    public Transition(int f, int t, double r) {
-      this.from = f;
-      this.to = t;
-      this.rate = r;
-    }
-
     public Transition(int f, int t, double r, int i, String n) {
       this.from = f;
       this.to = t;
@@ -62,6 +56,29 @@ public class SimulateModel
       return this.from + " " + this.to + " " + this.rate + " (" + this.transitionIndex + "_" + this.transitionName;
     }
 
+  }
+
+  public class State {
+    public int index;
+    public int[] vars;
+    public double totalRate;
+
+    public State(int index; int[] vars; double totalRate) {
+      this.index = index;
+      this.vars = vars;
+      this.totalRate = totalRate;
+    }
+
+    @Override
+    public String toString() {
+      String temp = index + " [";
+      for (int i=0; i<vars.length; i++) {
+        if (i>0) temp += ",";
+        temp += (String) vars[i]; 
+      }
+      temp += ("] (" + totalRate + ")");
+      return temp;
+    }
   }
 
   public void run()
@@ -262,7 +279,7 @@ public class SimulateModel
         // Print the transitions along the original path
         System.out.println("Transitions along Original Path");
         for (int i = 0; i < transitions.size(); i++) {
-          System.out.println(String.format("%d -- %s", i, transitions.get(i)));
+          System.out.println(String.format("%2d -- %s", i, transitions.get(i)));
         }
         System.out.println("Original Path Transitions Complete.");
 
