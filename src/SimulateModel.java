@@ -152,7 +152,7 @@ public class SimulateModel
         ArrayList<int[]> states = new ArrayList<int[]>();
 
         // set up the transitions for the state graph
-        ArrayList<Transition[]> transitions = new ArrayList<Transition[]>();
+        ArrayList<Transition> transitions = new ArrayList<Transition>();
 
         // todo: make an arraylist of transitions
         // <[from to rate] ... >
