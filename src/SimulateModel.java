@@ -233,6 +233,7 @@ public class SimulateModel
           // get the total rate
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
             states.get(rollingStateIndex).addRate(sim.getTransitionProbability(idx));
+            System.out.println(String.format("Rate: %.6f at index %d",sim.getTransitionProbability(idx),idx))
             // todo: save the total outgoing rate in a state object
             // todo: make states an object, not an int array.
           } 
