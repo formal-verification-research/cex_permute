@@ -450,14 +450,14 @@ public class SimulateModel
         // if the transition was not independent, remove the extra path.
         if (!commutedCheck) {
           System.out.println("ERROR: TRANSITION WAS NOT ACTUALLY INDEPENDENT!!!");
-          for (int i = n; i < rollingStateIndex; i++) {
+          for (int i = n; i < states.size(); i++) {
             states.remove(i);
           }
         }
 
         // Print the states along the original path
         System.out.println("States along Original Path");
-        for (int i = 0; i < rollingStateIndex; i++) {
+        for (int i = 0; i < states.size(); i++) {
           System.out.println(states.get(i));
         }
         System.out.println("Original Path States Complete.");
