@@ -179,6 +179,7 @@ public class SimulateModel
         
         // n is the length of the original path
         int n = tr_st.length;
+        System.out.println("n (length of original path) = " + n)
 
         System.out.println("Original Path with Indices: ");
         for (int tdx=0; tdx < tr_st.length; tdx++) {
@@ -315,7 +316,8 @@ public class SimulateModel
         double transition_rate = sim2.getTransitionProbability(index);
         System.out.printf("sim2.getTransitionProbability(commute[0].index) = ");
         System.out.println(sim2.getTransitionProbability(index));
-        transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
+        // since it is from the initial state, go from 1 to rollingStateIndex+1 (which should be n+1)
+        transitions.add(new Transition(1,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
 
         // fire the commuted transition
         sim2.manualTransition(index);
