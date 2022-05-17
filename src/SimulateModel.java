@@ -86,6 +86,14 @@ public class SimulateModel
       this.totalRate += p;
       return this.totalRate;
     }
+
+    public boolean equals(State s) {
+      if (this.vars.length != s.vars.length) return false;
+      for (int i=0; i<this.vars.length; i++) {
+        if (this.vars[i] != s.vars[i]) return false;
+      }
+      return true;
+    }
   }
 
   public void run()
@@ -169,6 +177,9 @@ public class SimulateModel
         String x_path = br.readLine();
 			  String[] tr_st = x_path.split("\\s+");
         
+        // n is the length of the original path
+        int n = tr_st.length;
+
         System.out.println("Original Path with Indices: ");
         for (int tdx=0; tdx < tr_st.length; tdx++) {
           System.out.println(String.format("%d [%s]", tdx, tr_st[tdx]));
@@ -278,7 +289,108 @@ public class SimulateModel
           // System.out.println(Arrays.toString(vv));
         }
 
+        // start over and walk along the commuted path, doing the same thing.
 
+        // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
+        // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
+        // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
+        // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
+        // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
+
+        // create a new path on sim2, go back to initial state
+        SimulatorEngine sim2 = prism.getSimulator();
+        sim2.createNewPath();
+        sim2.initialisePath(null);
+
+        // fire the commutable transition to verify path correctness
+        index = 0;
+        for (int idx=0; idx < sim2.getNumTransitions(); idx++) {
+          String s1 = String.format("[%s]",commute[0]);
+          String s2 = sim2.getTransitionActionString(idx);
+          if (s1.equalsIgnoreCase(s2)) {
+              index = idx;
+              break;
+          }
+        }
+        double transition_rate = sim2.getTransitionProbability(index);
+        System.out.printf("sim2.getTransitionProbability(commute[0].index) = ");
+        System.out.println(sim2.getTransitionProbability(index));
+        transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
+
+        // fire the commuted transition
+        sim2.manualTransition(index);
+        rollingStateIndex++;
+          
+        System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
+        System.out.println(sim2.getCurrentState());
+        System.out.println("State Values");
+        // (found at parser->State.java, line 41");
+        Object[] templist = sim2.getCurrentState().varValues;
+        int[] vv = new int[templist.length]; // vv for varValues
+        for (int i = 0; i < templist.length; i++) {
+          // Check if Object vv is an Integer or a String
+          // System.out.println(templist[i].getClass().getName());
+          if (templist[i] instanceof Integer) {
+            vv[i] = (Integer) templist[i];
+          }
+          else if (templist[i] instanceof String) {
+            vv[i] = Integer.parseInt((String) templist[i]);
+          }
+          // vv[i] = Integer.valueOf((String) templist[i]);
+        }
+        // add the COMMUTED TRANSITION state (state n+1)
+        states.add(new State(rollingStateIndex, new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]}, 0.0));
+
+
+        for (int tdx=0; tdx < tr_st.length; tdx++) { 
+          index = 0;
+          // get the total rate
+          for (int idx=0; idx < sim2.getNumTransitions(); idx++) {
+            states.get(rollingStateIndex).addRate(sim2.getTransitionProbability(idx));
+            System.out.println(String.format("Rate: %.6f at index %d",sim2.getTransitionProbability(idx),idx));
+            // todo: save the total outgoing rate in a state object
+            // todo: make states an object, not an int array.
+          } 
+          // the loops are separate because we want to get the total probability.
+          // we stop the next loop once we find our transition.
+          for (int idx=0; idx < sim2.getNumTransitions(); idx++) {
+            String s1 = String.format("[%s]",tr_st[tdx]);
+            String s2 = sim2.getTransitionActionString(idx);
+            if (s1.equalsIgnoreCase(s2)) {
+                index = idx;
+                break;
+            }
+          }
+          double transition_rate = sim2.getTransitionProbability(index);
+          System.out.printf("sim2.getTransitionProbability() = ");
+          System.out.println(sim2.getTransitionProbability(index));
+          transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
+
+          // fire the transition
+          sim2.manualTransition(index);
+          rollingStateIndex++;
+          
+          System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
+          System.out.println(sim2.getCurrentState());
+          System.out.println("State Values");
+          // (found at parser->State.java, line 41");
+          Object[] templist = sim2.getCurrentState().varValues;
+          int[] vv1 = new int[templist.length]; // vv1 for varValues
+          for (int i = 0; i < templist.length; i++) {
+            // Check if Object vv1 is an Integer or a String
+            // System.out.println(templist[i].getClass().getName());
+            // System.out.println(templist[i]);
+            if (templist[i] instanceof Integer) {
+              vv1[i] = (Integer) templist[i];
+            }
+            else if (templist[i] instanceof String) {
+              vv1[i] = Integer.parseInt((String) templist[i]);
+            }
+            // vv1[i] = Integer.valueOf((String) templist[i]);
+          }
+          states.add(new State(rollingStateIndex, new int[]{vv1[0],vv1[1],vv1[2],vv1[3],vv1[4],vv1[5]}, 0.0));
+          // System.out.println(Arrays.toString(vv1));
+        }
 
         // Print the states along the original path
         System.out.println("States along Original Path");
@@ -294,11 +406,7 @@ public class SimulateModel
         }
         System.out.println("Original Path Transitions Complete.");
 
-        
-        // print the full trace
-        // sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
-        // print the state (hopefully)
-        // System.out.println(sim.getPath());
+
       }
       // if it's just a regular model
       else {
