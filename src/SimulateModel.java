@@ -282,7 +282,7 @@ public class SimulateModel
           commutedStates.add(new State(-2, new int[]{vval_c[0],vval_c[1],vval_c[2],vval_c[3],vval_c[4],vval_c[5]}, 0.0));
 
           // todo: check the index I'm backtracking to
-          sim.backtrackTo(rollingStateIndex-1)
+          sim.backtrackTo(rollingStateIndex-1);
           
 
           index=0;
