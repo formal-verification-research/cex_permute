@@ -451,7 +451,7 @@ public class SimulateModel
         }
 
         // check that t_alpha truly is independent
-        boolean commutedCheck = false; // todo: false was to debug. set to true;
+        boolean commutedCheck = true; // todo: false was to debug. set to true;
 
         for (int k = 1; k < commutedStates.size(); k++) {
           if (!states.get(n+k).equals(commutedStates.get(k))) {
