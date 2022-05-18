@@ -493,11 +493,15 @@ public class SimulateModel
           }
         }
 
-        // if the transition was not independent, remove the extra path.
+        // if the transition was not independent, remove t_alpha at that location.
         if (!commutedCheck) {
           System.out.println("ERROR: TRANSITION WAS NOT ACTUALLY INDEPENDENT!!!");
-          for (int i = n; i < states.size(); ) {
-            states.remove(i);
+          for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < states.get(i).outgoing.size(); j++) {
+              if (states.get(i).outgoing.get(j).transitionName.contains(commute[0])) {
+                states.get(i).outgoing.remove(j);
+              }
+            }
           }
         }
 
@@ -523,8 +527,6 @@ public class SimulateModel
           }
         }
         System.out.println("Path Transitions Complete.");
-
-
       }
       // if it's just a regular model
       else {
