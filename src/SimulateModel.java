@@ -357,13 +357,13 @@ public class SimulateModel
 
         // notes on backtrack to:
         // cannot be rollingStateIndex here (nothing index 20)
-        //
+        // state 0 is initial state; so it's offset by -1 from rollingStateIndex.
 
-        // test this backtrack to 2
-        for (int i = rollingStateIndex-1; i >= 0; i--) {
-          sim.backtrackTo(i);
-          System.out.println(String.format("BacktrackTo %d yields state %s", i, sim.getCurrentState()));
-        }
+        // test this backtrack
+        // for (int i = rollingStateIndex-1; i >= 0; i--) {
+        //   sim.backtrackTo(i);
+        //   System.out.println(String.format("BacktrackTo %d yields state %s", i, sim.getCurrentState()));
+        // }
 
 
         // sim.backtrackTo(2);
