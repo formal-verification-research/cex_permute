@@ -537,7 +537,7 @@ public class SimulateModel
 
         traStr = "";
         staStr = "";
-        traStr += (states.size() + " " numTransitions + "\n");
+        traStr += (states.size() + " " + transitionCount + "\n");
         staStr += "(";
         String varName = "";
         int vari = 0;
