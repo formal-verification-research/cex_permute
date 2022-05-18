@@ -313,6 +313,12 @@ public class SimulateModel
                 break;
             }
           }
+          System.out.printf("Available transitions here: ");
+          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
+            String s2 = sim.getTransitionActionString(idx);
+            System.out.printf(String.format("%s ", s2));
+          }
+          System.out.println("");
           // double transition_rate = sim.getTransitionProbability(index);
           // System.out.printf("sim.getTransitionProbability() = ");
           // System.out.println(sim.getTransitionProbability(index));
@@ -324,9 +330,9 @@ public class SimulateModel
           sim.manualTransition(index);
           rollingStateIndex++;
           
-          System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
+          System.out.println(String.format("FIRST: State at tdx=%d, transition index=%d, transition name=%s", tdx, index, sim.getTransitionActionString(index)));
+          System.out.println("State Values afer firing transition");
           System.out.println(sim.getCurrentState());
-          System.out.println("State Values");
           // (found at parser->State.java, line 41");
           Object[] templist = sim.getCurrentState().varValues;
           int[] vv = new int[templist.length]; // vv for varValues
@@ -422,6 +428,12 @@ public class SimulateModel
                 break;
             }
           }
+          System.out.printf("Available transitions here 2: ");
+          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
+            String s2 = sim.getTransitionActionString(idx);
+            System.out.printf(String.format("%s ", s2));
+          }
+          System.out.println("");
           // transition_rate = sim2.getTransitionProbability(index);
           // System.out.printf("sim2.getTransitionProbability() = ");
           // System.out.println(sim2.getTransitionProbability(index));
@@ -432,7 +444,7 @@ public class SimulateModel
           sim2.manualTransition(index);
           rollingStateIndex++;
           
-          System.out.println(String.format("State at tdx=%d, transition index=%d:", tdx, index));
+          System.out.println(String.format("SECOND: State at tdx=%d, transition index=%d:", tdx, index));
           System.out.println(sim2.getCurrentState());
           System.out.println("State Values");
           // (found at parser->State.java, line 41");
