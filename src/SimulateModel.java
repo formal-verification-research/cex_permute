@@ -549,12 +549,11 @@ public class SimulateModel
         while (true) {
           varName = sim.getVariableName(vari);
           staStr += varName;
-          staStr += ",";
           if (sim.getVariableName(vari+1) == null) {
-            staStr += sim.getVariableName(vari+1);
             staStr += ")\n";
             break;
           }
+          staStr += ",";
           vari++;
         }
 
