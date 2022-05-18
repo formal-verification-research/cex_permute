@@ -330,9 +330,11 @@ public class SimulateModel
           states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
           // transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim.getTransitionActionString(index)));
 
+          System.out.println(String.format("CURRENT STATE C IS STATE %s", sim.getCurrentState()));
           // fire the transition
           sim.manualTransition(index);
           rollingStateIndex++;
+          System.out.println(String.format("CURRENT STATE D IS STATE %s", sim.getCurrentState()));
           
           System.out.println(String.format("FIRST: State at tdx=%d, transition index=%d, transition name=%s", tdx, index, sim.getTransitionActionString(index)));
           System.out.println("State Values afer firing transition");
