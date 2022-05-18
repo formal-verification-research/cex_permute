@@ -273,6 +273,7 @@ public class SimulateModel
             }
           }
           System.out.println(String.format("CURRENT STATE A IS STATE %s", sim.getCurrentState()));
+          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           sim.manualTransition(index);
           System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           System.out.println(String.format("CURRENT STATE B IS STATE %s", sim.getCurrentState()));
