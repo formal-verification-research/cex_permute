@@ -400,6 +400,7 @@ public class SimulateModel
         // transitions.add(new Transition(1,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
         
         // this needs to be before manualTransition
+        System.out.println("HERE");
         states.get(1).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index));
 
         // fire the commuted transition
