@@ -103,7 +103,7 @@ public class SimulateModel
     public double getAbsorbingRate() {
       double absorbRate = this.totalRate;
       for (int i = 0; i < outgoing.size(); i++) {
-        absorbRate -= outgoing.get(i).rate();
+        absorbRate -= outgoing.get(i).rate;
       }
       return absorbRate;
     }
