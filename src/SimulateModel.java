@@ -569,13 +569,13 @@ public class SimulateModel
           staStr += "\n";
         }
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter("model.sta"));
-        writer.write(staStr);
-        writer.close();
+        BufferedWriter staWriter = new BufferedWriter(new FileWriter("model.sta"));
+        staWriter.write(staStr);
+        staWriter.close();
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter("model.tra"));
-        writer.write(traStr);
-        writer.close();
+        BufferedWriter traWriter = new BufferedWriter(new FileWriter("model.tra"));
+        traWriter.write(traStr);
+        traWriter.close();
 
         // Print the states along the original path
         System.out.println("States along Original Path");
