@@ -359,7 +359,7 @@ public class SimulateModel
         // test this backtrack to 2
         for (int i = rollingStateIndex; i >= 0; i--) {
           sim.backtrackTo(i);
-          System.out.println(String.format("BacktrackTo %d yields state %s", i, sim.getCurrentState));
+          System.out.println(String.format("BacktrackTo %d yields state %s", i, sim.getCurrentState()));
         }
 
         return;
