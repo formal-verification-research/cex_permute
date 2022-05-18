@@ -45,7 +45,10 @@ if __name__ == "__main__":
 
   # Test the "build model" function
   buildmodel()
-  utils.printall("BUILT MODEL. NOW QUITTING.")
+  utils.printall("BUILT MODEL.")
+
+  # model check
+  # os.system("prism -importtrans model.tra -ctmc")
   quit()
 
   # Set up necessary folders
