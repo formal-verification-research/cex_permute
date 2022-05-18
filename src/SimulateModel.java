@@ -400,11 +400,11 @@ public class SimulateModel
         // transitions.add(new Transition(1,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
         
         // this needs to be before manualTransition
-        System.out.println("HERE");
-        states.get(1).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index));
-
-        // fire the commuted transition
-        System.out.println(String.format("COM FIRED %s (%d)", sim.getTransitionActionString(index), index));
+        // System.out.println("HERE");
+        // states.get(1).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index));
+        // we already added t_alpha here. There's no need to add it again like the line above.
+        // // fire the commuted transition
+        // System.out.println(String.format("COM FIRED %s (%d)", sim.getTransitionActionString(index), index));
         sim2.manualTransition(index);
         rollingStateIndex++;
 
