@@ -535,8 +535,8 @@ public class SimulateModel
 
         // write the sta and tra files in parallel to save time:
 
-        traStr = "";
-        staStr = "";
+        String traStr = "";
+        String staStr = "";
         traStr += (states.size() + " " + transitionCount + "\n");
         staStr += "(";
         String varName = "";
