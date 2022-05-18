@@ -362,7 +362,6 @@ public class SimulateModel
           System.out.println(String.format("BacktrackTo %d yields state %s", i, sim.getCurrentState()));
         }
 
-        return;
 
         // sim.backtrackTo(2);
         // System.out.println(sim.getCurrentState());
