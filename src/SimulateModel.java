@@ -233,7 +233,9 @@ public class SimulateModel
 
         // states.add(new int[]{-1,-1,-1,-1,-1,-1});
         states.add(new State(rollingStateIndex, new int[]{-1,-1,-1,-1,-1,-1}, 0.0));
-        rollingStateIndex++;
+        
+        // explicitly set index to 1 for initial state
+        rollingStateIndex = 1;
 
         // Make the initial state (should be currentstate at this point)
         Object[] tl = sim.getCurrentState().varValues;
@@ -251,13 +253,6 @@ public class SimulateModel
         // states.add(new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]});
         states.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]}, 0.0));
         commutedStates.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]}, 0.0));
-        
-        /*
-          Order of path analysis:
-          0) Build absorbing state, gathering its probability at each step
-          1) Go along the path firing t_alpha from s_i
-          2) Go along the original path, getting the probability of t_alpha
-        */
 
         int index;
         // walk along the original path, getting probabilities as we go
@@ -279,6 +274,7 @@ public class SimulateModel
           }
           System.out.println(String.format("CURRENT STATE A IS STATE %s", sim.getCurrentState()));
           sim.manualTransition(index);
+          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           System.out.println(String.format("CURRENT STATE B IS STATE %s", sim.getCurrentState()));
           // Add t_alpha in a way that we can remove it later if needed
           // states.get(rollingStateIndex).addTransition(int to, double rate, int transitionIndex, String transitionName)
@@ -317,12 +313,6 @@ public class SimulateModel
                 break;
             }
           }
-          System.out.printf("Available transitions here: ");
-          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            String s2 = sim.getTransitionActionString(idx);
-            System.out.printf(String.format("%s ", s2));
-          }
-          System.out.println("");
           // double transition_rate = sim.getTransitionProbability(index);
           // System.out.printf("sim.getTransitionProbability() = ");
           // System.out.println(sim.getTransitionProbability(index));
@@ -333,6 +323,7 @@ public class SimulateModel
           System.out.println(String.format("CURRENT STATE C IS STATE %s", sim.getCurrentState()));
           // fire the transition
           sim.manualTransition(index);
+          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           rollingStateIndex++;
           System.out.println(String.format("CURRENT STATE D IS STATE %s", sim.getCurrentState()));
           
@@ -395,6 +386,7 @@ public class SimulateModel
 
         // fire the commuted transition
         sim2.manualTransition(index);
+        System.out.println(String.format("COM FIRED %s (%d)", sim.getTransitionActionString(index), index));
         rollingStateIndex++;
 
         // (found at parser->State.java, line 41");
@@ -434,12 +426,6 @@ public class SimulateModel
                 break;
             }
           }
-          System.out.printf("Available transitions here 2: ");
-          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            String s2 = sim.getTransitionActionString(idx);
-            System.out.printf(String.format("%s ", s2));
-          }
-          System.out.println("");
           // transition_rate = sim2.getTransitionProbability(index);
           // System.out.printf("sim2.getTransitionProbability() = ");
           // System.out.println(sim2.getTransitionProbability(index));
@@ -448,6 +434,7 @@ public class SimulateModel
 
           // fire the transition
           sim2.manualTransition(index);
+          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           rollingStateIndex++;
           
           System.out.println(String.format("SECOND: State at tdx=%d, transition index=%d:", tdx, index));
@@ -562,6 +549,7 @@ public class SimulateModel
           System.out.printf("\n");
           pathProbability *= transition_probability;
           sim.manualTransition(index);
+          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
         }
 
         Expression target = prism.parsePropertiesString(x_p).getProperty(0);
