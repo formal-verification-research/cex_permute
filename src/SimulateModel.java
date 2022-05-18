@@ -355,6 +355,9 @@ public class SimulateModel
           // System.out.println(Arrays.toString(vv));
         }
 
+        // notes on backtrack to:
+        // cannot be rollingStateIndex here (nothing index 20)
+        //
 
         // test this backtrack to 2
         for (int i = rollingStateIndex; i >= 0; i--) {
