@@ -402,8 +402,8 @@ public class SimulateModel
         states.get(1).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index));
 
         // fire the commuted transition
-        sim2.manualTransition(index);
         System.out.println(String.format("COM FIRED %s (%d)", sim.getTransitionActionString(index), index));
+        sim2.manualTransition(index);
         rollingStateIndex++;
 
         // (found at parser->State.java, line 41");
@@ -447,11 +447,12 @@ public class SimulateModel
           // System.out.printf("sim2.getTransitionProbability() = ");
           // System.out.println(sim2.getTransitionProbability(index));
           // transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
+          // needs to be before manualTransition
           states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index));
 
           // fire the transition
-          sim2.manualTransition(index);
           System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
+          sim2.manualTransition(index);
           rollingStateIndex++;
           
           System.out.println(String.format("SECOND: State at tdx=%d, transition index=%d:", tdx, index));
