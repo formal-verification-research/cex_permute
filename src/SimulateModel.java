@@ -97,10 +97,11 @@ public class SimulateModel
 
     public void addTransition(int to, double rate, int transitionIndex, String transitionName) {
       outgoing.add(new Transition(this.index, to, rate, transitionIndex, transitionName));
-      if (transitionName.contains("two")) {
-        System.out.println("CONTAINS TWO (WHAT THE HECK):");
-        System.out.println(this);
-      }
+      System.out.println("Added Transition " + outgoing.get(outgoing.size()-1) + " to " + this);
+
+      // if (transitionName.contains("two")) {
+      //   System.out.println("CONTAINS TWO (WHAT THE HECK):");
+      // }
     }
 
     // get the rate going into the absorbing state
