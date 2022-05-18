@@ -261,7 +261,7 @@ public class SimulateModel
           // get the total rate and store it in states
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
             states.get(rollingStateIndex).addRate(sim.getTransitionProbability(idx));
-            System.out.println(String.format("Available Transition Here: %s (%d)",sim.getTransitionActionString(idx), idx));
+            // System.out.println(String.format("Available Transition Here: %s (%d)",sim.getTransitionActionString(idx), idx));
           } 
           // get the value for the s_k' after firing t_alpha to cross-check later
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
@@ -272,14 +272,15 @@ public class SimulateModel
                 break;
             }
           }
-          System.out.println(String.format("CURRENT STATE A IS STATE %s", sim.getCurrentState()));
-          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
+          // System.out.println(String.format("CURRENT STATE A IS STATE %s", sim.getCurrentState()));
+          // System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
+          // need to add state before manualTransition because the transition probability index 
+          states.get(rollingStateIndex).addTransition(rollingStateIndex+n, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
           sim.manualTransition(index);
-          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
-          System.out.println(String.format("CURRENT STATE B IS STATE %s", sim.getCurrentState()));
+          // System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
+          // System.out.println(String.format("CURRENT STATE B IS STATE %s", sim.getCurrentState()));
           // Add t_alpha in a way that we can remove it later if needed
           // states.get(rollingStateIndex).addTransition(int to, double rate, int transitionIndex, String transitionName)
-          states.get(rollingStateIndex).addTransition(rollingStateIndex+n, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
           // get variable values to build the state
           Object[] templist_c = sim.getCurrentState().varValues;
           int[] vval_c = new int[templist_c.length]; // vval_c for varValues
@@ -298,9 +299,9 @@ public class SimulateModel
           commutedStates.add(new State(-2, new int[]{vval_c[0],vval_c[1],vval_c[2],vval_c[3],vval_c[4],vval_c[5]}, 0.0));
 
           // go back to the original path
-          System.out.println(String.format("AFTER T_ALPHA IS STATE %s", sim.getCurrentState()));
+          // System.out.println(String.format("AFTER T_ALPHA IS STATE %s", sim.getCurrentState()));
           sim.backtrackTo(rollingStateIndex-1);
-          System.out.println(String.format("BACKTRACKED TO STATE %s", sim.getCurrentState()));
+          // System.out.println(String.format("BACKTRACKED TO STATE %s", sim.getCurrentState()));
           
 
           index=0;
@@ -318,19 +319,23 @@ public class SimulateModel
           // System.out.printf("sim.getTransitionProbability() = ");
           // System.out.println(sim.getTransitionProbability(index));
           // states.get(rollingStateIndex).addTransition(int to, double rate, int transitionIndex, String transitionName)
+          
+          // this needs to fire before manualTransition
+          // todo: modularize this so much better oh my goodness
           states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
           // transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim.getTransitionActionString(index)));
 
-          System.out.println(String.format("CURRENT STATE C IS STATE %s", sim.getCurrentState()));
+          // System.out.println(String.format("CURRENT STATE C IS STATE %s", sim.getCurrentState()));
           // fire the transition
           sim.manualTransition(index);
-          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
+          // System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           rollingStateIndex++;
-          System.out.println(String.format("CURRENT STATE D IS STATE %s", sim.getCurrentState()));
+          // System.out.println(String.format("CURRENT STATE D IS STATE %s", sim.getCurrentState()));
           
-          System.out.println(String.format("FIRST: State at tdx=%d, transition index=%d, transition name=%s", tdx, index, sim.getTransitionActionString(index)));
-          System.out.println("State Values afer firing transition");
-          System.out.println(sim.getCurrentState());
+          // System.out.println(String.format("FIRST: State at tdx=%d, transition index=%d, transition name=%s", tdx, index, sim.getTransitionActionString(index)));
+          // System.out.println("State Values afer firing transition");
+          // System.out.println(sim.getCurrentState());
+
           // (found at parser->State.java, line 41");
           Object[] templist = sim.getCurrentState().varValues;
           int[] vv = new int[templist.length]; // vv for varValues
@@ -350,10 +355,15 @@ public class SimulateModel
           // System.out.println(Arrays.toString(vv));
         }
 
-        System.out.println("BACKTRACKING!!! to state 2");
 
-        sim.backtrackTo(2);
-        System.out.println(sim.getCurrentState());
+        // test this backtrack to 2
+        for (int i = rollingStateIndex; i >= 0; i--) {
+          sim.backtrackTo(i);
+          System.out.println(String.format("BacktrackTo %d yields state %s", i, sim.getCurrentState));
+        }
+
+        // sim.backtrackTo(2);
+        // System.out.println(sim.getCurrentState());
 
         // start over and walk along the commuted path, doing the same thing.
 
@@ -383,6 +393,8 @@ public class SimulateModel
         // System.out.println(sim2.getTransitionProbability(index));
         // since it is from the initial state, go from 1 to rollingStateIndex+1 (which should be n+1)
         // transitions.add(new Transition(1,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
+        
+        // this needs to be before manualTransition
         states.get(1).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index));
 
         // fire the commuted transition
@@ -413,7 +425,7 @@ public class SimulateModel
           // get the total rate
           for (int idx=0; idx < sim2.getNumTransitions(); idx++) {
             states.get(rollingStateIndex).addRate(sim2.getTransitionProbability(idx));
-            System.out.println(String.format("Rate: %.6f at index %d",sim2.getTransitionProbability(idx),idx));
+            // System.out.println(String.format("Rate: %.6f at index %d",sim2.getTransitionProbability(idx),idx));
             // todo: save the total outgoing rate in a state object
             // todo: make states an object, not an int array.
           } 
