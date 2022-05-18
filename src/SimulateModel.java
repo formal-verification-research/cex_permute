@@ -277,9 +277,9 @@ public class SimulateModel
                 break;
             }
           }
-          System.out.println(String.format("CURRENT STATE A IS STATE %s", sim.getCurrentState());
+          System.out.println(String.format("CURRENT STATE A IS STATE %s", sim.getCurrentState()));
           sim.manualTransition(index);
-          System.out.println(String.format("CURRENT STATE B IS STATE %s", sim.getCurrentState());
+          System.out.println(String.format("CURRENT STATE B IS STATE %s", sim.getCurrentState()));
           // Add t_alpha in a way that we can remove it later if needed
           // states.get(rollingStateIndex).addTransition(int to, double rate, int transitionIndex, String transitionName)
           states.get(rollingStateIndex).addTransition(rollingStateIndex+n, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
@@ -301,9 +301,9 @@ public class SimulateModel
           commutedStates.add(new State(-2, new int[]{vval_c[0],vval_c[1],vval_c[2],vval_c[3],vval_c[4],vval_c[5]}, 0.0));
 
           // go back to the original path
-          System.out.println(String.format("AFTER T_ALPHA IS STATE %s", sim.getCurrentState());
+          System.out.println(String.format("AFTER T_ALPHA IS STATE %s", sim.getCurrentState()));
           sim.backtrackTo(rollingStateIndex-1);
-          System.out.println(String.format("BACKTRACKED TO STATE %s", sim.getCurrentState());
+          System.out.println(String.format("BACKTRACKED TO STATE %s", sim.getCurrentState()));
           
 
           index=0;
