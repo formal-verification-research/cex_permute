@@ -56,6 +56,10 @@ public class SimulateModel
       return this.from + " " + this.to + " " + this.rate + " (" + this.transitionIndex + "_" + this.transitionName;
     }
 
+    public String prism() {
+      return this.from + " " + this.to + " " + this.rate;
+    }
+
   }
 
   public class State {
@@ -80,6 +84,15 @@ public class SimulateModel
       }
       temp += ("] (" + totalRate + ")");
       return temp;
+    }
+
+    public String prism() {
+      String temp = index + ":(";
+      for (int i=0; i<vars.length; i++) {
+        if (i>0) temp += ",";
+        temp += vars[i]; 
+      }
+      return temp + ")";
     }
 
     public double addRate(double p) {
@@ -227,6 +240,7 @@ public class SimulateModel
 
         // set up a rolling state index to add new states
         int rollingStateIndex = 0;
+        int transitionCount = 0;
 
         // Make the absorbing state
         // TODO: For now, we just hard-coded the absorbing state to match 
@@ -277,6 +291,7 @@ public class SimulateModel
           // System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           // need to add state before manualTransition because the transition probability index 
           states.get(rollingStateIndex).addTransition(rollingStateIndex+n, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
+          transitionCount++;
           sim.manualTransition(index);
           // System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           // System.out.println(String.format("CURRENT STATE B IS STATE %s", sim.getCurrentState()));
@@ -324,6 +339,7 @@ public class SimulateModel
           // this needs to fire before manualTransition
           // todo: modularize this so much better oh my goodness
           states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
+          transitionCount++;
           // transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim.getTransitionActionString(index)));
 
           // System.out.println(String.format("CURRENT STATE C IS STATE %s", sim.getCurrentState()));
@@ -451,6 +467,7 @@ public class SimulateModel
           // transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
           // needs to be before manualTransition
           states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index));
+          transitionCount++;
 
           // fire the transition
           System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
@@ -494,6 +511,8 @@ public class SimulateModel
         }
 
         // if the transition was not independent, remove t_alpha at that location.
+        // todo: check that this works. for now, the six_reaction model passes the check
+          // so there's no need to worry about removing t_alpha when it's dependent.
         if (!commutedCheck) {
           System.out.println("ERROR: TRANSITION WAS NOT ACTUALLY INDEPENDENT!!!");
           for (int i = 1; i <= n; i++) {
@@ -504,6 +523,56 @@ public class SimulateModel
             }
           }
         }
+
+        // get the absorbing state transition information
+        double absorbRate = 0.0;
+        for (int i = 0; i < states.size(); i++) {
+          absorbRate = states.get(i).getAbsorbingRate();
+          states.get(i).addTransition(0, states.get(i).getAbsorbingRate(), -1, "ABSORB");
+          transitionCount++;
+          // int to, double rate, int transitionIndex, String transitionName
+        }
+
+        // write the sta and tra files in parallel to save time:
+
+        traStr = "";
+        staStr = "";
+        traStr += (states.size() + " " numTransitions + "\n");
+        staStr += "(";
+        String varName = "";
+        int vari = 0;
+
+        // get variable names for sta
+        while (true) {
+          varName = sim.getVariableName(vari);
+          staStr += varName;
+          staStr += ",";
+          if (sim.getVariableName(vari+1) == null) {
+            staStr += sim.getVariableName(vari+1);
+            staStr += ")\n";
+            break;
+          }
+          vari++;
+        }
+
+        // get state and transition info by looping through states
+        for (int i = 0; i < states.size(); i++) {
+          for (int j = 0; j < states.get(i).outgoing.size(); j++) {
+            System.out.println(String.format("%2d -- %s", i, states.get(i).outgoing.get(j)));
+            traStr += states.get(i).outgoing.get(j).prism();
+            traStr += "\n";
+          }
+          staStr += states.get(i).prism();
+          staStr += "\n";
+        }
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter("model.sta"));
+        writer.write(staStr);
+        writer.close();
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter("model.tra"));
+        writer.write(traStr);
+        writer.close();
 
         // Print the states along the original path
         System.out.println("States along Original Path");
@@ -527,6 +596,10 @@ public class SimulateModel
           }
         }
         System.out.println("Path Transitions Complete.");
+
+        
+
+
       }
       // if it's just a regular model
       else {
