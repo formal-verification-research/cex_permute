@@ -298,7 +298,7 @@ public class SimulateModel
 
           // go back to the original path
           System.out.println(String.format("AFTER T_ALPHA IS STATE %s", sim.getCurrentState()));
-          sim.backtrackTo(rollingStateIndex-1);
+          sim.backtrackTo(rollingStateIndex);
           System.out.println(String.format("BACKTRACKED TO STATE %s", sim.getCurrentState()));
           
 
