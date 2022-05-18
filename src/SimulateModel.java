@@ -276,7 +276,7 @@ public class SimulateModel
           sim.manualTransition(index);
           // Add t_alpha in a way that we can remove it later if needed
           // states.get(rollingStateIndex).addTransition(int to, double rate, int transitionIndex, String transitionName)
-          states.get(rollingStateIndex).addTransition(rollingStateIndex+n, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index))
+          states.get(rollingStateIndex).addTransition(rollingStateIndex+n, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
           // get variable values to build the state
           Object[] templist_c = sim.getCurrentState().varValues;
           int[] vval_c = new int[templist_c.length]; // vval_c for varValues
@@ -313,7 +313,7 @@ public class SimulateModel
           // System.out.printf("sim.getTransitionProbability() = ");
           // System.out.println(sim.getTransitionProbability(index));
           // states.get(rollingStateIndex).addTransition(int to, double rate, int transitionIndex, String transitionName)
-          states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index))
+          states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
           // transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim.getTransitionActionString(index)));
 
           // fire the transition
@@ -375,7 +375,7 @@ public class SimulateModel
         // System.out.println(sim2.getTransitionProbability(index));
         // since it is from the initial state, go from 1 to rollingStateIndex+1 (which should be n+1)
         // transitions.add(new Transition(1,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
-        states.get(1).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index))
+        states.get(1).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index));
 
         // fire the commuted transition
         sim2.manualTransition(index);
@@ -422,7 +422,7 @@ public class SimulateModel
           // System.out.printf("sim2.getTransitionProbability() = ");
           // System.out.println(sim2.getTransitionProbability(index));
           // transitions.add(new Transition(rollingStateIndex,rollingStateIndex+1,transition_rate,index,sim2.getTransitionActionString(index)));
-          states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index))
+          states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index));
 
           // fire the transition
           sim2.manualTransition(index);
