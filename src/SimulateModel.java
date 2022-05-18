@@ -261,7 +261,7 @@ public class SimulateModel
           // get the total rate and store it in states
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
             states.get(rollingStateIndex).addRate(sim.getTransitionProbability(idx));
-            // System.out.println(String.format("Rate: %.6f at index %d",sim.getTransitionProbability(idx),idx));
+            System.out.println(String.format("Available Transition Here: %s (%d)",sim.getTransitionActionString(idx), idx));
           } 
           // get the value for the s_k' after firing t_alpha to cross-check later
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
@@ -298,7 +298,7 @@ public class SimulateModel
 
           // go back to the original path
           System.out.println(String.format("AFTER T_ALPHA IS STATE %s", sim.getCurrentState()));
-          sim.backtrackTo(rollingStateIndex);
+          sim.backtrackTo(rollingStateIndex-1);
           System.out.println(String.format("BACKTRACKED TO STATE %s", sim.getCurrentState()));
           
 
