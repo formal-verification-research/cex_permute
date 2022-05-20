@@ -1,21 +1,18 @@
-r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_five	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_one	r_four	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_one	r_six	r_four	
-r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_five	r_four	r_six	r_one	r_four	
+r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	r_six	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_one	r_four	action,step,time,s1,s2,s3,s4,s5,s6	
+r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_six	r_four	r_one	action,step,time,s1,s2,s3,s4,s5,s6	
