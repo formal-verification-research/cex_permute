@@ -250,7 +250,8 @@ public class SimulateModel
         // the six-reaction model. Eventually fix this with minimum value - 1.
 
         // states.add(new int[]{-1,-1,-1,-1,-1,-1});
-        states.add(new State(rollingStateIndex, new int[]{-1,-1,-1,-1,-1,-1}, 0.0));
+        // NOT AN ABSORBING STATE. NOW, STATE 0 IS JUST A FILLER.
+        states.add(new State(rollingStateIndex, new int[]{-5,-5,-5,-5,-5,-5}, 0.0));
         
         // explicitly set index to 1 for initial state
         rollingStateIndex = 1;
@@ -527,12 +528,17 @@ public class SimulateModel
           }
         }
 
+        rollingStateIndex++;
+
+        int absorbIndex = rollingStateIndex;
+        states.add(new State(absorbIndex, new int[]{-1,-1,-1,-1,-1,-1}, 0.0));
+
         // get the absorbing state transition information
-        System.out.println("Absorbing Index: " + rollingStateIndex);
+        System.out.println("Absorbing Index: " + absorbIndex);
         double absorbRate = 0.0;
         for (int i = 0; i < states.size(); i++) {
           absorbRate = states.get(i).getAbsorbingRate();
-          states.get(i).addTransition(rollingStateIndex, states.get(i).getAbsorbingRate(), -1, "ABSORB");
+          states.get(i).addTransition(absorbIndex, states.get(i).getAbsorbingRate(), -1, "ABSORB");
           transitionCount++;
           // int to, double rate, int transitionIndex, String transitionName
         }
@@ -559,8 +565,9 @@ public class SimulateModel
         }
 
         // get state and transition info by looping through states
-        // setup state 1 as state 0 first
-        for (int i = 0; i < states.size(); i++) {
+        // state 0 is a filler state to make for easier math.
+        // thus, start loop at index 1, not 0
+        for (int i = 1; i < states.size(); i++) {
           for (int j = 0; j < states.get(i).outgoing.size(); j++) {
             System.out.println(String.format("%2d -- %s", i, states.get(i).outgoing.get(j)));
             traStr += states.get(i).outgoing.get(j).prism();
