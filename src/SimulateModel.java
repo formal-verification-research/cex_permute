@@ -60,7 +60,8 @@ public class SimulateModel
     }
 
     public String prism() {
-      return this.from + " " + this.to + " " + this.rate;
+      // subtract 1 from the indices because of the prism quirk
+      return (this.from-1) + " " + (this.to-1) + " " + this.rate;
     }
 
   }
