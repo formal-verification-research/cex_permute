@@ -536,7 +536,8 @@ public class SimulateModel
         // get the absorbing state transition information
         System.out.println("Absorbing Index: " + absorbIndex);
         double absorbRate = 0.0;
-        for (int i = 0; i < states.size(); i++) {
+        // don't self-loop to absorbing state
+        for (int i = 1; i < states.size()-1; i++) {
           absorbRate = states.get(i).getAbsorbingRate();
           states.get(i).addTransition(absorbIndex, states.get(i).getAbsorbingRate(), -1, "ABSORB");
           transitionCount++;
@@ -547,7 +548,7 @@ public class SimulateModel
 
         String traStr = "";
         String staStr = "";
-        traStr += (states.size() + " " + transitionCount + "\n");
+        traStr += ((states.size()-1) + " " + transitionCount + "\n");
         staStr += "(";
         String varName = "";
         int vari = 0;
