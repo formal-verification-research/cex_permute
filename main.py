@@ -47,6 +47,9 @@ if __name__ == "__main__":
   buildmodel()
   utils.printall("BUILT MODEL.")
 
+  os.system("prism -importmodel model.tra,sta -exportmodel out.tra,sta,lab -ctmc pro.csl")
+  utils.printall("FINISHED PRISM")
+
   # model check
   # os.system("prism -importtrans model.tra -ctmc")
   quit()

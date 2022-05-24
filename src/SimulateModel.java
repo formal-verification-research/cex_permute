@@ -90,7 +90,7 @@ public class SimulateModel
     }
 
     public String prism() {
-      String temp = index + ":(";
+      String temp = (index-1) + ":(";
       for (int i=0; i<vars.length; i++) {
         if (i>0) temp += ",";
         temp += vars[i]; 
@@ -528,10 +528,11 @@ public class SimulateModel
         }
 
         // get the absorbing state transition information
+        System.out.println("Absorbing Index: " + rollingStateIndex)
         double absorbRate = 0.0;
         for (int i = 0; i < states.size(); i++) {
           absorbRate = states.get(i).getAbsorbingRate();
-          states.get(i).addTransition(0, states.get(i).getAbsorbingRate(), -1, "ABSORB");
+          states.get(i).addTransition(rollingStateIndex, states.get(i).getAbsorbingRate(), -1, "ABSORB");
           transitionCount++;
           // int to, double rate, int transitionIndex, String transitionName
         }
@@ -558,6 +559,7 @@ public class SimulateModel
         }
 
         // get state and transition info by looping through states
+        // setup state 1 as state 0 first
         for (int i = 0; i < states.size(); i++) {
           for (int j = 0; j < states.get(i).outgoing.size(); j++) {
             System.out.println(String.format("%2d -- %s", i, states.get(i).outgoing.get(j)));
@@ -695,3 +697,7 @@ public class SimulateModel
     }
   }
 }
+
+
+// Maybe when we print we can just swap 0 and 1. That is, 0 is the initial state
+// and 1 is the absorbing state. ???
