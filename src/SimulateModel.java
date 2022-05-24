@@ -528,7 +528,7 @@ public class SimulateModel
         }
 
         // get the absorbing state transition information
-        System.out.println("Absorbing Index: " + rollingStateIndex)
+        System.out.println("Absorbing Index: " + rollingStateIndex);
         double absorbRate = 0.0;
         for (int i = 0; i < states.size(); i++) {
           absorbRate = states.get(i).getAbsorbingRate();
