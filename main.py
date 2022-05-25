@@ -47,7 +47,9 @@ if __name__ == "__main__":
   buildmodel()
   utils.printall("BUILT MODEL.")
 
-  os.system("prism -importmodel model.tra,sta -exportmodel out.tra,sta,lab -ctmc pro.csl")
+  #TODO: GENERATE LABEL FILE IN JAVA
+  # should match dummy.lab, with 40 replaced with 2*n
+  os.system("prism -importmodel model.tra,sta,lab -exportmodel out.tra,sta,lab -ctmc pro.csl > final_prism_report.txt")
   utils.printall("FINISHED PRISM")
 
   # model check
