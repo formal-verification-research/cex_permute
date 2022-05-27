@@ -641,7 +641,8 @@ public class SimulateModel
           index = 0;
           totalRate = 0.0;
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
+            // this line may have been causing issues -- I think I put it in the wrong loop
+            // System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
             System.out.printf("%s ", sim.getTransitionActionString(idx).replace("[","").replace("]",""));
             totalRate += sim.getTransitionProbability(idx);
           } // try combining these
