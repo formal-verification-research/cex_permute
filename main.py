@@ -26,9 +26,9 @@ import branch
 
 def buildmodel():
   # copy in the dummy file, for testing only.
-  with open("dummy_build_model.txt") as t:
-    with open("forprism.trace", "w") as p:
-      p.write(t.read())
+  # with open("dummy_build_model.txt") as t:
+  #   with open("forprism.trace", "w") as p:
+  #     p.write(t.read())
   try:
     os.system("make test")
   except:
@@ -44,17 +44,17 @@ if __name__ == "__main__":
   utils.cleanup()
 
   # Test the "build model" function
-  buildmodel()
-  utils.printall("BUILT MODEL.")
+  # buildmodel()
+  # utils.printall("BUILT MODEL.")
 
   #TODO: GENERATE LABEL FILE IN JAVA
   # should match dummy.lab, with 40 replaced with 2*n
-  os.system("prism -importmodel model.tra,sta,lab -exportmodel out.tra,sta,lab -ctmc pro.csl > final_prism_report.txt")
-  utils.printall("FINISHED PRISM")
+  # os.system("prism -importmodel model.tra,sta,lab -exportmodel out.tra,sta,lab -ctmc pro.csl > final_prism_report.txt")
+  # utils.printall("FINISHED PRISM")
 
   # model check
   # os.system("prism -importtrans model.tra -ctmc")
-  quit()
+  # quit()
 
   # Set up necessary folders
   if not os.path.exists("results"):
@@ -73,9 +73,30 @@ if __name__ == "__main__":
   prism_file = utils.get_prism_file()
   
   # Run ivy_check to get the seed counterexample
-  utils.printall("Running ivy_check on the model...")
   # ivyresult = ivy.check(ivy_file, temp_result)
+  
+  # get the seed path
+  utils.printall("Running ivy_check on the model...")
   ivy_path = ivy.check(ivy_file)
+
+  # get the enabled transitions
+  api_result = prism_api.getEnabledTransitions(ivy_path)
+
+  # find the intersection of the transitions
+  intersection = prism_api.get_intersection(api_result)
+
+  # print the output file
+  with open("forprism.trace", "w") as p:
+    p.write("BUILD_MODEL\n")
+    for i in range(0,len(intersection)):
+      if i>0:
+        p.write("\t")
+      p.write(intersection[i])
+    p.write("\n")
+    p.write(ivy_path)
+
+
+
 
   # Extract the transition path from the counterexample
   # print("Finding the counterexample transition path...")
@@ -84,22 +105,21 @@ if __name__ == "__main__":
   # with open("model.trace") as t:
   #   ivy_path = t.read() 
 
-  api_result = prism_api.getEnabledTransitions(ivy_path)
-  intersection = commute.commutePath(ivy_path, api_result, ivy_file, pathP)
+  # intersection = commute.commutePath(ivy_path, api_result, ivy_file, pathP)
   # pathP = commute.commutePath(ivy_path, pathP)
 
-  utils.printall("Finished Commuting. Probability now", pathP.prob)
+  # utils.printall("Finished Commuting. Probability now", pathP.prob)
   # input("\n\nCLICK ENTER TO PROCEED TO 1-TRANSITION SYSTEM\n\n")
 
   # Force an extra enabled transition from each state, try to get a path
-  utils.printall("Finding novel paths by branching out 1 transition")
+  # utils.printall("Finding novel paths by branching out 1 transition")
 
   # get the transitions in order
-  orig_path = ivy_path.split("\t")
+  # orig_path = ivy_path.split("\t")
 
   # clean up the list
-  while "" in orig_path:
-    orig_path.remove("")
+  # while "" in orig_path:
+  #   orig_path.remove("")
 
   # branch.branch(orig_path, api_result, intersection, ivy_file, pathP)
 
@@ -193,8 +213,8 @@ if __name__ == "__main__":
     
 
 
-  utils.printall(80*"=")
-  utils.printall("  Final Probability:", '%.10E' % pathP.prob)
+  # utils.printall(80*"=")
+  # utils.printall("  Final Probability:", '%.10E' % pathP.prob)
   utils.printall(80*"=")
   utils.printall("Exiting without error.")
   utils.printall(80*"=")
