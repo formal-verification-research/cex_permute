@@ -41,6 +41,8 @@ def get_intersection(trace):
                 curr_enabled.append(transition)
     
     # print(str(curr_enabled))
+    while ("" in curr_enabled):
+        curr_enabled.remove("")
     return curr_enabled
 
 
