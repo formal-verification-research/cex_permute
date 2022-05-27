@@ -1,7 +1,7 @@
 (javac -classpath "/usr/local/prism-src/prism/classes:/usr/local/prism-src/prism/lib/*:/usr/local/prism-src/prism/prism/classes:/usr/local/prism-src/prism/prism/lib/*" -d classes src/./SimulateModel.java)
 PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.SimulateModel bin/run
 Commutable Transitions seen by API: 
-0 _tr_
+0 _r_one_
 n (length of original path) = 20
 State 21 equals commuted state 1
 State 22 equals commuted state 2
@@ -29,10 +29,35 @@ Welcome to the counterexample permutation explorer.
  ********************************************************************************
 Running ivy_check on the model...
 NEW FILE IVY1
-ivy_check trace=true model.ivy > /tmp/tmp91bhua3v
+ivy_check trace=true model.ivy > /tmp/tmpsncut28v
 CLOSED FILE IVY1
 Getting enabled transitions
+Enabled transitions arePRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.SimulateModel bin/run
+19 length
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+r_one r_five r_six 
+r_one r_four 
+>> Path Reaches Target :)
+pathProbability 1.000000e+00
+
 Getting intersection of enabled transitions
+Intersection is ['r_one']
 Printing file to send to prism API
 Sending model to prism API
 Using PRISM to model check. See final_prism_report.txt
