@@ -80,12 +80,15 @@ if __name__ == "__main__":
   ivy_path = ivy.check(ivy_file)
 
   # get the enabled transitions
+  utils.printall("Getting enabled transitions")
   api_result = prism_api.getEnabledTransitions(ivy_path)
 
   # find the intersection of the transitions
+  utils.printall("Getting intersection of enabled transitions")
   intersection = prism_api.get_intersection(api_result)
 
   # print the output file
+  utils.printall("Printing file to send to prism API")
   with open("forprism.trace", "w") as p:
     p.write("BUILD_MODEL\n")
     for i in range(0,len(intersection)):
@@ -94,6 +97,15 @@ if __name__ == "__main__":
       p.write(intersection[i])
     p.write("\n")
     p.write(ivy_path)
+
+  # send the model to the api
+  utils.printall("Sending model to prism API")
+  buildmodel()
+
+  # model check it
+  utils.printall("Using PRISM to model check")
+  os.system("prism -importmodel model.tra,sta,lab -exportmodel out.tra,sta,lab -ctmc pro.csl > final_prism_report.txt")
+
 
 
 
@@ -230,4 +242,4 @@ if __name__ == "__main__":
   
   # Repeat with the new IVy model
 
-  utils.cleanup()
+  # utils.cleanup()
