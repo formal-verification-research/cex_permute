@@ -204,7 +204,7 @@ public class SimulateModel
         String x_commute = br.readLine();
         String[] commute = x_commute.split("\\s+");
         
-        System.out.println("Commutable Transitions: ");
+        System.out.println("Commutable Transitions seen by API: ");
         for (int cmx=0; cmx < commute.length; cmx++) {
           System.out.println(String.format("%d _%s_", cmx, commute[cmx]));
         }
@@ -216,10 +216,11 @@ public class SimulateModel
         int n = tr_st.length + 1;
         System.out.println("n (length of original path) = " + n);
 
-        System.out.println("Original Path with Indices: ");
-        for (int tdx=0; tdx < tr_st.length; tdx++) {
-          System.out.println(String.format("%d [%s]", tdx, tr_st[tdx]));
-        }
+        // Print original path with indices, for debugging
+        // System.out.println("Original Path with Indices: ");
+        // for (int tdx=0; tdx < tr_st.length; tdx++) {
+        //   System.out.println(String.format("%d [%s]", tdx, tr_st[tdx]));
+        // }
 
         // create a new path
         sim.createNewPath();
@@ -640,7 +641,7 @@ public class SimulateModel
           index = 0;
           totalRate = 0.0;
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            // System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
+            System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
             System.out.printf("%s ", sim.getTransitionActionString(idx).replace("[","").replace("]",""));
             totalRate += sim.getTransitionProbability(idx);
           } // try combining these
@@ -654,10 +655,11 @@ public class SimulateModel
           }
           double transition_probability = sim.getTransitionProbability(index) / totalRate;
           // System.out.printf("\n======= tr %s (%d) %e ===========\n\n", tr_st[tdx], index, transition_probability);
-          System.out.printf("\n");
+          // System.out.printf("\n");
           pathProbability *= transition_probability;
-          sim.manualTransition(index);
+          // print what we fired before we fire it
           System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
+          sim.manualTransition(index);
         }
 
         Expression target = prism.parsePropertiesString(x_p).getProperty(0);

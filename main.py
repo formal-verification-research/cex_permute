@@ -103,7 +103,7 @@ if __name__ == "__main__":
   buildmodel()
 
   # model check it
-  utils.printall("Using PRISM to model check")
+  utils.printall("Using PRISM to model check. See final_prism_report.txt")
   os.system("prism -importmodel model.tra,sta,lab -exportmodel out.tra,sta,lab -ctmc pro.csl > final_prism_report.txt")
 
 
