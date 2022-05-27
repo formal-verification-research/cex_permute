@@ -82,10 +82,12 @@ if __name__ == "__main__":
   # get the enabled transitions
   utils.printall("Getting enabled transitions")
   api_result = prism_api.getEnabledTransitions(ivy_path)
+  utils.printall("Enabled transitions are" + str(api_result))
 
   # find the intersection of the transitions
   utils.printall("Getting intersection of enabled transitions")
   intersection = prism_api.get_intersection(api_result)
+  utils.printall("Intersection is " + str(intersection))
 
   # print the output file
   utils.printall("Printing file to send to prism API")
