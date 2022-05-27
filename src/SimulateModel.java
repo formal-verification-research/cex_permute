@@ -114,7 +114,7 @@ public class SimulateModel
 
     public void addTransition(int to, double rate, int transitionIndex, String transitionName) {
       outgoing.add(new Transition(this.index, to, rate, transitionIndex, transitionName));
-      System.out.println("Added Transition " + outgoing.get(outgoing.size()-1) + " to " + this);
+      // System.out.println("Added Transition " + outgoing.get(outgoing.size()-1) + " to " + this);
 
       // if (transitionName.contains("two")) {
       //   System.out.println("CONTAINS TWO (WHAT THE HECK):");
@@ -658,7 +658,7 @@ public class SimulateModel
           // System.out.printf("\n");
           pathProbability *= transition_probability;
           // print what we fired before we fire it
-          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
+          // System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           sim.manualTransition(index);
         }
 
