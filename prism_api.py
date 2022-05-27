@@ -40,7 +40,7 @@ def get_intersection(trace):
             if transition in last_enabled:
                 curr_enabled.append(transition)
     
-    print(str(curr_enabled))
+    # print(str(curr_enabled))
     return curr_enabled
 
 
