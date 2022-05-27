@@ -1,0 +1,41 @@
+(javac -classpath "/usr/local/prism-src/prism/classes:/usr/local/prism-src/prism/lib/*:/usr/local/prism-src/prism/prism/classes:/usr/local/prism-src/prism/prism/lib/*" -d classes src/./SimulateModel.java)
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.SimulateModel bin/run
+Commutable Transitions seen by API: 
+0 _tr_
+n (length of original path) = 20
+State 21 equals commuted state 1
+State 22 equals commuted state 2
+State 23 equals commuted state 3
+State 24 equals commuted state 4
+State 25 equals commuted state 5
+State 26 equals commuted state 6
+State 27 equals commuted state 7
+State 28 equals commuted state 8
+State 29 equals commuted state 9
+State 30 equals commuted state 10
+State 31 equals commuted state 11
+State 32 equals commuted state 12
+State 33 equals commuted state 13
+State 34 equals commuted state 14
+State 35 equals commuted state 15
+State 36 equals commuted state 16
+State 37 equals commuted state 17
+State 38 equals commuted state 18
+State 39 equals commuted state 19
+Absorbing Index: 41
+Path Transitions Complete.
+******************************************************************************** 
+Welcome to the counterexample permutation explorer.
+ ********************************************************************************
+Running ivy_check on the model...
+NEW FILE IVY1
+ivy_check trace=true model.ivy > /tmp/tmp91bhua3v
+CLOSED FILE IVY1
+Getting enabled transitions
+Getting intersection of enabled transitions
+Printing file to send to prism API
+Sending model to prism API
+Using PRISM to model check. See final_prism_report.txt
+================================================================================
+Exiting without error.
+================================================================================

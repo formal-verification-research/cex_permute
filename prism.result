@@ -1,4 +1,51 @@
-PRISM_DIR=../prism PRISM_MAINCLASS=simulate.SimulateModel bin/run
-sim.getCurrentState
-(1,50,0,1,50,0)
-parser.State
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.SimulateModel bin/run
+19 length
+tr 0: [r_one] 50.000000
+r_one tr 1: [r_four] 50.000000
+r_four tr 0: [r_one] 50.000000
+r_one tr 1: [r_five] 1.000000
+r_five tr 2: [r_six] 0.100000
+r_six tr 0: [r_one] 51.000000
+r_one tr 1: [r_four] 49.000000
+r_four tr 0: [r_one] 51.000000
+r_one tr 1: [r_five] 1.000000
+r_five tr 2: [r_six] 0.100000
+r_six tr 0: [r_one] 52.000000
+r_one tr 1: [r_four] 48.000000
+r_four tr 0: [r_one] 52.000000
+r_one tr 1: [r_five] 1.000000
+r_five tr 2: [r_six] 0.100000
+r_six tr 0: [r_one] 53.000000
+r_one tr 1: [r_four] 47.000000
+r_four tr 0: [r_one] 53.000000
+r_one tr 1: [r_five] 1.000000
+r_five tr 2: [r_six] 0.100000
+r_six tr 0: [r_one] 54.000000
+r_one tr 1: [r_four] 46.000000
+r_four tr 0: [r_one] 54.000000
+r_one tr 1: [r_five] 1.000000
+r_five tr 2: [r_six] 0.100000
+r_six tr 0: [r_one] 55.000000
+r_one tr 1: [r_four] 45.000000
+r_four tr 0: [r_one] 55.000000
+r_one tr 1: [r_five] 1.000000
+r_five tr 2: [r_six] 0.100000
+r_six tr 0: [r_one] 56.000000
+r_one tr 1: [r_four] 44.000000
+r_four tr 0: [r_one] 56.000000
+r_one tr 1: [r_five] 1.000000
+r_five tr 2: [r_six] 0.100000
+r_six tr 0: [r_one] 57.000000
+r_one tr 1: [r_four] 43.000000
+r_four tr 0: [r_one] 57.000000
+r_one tr 1: [r_five] 1.000000
+r_five tr 2: [r_six] 0.100000
+r_six tr 0: [r_one] 58.000000
+r_one tr 1: [r_four] 42.000000
+r_four tr 0: [r_one] 58.000000
+r_one tr 1: [r_five] 1.000000
+r_five tr 2: [r_six] 0.100000
+r_six tr 0: [r_one] 59.000000
+r_one tr 1: [r_four] 41.000000
+r_four >> Path Reaches Target :)
+pathProbability 8.042021e-29
