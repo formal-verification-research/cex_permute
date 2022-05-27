@@ -476,13 +476,13 @@ public class SimulateModel
           transitionCount++;
 
           // fire the transition
-          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
+          // System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           sim2.manualTransition(index);
           rollingStateIndex++;
           
-          System.out.println(String.format("SECOND: State at tdx=%d, transition index=%d:", tdx, index));
-          System.out.println(sim2.getCurrentState());
-          System.out.println("State Values");
+          // System.out.println(String.format("SECOND: State at tdx=%d, transition index=%d:", tdx, index));
+          // System.out.println(sim2.getCurrentState());
+          // System.out.println("State Values");
           // (found at parser->State.java, line 41");
           Object[] templist1 = sim2.getCurrentState().varValues;
           int[] vv1 = new int[templist1.length]; // vv1 for varValues
@@ -572,7 +572,7 @@ public class SimulateModel
         // thus, start loop at index 1, not 0
         for (int i = 1; i < states.size(); i++) {
           for (int j = 0; j < states.get(i).outgoing.size(); j++) {
-            System.out.println(String.format("%2d -- %s", i, states.get(i).outgoing.get(j)));
+            // System.out.println(String.format("%2d -- %s", i, states.get(i).outgoing.get(j)));
             traStr += states.get(i).outgoing.get(j).prism();
             traStr += "\n";
           }
@@ -588,27 +588,27 @@ public class SimulateModel
         traWriter.write(traStr);
         traWriter.close();
 
-        // Print the states along the original path
-        System.out.println("States along Original Path");
-        for (int i = 0; i < states.size(); i++) {
-          System.out.println(states.get(i));
-        }
-        System.out.println("Original Path States Complete.");
+        // Print the states along the original path for debugging
+        // System.out.println("States along Original Path");
+        // for (int i = 0; i < states.size(); i++) {
+        //   System.out.println(states.get(i));
+        // }
+        // System.out.println("Original Path States Complete.");
 
-        // Print the states along the commuted check path
-        System.out.println("States along Commuted Check Path");
-        for (int i = 0; i < commutedStates.size(); i++) {
-          System.out.println(commutedStates.get(i));
-        }
-        System.out.println("Commuted Check Path States Complete.");
+        // // Print the states along the commuted check path
+        // System.out.println("States along Commuted Check Path");
+        // for (int i = 0; i < commutedStates.size(); i++) {
+        //   System.out.println(commutedStates.get(i));
+        // }
+        // System.out.println("Commuted Check Path States Complete.");
 
-        // Print the transitions along the original path
-        System.out.println("Transitions along Original Path");
-        for (int i = 0; i < states.size(); i++) {
-          for (int j = 0; j < states.get(i).outgoing.size(); j++) {
-            System.out.println(String.format("%2d -- %s", i, states.get(i).outgoing.get(j)));
-          }
-        }
+        // // Print the transitions along the original path
+        // System.out.println("Transitions along Original Path");
+        // for (int i = 0; i < states.size(); i++) {
+        //   for (int j = 0; j < states.get(i).outgoing.size(); j++) {
+        //     System.out.println(String.format("%2d -- %s", i, states.get(i).outgoing.get(j)));
+        //   }
+        // }
         System.out.println("Path Transitions Complete.");
 
         
