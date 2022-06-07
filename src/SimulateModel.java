@@ -552,7 +552,7 @@ public class SimulateModel
 
         String traStr = "";
         String staStr = "";
-        String labStr = "0=\"init\" 1=\"sink\"\n0: 0\n";
+        String labStr = "0=\"init\" 1=\"deadlock\"\n0: 0\n";
         traStr += ((states.size()-1) + " " + transitionCount + "\n");
         staStr += "(";
         labStr += (absorbIndex + ": 1");
