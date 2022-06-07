@@ -552,8 +552,10 @@ public class SimulateModel
 
         String traStr = "";
         String staStr = "";
+        String labStr = '0="init" 1="sink"\n0: 0\n';
         traStr += ((states.size()-1) + " " + transitionCount + "\n");
         staStr += "(";
+        labStr += (absorbIndex + ": 1");
         String varName = "";
         int vari = 0;
 
@@ -589,6 +591,10 @@ public class SimulateModel
         BufferedWriter traWriter = new BufferedWriter(new FileWriter("model.tra"));
         traWriter.write(traStr);
         traWriter.close();
+
+        BufferedWriter labWriter = new BufferedWriter(new FileWriter("model.lab"));
+        labWriter.write(labStr);
+        labWriter.close();
 
         // Print the states along the original path for debugging
         // System.out.println("States along Original Path");
