@@ -253,7 +253,7 @@ public class SimulateModel
 
         // states.add(new int[]{-1,-1,-1,-1,-1,-1});
         // NOT AN ABSORBING STATE. NOW, STATE 0 IS JUST A FILLER.
-        states.add(new State(rollingStateIndex, new int[]{-5,-5,-5,-5,-5,-5}, 0.0));
+        states.add(new State(rollingStateIndex, new int[]{-5,-5,-5,-5,-5,-5,-5}, 0.0));
         
         // explicitly set index to 1 for initial state
         rollingStateIndex = 1;
@@ -272,8 +272,10 @@ public class SimulateModel
         }
         // todo: don't hard code teh varv array in.
         // states.add(new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]});
-        states.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]}, 0.0));
-        commutedStates.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5]}, 0.0));
+        states.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5],varv[6]}, 0.0));
+        commutedStates.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5],varv[6]}, 0.0));
+
+        // TODO: Make it work for any array size.
 
         int index;
         // walk along the original path, getting probabilities as we go
@@ -318,7 +320,7 @@ public class SimulateModel
             }
             // vval_c[i] = Integer.valueOf((String) templist_c[i]);
           }
-          commutedStates.add(new State(-2, new int[]{vval_c[0],vval_c[1],vval_c[2],vval_c[3],vval_c[4],vval_c[5]}, 0.0));
+          commutedStates.add(new State(-2, new int[]{vval_c[0],vval_c[1],vval_c[2],vval_c[3],vval_c[4],vval_c[5],vval_c[6]}, 0.0));
 
           // go back to the original path
           // System.out.println(String.format("AFTER T_ALPHA IS STATE %s", sim.getCurrentState()));
@@ -374,7 +376,7 @@ public class SimulateModel
             }
             // vv[i] = Integer.valueOf((String) templist[i]);
           }
-          states.add(new State(rollingStateIndex, new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]}, 0.0));
+          states.add(new State(rollingStateIndex, new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5],vv[6]}, 0.0));
           // System.out.println(Arrays.toString(vv));
         }
 
@@ -445,7 +447,7 @@ public class SimulateModel
           // vv[i] = Integer.valueOf((String) templist[i]);
         }
         // add the COMMUTED TRANSITION state (state n+1)
-        states.add(new State(rollingStateIndex, new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5]}, 0.0));
+        states.add(new State(rollingStateIndex, new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5],vv[6]}, 0.0));
 
 
         for (int tdx=0; tdx < tr_st.length; tdx++) { 
@@ -498,7 +500,7 @@ public class SimulateModel
             }
             // vv1[i] = Integer.valueOf((String) templist1[i]);
           }
-          states.add(new State(rollingStateIndex, new int[]{vv1[0],vv1[1],vv1[2],vv1[3],vv1[4],vv1[5]}, 0.0));
+          states.add(new State(rollingStateIndex, new int[]{vv1[0],vv1[1],vv1[2],vv1[3],vv1[4],vv1[5],vv1[6]}, 0.0));
           // System.out.println(Arrays.toString(vv1));
         }
 
