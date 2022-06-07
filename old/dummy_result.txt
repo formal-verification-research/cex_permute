@@ -1,6 +1,0 @@
-test a b c
-c test d m x r a
-l m n a o test p
-x test a
-test a y
-TARGET
