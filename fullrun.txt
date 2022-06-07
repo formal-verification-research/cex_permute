@@ -1,4 +1,5 @@
 (javac -classpath "/usr/local/prism-src/prism/classes:/usr/local/prism-src/prism/lib/*:/usr/local/prism-src/prism/prism/classes:/usr/local/prism-src/prism/prism/lib/*" -d classes src/./SimulateModel.java)
+Makefile:24: recipe for target 'classes/./SimulateModel.class' failed
 PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.SimulateModel bin/run
 Commutable Transitions seen by API: 
 0 _r1_
