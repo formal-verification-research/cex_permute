@@ -81,11 +81,11 @@ if __name__ == "__main__":
   # get the seed path
   utils.printall("Running ivy_check on the model...")
   with open("model.trace", 'r') as ivy_trace:
-    ivy_path = ivy_trace.read()
+    ivy_path = ivy_trace.read().replace(" ", "\t")
   
   # uncomment to use the shortest path instead
   # with open("shortest.trace", 'r') as ivy_trace:
-  #   ivy_path = ivy_trace.read()
+  #   ivy_path = ivy_trace.read().replace(" ", "\t")
 
   # Use existing path since IVy Check takes FOREVER
   # ivy_path = ivy.check(ivy_file)
@@ -113,12 +113,12 @@ if __name__ == "__main__":
     p.write("\n")
     p.write(ivy_path)
 
-  # Quit here for now
-  quit()
-  
   # send the model to the api
   utils.printall("Sending model to prism API")
   buildmodel()
+  
+  # Quit here for now
+  quit()
 
   # model check it
   utils.printall("Using PRISM to model check. See final_prism_report.txt")
