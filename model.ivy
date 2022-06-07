@@ -2,82 +2,99 @@
 
 attribute method = mc
 
-type bv8
-interpret bv8 -> bv[8] #lowering this lowers execution time
+type num
+interpret num -> bv[10] #lowering this lowers execution time
 
-object spec = {
-
-var s1 : bv8
-var s2 : bv8
-var s3 : bv8
-var s4 : bv8
-var s5 : bv8
-var s6 : bv8
+var r   : num
+var l   : num
+var rl  : num
+var g   : num
+var ga  : num
+var gbg : num
+var gd  : num
 
 after init {
-  s1 := 1;
-  s2 := 50;
-  s3 := 0;
-  s4 := 1;
-  s5 := 50;
-  s6 := 0;
-} #init
+  r   := 50;
+  l   :=  2;
+  rl  :=  0;
+  g   := 50;
+  ga  :=  0;
+  gbg :=  0;
+  gd  :=  0;
+}
 
-action r_one = {
-  if (s1 > 0 & s1 ~= 0) & (s2 > 0 & s2 ~= 0) & s5 ~= 40 {
-    s1 := s1 - 1;
-    s2 := s2 - 1;
-    s3 := s3 + 1;
-  };
-} #end r_one
+before r1 {
+  require true;
+}
+action r1 = {
+  r := r + 1;
+}
+export r1
 
-action r_two = {
-  if (s3 > 0 & s3 ~= 0) & s5 ~= 40 {
-    s1 := s1 + 1;
-    s2 := s2 + 1;
-    s3 := s3 - 1;
-  };
-} #end r_two
+before r2 {
+  require r >= 1;
+}
+action r2 = {
+  r := r - 1;
+}
+export r2
 
-action r_three = {
-  if (s3 > 0 & s3 ~= 0) & s5 ~= 40 {
-    s1 := s1 + 1;
-    s3 := s3 - 1;
-    s5 := s5 + 1;
-  };
-} #end r_three
+before r3 {
+  require l >= 1 & r >= 1;
+}
+action r3 = {
+  r := r - 1;
+  l := l - 1;
+  rl := rl + 1;
+  l := l + 1;
+}
+export r3
 
-action r_four = {
-  if (s4 > 0 & s4 ~= 0) & (s5 > 0 & s5 ~= 0) & s5 ~= 40 {
-    s4 := s4 - 1;
-    s5 := s5 - 1;
-    s6 := s6 + 1;
-  };
-} #end r_four
+before r4 {
+  require rl >= 1;
+}
+action r4 = {
+  rl := rl - 1;
+  r := r + 1;
+}
+export r4
 
-action r_five = {
-  if (s6 > 0 & s6 ~= 0) & s5 ~= 40 {
-    s4 := s4 + 1;
-    s5 := s5 + 1;
-    s6 := s6 - 1;
-  };
-} #end r_five
+before r5 {
+  require rl >= 1 & g >= 1;
+}
+action r5 = {
+  rl := rl - 1;
+  g := g - 1;
+  ga := ga + 1;
+  gbg := gbg + 1;
+}
+export r5
 
-action r_six = {
-  if (s6 > 0 & s6 ~= 0) & s5 ~= 40 {
-    s4 := s4 + 1;
-    s2 := s2 + 1;
-    s6 := s6 - 1;
-  };
-} #end r_six
+before r6 {
+  require ga >= 1;
+}
+action r6 = {
+  ga := ga - 1;
+  gd := gd + 1;
+}
+export r6
 
-export r_one
-export r_two
-export r_three
-export r_four
-export r_five
-export r_six
+before r7 {
+  require gd >= 1 & gbg >= 1;
+}
+action r7 = {
+  gd := gd - 1;
+  gbg := gbg - 1;
+  g := g + 1;
+}
+export r7
 
-} #end spec
+before r8 {
+  require true;
+}
+action r8 = {
+  rl := rl + 1;
+}
+export r8
 
-invariant (spec.s5 ~= 40)
+invariant (gbg ~= 50)
