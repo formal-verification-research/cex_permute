@@ -2,7 +2,7 @@ PRISM
 =====
 
 Version: 4.7.dev
-Date: Tue Jun 07 10:58:56 MDT 2022
+Date: Tue Jun 07 11:02:17 MDT 2022
 Hostname: horace
 Memory limits: cudd=1g, java(heap)=1g
 Command line: prism -importmodel 'model.tra,sta,lab' -exportmodel 'out.tra,sta,lab' -ctmc pro.csl
@@ -19,9 +19,9 @@ Building model...
 
 Computing reachable states...
 
-Reachability (BFS): 185 iterations in 0.26 seconds (average 0.001427, setup 0.00)
+Reachability (BFS): 185 iterations in 0.26 seconds (average 0.001411, setup 0.00)
 
-Time for model construction: 1.031 seconds.
+Time for model construction: 0.937 seconds.
 
 Warning: Deadlocks detected and fixed in 3 states
 
@@ -59,11 +59,11 @@ Starting iterations...
 
 Steady state detected at iteration 174
 
-Iterative method: 174 iterations in 0.92 seconds (average 0.000023, setup 0.92)
+Iterative method: 174 iterations in 0.69 seconds (average 0.000029, setup 0.68)
 
 Value in the initial state: 0.0
 
-Time for model checking: 0.781 seconds.
+Time for model checking: 0.581 seconds.
 
 Result: 0.0
 
