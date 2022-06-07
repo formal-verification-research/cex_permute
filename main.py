@@ -11,6 +11,9 @@
 # https://github.com/fluentverification/usu_importance_sampling
 
 
+# This version is hard-coded for the 8-reaction (yeast polarization) model
+
+
 # Import functions from local files
 # import getfiles as gf
 import ivy
@@ -77,7 +80,11 @@ if __name__ == "__main__":
   
   # get the seed path
   utils.printall("Running ivy_check on the model...")
-  ivy_path = ivy.check(ivy_file)
+  with open("model.trace", 'r') as ivy_trace:
+    ivy_path = ivy_trace.read()
+    
+  # Use existing path since IVy Check takes FOREVER
+  # ivy_path = ivy.check(ivy_file)
 
   # get the enabled transitions
   utils.printall("Getting enabled transitions")
