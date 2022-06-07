@@ -652,7 +652,7 @@ public class SimulateModel
             // this line may have been causing issues -- I think I put it in the wrong loop
             // System.out.printf("tr %d: %s %f\n", idx, sim.getTransitionActionString(idx), sim.getTransitionProbability(idx));
             System.out.printf("%s ", sim.getTransitionActionString(idx).replace("[","").replace("]",""));
-            // totalRate += sim.getTransitionProbability(idx);
+            totalRate += sim.getTransitionProbability(idx);
           } // try combining these
           for (int idx=0; idx < sim.getNumTransitions(); idx++) {
             String s1 = String.format("[%s]",tr_st[tdx]);
@@ -662,10 +662,10 @@ public class SimulateModel
                 break;
             }
           }
-          // double transition_probability = sim.getTransitionProbability(index) / totalRate;
+          double transition_probability = sim.getTransitionProbability(index) / totalRate;
           // System.out.printf("\n======= tr %s (%d) %e ===========\n\n", tr_st[tdx], index, transition_probability);
           System.out.printf("\n");
-          // pathProbability *= transition_probability;
+          pathProbability *= transition_probability;
           // print what we fired before we fire it
           // System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           sim.manualTransition(index);
