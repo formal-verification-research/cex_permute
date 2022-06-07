@@ -535,7 +535,7 @@ public class SimulateModel
         rollingStateIndex++;
 
         int absorbIndex = rollingStateIndex;
-        states.add(new State(absorbIndex, new int[]{-1,-1,-1,-1,-1,-1}, 0.0));
+        states.add(new State(absorbIndex, new int[]{-1,-1,-1,-1,-1,-1,-1}, 0.0));
 
         // get the absorbing state transition information
         System.out.println("Absorbing Index: " + absorbIndex);
