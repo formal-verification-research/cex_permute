@@ -665,9 +665,12 @@ public class SimulateModel
           double transition_probability = sim.getTransitionProbability(index) / totalRate;
           // System.out.printf("\n======= tr %s (%d) %e ===========\n\n", tr_st[tdx], index, transition_probability);
           System.out.printf("\n");
+          if (transition_probability == 0.0f) {
+            System.out.println(String.format("ZERO PROBABILITY FOR TRANSITION %s (%d)", sim.getTransitionActionString(index), index));
+          }
           pathProbability *= transition_probability;
           // print what we fired before we fire it
-          // System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
+          System.out.println(String.format("FIRED %s (%d)", sim.getTransitionActionString(index), index));
           sim.manualTransition(index);
         }
 
