@@ -82,7 +82,7 @@ if __name__ == "__main__":
   utils.printall("Running ivy_check on the model...")
   with open("model.trace", 'r') as ivy_trace:
     ivy_path = ivy_trace.read()
-    
+
   # Use existing path since IVy Check takes FOREVER
   # ivy_path = ivy.check(ivy_file)
 
@@ -95,6 +95,10 @@ if __name__ == "__main__":
   utils.printall("Getting intersection of enabled transitions")
   intersection = prism_api.get_intersection(api_result)
   utils.printall("Intersection is " + str(intersection))
+
+
+  # Quit here for now
+  quit()
 
   # print the output file
   utils.printall("Printing file to send to prism API")
