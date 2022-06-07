@@ -82,6 +82,10 @@ if __name__ == "__main__":
   utils.printall("Running ivy_check on the model...")
   with open("model.trace", 'r') as ivy_trace:
     ivy_path = ivy_trace.read()
+  
+  # uncomment to use the shortest path instead
+  # with open("shortest.trace", 'r') as ivy_trace:
+  #   ivy_path = ivy_trace.read()
 
   # Use existing path since IVy Check takes FOREVER
   # ivy_path = ivy.check(ivy_file)
@@ -97,8 +101,6 @@ if __name__ == "__main__":
   utils.printall("Intersection is " + str(intersection))
 
 
-  # Quit here for now
-  quit()
 
   # print the output file
   utils.printall("Printing file to send to prism API")
@@ -111,6 +113,9 @@ if __name__ == "__main__":
     p.write("\n")
     p.write(ivy_path)
 
+  # Quit here for now
+  quit()
+  
   # send the model to the api
   utils.printall("Sending model to prism API")
   buildmodel()
