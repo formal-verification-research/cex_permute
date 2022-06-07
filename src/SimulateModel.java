@@ -670,7 +670,7 @@ public class SimulateModel
           }
           pathProbability *= transition_probability;
           // print what we fired before we fire it
-          System.out.println(String.format("FIRED %s (%d) with probability %f", sim.getTransitionActionString(index), index, transition_probability));
+          System.out.println(String.format("FIRED %s (%d) with probability %e (total %e)", sim.getTransitionActionString(index), index, transition_probability, totalRate));
           sim.manualTransition(index);
         }
 
