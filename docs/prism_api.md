@@ -244,5 +244,3 @@ Close PRISM down with the following:
 ```java
 prism.closeDown();
 ```
-
-

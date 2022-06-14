@@ -26,7 +26,7 @@ classes/%.class: src/%.java
 # Test execution
 
 test:
-	PRISM_DIR=$(PRISM_DIR) PRISM_MAINCLASS=simulate.SimulateModel bin/run
+	PRISM_DIR=$(PRISM_DIR) PRISM_MAINCLASS=simulate.BuildModel bin/run
 
 # Clean up
 
