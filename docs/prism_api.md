@@ -37,7 +37,7 @@ PrismLog mainLog = new PrismDevNullLog();
 Initialize a PRISM simulation engine, where `mainLog` is of type `PrismLog`, noting the use of "s" in "initiali**s**e:
 
 ```java
-Prism p = new Prism(mainLog);
+Prism prism = new Prism(mainLog);
 prism.initialise();
 ```
 
@@ -222,5 +222,27 @@ if (target.evaluateBoolean(s)) // do something
 ```
 
 There are a number of additional evaluate functions, but they are not covered here. See [prism/Expression.java](https://github.com/prismmodelchecker/prism/blob/master/prism/src/parser/ast/Expression.java) for details in code comments.
+
+### Full Path and Termination
+
+The full path can be accessed using the following:
+
+```java
+sim.getPathFull()
+```
+
+The path can be exported using the following:
+
+```java
+sim.getPathFull().exportToLog(
+    new PrismPrintStreamLog(System.out), true, ",", null
+);
+```
+
+Close PRISM down with the following:
+
+```java
+prism.closeDown();
+```
 
 
