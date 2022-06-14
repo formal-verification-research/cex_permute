@@ -33,10 +33,10 @@ import simulator.SimulatorEngine;
 public class SimulateModel
 {
 
-  // By default, call SimulateModel().run()
+  // By default, call BuildModel().run()
   public static void main(String[] args)
   {
-    new SimulateModel().run();
+    new BuildModel().run();
   }
 
   // Store the transitions in their own objects
@@ -75,15 +75,17 @@ public class SimulateModel
   // Store states in their own objects
   public class State {
     public int index; // State index
-    public int[] vars; // State variable values
+    public ArrayList<Object> vars; // State variable values
     public double totalRate; // Total outgoing rate at this state
+    public ArrayList<String> enabled; // Set of enabled outgoing transitions
     public ArrayList<Transition> outgoing; // Set of saved outgoing transitions
 
     // Initialize a state, nothing fancy here
-    public State(int index, int[] vars, double totalRate) {
+    public State(int index, ArrayList<Object> vars, double totalRate) {
       this.index = index;
       this.vars = vars;
       this.totalRate = totalRate;
+      this.enabled = new ArrayList<String>();
       this.outgoing = new ArrayList<Transition>();
     }
 
@@ -91,9 +93,9 @@ public class SimulateModel
     @Override
     public String toString() {
       String temp = index + " [";
-      for (int i=0; i<vars.length; i++) {
+      for (int i=0; i<vars.size(); i++) {
         if (i>0) temp += ",";
-        temp += vars[i]; 
+        temp += vars.get(i); 
       }
       temp += ("] (" + totalRate + ")");
       return temp;
@@ -103,9 +105,9 @@ public class SimulateModel
     // Format is <index>:(<state_var>,<state_var>...)
     public String prism() {
       String temp = (index-1) + ":(";
-      for (int i=0; i<vars.length; i++) {
+      for (int i=0; i<vars.size(); i++) {
         if (i>0) temp += ",";
-        temp += vars[i]; 
+        temp += vars.get(i); 
       }
       return temp + ")";
     }
@@ -141,12 +143,507 @@ public class SimulateModel
       }
       return absorbRate;
     }
+
+    // Add an enabled transition to the list
+    public void addEnabled(String transition_name) {
+      enabled.add(transition_name);
+    }
+
+  }
+
+  // Store a path in an object
+  public class Path {
+    
+    public int firstState; // first state index
+    public int lastState; // last state index
+    public ArrayList<String> prefix; // list of commutable transitions
+    public ArrayList<String> commutable; // list of commutable transitions
+
+    // Initialization function, nothing fancy
+    public Path(int firstState, int lastState) {
+      this.firstState = firstState;
+      this.lastState = lastState;
+      this.prefix = new ArrayList<String>();
+      this.commutable = new ArrayList<String>();
+    }
+
+    // Initialization function WITH PREFIX, nothing fancy
+    public Path(int firstState, int lastState, ArrayList<String> prefix) {
+      this.firstState = firstState;
+      this.lastState = lastState;
+      this.prefix = prefix;
+      this.commutable = new ArrayList<String>();
+    }
+
+    // Find the intersection of states
+    public void findCommutable(ArrayList<State> states) {
+      // Initialize the arraylists for checking
+      ArrayList<String> wasEnabled = states.get(this.firstState).enabled;
+      ArrayList<String> isEnabled = new ArrayList<String>();
+      // Loop through the states to check enabled
+      for (int i = this.firstState + 1; i < this.lastState; i++) {
+        wasEnabled = isEnabled;
+        isEnabled = new ArrayList<String>();
+        for (int j = 0; j < states.get(i).enabled.size(); j++) {
+          // If the last enabled transitions contain the transition
+          if (wasEnabled.contains(states.get(i).enabled.get(j))) {
+            isEnabled.add(states.get(i).enabled.get(j));
+          }
+        }
+      }
+      this.commutable = isEnabled;
+    }
+
+    // Remove a commutable (because it doesn't work)
+    public void removeCommutable(int c) {
+      commutable.remove(c);
+    }
+
+    // Custom string output to give the most detail
+    @Override
+    public String toString() {
+      return "Path object spanning state " + this.firstState + " through state " + this.lastState + " with commutable transitions " + commutable.toString();
+    }
+
+  }
+
+  // Store model information in an object
+  public class Model {
+    
+    public int stateCount;
+    public int currentState;
+    public int lastPathEnded;
+    public ArrayList<State> states;
+    
+    public int n;
+
+    public int pathCount;
+    public ArrayList<Path> paths;
+
+    public int absorbingIndex;
+
+    // Initialization function, nothing fancy
+    public Model() {
+      this.stateCount = 0;
+      this.currentState = -1;
+      this.lastPathEnded = 0;
+      this.n = 0;
+      this.pathCount = 0;
+      this.states = new ArrayList<State>();
+      this.paths = new ArrayList<Path>();
+      this.absorbingIndex = -1;
+    }
+    
+    public void setN(int n) {
+      this.n = n;
+    }
+
+    // Create a new state with a new index
+    public void addState(ArrayList<Object> vars, double totalRate) {
+      this.states.add(new State(stateCount, vars, totalRate));
+      stateCount++;
+      currentState++;
+    }
+
+    // Add to the total rate of the current state
+    public void addRateToCurrentState(double rate) {
+      states.get(currentState).addRate(rate);
+    }
+    
+    // Add to the enabled transitions of the current state
+    public void addEnabledToCurrentState(String transition) {
+      states.get(currentState).addEnabled(transition);
+    }
+
+    // Add a one-step transition to the current state
+    public void addSimpleTransition(int index, String name, double rate) {
+      states(currentState).addTransition(currentState + 1, rate, index, name);
+    }
+    
+    // Add a more complicated transition
+    public void addTransition(from, to, index, name, rate) {
+      states(from).addTransition(to, rate, index, name);
+    }
+
+    // Make a seed path object
+    public void addPath() {
+      this.paths.add(new Path(lastPathEnded, currentState));
+      lastPathEnded = currentState + 1;
+      pathCount++;
+    }
+
+    // Make a seed path object WITH PREFIX
+    public void addPath(ArrayList<String> prefix) {
+      this.paths.add(new Path(lastPathEnded, currentState, prefix));
+      lastPathEnded = currentState + 1;
+      pathCount++;
+    }
+
+    // Make a seed path object WITH PREFIX
+    public void addPath(ArrayList<String> prefix) {
+      this.paths.add(new Path(lastPathEnded, currentState, prefix));
+      lastPathEnded = currentState + 1; // should work as long as prefix grows as expected
+      pathCount++;
+    }
+
+    // Make an absorbing state
+    //  This MUST be the last state you add.
+    public void addAbsorbingState() {
+      int numVars = states.get(0).vars.size();
+      this.absorbingIndex = stateCount;
+      this.states.add(new State(absorbingIndex, vars, totalRate));
+      System.out.println("Absorbing Index: " + absorbingIndex);
+      double absorbRate = 0.0;
+      for (int i = 0; i < states.size() - 1; i++) {
+        absorbRate = states.get(i).getAbsorbingRate();
+        if (absorbRate > 0.0) {
+          states.get(i).addTransition(absorbIndex, states.get(i).getAbsorbingRate(), -1, "ABSORB");
+        }
+      }
+    }
+
+    public int countTransitions() {
+      int transitionCount = 0;
+      for (int i = 0; i < states.size() - 1; i++) {
+        transitionCount += states.get(i).outgoing.size();
+      }
+      return transitionCount;
+    }
+
+    // Export model files
+    public void exportFiles(SimulatorEngine sim) {
+
+      // Count transitions
+      int transitionCount = this.countTransitions();
+
+      // Initialize transition string
+      String traStr = "";
+      traStr += ((states.size()) + " " + transitionCount + "\n");
+
+      // Initialize state string
+      String staStr = "";
+      staStr += "(";
+
+      // Initialize label string
+      // TODO: Play with deadlock vs sink
+      String labStr = "0=\"init\" 1=\"sink\"\n0: 0\n";
+      labStr += (this.absorbingIndex + ": 1");
+        
+      // Initialize variable name string
+      String varName = "";
+
+      // Get variable names for first line of .sta file
+      // TODO: This might actually be useful early on, to
+      //  get the total variable count?
+      int vari = 0;
+      while (true) {
+        varName = sim.getVariableName(vari);
+        staStr += varName;
+        if (sim.getVariableName(vari+1) == null) {
+          staStr += ")\n";
+          break;
+        }
+        staStr += ",";
+        vari++;
+      }
+
+        // Get state and transition info by looping through states;
+        //  state 0 is a filler state to make for easier math,
+        //  thus, start state loop at index 1, not 0
+        for (int i = 1; i < states.size(); i++) {
+          // Loop through transitions at each state
+          for (int j = 0; j < states.get(i).outgoing.size(); j++) {
+            traStr += states.get(i).outgoing.get(j).prism();
+            traStr += "\n";
+          }
+          staStr += states.get(i).prism();
+          staStr += "\n";
+        }
+
+        // Write the state file to buildModel.sta
+        BufferedWriter staWriter = new BufferedWriter(new FileWriter("buildModel.sta"));
+        staWriter.write(staStr);
+        staWriter.close();
+
+        // Write the transition file to buildModel.tra
+        BufferedWriter traWriter = new BufferedWriter(new FileWriter("buildModel.tra"));
+        traWriter.write(traStr);
+        traWriter.close();
+
+        // Write the label file to buildModel.lab
+        BufferedWriter labWriter = new BufferedWriter(new FileWriter("buildModel.lab"));
+        labWriter.write(labStr);
+        labWriter.close();
+
+        // Alert user of successful termination
+        System.out.println("Model built. PRISM API ended successfully.");
+
+    }
+
+  }
+
+  // Build a path following a transition sequence after firing a prefix
+  public boolean buildPath(ArrayList<String> transitions, ArrayList<String> prefix, Model model) {
+
+    // Create a new simulation
+    SimulatorEngine sim = prism.getSimulator();
+    sim.createNewPath();
+    sim.initialisePath(null);
+    
+    // Walk along the prefix to get the new initial state
+    for (int t=0; t < prefix.size(); t++) {
+
+      // Reset the index
+      index = 0;
+
+      // Get information for the current transition
+      for (int i=0; i < sim.getNumTransitions(); i++) {
+        // Get transition strings from path and simulation
+        String pathTransition = String.format("[%s]", prefix.get(t));
+        String simTransition = sim.getTransitionActionString(i);
+        // Update index if we found the right transition
+        if (pathTransition.equalsIgnoreCase(simTransition)) {
+            index = i;
+            break;
+        }
+      }
+
+      // Fire the prefix transition
+      sim.manualTransition(index);
+
+    }
+
+
+
+    // Walk along the path and add state info to the model
+    for (int t=0; t < transitions.size(); t++) {
+
+      // Make the current state
+      model.addState(sim.getCurrentState().varValues, 0.0);
+
+      // Reset the index
+      index = 0;
+
+      // Get information for the current transition
+      for (int i=0; i < sim.getNumTransitions(); i++) {
+        // Get transition strings from path and simulation
+        String pathTransition = String.format("[%s]", transitions.get(t));
+        String simTransition = sim.getTransitionActionString(i);
+        // Add current state info to model
+        model.addRateToCurrentState(simTransition);
+        model.addEnabledToCurrentState(simTransition);
+        // Update index if we found the right transition
+        if (pathTransition.equalsIgnoreCase(simTransition)) {
+            index = i;
+        }
+      }
+
+      // Get the rate of the transition we fired
+      double transition_probability = sim.getTransitionProbability(index);
+
+      // If the transition probability is 0, alert the user
+      if (transition_probability == 0.0f) {
+        System.out.println(String.format("ZERO PROBABILITY FOR TRANSITION %s (%d)", sim.getTransitionActionString(index), index));
+      }
+
+      // Add the transition to the model
+      model.addSimpleTransition(index, sim.getTransitionActionString(index), sim.getTransitionProbability(index));
+
+      // Fire the transition
+      sim.manualTransition(index);
+
+    }
+
+    // Make the target state (after firing the final transition)
+    model.addState(sim.getCurrentState().varValues, 0.0);
+
+    // Check if it's a target state and alert the user if not
+    // TODO: Implement this
+
+    // Tell the model we finished the seed path
+    model.addPath(prefix);
+
+    return true;
+  }
+
+  // Build parallel commuted paths for a path
+  public void commute(Model model, Path path, ArrayList<String> transitions, int depth) {
+      
+    // Maximum recursion depth
+    if (depth == 1) {
+      return;
+    }
+
+    // Find the commutable transitions along the path
+    path.findCommutable();
+
+    // Set up array to mark transitions for removal
+    boolean toRemove[] = new boolean[path.commutable.size()];
+    Arrays.fill(toRemove, false);
+
+    // Check the full-lenth parallel path before firing commutable transitions
+    // That is, set the commutable transition as a path prefix
+    //  and build paths following the seed transition sequence.
+    for (int c = c < path.commutable.size(); c++) {
+      ArrayList<String> nextPrefix = new ArrayList<String>();
+      nextPrefix.addAll(path.prefix);
+      nextPrefix.add(path.commutable.get(c));
+      // TODO: Also check if we reached a target state within the buildPath function
+      if (!buildPath(transitions, nextPrefix, model)) {
+        toRemove[c] = true;
+        continue;
+      }
+    }
+    
+    // Remove the necessary transitions from commutable
+    for (int i = toRemove.length - 1; i >= 0 ; i--) {
+      if (toRemove[i]) {
+        path.removeCommutable(i);
+      }
+    }
+
+    // Count how many paths we go back when we look at indices
+    int addedPaths = path.commutable.size();
+    int goBackPaths = addedPaths;
+
+    // Fire each commutable transition from each state along the path
+    //  and check that it matches the full-length path
+
+    // Do this for every commutable transition
+    for (int t_alpha = 0; t_alpha < path.commutable.size(); t_alpha++) {
+
+      // Create a new simulation from the initial state
+      SimulatorEngine sim = prism.getSimulator();
+      sim.createNewPath();
+      sim.initialisePath(null);
+
+      // This stores where we are adjacent to in the SEED PATH
+      int seedStateIndex = 0;
+      int simStateIndex = 0;
+
+      // TODO: There may be more math to deal with prefixes.
+      //  Look at this when I have the brain power
+
+      // Walk along the prefix to get the new initial state
+      for (int t=0; t < path.prefix.size(); t++) {
+
+        // Reset the index
+        index = 0;
+
+        // Get information for the current transition
+        for (int i=0; i < sim.getNumTransitions(); i++) {
+          // Get transition strings from path and simulation
+          String pathTransition = String.format("[%s]", path.prefix.get(t));
+          String simTransition = sim.getTransitionActionString(i);
+          // Update index if we found the right transition
+          if (pathTransition.equalsIgnoreCase(simTransition)) {
+              index = i;
+              break;
+          }
+        }
+
+        // Fire the prefix transition
+        sim.manualTransition(index);
+        simStateIndex++;
+
+      }
+
+      // Walk along the path, firing and adding the commutable transition
+      //  then backtracking to the previous state
+      for (int t=0; t < transitions.size(); t++) {
+
+        // Reset the index
+        index = 0;
+        String finalTransition = "";
+
+        // Find and fire the commuted transition
+        for (int i=0; i < sim.getNumTransitions(); i++) {
+          // Get transition strings from path and simulation
+          String pathTransition = String.format("[%s]", path.commutable.get(t_alpha));
+          String simTransition = sim.getTransitionActionString(i);
+          // Update index if we found the right transition
+          if (pathTransition.equalsIgnoreCase(simTransition)) {
+            index = i;
+            finalTransition = simTransition;
+            break;
+          }
+        }
+        // Fire the transition without incrementing simStateIndex, 
+        //  since we want to store the index of the state we return to
+        sim.manualTransition(index);
+
+        // Check that the commuted transition is independent. If yes, save the transition
+        State tempState = new State(-5, ArrayList<Object> vars, 0);
+        
+        // Check if the new state is equal to state in pre-calculated path
+
+        // Index of the equivalent state:
+        // (adjacent index) + ( (path id) * (n) )
+        // (adjacent index) + ( ( (path count) - (go back paths) ) * (n) )
+        // Math from back of envelope from Molina
+
+        int equivalentIndex = seedStateIndex + ( (model.pathCount - goBackPaths) * model.n );
+
+        System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
+        
+        // Check is state matches what it should be
+        if (tempstate.equals(model.states.get(equivalentIndex))) {
+          System.out.println("STATES EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
+          // Add transition to the relevant state
+          int from = seedStateIndex + path.firstState;
+          int to = equivalentIndex;
+          // index is still index
+          String name = sim.getTransitionActionString(index);
+          double rate = sim.getTransitionProbability(index)
+          model.addTransition(from, to, index, name, rate);
+        }
+        else {
+          System.out.println("STATES NOT EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
+        }
+
+        // Backtrack
+        sim.backtrackTo(simStateIndex);
+
+        // Find the original path transition
+        for (int i=0; i < sim.getNumTransitions(); i++) {
+          // Get transition strings from path and simulation
+          String pathTransition = String.format("[%s]", transitions.get(t));
+          String simTransition = sim.getTransitionActionString(i);
+          // Update index if we found the right transition
+          if (pathTransition.equalsIgnoreCase(simTransition)) {
+              index = i;
+          }
+        }
+
+        // Fire the transition
+        sim.manualTransition(index);
+        simStateIndex++;
+        seedStateIndex++;
+
+      }
+      
+      // We're moving on to the next path
+      goBackPaths--;
+
+    }
+  
+    for (int i = addedPaths; i > 0; i--) {
+      commute(model, model.paths.get(i), transitions, depth + 1)
+    }
+
   }
 
   // Main run function - runs every call
   public void run()
   {
     try {
+      
+      // Welcome message
+      System.out.println("Building PRISM Model based on seed path.");
+      
+      // Keep an index available for temporary use
+      int index;
+      
       // give PRISM output a log file
       PrismLog mainLog = new PrismDevNullLog();
 
@@ -166,508 +663,39 @@ public class SimulateModel
 
       // Load the model into the simulator engine
       prism.loadModelIntoSimulator();
-      SimulatorEngine sim = prism.getSimulator();
-		
+
+      // Initialize the model
+      Model model = new Model();
+
       // Read in the first line of the trace as a string
-      // For now, the trace must go in forprism.trace (done in python script)
+      // For now, the trace must go in forprism.trace (handled in python script)
 			FileReader fr = new FileReader("forprism.trace");
 			BufferedReader br = new BufferedReader(fr);
-			String x;
-			x = br.readLine();
 
+      // Read in the seed path line
+      String x_transitions = br.readLine();
+      ArrayList<String> transitions = new ArrayList<String>();
+      transitions = Arrays.asList(x_transitions.split("\\s+"));
+      
+      // Let n_seed be the length of the seed path (in STATES, not transitions)
+      int n_seed = transitions.size() + 1;
+      System.out.println("n_seed (states in seed path) = " + n_seed);
+      model.setN(n_seed);
 
-      // Look for CHANGE_IVY_INITIAL_STATE in first line
-      //  to indicate we want to fire a couple of transitions, then
-      //  print the resulting state variable information
-      if (x.contains("CHANGE_IVY_INITIAL_STATE")) {
+      // Build the seed path, which recursively does everything
+      ArrayList<String> prefix = new ArrayList<String>();
+      buildPath(transitions, prefix, model);
+      commute(model, model.paths.get(0), transitions, 0); 
 
-        // Break the string into a transition set
-			  String[] tr_st = x.split("\\s+"); 
+      // Configure the absorbing state
+      model.addAbsorbingState();
 
-        // create a new path
-        sim.createNewPath();
-        sim.initialisePath(null);
+      // Print to files
+      SimulatorEngine sim = prism.getSimulator();
+      model.exportFiles(sim);
 
-        // Walk along the given path
-        int index;
-        for (int tdx=1; tdx < tr_st.length; tdx++) {
-          index = 0;
-          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            String s1 = String.format("[%s]",tr_st[tdx]);
-            String s2 = sim.getTransitionActionString(idx);
-            if (s1.equalsIgnoreCase(s2)) {
-                index = idx;
-                break;
-            }
-          }
-          sim.manualTransition(index);
-        }
-
-        // Print the current state
-        System.out.println(sim.getCurrentState());
-
-        // close PRISM
-        prism.closeDown();
-        
-      }
-
-
-      // Look for BUILD_MODEL in first line
-      // to indicate we want to build .sta, .tra, and .lab files
-      else if (x.contains("BUILD_MODEL")) {
-        // Break the input file into its parts 
-        // File follows this format:
-        // BUILD_MODEL
-        // COMMUTABLE (tab-separated)
-        // PATH (tab-separated)
-        
-        // Read in the commutable transition line
-        String x_commute = br.readLine();
-        String[] commute = x_commute.split("\\s+");
-        
-        // Print the commutable transition list to the user
-        System.out.println("Commutable Transitions seen by API: ");
-        for (int cmx=0; cmx < commute.length; cmx++) {
-          System.out.println(String.format("%d _%s_", cmx, commute[cmx]));
-        }
-
-        // Read in the seed path line
-        String x_path = br.readLine();
-			  String[] tr_st = x_path.split("\\s+");
-        
-        // Let n be the length of the seed path (in STATES, not transitions)
-        int n = tr_st.length + 1;
-        System.out.println("n (length of seed path) = " + n);
-
-        // Print seed path with indices, for debugging
-        // System.out.println("Seed Path with Indices: ");
-        // for (int tdx=0; tdx < tr_st.length; tdx++) {
-        //   System.out.println(String.format("%d [%s]", tdx, tr_st[tdx]));
-        // }
-
-        // Create a new path to do our construction
-        sim.createNewPath();
-        sim.initialisePath(null);
-        
-        // TODO: currently assuming that there are no duplicate states
-        // TODO: currently assuming only one commuted transition
-
-        // Make an ArrayList of states in our model
-        ArrayList<State> states = new ArrayList<State>();
-
-        // Make an ArrayList of commuted states to cross-check the 
-        // independent transition attribute
-        ArrayList<State> commutedStates = new ArrayList<State>();      
-        
-        // Keep a rolling state index while we add our states
-        // This makes sure every state gets a fresh index
-        int rollingStateIndex = 0;
-        int transitionCount = 0;
-
-        // Make a dummy state to fill the spot of State 0 (helps make math easier)
-        states.add(new State(rollingStateIndex, new int[]{-5,-5,-5,-5,-5,-5,-5}, 0.0));
-        
-        // Set the index of the initial state to 1 (explicitly)
-        rollingStateIndex = 1;
-
-        // Make the initial state using the simulator's current (unmodified) state
-        Object[] tl = sim.getCurrentState().varValues;
-        int[] varv = new int[tl.length];
-        for (int i = 0; i < tl.length; i++) {
-          // Check if Object is an Integer or a String, handle appropriately
-          if (tl[i] instanceof Integer) {
-            varv[i] = (Integer) tl[i];
-          }
-          else if (tl[i] instanceof String) {
-            varv[i] = Integer.parseInt((String) tl[i]);
-          }
-        }
-        // TODO: Don't hard-code the varv array in
-        // TODO: Make it work for any array size.
-
-        // Add the initial state to both state arrays
-        states.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5],varv[6]}, 0.0));
-        commutedStates.add(new State(rollingStateIndex, new int[]{varv[0],varv[1],varv[2],varv[3],varv[4],varv[5],varv[6]}, 0.0));
-
-        // Walk along the original path, building states as we go
-        int index;
-        for (int tdx=0; tdx < tr_st.length; tdx++) {
-          index = 0;
-          // get the total rate and store it in states
-          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            states.get(rollingStateIndex).addRate(sim.getTransitionProbability(idx));
-            // System.out.println(String.format("Available Transition Here: %s (%d)",sim.getTransitionActionString(idx), idx));
-          } 
-
-          // get the value for the s_k' after firing t_alpha to cross-check later
-          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            String s1 = String.format("[%s]",commute[0]);
-            String s2 = sim.getTransitionActionString(idx);
-            if (s1.equalsIgnoreCase(s2)) {
-                index = idx;
-                break;
-            }
-          }
-          
-          // Add the current transition to the current state and increment the transition counter
-          // Adds t_alpha in a way that we can remove it later if needed
-          states.get(rollingStateIndex).addTransition(rollingStateIndex+n, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
-          transitionCount++;
-          
-          // Fire the transition
-          sim.manualTransition(index);
-          
-          // Get variable values to build the state
-          Object[] templist_c = sim.getCurrentState().varValues;
-          int[] vval_c = new int[templist_c.length]; // vval_c for varValues
-          for (int i = 0; i < templist_c.length; i++) {
-            // Check if Object vval_c is an Integer or a String
-            if (templist_c[i] instanceof Integer) {
-              vval_c[i] = (Integer) templist_c[i];
-            }
-            else if (templist_c[i] instanceof String) {
-              vval_c[i] = Integer.parseInt((String) templist_c[i]);
-            }
-          }
-          commutedStates.add(new State(-2, new int[]{vval_c[0],vval_c[1],vval_c[2],vval_c[3],vval_c[4],vval_c[5],vval_c[6]}, 0.0));
-
-          // Backtrack once to the original path
-          sim.backtrackTo(rollingStateIndex-1);
-          
-
-          // Get the index of the next transition along the seed path
-          index=0;
-          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            String s1 = String.format("[%s]",tr_st[tdx]);
-            String s2 = sim.getTransitionActionString(idx);
-            if (s1.equalsIgnoreCase(s2)) {
-                index = idx;
-                break;
-            }
-          }
-
-          // todo: modularize this so much better oh my goodness
-
-          // Get the current state along the seed path, then add the 
-          //  next transition along the seed path
-          states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim.getTransitionProbability(index), index, sim.getTransitionActionString(index));
-          transitionCount++;
-
-          // Fire the next transition along the seed path
-          sim.manualTransition(index);
-          
-          // Add to the state index
-          rollingStateIndex++;
-          
-          // Get the variable values at the current state
-          //  (found at parser->State.java, line 41")
-          Object[] templist = sim.getCurrentState().varValues;
-          int[] vv = new int[templist.length]; // vv for varValues
-          for (int i = 0; i < templist.length; i++) {
-            // Check if Object in varValues is an Integer or a String
-            //  then parse the (integer) value into the vv array
-            if (templist[i] instanceof Integer) {
-              vv[i] = (Integer) templist[i];
-            }
-            else if (templist[i] instanceof String) {
-              vv[i] = Integer.parseInt((String) templist[i]);
-            }
-          }
-          // Add the state to the list of states
-          // TODO: Don't hard-code the array indices somehow
-          states.add(new State(rollingStateIndex, new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5],vv[6]}, 0.0));
-        }
-
-
-        // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
-        // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
-        // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
-        // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
-        // SECOND LOOP -- COMMUTED PATH // SECOND LOOP -- COMMUTED PATH
-
-        // Walk along the commuted path to verify the commuted path transitions
-        //  yield a correct path to a target state
-
-        // Create a new path called sim2 to handle just these commuted transitions
-        SimulatorEngine sim2 = prism.getSimulator();
-        sim2.createNewPath();
-        
-        // Go back to initial state
-        sim2.initialisePath(null);
-
-        // Get the index of t_alpha
-        index = 0;
-        for (int idx=0; idx < sim2.getNumTransitions(); idx++) {
-          // TODO: Eventually do each commute[k]
-          String s1 = String.format("[%s]",commute[0]);
-          String s2 = sim2.getTransitionActionString(idx);
-          if (s1.equalsIgnoreCase(s2)) {
-              index = idx;
-              break;
-          }
-        }
-        
-        // Fire the commutable transition from the initial state
-        //  to get the "commuted path initial state"
-        sim2.manualTransition(index);
-
-        // Add to the (existing) state index counter to ensure uniqueness
-        rollingStateIndex++;
-
-        // Get the variable values in the current state
-        //  (found at parser->State.java, line 41");
-        Object[] templist = sim2.getCurrentState().varValues;
-        int[] vv = new int[templist.length]; // vv for varValues
-        for (int i = 0; i < templist.length; i++) {
-          // Check if Object vv is an Integer or a String
-          if (templist[i] instanceof Integer) {
-            vv[i] = (Integer) templist[i];
-          }
-          else if (templist[i] instanceof String) {
-            vv[i] = Integer.parseInt((String) templist[i]);
-          }
-        }
-        // Add the first COMMUTED TRANSITION state (state n+1) to the list
-        states.add(new State(rollingStateIndex, new int[]{vv[0],vv[1],vv[2],vv[3],vv[4],vv[5],vv[6]}, 0.0));
-
-        // Loop along the seed path transitions to follow the sequence
-        for (int tdx=0; tdx < tr_st.length; tdx++) { 
-          index = 0;
-          // Get the total rate from the outgoing transitions
-          for (int idx=0; idx < sim2.getNumTransitions(); idx++) {
-            states.get(rollingStateIndex).addRate(sim2.getTransitionProbability(idx));
-          } 
-          // Get the index of the next transition in the seed sequence
-          //  (The loops are separate because we want to get total probability;
-          //    we stop the next loop once we find our transition.)
-          for (int idx=0; idx < sim2.getNumTransitions(); idx++) {
-            String s1 = String.format("[%s]",tr_st[tdx]);
-            String s2 = sim2.getTransitionActionString(idx);
-            if (s1.equalsIgnoreCase(s2)) {
-                index = idx;
-                break;
-            }
-          }
-          
-          // Add the discovered seed transition to the state
-          states.get(rollingStateIndex).addTransition(rollingStateIndex+1, sim2.getTransitionProbability(index), index, sim2.getTransitionActionString(index));
-          
-          // Increment the transition count
-          transitionCount++;
-
-          // Fire the transition from the seed path sequence
-          sim2.manualTransition(index);
-
-          // Increment the rolling state count
-          rollingStateIndex++;
-          
-          // Get the state variables at this new state
-          Object[] templist1 = sim2.getCurrentState().varValues;
-          int[] vv1 = new int[templist1.length]; // vv1 for varValues
-          for (int i = 0; i < templist1.length; i++) {
-            // Get value if it's an integer or a string
-            if (templist1[i] instanceof Integer) {
-              vv1[i] = (Integer) templist1[i];
-            }
-            else if (templist1[i] instanceof String) {
-              vv1[i] = Integer.parseInt((String) templist1[i]);
-            }
-          }
-          // Add the new state to the state list
-          states.add(new State(rollingStateIndex, new int[]{vv1[0],vv1[1],vv1[2],vv1[3],vv1[4],vv1[5],vv1[6]}, 0.0));
-        }
-
-        // Check that t_alpha truly is independent
-        //  i.e. check that firing t_a -> t_b yields an identical state
-        //  to firing t_b -> t_a. See Principles of Model Checking (8.1)
-        boolean commutedCheck = true;
-        for (int k = 1; k < commutedStates.size(); k++) {
-          if (!states.get(n+k).equals(commutedStates.get(k))) {
-            System.out.println("STATES NOT EQUAL. DETAILS ON NEXT LINE.");
-            System.out.println("State " + (n+k) + " does not equal commuted state " + k);
-            commutedCheck = false;
-          }
-          else {
-            System.out.println("State " + (n+k) + " equals commuted state " + k);
-          }
-        }
-
-        // if the transition was not independent, remove t_alpha at that location.
-        // todo: check that this works. for now, the six_reaction model passes the check
-          // so there's no need to worry about removing t_alpha when it's dependent.
-        if (!commutedCheck) {
-          System.out.println("ERROR: TRANSITION WAS NOT ACTUALLY INDEPENDENT!!!");
-          for (int i = 1; i <= n; i++) {
-            for (int j = 0; j < states.get(i).outgoing.size(); j++) {
-              if (states.get(i).outgoing.get(j).transitionName.contains(commute[0])) {
-                states.get(i).outgoing.remove(j);
-              }
-            }
-          }
-        }
-
-        // Configure the absorbing state
-        rollingStateIndex++;
-        int absorbIndex = rollingStateIndex;
-        states.add(new State(absorbIndex, new int[]{-1,-1,-1,-1,-1,-1,-1}, 0.0));
-
-        // Get the absorbing state transition information
-        System.out.println("Absorbing Index: " + absorbIndex);
-        double absorbRate = 0.0;
-        // Loop from state 1 to the last real state
-        for (int i = 1; i < states.size()-1; i++) {
-          // Get the absorbing rate at each state
-          absorbRate = states.get(i).getAbsorbingRate();
-          // Add a new transition with the absorbing rate going to the 
-          //  absorbing state
-          // TODO: Skip this if the absorbing rate is 0
-          states.get(i).addTransition(absorbIndex, states.get(i).getAbsorbingRate(), -1, "ABSORB");
-          transitionCount++;
-        }
-
-        // Initialize transition string
-        String traStr = "";
-        traStr += ((states.size()-1) + " " + transitionCount + "\n");
-
-        // Initialize state string
-        String staStr = "";
-        staStr += "(";
-
-        // Initialize label string
-        String labStr = "0=\"init\" 1=\"sink\"\n0: 0\n";
-        labStr += (absorbIndex + ": 1");
-        
-        // Initialize variable name string
-        String varName = "";
-
-        // Get variable names for first line of .sta file
-        // TODO: This might actually be useful early on, to
-        //  get the total variable count?
-        int vari = 0;
-        while (true) {
-          varName = sim.getVariableName(vari);
-          staStr += varName;
-          if (sim.getVariableName(vari+1) == null) {
-            staStr += ")\n";
-            break;
-          }
-          staStr += ",";
-          vari++;
-        }
-
-        // Get state and transition info by looping through states;
-        //  state 0 is a filler state to make for easier math,
-        //  thus, start state loop at index 1, not 0
-        for (int i = 1; i < states.size(); i++) {
-          // Loop through transitions at each state
-          for (int j = 0; j < states.get(i).outgoing.size(); j++) {
-            traStr += states.get(i).outgoing.get(j).prism();
-            traStr += "\n";
-          }
-          staStr += states.get(i).prism();
-          staStr += "\n";
-        }
-
-        // Write the state file to model.sta
-        BufferedWriter staWriter = new BufferedWriter(new FileWriter("model.sta"));
-        staWriter.write(staStr);
-        staWriter.close();
-
-        // Write the transition file to model.tra
-        BufferedWriter traWriter = new BufferedWriter(new FileWriter("model.tra"));
-        traWriter.write(traStr);
-        traWriter.close();
-
-        // Write the label file to model.lab
-        BufferedWriter labWriter = new BufferedWriter(new FileWriter("model.lab"));
-        labWriter.write(labStr);
-        labWriter.close();
-
-        // Alert user of successful termination
-        System.out.println("Model built. PRISM API ended successfully.");
-
-        // Close PRISM
-        prism.closeDown();
-
-      }
-
-
-      // Default case. No flag indicates we want to simulate a single path 
-      //  and get its probability.
-      else {
-        // Break the string into a transition set
-        String[] tr_st=x.split("\\s+"); 
-
-        // Read in the CSL property to check if it satisfies the property
-        FileReader fr_p = new FileReader("model.csl");
-        BufferedReader br_p = new BufferedReader(fr_p);
-        String x_p;
-        x_p = br_p.readLine();
-
-        // Create a new path
-        sim.createNewPath();
-        sim.initialisePath(null);
-        // sim.createNewOnTheFlyPath(); is recommended for efficiency
-        //  but it has not given correct results
-
-        // Get the index and rate of each transition, then follow the path
-        int index;
-        double pathProbability = 1.0;
-        double totalRate = 0.0;
-        for (int tdx=0; tdx < tr_st.length; tdx++) {
-          index = 0;
-          totalRate = 0.0;
-
-          // Get the total rate in a separate loop (because of the break)
-          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            totalRate += sim.getTransitionProbability(idx);
-          } 
-
-          // Get the index of the transition to fire
-          for (int idx=0; idx < sim.getNumTransitions(); idx++) {
-            String s1 = String.format("[%s]",tr_st[tdx]);
-            String s2 = sim.getTransitionActionString(idx);
-            if (s1.equalsIgnoreCase(s2)) {
-                index = idx;
-                break;
-            }
-          }
-          // Get the probability (not rate) of the transition to fire
-          double transition_probability = sim.getTransitionProbability(index) / totalRate;
-          
-          // If the probability is 0, alert the user
-          if (transition_probability == 0.0f) {
-            System.out.println(String.format("ZERO PROBABILITY FOR TRANSITION %s (%d)", sim.getTransitionActionString(index), index));
-          }
-
-          // Multiply probability along the path
-          pathProbability *= transition_probability;
-          
-          // Alert the user of the probability of the fired transition
-          System.out.println(String.format("FIRED %s (%d) with probability %e (total %e)", sim.getTransitionActionString(index), index, transition_probability, totalRate));
-          
-          // Fire the transition
-          sim.manualTransition(index);
-        }
-
-        // Set up a target expression from the CSL property
-        Expression target = prism.parsePropertiesString(x_p).getProperty(0);
-
-        // Check if the current state (final state) satisfies the CSL property
-        if (target.evaluateBoolean(sim.getCurrentState())) {
-          System.out.printf(">> Path Reaches Target :)\n");
-          System.out.printf("pathProbability %e\n", pathProbability);
-        }
-        // If it does not, alert the user and don't count the probability.
-        else {
-          System.out.printf(">> target state not reached ERR_TAR_NO_RCH\n>> Probability not counted\n");
-          sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
-        }       
-
-        // close PRISM
-        prism.closeDown();
-      }
-
+      // close PRISM
+      prism.closeDown();
 
     } 
     // Catch common errors and give user the info
