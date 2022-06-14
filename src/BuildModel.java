@@ -30,7 +30,7 @@ import prism.PrismPrintStreamLog;
 import simulator.SimulatorEngine;
 
 // This class takes care of everything we need the PRISM API for
-public class SimulateModel
+public class BuildModel
 {
 
   // By default, call BuildModel().run()
