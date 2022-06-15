@@ -98,6 +98,7 @@ public class BuildModel
         temp += vars.get(i); 
       }
       temp += ("] (" + totalRate + ")");
+      temp += (" + en " + enabled + "\n");
       return temp;
     }
 
