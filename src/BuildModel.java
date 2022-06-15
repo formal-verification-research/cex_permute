@@ -185,6 +185,8 @@ public class BuildModel
       for (int i = this.firstState + 1; i < this.lastState; i++) {
         wasEnabled = isEnabled;
         isEnabled = new ArrayList<String>();
+        System.out.println("wasEnabled: " + wasEnabled);
+        System.out.println("isEnabled: " + isEnabled);
         for (int j = 0; j < states.get(i).enabled.size(); j++) {
           // If the last enabled transitions contain the transition
           if (wasEnabled.contains(states.get(i).enabled.get(j))) {
