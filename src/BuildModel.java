@@ -449,7 +449,7 @@ public class BuildModel
       }
 
       if (index == -1) {
-        System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG");
+        System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 01.");
         index = 0;
       }
 
@@ -476,7 +476,7 @@ public class BuildModel
       // System.out.println("State added: " + model.states.get(model.states.size()-1));
 
       // Reset the index
-      index = 0;
+      index = -1;
 
       // Get information for the current transition
       for (int i=0; i < sim.getNumTransitions(); i++) {
@@ -490,6 +490,11 @@ public class BuildModel
         if (pathTransition.equalsIgnoreCase(simTransition)) {
             index = i;
         }
+      }
+
+      if (index == -1) {
+        System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 02.");
+        index = 0;
       }
 
       // Get the rate of the transition we fired
@@ -608,7 +613,7 @@ public class BuildModel
       for (int t=0; t < path.prefix.size(); t++) {
 
         // Reset the index
-        index = 0;
+        index = -1;
 
         // Get information for the current transition
         for (int i=0; i < sim.getNumTransitions(); i++) {
@@ -620,6 +625,11 @@ public class BuildModel
               index = i;
               break;
           }
+        }
+
+        if (index == -1) {
+          System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 03.");
+          index = 0;
         }
 
         // Fire the prefix transition
@@ -635,7 +645,7 @@ public class BuildModel
       for (int t=0; t < transitions.size(); t++) {
 
         // Reset the index
-        index = 0;
+        index = -1;
         String finalTransition = "";
 
         // Find and fire the commuted transition
