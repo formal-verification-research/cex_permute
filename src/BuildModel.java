@@ -556,7 +556,7 @@ public class BuildModel
     System.out.println("Started commute with depth = " + depth);
 
     // Maximum recursion depth
-    if (depth == 2) {
+    if (depth == 1) {
       return;
     }
 
