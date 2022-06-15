@@ -661,6 +661,12 @@ public class BuildModel
             break;
           }
         }
+
+        if (index == -1) {
+          System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG");
+          index = 0;
+        }
+        
         // Fire the transition without incrementing simStateIndex, 
         //  since we want to store the index of the state we return to
         sim.manualTransition(index);
