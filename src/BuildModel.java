@@ -588,7 +588,7 @@ public class BuildModel
     // Do this for every commutable transition
     for (int t_alpha = 0; t_alpha < path.commutable.size(); t_alpha++) {
 
-      System.out.println("Attempting to commute transition " + t_alpha + " of " + path.commutable.size());
+      System.out.println("Attempting to commute transition " + t_alpha + " of " + path.commutable.size() + "(" + path.commutable.get(t_alpha) + ")");
 
       // Create a new simulation from the initial state
       SimulatorEngine sim = prism.getSimulator();
@@ -628,7 +628,7 @@ public class BuildModel
 
       }
 
-      System.out.println("Fired the prefix. Current state is " + sim.getCurrentState().varValues);
+      System.out.println("Fired the prefix. Current state is " + sim.getCurrentState());
 
       // Walk along the path, firing and adding the commutable transition
       //  then backtracking to the previous state
@@ -678,11 +678,11 @@ public class BuildModel
 
         int equivalentIndex = seedStateIndex + ( (model.pathCount - goBackPaths) * model.n );
 
-        System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
+        if (seedStateIndex == 0) System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
         
         // Check is state matches what it should be
         if (tempState.equals(model.states.get(equivalentIndex))) {
-          System.out.println("STATES EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
+          if (seedStateIndex == 0) System.out.println("STATES EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
           // Add transition to the relevant state
           int from = seedStateIndex + path.firstState;
           int to = equivalentIndex;
@@ -692,7 +692,7 @@ public class BuildModel
           model.addTransition(from, to, index, name, rate);
         }
         else {
-          System.out.println("STATES NOT EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
+          if (seedStateIndex == 0) System.out.println("STATES NOT EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
         }
 
         // Backtrack
