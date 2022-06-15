@@ -243,11 +243,11 @@ public class BuildModel
       ArrayList<Integer> intVars = new ArrayList<Integer>();
       for (int i = 0; i < vars.size(); i++) {
         // Check if Object is an Integer or a String, handle appropriately
-        if (tl.get(i) instanceof Integer) {
-          intVars.add((Integer) tl.get(i));
+        if (vars.get(i) instanceof Integer) {
+          intVars.add((Integer) vars.get(i));
         }
-        else if (tl.get(i) instanceof String) {
-          intVars.add(Integer.parseInt((String) tl.get(i)));
+        else if (vars.get(i) instanceof String) {
+          intVars.add(Integer.parseInt((String) vars.get(i)));
         }
       }
       this.states.add(new State(stateCount, intVars, totalRate));
@@ -299,7 +299,7 @@ public class BuildModel
       ArrayList<Integer> absorbingVariables = new ArrayList<Integer>();
       // Set all absorbing variables to -1
       for (int i = 0; i < numVars; i++) {
-        absorbingVariables.add((Object) Integer.valueOf(-1));
+        absorbingVariables.add(Integer.valueOf(-1));
       }
       this.absorbingIndex = stateCount;
       this.states.add(new State(absorbingIndex, absorbingVariables, 0.0));
@@ -599,10 +599,17 @@ public class BuildModel
 
         // Check that the commuted transition is independent. If yes, save the transition
         Object varVals[] = sim.getCurrentState().varValues;
-        ArrayList<Object> stateVariables = new ArrayList<Object>();
+        ArrayList<Integer> stateVariables = new ArrayList<Integer>();
         for (int i = 0; i < varVals.length; i++) {
-          stateVariables.add(varVals[i]);
+          if (varVals[i] instanceof Integer) {
+            stateVariables.add((Integer) varVals[i]);
+          }
+          else if (varVals[i] instanceof String) {
+            stateVariables.add(Integer.parseInt((String) varVals[i]));
+          }
+          // stateVariables.add(varVals[i]);
         }
+
         State tempState = new State(-5, stateVariables, 0);
         
         // Check if the new state is equal to state in pre-calculated path
