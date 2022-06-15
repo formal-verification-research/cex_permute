@@ -639,10 +639,11 @@ public class BuildModel
         String finalTransition = "";
 
         // Find and fire the commuted transition
+        System.out.println("01. Checking " + String.format("[%s]", path.commutable.get(t_alpha)));
+        String simTransition = sim.getTransitionActionString(i);
         for (int i=0; i < sim.getNumTransitions(); i++) {
           // Get transition strings from path and simulation
           String pathTransition = String.format("[%s]", path.commutable.get(t_alpha));
-          String simTransition = sim.getTransitionActionString(i);
           // Update index if we found the right transition
           if (pathTransition.equalsIgnoreCase(simTransition)) {
             index = i;
