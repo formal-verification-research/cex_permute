@@ -75,13 +75,13 @@ public class BuildModel
   // Store states in their own objects
   public class State {
     public int index; // State index
-    public ArrayList<Object> vars; // State variable values
+    public ArrayList<Integer> vars; // State variable values
     public double totalRate; // Total outgoing rate at this state
     public ArrayList<String> enabled; // Set of enabled outgoing transitions
     public ArrayList<Transition> outgoing; // Set of saved outgoing transitions
 
     // Initialize a state, nothing fancy here
-    public State(int index, ArrayList<Object> vars, double totalRate) {
+    public State(int index, ArrayList<Integer> vars, double totalRate) {
       this.index = index;
       this.vars = vars;
       this.totalRate = totalRate;
@@ -240,7 +240,17 @@ public class BuildModel
 
     // Create a new state with a new index
     public void addState(ArrayList<Object> vars, double totalRate) {
-      this.states.add(new State(stateCount, vars, totalRate));
+      ArrayList<Integer> intVars = new ArrayList<Integer>();
+      for (int i = 0; i < vars.size(); i++) {
+        // Check if Object is an Integer or a String, handle appropriately
+        if (tl.get(i) instanceof Integer) {
+          intVars.add((Integer) tl.get(i));
+        }
+        else if (tl.get(i) instanceof String) {
+          intVars.add(Integer.parseInt((String) tl.get(i)));
+        }
+      }
+      this.states.add(new State(stateCount, intVars, totalRate));
       stateCount++;
       currentState++;
     }
@@ -289,7 +299,7 @@ public class BuildModel
       ArrayList<Integer> absorbingVariables = new ArrayList<Integer>();
       // Set all absorbing variables to -1
       for (int i = 0; i < numVars; i++) {
-        absorbingVariables.add((Integer) -1);
+        absorbingVariables.add((Object) Integer.valueOf(-1));
       }
       this.absorbingIndex = stateCount;
       this.states.add(new State(absorbingIndex, absorbingVariables, 0.0));
@@ -488,7 +498,7 @@ public class BuildModel
     }
 
     // Find the commutable transitions along the path
-    path.findCommutable();
+    path.findCommutable(model.states);
 
     // Set up array to mark transitions for removal
     boolean toRemove[] = new boolean[path.commutable.size()];
@@ -502,7 +512,7 @@ public class BuildModel
       nextPrefix.addAll(path.prefix);
       nextPrefix.add(path.commutable.get(c));
       // TODO: Also check if we reached a target state within the buildPath function
-      if (!buildPath(transitions, nextPrefix, model)) {
+      if (buildPath(prism, transitions, nextPrefix, model) == false) {
         toRemove[c] = true;
         continue;
       }
@@ -607,7 +617,7 @@ public class BuildModel
         System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
         
         // Check is state matches what it should be
-        if (tempstate.equals(model.states.get(equivalentIndex))) {
+        if (tempState.equals(model.states.get(equivalentIndex))) {
           System.out.println("STATES EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
           // Add transition to the relevant state
           int from = seedStateIndex + path.firstState;
@@ -648,7 +658,7 @@ public class BuildModel
     }
   
     for (int i = addedPaths; i > 0; i--) {
-      commute(model, model.paths.get(i), transitions, depth + 1);
+      commute(prism, model, model.paths.get(i), transitions, depth + 1);
     }
 
   }
