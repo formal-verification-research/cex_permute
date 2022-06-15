@@ -432,7 +432,9 @@ public class BuildModel
     for (int t=0; t < prefix.size(); t++) {
 
       // Reset the index
-      index = 0;
+      index = -1;
+
+      System.out.println("Checking prefix transition " + String.format("[%s]", prefix.get(t)));
 
       // Get information for the current transition
       for (int i=0; i < sim.getNumTransitions(); i++) {
@@ -444,6 +446,11 @@ public class BuildModel
             index = i;
             break;
         }
+      }
+
+      if (index == -1) {
+        System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG");
+        index = 0;
       }
 
       System.out.println("Fired prefix (commuted) transition " + sim.getTransitionActionString(index) + " in buildPath");
