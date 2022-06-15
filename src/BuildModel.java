@@ -650,7 +650,7 @@ public class BuildModel
 
         // Find and fire the commuted transition
         String pathTransition = String.format("%s", path.commutable.get(t_alpha));
-        System.out.println("01. Checking " + pathTransition);
+        // System.out.println("01. Checking " + pathTransition);
         for (int i=0; i < sim.getNumTransitions(); i++) {
           // Get transition strings from path and simulation
           String simTransition = sim.getTransitionActionString(i);
@@ -666,7 +666,7 @@ public class BuildModel
           System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG");
           index = 0;
         }
-        
+
         // Fire the transition without incrementing simStateIndex, 
         //  since we want to store the index of the state we return to
         sim.manualTransition(index);
@@ -717,7 +717,7 @@ public class BuildModel
 
         // Find the original path transition
         pathTransition = String.format("[%s]", transitions.get(t));
-        System.out.println("02. Checking " + pathTransition);
+        // System.out.println("02. Checking " + pathTransition);
         for (int i=0; i < sim.getNumTransitions(); i++) {
           // Get transition strings from path and simulation
           String simTransition = sim.getTransitionActionString(i);
