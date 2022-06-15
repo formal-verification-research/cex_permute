@@ -395,7 +395,7 @@ public class BuildModel
 
   // Build a path following a transition sequence after firing a prefix
   public boolean buildPath(Prism prism, ArrayList<String> transitions, ArrayList<String> prefix, Model model) {
-
+  try {
     // Create a new simulation
     SimulatorEngine sim = prism.getSimulator();
     sim.createNewPath();
@@ -487,11 +487,26 @@ public class BuildModel
     model.addPath(prefix);
 
     return true;
+
+  }
+  // Catch common errors and give user the info
+  catch (FileNotFoundException e) {
+    System.out.println("FileNotFoundException Error: " + e.getMessage());
+    System.exit(1);
+  } 
+  catch (PrismException e) {
+    System.out.println("PrismException Error: " + e.getMessage());
+    System.exit(1);
+  }
+  catch (IOException e) {
+    System.out.println("IOException Error: " + e.getMessage());
+    System.exit(1);
+  }
   }
 
   // Build parallel commuted paths for a path
   public void commute(Prism prism, Model model, Path path, ArrayList<String> transitions, int depth) {
-      
+  try {
     // Maximum recursion depth
     if (depth == 1) {
       return;
@@ -667,7 +682,20 @@ public class BuildModel
     for (int i = addedPaths; i > 0; i--) {
       commute(prism, model, model.paths.get(i), transitions, depth + 1);
     }
-
+  }
+  // Catch common errors and give user the info
+  catch (FileNotFoundException e) {
+    System.out.println("FileNotFoundException Error: " + e.getMessage());
+    System.exit(1);
+  } 
+  catch (PrismException e) {
+    System.out.println("PrismException Error: " + e.getMessage());
+    System.exit(1);
+  }
+  catch (IOException e) {
+    System.out.println("IOException Error: " + e.getMessage());
+    System.exit(1);
+  }
   }
 
   // Main run function - runs every call
