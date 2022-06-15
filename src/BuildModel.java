@@ -480,7 +480,7 @@ public class BuildModel
 
       // Get information for the current transition
       String pathTransition = String.format("[%s]", transitions.get(t));
-      System.out.println("Checking 02. " + pathTransition);
+      // System.out.println("Checking 02. " + pathTransition);
       for (int i=0; i < sim.getNumTransitions(); i++) {
         // Get transition strings from path and simulation
         String simTransition = sim.getTransitionActionString(i);
@@ -495,12 +495,15 @@ public class BuildModel
 
       if (index == -1) {
         System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 02.");
+        System.out.println("Attempting transition: " + pathTransition);
         System.out.println("Enabled at current state: ");
         for (int i=0; i < sim.getNumTransitions(); i++) {
           // Get transition strings from path and simulation
           System.out.println(sim.getTransitionActionString(i));
         }
-        index = 0;
+        // For now, if the transition is not available, return false.
+        // Maybe do something clever later
+        return false;
       }
 
       // Get the rate of the transition we fired
