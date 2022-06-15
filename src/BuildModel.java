@@ -639,7 +639,7 @@ public class BuildModel
         String finalTransition = "";
 
         // Find and fire the commuted transition
-        String pathTransition = String.format("[%s]", path.commutable.get(t_alpha));
+        String pathTransition = String.format("%s", path.commutable.get(t_alpha));
         System.out.println("01. Checking " + pathTransition);
         for (int i=0; i < sim.getNumTransitions(); i++) {
           // Get transition strings from path and simulation
