@@ -323,7 +323,7 @@ public class BuildModel
 
     // Export model files
     public void exportFiles(SimulatorEngine sim) {
-
+      try {
       // Count transitions
       int transitionCount = this.countTransitions();
 
@@ -388,7 +388,20 @@ public class BuildModel
 
         // Alert user of successful termination
         System.out.println("Model built. PRISM API ended successfully.");
-
+      }
+      // Catch common errors and give user the info
+      catch (FileNotFoundException e) {
+        System.out.println("FileNotFoundException Error: " + e.getMessage());
+        System.exit(1);
+      } 
+      catch (PrismException e) {
+        System.out.println("PrismException Error: " + e.getMessage());
+        System.exit(1);
+      }
+      catch (IOException e) {
+        System.out.println("IOException Error: " + e.getMessage());
+        System.exit(1);
+      }
     }
 
   }
@@ -690,10 +703,6 @@ public class BuildModel
   } 
   catch (PrismException e) {
     System.out.println("PrismException Error: " + e.getMessage());
-    System.exit(1);
-  }
-  catch (IOException e) {
-    System.out.println("IOException Error: " + e.getMessage());
     System.exit(1);
   }
   }
