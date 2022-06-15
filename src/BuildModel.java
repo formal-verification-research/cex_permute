@@ -418,7 +418,7 @@ public class BuildModel
   public boolean buildPath(Prism prism, ArrayList<String> transitions, ArrayList<String> prefix, Model model) {
   try {
 
-    System.out.println("buildPath started with prefix size " + prefix.size());
+    System.out.println("buildPath started with prefix " + prefix);
     int addedThisRun = 0;
 
     // Create a new simulation
