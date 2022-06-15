@@ -507,8 +507,9 @@ public class BuildModel
   // Build parallel commuted paths for a path
   public void commute(Prism prism, Model model, Path path, ArrayList<String> transitions, int depth) {
   try {
+    
     // Maximum recursion depth
-    if (depth == 1) {
+    if (depth == 2) {
       return;
     }
 
