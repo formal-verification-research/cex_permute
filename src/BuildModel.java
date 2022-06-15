@@ -495,6 +495,11 @@ public class BuildModel
 
       if (index == -1) {
         System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 02.");
+        System.out.println("Enabled at current state: ");
+        for (int i=0; i < sim.getNumTransitions(); i++) {
+          // Get transition strings from path and simulation
+          System.out.println(sim.getTransitionActionString(i));
+        }
         index = 0;
       }
 
