@@ -616,9 +616,10 @@ public class BuildModel
         index = -1;
 
         // Get information for the current transition
+        String pathTransition = String.format("[%s]", path.prefix.get(t));
+        System.out.println("Checking " + pathTransition);
         for (int i=0; i < sim.getNumTransitions(); i++) {
           // Get transition strings from path and simulation
-          String pathTransition = String.format("[%s]", path.prefix.get(t));
           String simTransition = sim.getTransitionActionString(i);
           // Update index if we found the right transition
           if (pathTransition.equalsIgnoreCase(simTransition)) {
@@ -709,7 +710,8 @@ public class BuildModel
           model.addTransition(from, to, index, name, rate);
         }
         else {
-          if (seedStateIndex == 0) System.out.println("STATES NOT EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
+          if (seedStateIndex != 0) System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
+          System.out.println("STATES NOT EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
         }
 
         // Backtrack
