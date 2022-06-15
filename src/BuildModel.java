@@ -394,10 +394,6 @@ public class BuildModel
         System.out.println("FileNotFoundException Error: " + e.getMessage());
         System.exit(1);
       } 
-      catch (PrismException e) {
-        System.out.println("PrismException Error: " + e.getMessage());
-        System.exit(1);
-      }
       catch (IOException e) {
         System.out.println("IOException Error: " + e.getMessage());
         System.exit(1);
@@ -498,23 +494,15 @@ public class BuildModel
 
     // Tell the model we finished the seed path
     model.addPath(prefix);
-
     return true;
-
   }
   // Catch common errors and give user the info
-  catch (FileNotFoundException e) {
-    System.out.println("FileNotFoundException Error: " + e.getMessage());
-    System.exit(1);
-  } 
   catch (PrismException e) {
     System.out.println("PrismException Error: " + e.getMessage());
     System.exit(1);
+    return false;
   }
-  catch (IOException e) {
-    System.out.println("IOException Error: " + e.getMessage());
-    System.exit(1);
-  }
+  return true;
   }
 
   // Build parallel commuted paths for a path
@@ -777,10 +765,6 @@ public class BuildModel
 
     } 
     // Catch common errors and give user the info
-    catch (FileNotFoundException e) {
-			System.out.println("FileNotFoundException Error: " + e.getMessage());
-			System.exit(1);
-		} 
     catch (PrismException e) {
 			System.out.println("PrismException Error: " + e.getMessage());
 			System.exit(1);
