@@ -263,11 +263,14 @@ public class BuildModel
     // Add to the total rate of the current state
     public void addRateToCurrentState(double rate) {
       states.get(currentState).addRate(rate);
+      System.out.println("Added rate " + rate + " to state " + currentState);
     }
     
     // Add to the enabled transitions of the current state
     public void addEnabledToCurrentState(String transition) {
       states.get(currentState).addEnabled(transition);
+      System.out.println("Added enabled transition " + transition + " to state " + currentState);
+      System.out.println("Enabled transitions at state " + currentState + " are now " + states.get(currentState).enabled);
     }
 
     // Add a one-step transition to the current state
@@ -410,6 +413,9 @@ public class BuildModel
   // Build a path following a transition sequence after firing a prefix
   public boolean buildPath(Prism prism, ArrayList<String> transitions, ArrayList<String> prefix, Model model) {
   try {
+
+    System.out.println("buildPath started with prefix size " + prefix.size());
+
     // Create a new simulation
     SimulatorEngine sim = prism.getSimulator();
     sim.createNewPath();
@@ -452,6 +458,8 @@ public class BuildModel
         stateVariables.add(varVals[i]);
       }
       model.addState(stateVariables, 0.0);
+
+      System.out.println("State added: " + model.states.get(model.states.size()-1));
 
       // Reset the index
       index = 0;
