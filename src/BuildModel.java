@@ -183,14 +183,14 @@ public class BuildModel
       System.out.println("Starting findCommutable on " + this + " with states " + states);
       ArrayList<String> wasEnabled = new ArrayList<String>();
       ArrayList<String> isEnabled = states.get(this.firstState).enabled;
-      System.out.println("wasEnabled: " + wasEnabled);
-      System.out.println("isEnabled: " + isEnabled);
+      // System.out.println("wasEnabled: " + wasEnabled);
+      // System.out.println("isEnabled: " + isEnabled);
       // Loop through the states to check enabled
       for (int i = this.firstState + 1; i < this.lastState; i++) {
         wasEnabled = isEnabled;
         isEnabled = new ArrayList<String>();
-        System.out.println("wasEnabled: " + wasEnabled);
-        System.out.println("isEnabled: " + isEnabled);
+        // System.out.println("wasEnabled: " + wasEnabled);
+        // System.out.println("isEnabled: " + isEnabled);
         for (int j = 0; j < states.get(i).enabled.size(); j++) {
           // If the last enabled transitions contain the transition
           if (wasEnabled.contains(states.get(i).enabled.get(j))) {
@@ -783,6 +783,10 @@ public class BuildModel
 
       // close PRISM
       prism.closeDown();
+
+      // Exit and alert user
+      System.out.println("Thank you. Remember to check buildModel.tra,sta,lab and out.sta,tra,lab and final_prism_report.txt if you used the makefile.");
+      System.out.println("Otherwise, your model is available at buildModel.tra,sta,lab.");
 
     } 
     // Catch common errors and give user the info
