@@ -149,6 +149,7 @@ public class BuildModel
       enabled.add(transition_name);
     }
 
+
   }
 
   // Store a path in an object
@@ -192,11 +193,13 @@ public class BuildModel
         }
       }
       this.commutable = isEnabled;
+      System.out.println("Commutable transitions at this point: " + this.commutable + " on " + this);
     }
 
     // Remove a commutable (because it doesn't work)
     public void removeCommutable(int c) {
       commutable.remove(c);
+      System.out.println("Removed commutable at index " + c + " because it did not work.");
     }
 
     // Custom string output to give the most detail
@@ -507,7 +510,9 @@ public class BuildModel
   // Build parallel commuted paths for a path
   public void commute(Prism prism, Model model, Path path, ArrayList<String> transitions, int depth) {
   try {
-    
+
+    System.out.println("Started commute with depth = " + depth);
+
     // Maximum recursion depth
     if (depth == 2) {
       return;
@@ -545,11 +550,15 @@ public class BuildModel
     int addedPaths = path.commutable.size();
     int goBackPaths = addedPaths;
 
+    System.out.println("We added " + addedPaths + " paths (one per commutable transition)");
+
     // Fire each commutable transition from each state along the path
     //  and check that it matches the full-length path
 
     // Do this for every commutable transition
     for (int t_alpha = 0; t_alpha < path.commutable.size(); t_alpha++) {
+
+      System.out.println("Attempting to commute transition " + t_alpha + " of " + path.commutable.size());
 
       // Create a new simulation from the initial state
       SimulatorEngine sim = prism.getSimulator();
@@ -588,6 +597,8 @@ public class BuildModel
         simStateIndex++;
 
       }
+
+      System.out.println("Fired the prefix. Current state is " + sim.getCurrentState().varValues);
 
       // Walk along the path, firing and adding the commutable transition
       //  then backtracking to the previous state
