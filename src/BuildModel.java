@@ -179,6 +179,7 @@ public class BuildModel
     // Find the intersection of states
     public void findCommutable(ArrayList<State> states) {
       // Initialize the arraylists for checking
+      System.out.println("Starting findCommutable on " + this);
       ArrayList<String> wasEnabled = states.get(this.firstState).enabled;
       ArrayList<String> isEnabled = new ArrayList<String>();
       // Loop through the states to check enabled
@@ -263,14 +264,14 @@ public class BuildModel
     // Add to the total rate of the current state
     public void addRateToCurrentState(double rate) {
       states.get(currentState).addRate(rate);
-      System.out.println("Added rate " + rate + " to state " + currentState);
+      // System.out.println("Added rate " + rate + " to state " + currentState);
     }
     
     // Add to the enabled transitions of the current state
     public void addEnabledToCurrentState(String transition) {
       states.get(currentState).addEnabled(transition);
-      System.out.println("Added enabled transition " + transition + " to state " + currentState);
-      System.out.println("Enabled transitions at state " + currentState + " are now " + states.get(currentState).enabled);
+      // System.out.println("Added enabled transition " + transition + " to state " + currentState);
+      // System.out.println("Enabled transitions at state " + currentState + " are now " + states.get(currentState).enabled);
     }
 
     // Add a one-step transition to the current state
