@@ -124,7 +124,7 @@ public class BuildModel
       if (this.vars.length != s.vars.length) return false;
       // Check each value one-by-one
       for (int i=0; i<this.vars.length; i++) {
-        if (this.vars[i] != s.vars[i]) return false;
+        if (this.vars.get(i) != s.vars.get(i)) return false;
       }
       return true;
     }
@@ -261,7 +261,7 @@ public class BuildModel
     }
     
     // Add a more complicated transition
-    public void addTransition(from, to, index, name, rate) {
+    public void addTransition(int from, int to, int index, String name, double rate) {
       states(from).addTransition(to, rate, index, name);
     }
 
@@ -279,12 +279,8 @@ public class BuildModel
       pathCount++;
     }
 
-    // Make a seed path object WITH PREFIX
-    public void addPath(ArrayList<String> prefix) {
-      this.paths.add(new Path(lastPathEnded, currentState, prefix));
-      lastPathEnded = currentState + 1; // should work as long as prefix grows as expected
-      pathCount++;
-    }
+    // TODO: Might need to make a custom start/end path builder?
+    
 
     // Make an absorbing state
     //  This MUST be the last state you add.
@@ -484,7 +480,7 @@ public class BuildModel
     // Check the full-lenth parallel path before firing commutable transitions
     // That is, set the commutable transition as a path prefix
     //  and build paths following the seed transition sequence.
-    for (int c = c < path.commutable.size(); c++) {
+    for (int c = 0; c < path.commutable.size(); c++) {
       ArrayList<String> nextPrefix = new ArrayList<String>();
       nextPrefix.addAll(path.prefix);
       nextPrefix.add(path.commutable.get(c));
@@ -594,7 +590,7 @@ public class BuildModel
           int to = equivalentIndex;
           // index is still index
           String name = sim.getTransitionActionString(index);
-          double rate = sim.getTransitionProbability(index)
+          double rate = sim.getTransitionProbability(index);
           model.addTransition(from, to, index, name, rate);
         }
         else {
@@ -628,7 +624,7 @@ public class BuildModel
     }
   
     for (int i = addedPaths; i > 0; i--) {
-      commute(model, model.paths.get(i), transitions, depth + 1)
+      commute(model, model.paths.get(i), transitions, depth + 1);
     }
 
   }
