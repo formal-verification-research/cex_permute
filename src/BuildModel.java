@@ -553,9 +553,11 @@ public class BuildModel
       ArrayList<String> nextPrefix = new ArrayList<String>();
       nextPrefix.addAll(path.prefix);
       nextPrefix.add(path.commutable.get(c));
+      System.out.println("Sending prefix " + nextPrefix + " to buildPath (c=" + c + ")");
       // TODO: Also check if we reached a target state within the buildPath function
       if (buildPath(prism, transitions, nextPrefix, model) == false) {
         toRemove[c] = true;
+        System.out.println("Path not built (buildPath returned false)");
         continue;
       }
     }
