@@ -180,7 +180,7 @@ public class BuildModel
     // Find the intersection of states
     public void findCommutable(ArrayList<State> states) {
       // Initialize the arraylists for checking
-      System.out.println("Starting findCommutable on " + this + " with states " + states);
+      System.out.println("Starting findCommutable on " + this);
       ArrayList<String> wasEnabled = new ArrayList<String>();
       ArrayList<String> isEnabled = states.get(this.firstState).enabled;
       // System.out.println("wasEnabled: " + wasEnabled);
@@ -313,7 +313,7 @@ public class BuildModel
       for (int i = 0; i < numVars; i++) {
         absorbingVariables.add(Integer.valueOf(-1));
       }
-      this.absorbingIndex = stateCount;
+      this.absorbingIndex = stateCount - 1;
       this.states.add(new State(absorbingIndex, absorbingVariables, 0.0));
       System.out.println("Absorbing Index: " + absorbingIndex);
       double absorbRate = 0.0;
@@ -419,6 +419,7 @@ public class BuildModel
   try {
 
     System.out.println("buildPath started with prefix size " + prefix.size());
+    int addedThisRun = 0;
 
     // Create a new simulation
     SimulatorEngine sim = prism.getSimulator();
@@ -445,6 +446,7 @@ public class BuildModel
         }
       }
 
+      System.out.println("Fired prefix (commuted) transition " + sim.getTransitionActionString(index) + " in buildPath");
       // Fire the prefix transition
       sim.manualTransition(index);
 
@@ -462,6 +464,7 @@ public class BuildModel
         stateVariables.add(varVals[i]);
       }
       model.addState(stateVariables, 0.0);
+      addedThisRun++;
 
       // System.out.println("State added: " + model.states.get(model.states.size()-1));
 
@@ -505,12 +508,16 @@ public class BuildModel
       stateVariables.add(varVals[i]);
     }
     model.addState(stateVariables, 0.0);
+    addedThisRun++;
 
     // Check if it's a target state and alert the user if not
     // TODO: Implement this
 
     // Tell the model we finished the seed path
     model.addPath(prefix);
+
+    System.out.println("Finished buildPath having added " + addedThisRun + " states to the model.");
+
     return true;
   }
   // Catch common errors and give user the info
