@@ -616,7 +616,7 @@ public class BuildModel
         index = -1;
 
         // Get information for the current transition
-        String pathTransition = String.format("[%s]", path.prefix.get(t));
+        String pathTransition = String.format("%s", path.prefix.get(t));
         System.out.println("Checking " + pathTransition);
         for (int i=0; i < sim.getNumTransitions(); i++) {
           // Get transition strings from path and simulation
