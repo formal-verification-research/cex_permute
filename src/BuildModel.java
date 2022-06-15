@@ -664,7 +664,7 @@ public class BuildModel
         }
 
         if (index == -1) {
-          System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG");
+          System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 04.");
           index = 0;
         }
 
