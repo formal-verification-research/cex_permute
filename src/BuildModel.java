@@ -179,7 +179,7 @@ public class BuildModel
     // Find the intersection of states
     public void findCommutable(ArrayList<State> states) {
       // Initialize the arraylists for checking
-      System.out.println("Starting findCommutable on " + this);
+      System.out.println("Starting findCommutable on " + this + " with states " + states);
       ArrayList<String> wasEnabled = states.get(this.firstState).enabled;
       ArrayList<String> isEnabled = new ArrayList<String>();
       // Loop through the states to check enabled
@@ -460,7 +460,7 @@ public class BuildModel
       }
       model.addState(stateVariables, 0.0);
 
-      System.out.println("State added: " + model.states.get(model.states.size()-1));
+      // System.out.println("State added: " + model.states.get(model.states.size()-1));
 
       // Reset the index
       index = 0;
