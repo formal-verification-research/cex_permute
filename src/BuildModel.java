@@ -181,8 +181,10 @@ public class BuildModel
     public void findCommutable(ArrayList<State> states) {
       // Initialize the arraylists for checking
       System.out.println("Starting findCommutable on " + this + " with states " + states);
-      ArrayList<String> wasEnabled = states.get(this.firstState).enabled;
-      ArrayList<String> isEnabled = new ArrayList<String>();
+      ArrayList<String> wasEnabled = new ArrayList<String>();
+      ArrayList<String> isEnabled = states.get(this.firstState).enabled;
+      System.out.println("wasEnabled: " + wasEnabled);
+      System.out.println("isEnabled: " + isEnabled);
       // Loop through the states to check enabled
       for (int i = this.firstState + 1; i < this.lastState; i++) {
         wasEnabled = isEnabled;
