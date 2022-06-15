@@ -434,12 +434,12 @@ public class BuildModel
       // Reset the index
       index = -1;
 
-      System.out.println("Checking prefix transition " + String.format("[%s]", prefix.get(t)));
+      System.out.println("Checking prefix transition " + prefix.get(t));
 
       // Get information for the current transition
+      String pathTransition = prefix.get(t);
       for (int i=0; i < sim.getNumTransitions(); i++) {
         // Get transition strings from path and simulation
-        String pathTransition = String.format("[%s]", prefix.get(t));
         String simTransition = sim.getTransitionActionString(i);
         // Update index if we found the right transition
         if (pathTransition.equalsIgnoreCase(simTransition)) {
