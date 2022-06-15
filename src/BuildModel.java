@@ -121,9 +121,9 @@ public class BuildModel
     // Check if state variables are all equal (i.e. equivalent states)
     public boolean equals(State s) {
       // Different length clearly indicates a difference
-      if (this.vars.length != s.vars.length) return false;
+      if (this.vars.size() != s.vars.size()) return false;
       // Check each value one-by-one
-      for (int i=0; i<this.vars.length; i++) {
+      for (int i=0; i<this.vars.size(); i++) {
         if (this.vars.get(i) != s.vars.get(i)) return false;
       }
       return true;
@@ -257,12 +257,12 @@ public class BuildModel
 
     // Add a one-step transition to the current state
     public void addSimpleTransition(int index, String name, double rate) {
-      states(currentState).addTransition(currentState + 1, rate, index, name);
+      states.get(currentState).addTransition(currentState + 1, rate, index, name);
     }
     
     // Add a more complicated transition
     public void addTransition(int from, int to, int index, String name, double rate) {
-      states(from).addTransition(to, rate, index, name);
+      states.get(from).addTransition(to, rate, index, name);
     }
 
     // Make a seed path object
@@ -286,14 +286,19 @@ public class BuildModel
     //  This MUST be the last state you add.
     public void addAbsorbingState() {
       int numVars = states.get(0).vars.size();
+      ArrayList<Integer> absorbingVariables = new ArrayList<Integer>();
+      // Set all absorbing variables to -1
+      for (int i = 0; i < numVars; i++) {
+        absorbingVariables.add((Integer) -1);
+      }
       this.absorbingIndex = stateCount;
-      this.states.add(new State(absorbingIndex, vars, totalRate));
+      this.states.add(new State(absorbingIndex, absorbingVariables, 0.0));
       System.out.println("Absorbing Index: " + absorbingIndex);
       double absorbRate = 0.0;
       for (int i = 0; i < states.size() - 1; i++) {
         absorbRate = states.get(i).getAbsorbingRate();
         if (absorbRate > 0.0) {
-          states.get(i).addTransition(absorbIndex, states.get(i).getAbsorbingRate(), -1, "ABSORB");
+          states.get(i).addTransition(absorbingIndex, states.get(i).getAbsorbingRate(), -1, "ABSORB");
         }
       }
     }
@@ -379,12 +384,14 @@ public class BuildModel
   }
 
   // Build a path following a transition sequence after firing a prefix
-  public boolean buildPath(ArrayList<String> transitions, ArrayList<String> prefix, Model model) {
+  public boolean buildPath(Prism prism, ArrayList<String> transitions, ArrayList<String> prefix, Model model) {
 
     // Create a new simulation
     SimulatorEngine sim = prism.getSimulator();
     sim.createNewPath();
     sim.initialisePath(null);
+
+    int index;
     
     // Walk along the prefix to get the new initial state
     for (int t=0; t < prefix.size(); t++) {
@@ -415,7 +422,12 @@ public class BuildModel
     for (int t=0; t < transitions.size(); t++) {
 
       // Make the current state
-      model.addState(sim.getCurrentState().varValues, 0.0);
+      Object varVals[] = sim.getCurrentState().varValues;
+      ArrayList<Object> stateVariables = new ArrayList<Object>();
+      for (int i = 0; i < varVals.length; i++) {
+        stateVariables.add(varVals[i]);
+      }
+      model.addState(stateVariables, 0.0);
 
       // Reset the index
       index = 0;
@@ -426,7 +438,7 @@ public class BuildModel
         String pathTransition = String.format("[%s]", transitions.get(t));
         String simTransition = sim.getTransitionActionString(i);
         // Add current state info to model
-        model.addRateToCurrentState(simTransition);
+        model.addRateToCurrentState(sim.getTransitionProbability(i));
         model.addEnabledToCurrentState(simTransition);
         // Update index if we found the right transition
         if (pathTransition.equalsIgnoreCase(simTransition)) {
@@ -451,7 +463,12 @@ public class BuildModel
     }
 
     // Make the target state (after firing the final transition)
-    model.addState(sim.getCurrentState().varValues, 0.0);
+    Object varVals[] = sim.getCurrentState().varValues;
+    ArrayList<Object> stateVariables = new ArrayList<Object>();
+    for (int i = 0; i < varVals.length; i++) {
+      stateVariables.add(varVals[i]);
+    }
+    model.addState(stateVariables, 0.0);
 
     // Check if it's a target state and alert the user if not
     // TODO: Implement this
@@ -463,7 +480,7 @@ public class BuildModel
   }
 
   // Build parallel commuted paths for a path
-  public void commute(Model model, Path path, ArrayList<String> transitions, int depth) {
+  public void commute(Prism prism, Model model, Path path, ArrayList<String> transitions, int depth) {
       
     // Maximum recursion depth
     if (depth == 1) {
@@ -512,6 +529,8 @@ public class BuildModel
       SimulatorEngine sim = prism.getSimulator();
       sim.createNewPath();
       sim.initialisePath(null);
+
+      int index;
 
       // This stores where we are adjacent to in the SEED PATH
       int seedStateIndex = 0;
@@ -569,7 +588,12 @@ public class BuildModel
         sim.manualTransition(index);
 
         // Check that the commuted transition is independent. If yes, save the transition
-        State tempState = new State(-5, ArrayList<Object> vars, 0);
+        Object varVals[] = sim.getCurrentState().varValues;
+        ArrayList<Object> stateVariables = new ArrayList<Object>();
+        for (int i = 0; i < varVals.length; i++) {
+          stateVariables.add(varVals[i]);
+        }
+        State tempState = new State(-5, stateVariables, 0);
         
         // Check if the new state is equal to state in pre-calculated path
 
@@ -670,8 +694,12 @@ public class BuildModel
 
       // Read in the seed path line
       String x_transitions = br.readLine();
+      String[] strarr_transitions = x_transitions.split("\\s+");
       ArrayList<String> transitions = new ArrayList<String>();
-      transitions = Arrays.asList(x_transitions.split("\\s+"));
+      for (int i = 0; i < strarr_transitions.length; i++) {
+        transitions.add(strarr_transitions[i]);
+      }
+      // transitions = Arrays.asList(x_transitions.split("\\s+"));
       
       // Let n_seed be the length of the seed path (in STATES, not transitions)
       int n_seed = transitions.size() + 1;
@@ -680,8 +708,8 @@ public class BuildModel
 
       // Build the seed path, which recursively does everything
       ArrayList<String> prefix = new ArrayList<String>();
-      buildPath(transitions, prefix, model);
-      commute(model, model.paths.get(0), transitions, 0); 
+      buildPath(prism, transitions, prefix, model);
+      commute(prism, model, model.paths.get(0), transitions, 0); 
 
       // Configure the absorbing state
       model.addAbsorbingState();
