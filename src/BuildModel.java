@@ -309,6 +309,8 @@ public class BuildModel
       for (int i = 0; i < this.states.size(); i++) { // loop through states
         for (int j = i+1; j < this.states.size(); j++) { // loop through comparable states
           if (this.states.get(i).equals(this.states.get(j))) { // if states are equal
+            System.out.println("State " + i + " equals state " + j);
+
             // TODO: Guarantee other attributes are equivalent
 
             // Combine the outgoing transitions into one set in state i
@@ -321,6 +323,7 @@ public class BuildModel
                 }
               }
               if (canAdd) {
+                System.out.println("Can add transition to " + k);
                 this.states.get(j).outgoing.add( this.states.get(j).outgoing.get(k) );
               }
             }
