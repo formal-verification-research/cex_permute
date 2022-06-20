@@ -132,7 +132,9 @@ public class BuildModel
 
     // Add an outgoing transition to the list
     public void addTransition(int to, double rate, int transitionIndex, String transitionName) {
-      outgoing.add(new Transition(this.index, to, rate, transitionIndex, transitionName));
+      if (rate > 0.0) { // Experimental: Only add transition if the rate is nonzero
+        outgoing.add(new Transition(this.index, to, rate, transitionIndex, transitionName));
+      }
     }
 
     // Get the rate of transitions into the absorbing state
@@ -306,6 +308,9 @@ public class BuildModel
     // This algorithm was not designed to work once the absorbing state 
     //  calculations are complete.
     public void mergeDuplicates() {
+      for (int i = 0; i < this.states.size(); i++) { // loop through states
+        System.out.println("State " + i + " outgoing size = " + this.states.get(i).outgoing.size() );
+      }
       for (int i = 0; i < this.states.size(); i++) { // loop through states
         for (int j = i+1; j < this.states.size(); j++) { // loop through comparable states
           if (this.states.get(i).equals(this.states.get(j))) { // if states are equal
