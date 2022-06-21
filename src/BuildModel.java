@@ -311,48 +311,48 @@ public class BuildModel
       for (int i = 0; i < this.states.size(); i++) { // loop through states
         System.out.println("State " + i + " outgoing size = " + this.states.get(i).outgoing.size() );
       }
-      for (int i = 0; i < this.states.size(); i++) { // loop through states
-        for (int j = i+1; j < this.states.size(); j++) { // loop through comparable states
-          if (this.states.get(i).equals(this.states.get(j))) { // if states are equal
-            System.out.println("State " + i + " equals state " + j);
+      // for (int i = 0; i < this.states.size(); i++) { // loop through states
+      //   for (int j = i+1; j < this.states.size(); j++) { // loop through comparable states
+      //     if (this.states.get(i).equals(this.states.get(j))) { // if states are equal
+      //       System.out.println("State " + i + " equals state " + j);
 
-            // TODO: Guarantee other attributes are equivalent
+      //       // TODO: Guarantee other attributes are equivalent
 
-            // Combine the outgoing transitions into one set in state i
-            for (int k = 0; k < this.states.get(j).outgoing.size(); k++) {
-              // transition is this.states.get(j).outgoing.get(k)
-              boolean canAdd = true;
-              for (int l = 0; l < this.states.get(i).outgoing.size(); l++) {
-                if (this.states.get(j).outgoing.get(k).to == this.states.get(i).outgoing.get(l).to) {
-                  canAdd = false; // don't add transitions we already have
-                }
-              }
-              if (canAdd) {
-                System.out.println("Can add transition to " + k);
-                this.states.get(j).outgoing.add( this.states.get(j).outgoing.get(k) );
-              }
-            }
+      //       // Combine the outgoing transitions into one set in state i
+      //       for (int k = 0; k < this.states.get(j).outgoing.size(); k++) {
+      //         // transition is this.states.get(j).outgoing.get(k)
+      //         boolean canAdd = true;
+      //         for (int l = 0; l < this.states.get(i).outgoing.size(); l++) {
+      //           if (this.states.get(j).outgoing.get(k).to == this.states.get(i).outgoing.get(l).to) {
+      //             canAdd = false; // don't add transitions we already have
+      //           }
+      //         }
+      //         if (canAdd) {
+      //           System.out.println("Can add transition to " + k);
+      //           this.states.get(j).outgoing.add( this.states.get(j).outgoing.get(k) );
+      //         }
+      //       }
 
-            // Delete state j 
-            this.states.remove(j);
+      //       // Delete state j 
+      //       this.states.remove(j);
 
-            // Loop through every state
-            for (int k = 0; k < this.states.size(); k++) {
-              for (int l = 0; l < this.states.get(k).outgoing.size(); l++) {
-                // Change transitions to index j to index i
-                // transition is this.states.get(k).outgoing.get(l)
-                if (this.states.get(k).outgoing.get(l).to == j) {
-                  this.states.get(k).outgoing.get(l).to = i;
-                }
-                // Change transitions to index a > j to go to index a-1
-                if (this.states.get(k).outgoing.get(l).to == j) {
-                  this.states.get(k).outgoing.get(l).to -= 1;
-                }
-              }
-            }
-          }
-        }
-      }
+      //       // Loop through every state
+      //       for (int k = 0; k < this.states.size(); k++) {
+      //         for (int l = 0; l < this.states.get(k).outgoing.size(); l++) {
+      //           // Change transitions to index j to index i
+      //           // transition is this.states.get(k).outgoing.get(l)
+      //           if (this.states.get(k).outgoing.get(l).to == j) {
+      //             this.states.get(k).outgoing.get(l).to = i;
+      //           }
+      //           // Change transitions to index a > j to go to index a-1
+      //           if (this.states.get(k).outgoing.get(l).to == j) {
+      //             this.states.get(k).outgoing.get(l).to -= 1;
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
     }
 
     // TODO: Might need to make a custom start/end path builder?
