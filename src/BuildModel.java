@@ -311,48 +311,61 @@ public class BuildModel
       for (int i = 0; i < this.states.size(); i++) { // loop through states
         System.out.println("State " + i + " outgoing size = " + this.states.get(i).outgoing.size() );
       }
-      // for (int i = 0; i < this.states.size(); i++) { // loop through states
-      //   for (int j = i+1; j < this.states.size(); j++) { // loop through comparable states
-      //     if (this.states.get(i).equals(this.states.get(j))) { // if states are equal
-      //       System.out.println("State " + i + " equals state " + j);
+      for (int i = 0; i < this.states.size(); i++) { // loop through states
+        for (int j = i+1; j < this.states.size(); j++) { // loop through comparable states
+          if (this.states.get(i).equals(this.states.get(j))) { // if states are equal
+            System.out.println("State " + i + " equals state " + j);
 
-      //       // TODO: Guarantee other attributes are equivalent
+            // TODO: Guarantee other attributes are equivalent
 
-      //       // Combine the outgoing transitions into one set in state i
-      //       for (int k = 0; k < this.states.get(j).outgoing.size(); k++) {
-      //         // transition is this.states.get(j).outgoing.get(k)
-      //         boolean canAdd = true;
-      //         for (int l = 0; l < this.states.get(i).outgoing.size(); l++) {
-      //           if (this.states.get(j).outgoing.get(k).to == this.states.get(i).outgoing.get(l).to) {
-      //             canAdd = false; // don't add transitions we already have
-      //           }
-      //         }
-      //         if (canAdd) {
-      //           System.out.println("Can add transition to " + k);
-      //           this.states.get(j).outgoing.add( this.states.get(j).outgoing.get(k) );
-      //         }
-      //       }
+            // Combine the outgoing transitions into one set in state i
+            for (int k = 0; k < this.states.get(j).outgoing.size(); k++) {
+              // transition is this.states.get(j).outgoing.get(k)
+              boolean canAdd = true;
+              for (int l = 0; l < this.states.get(i).outgoing.size(); l++) {
+                if (this.states.get(j).outgoing.get(k).to == this.states.get(i).outgoing.get(l).to) {
+                  canAdd = false; // don't add transitions we already have
+                }
+              }
+              if (canAdd) {
+                System.out.println("Adding transition to state " + k);
+                this.states.get(i).outgoing.add( this.states.get(j).outgoing.get(k) );
+              }
+            }
 
-      //       // Delete state j 
-      //       this.states.remove(j);
+            // Delete state j 
+            this.states.remove(j);
+            this.stateCount--;
+            System.out.println("There are now " + stateCount + " states.");
 
-      //       // Loop through every state
-      //       for (int k = 0; k < this.states.size(); k++) {
-      //         for (int l = 0; l < this.states.get(k).outgoing.size(); l++) {
-      //           // Change transitions to index j to index i
-      //           // transition is this.states.get(k).outgoing.get(l)
-      //           if (this.states.get(k).outgoing.get(l).to == j) {
-      //             this.states.get(k).outgoing.get(l).to = i;
-      //           }
-      //           // Change transitions to index a > j to go to index a-1
-      //           if (this.states.get(k).outgoing.get(l).to == j) {
-      //             this.states.get(k).outgoing.get(l).to -= 1;
-      //           }
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
+            // Make sure state indices match up
+            for (int k = j; k < this.states.size(); k++) {
+              this.states.get(k).index = k;
+            }
+
+            // Loop through every state to fix outgoing transitions
+            for (int k = 0; k < this.states.size(); k++) {
+              for (int l = 0; l < this.states.get(k).outgoing.size(); l++) {
+                // Change transitions to index j to index i
+                // transition is this.states.get(k).outgoing.get(l)
+                if (this.states.get(k).outgoing.get(l).to == j) {
+                  this.states.get(k).outgoing.get(l).to = i;
+                }
+                // Change transitions to index a > j to go to index a-1
+                if (this.states.get(k).outgoing.get(l).to > j) {
+                  this.states.get(k).outgoing.get(l).to -= 1;
+                }
+                // Make sure all the transition from attributes match
+                this.states.get(k).outgoing.get(l).from = k;
+              }
+            }
+
+          }
+        }
+      }
+      for (int i = 0; i < this.states.size(); i++) { // loop through states
+        System.out.println("State " + i + " outgoing size = " + this.states.get(i).outgoing.size() );
+      }
     }
 
     // TODO: Might need to make a custom start/end path builder?
@@ -367,7 +380,7 @@ public class BuildModel
       for (int i = 0; i < numVars; i++) {
         absorbingVariables.add(Integer.valueOf(-1));
       }
-      this.absorbingIndex = stateCount - 1;
+      this.absorbingIndex = stateCount;
       this.states.add(new State(absorbingIndex, absorbingVariables, 0.0));
       System.out.println("Absorbing Index: " + absorbingIndex);
       double absorbRate = 0.0;
@@ -439,17 +452,17 @@ public class BuildModel
 
         // Write the state file to buildModel.sta
         BufferedWriter staWriter = new BufferedWriter(new FileWriter("buildModel.sta"));
-        staWriter.write(staStr);
+        staWriter.write(staStr.trim());
         staWriter.close();
 
         // Write the transition file to buildModel.tra
         BufferedWriter traWriter = new BufferedWriter(new FileWriter("buildModel.tra"));
-        traWriter.write(traStr);
+        traWriter.write(traStr.trim());
         traWriter.close();
 
         // Write the label file to buildModel.lab
         BufferedWriter labWriter = new BufferedWriter(new FileWriter("buildModel.lab"));
-        labWriter.write(labStr);
+        labWriter.write(labStr.trim());
         labWriter.close();
 
         // Alert user of successful termination
