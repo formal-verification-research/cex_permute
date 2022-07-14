@@ -33,6 +33,11 @@ import simulator.SimulatorEngine;
 public class BuildModel
 {
 
+  // Maximum recursion depth
+  public static final int MAX_DEPTH = 5;
+  // turn off printing to save time
+  public static final boolean DO_PRINT = false;
+
   // By default, call BuildModel().run()
   public static void main(String[] args)
   {
@@ -181,7 +186,7 @@ public class BuildModel
     // Find the intersection of states
     public void findCommutable(ArrayList<State> states) {
       // Initialize the arraylists for checking
-      System.out.println("Starting findCommutable on " + this);
+      if (DO_PRINT) System.out.println("Starting findCommutable on " + this);
       ArrayList<String> wasEnabled = new ArrayList<String>();
       ArrayList<String> isEnabled = states.get(this.firstState).enabled;
       // System.out.println("wasEnabled: " + wasEnabled);
@@ -200,13 +205,13 @@ public class BuildModel
         }
       }
       this.commutable = isEnabled;
-      System.out.println("Commutable transitions at this point: " + this.commutable + " on " + this);
+      if (DO_PRINT) System.out.println("Commutable transitions at this point: " + this.commutable + " on " + this);
     }
 
     // Remove a commutable (because it doesn't work)
     public void removeCommutable(int c) {
       commutable.remove(c);
-      System.out.println("Removed commutable at index " + c + " because it did not work.");
+      if (DO_PRINT) System.out.println("Removed commutable at index " + c + " because it did not work.");
     }
 
     // Custom string output to give the most detail
@@ -317,13 +322,13 @@ public class BuildModel
       for (int i = 0; i < this.states.size(); i++) { // loop through states
         for (int j = i+1; j < this.states.size(); j++) { // loop through comparable states
           if (this.states.get(i).equals(this.states.get(j))) { // if states are equal
-            System.out.println("State " + i + " equals state " + j);
+            if (DO_PRINT) System.out.println("State " + i + " equals state " + j);
 
             // TODO: Guarantee other attributes are equivalent
 
             // Combine the outgoing transitions into one set in state i
             for (int k = 0; k < this.states.get(j).outgoing.size(); k++) {
-              System.out.println(this.states.get(j).outgoing.size() + " transitions to compare");
+              if (DO_PRINT) System.out.println(this.states.get(j).outgoing.size() + " transitions to compare");
               // transition is this.states.get(j).outgoing.get(k)
               boolean canAdd = true;
               for (int l = 0; l < this.states.get(i).outgoing.size(); l++) {
@@ -342,7 +347,7 @@ public class BuildModel
             // Delete state j 
             this.states.remove(j);
             this.stateCount--;
-            System.out.println("There are now " + stateCount + " states.");
+            if (DO_PRINT) System.out.println("There are now " + stateCount + " states.");
 
             // Make sure state indices match up
             for (int k = j; k < this.states.size(); k++) {
@@ -381,14 +386,14 @@ public class BuildModel
             if (this.states.get(i).outgoing.get(j).to == this.states.get(i).outgoing.get(k).to) {
               // if the rates are different don't merge
               if (this.states.get(i).outgoing.get(j).transitionName.equalsIgnoreCase(this.states.get(i).outgoing.get(k).transitionName)) {
-                System.out.println("Merging:");
-                System.out.println(this.states.get(i).outgoing.get(j) + " and " + this.states.get(i).outgoing.get(k));
+                if (DO_PRINT) System.out.println("Merging:");
+                if (DO_PRINT) System.out.println(this.states.get(i).outgoing.get(j) + " and " + this.states.get(i).outgoing.get(k));
                 this.states.get(i).outgoing.get(j).rate += this.states.get(i).outgoing.get(k).rate;
                 this.states.get(i).outgoing.remove(k);
               }
               else {
-                System.out.println("Transition names not equivalent. Transitions not merged:");
-                System.out.println(this.states.get(i).outgoing.get(j) + " and " + this.states.get(i).outgoing.get(k));
+                if (DO_PRINT) System.out.println("Transition names not equivalent. Transitions not merged:");
+                if (DO_PRINT) System.out.println(this.states.get(i).outgoing.get(j) + " and " + this.states.get(i).outgoing.get(k));
               } 
             }
           }
@@ -415,9 +420,11 @@ public class BuildModel
       }
       this.absorbingIndex = stateCount;
       this.states.add(new State(absorbingIndex, absorbingVariables, 0.0));
-      System.out.println("Absorbing Index: " + absorbingIndex);
+      if (DO_PRINT) System.out.println("Absorbing Index: " + absorbingIndex);
       double absorbRate = 0.0;
-      for (int i = 0; i < states.size() - 1; i++) {
+      // for (int i = 0; i < states.size() - 1; i++) {
+        // adjusted to add an absorbing transition to the target state
+      for (int i = 0; i < states.size(); i++) {
         absorbRate = states.get(i).getAbsorbingRate();
         if (absorbRate > 0.0) {
           states.get(i).addTransition(absorbingIndex, states.get(i).getAbsorbingRate(), -1, "ABSORB");
@@ -499,15 +506,15 @@ public class BuildModel
         labWriter.close();
 
         // Alert user of successful termination
-        System.out.println("Model built. PRISM API ended successfully.");
+        if (DO_PRINT) System.out.println("Model built. PRISM API ended successfully.");
       }
       // Catch common errors and give user the info
       catch (FileNotFoundException e) {
-        System.out.println("FileNotFoundException Error: " + e.getMessage());
+        if (DO_PRINT) System.out.println("FileNotFoundException Error: " + e.getMessage());
         System.exit(1);
       } 
       catch (IOException e) {
-        System.out.println("IOException Error: " + e.getMessage());
+        if (DO_PRINT) System.out.println("IOException Error: " + e.getMessage());
         System.exit(1);
       }
     }
@@ -518,7 +525,7 @@ public class BuildModel
   public boolean buildPath(Prism prism, ArrayList<String> transitions, ArrayList<String> prefix, Model model) {
   try {
 
-    System.out.println("buildPath started with prefix " + prefix);
+    if (DO_PRINT) System.out.println("buildPath started with prefix " + prefix);
     int addedThisRun = 0;
 
     // Create a new simulation
@@ -534,7 +541,7 @@ public class BuildModel
       // Reset the index
       index = -1;
 
-      System.out.println("Checking prefix transition " + prefix.get(t));
+      if (DO_PRINT) System.out.println("Checking prefix transition " + prefix.get(t));
 
       // Get information for the current transition
       String pathTransition = prefix.get(t);
@@ -549,11 +556,11 @@ public class BuildModel
       }
 
       if (index == -1) {
-        System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 01.");
+        if (DO_PRINT) System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 01.");
         index = 0;
       }
 
-      System.out.println("Fired prefix (commuted) transition " + sim.getTransitionActionString(index) + " in buildPath");
+      if (DO_PRINT) System.out.println("Fired prefix (commuted) transition " + sim.getTransitionActionString(index) + " in buildPath");
       // Fire the prefix transition
       sim.manualTransition(index);
 
@@ -594,14 +601,14 @@ public class BuildModel
       }
 
       if (index == -1) {
-        System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 02.");
-        System.out.println("Attempting transition: " + pathTransition);
-        System.out.println("Enabled at current state: ");
+        if (DO_PRINT) System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 02.");
+        if (DO_PRINT) System.out.println("Attempting transition: " + pathTransition);
+        if (DO_PRINT) System.out.println("Enabled at current state: ");
         for (int i=0; i < sim.getNumTransitions(); i++) {
           // Get transition strings from path and simulation
-          System.out.printf("%s ", sim.getTransitionActionString(i));
+          if (DO_PRINT) System.out.printf("%s ", sim.getTransitionActionString(i));
         }
-        System.out.println("");
+        if (DO_PRINT) System.out.println("");
         // For now, if the transition is not available, return false.
         // Maybe do something clever later
         return false;
@@ -611,7 +618,7 @@ public class BuildModel
       double transition_probability = sim.getTransitionProbability(index);
 
       // If the transition probability is 0, alert the user
-      if (transition_probability == 0.0f) {
+      if (DO_PRINT && transition_probability == 0.0f) {
         System.out.println(String.format("ZERO PROBABILITY FOR TRANSITION %s (%d)", sim.getTransitionActionString(index), index));
       }
 
@@ -632,19 +639,24 @@ public class BuildModel
     model.addState(stateVariables, 0.0);
     addedThisRun++;
 
+    // get the absorbing state rate for the target state
+    for (int i=0; i < sim.getNumTransitions(); i++) {
+      model.addRateToCurrentState(sim.getTransitionProbability(i));
+    }
+
     // Check if it's a target state and alert the user if not
     // TODO: Implement this
 
     // Tell the model we finished the seed path
     model.addPath(prefix);
 
-    System.out.println("Finished buildPath having added " + addedThisRun + " states to the model.");
+    if (DO_PRINT) System.out.println("Finished buildPath having added " + addedThisRun + " states to the model.");
 
     return true;
   }
   // Catch common errors and give user the info
   catch (PrismException e) {
-    System.out.println("PrismException Error: " + e.getMessage());
+    if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
     System.exit(1);
     return false;
   }
@@ -654,10 +666,10 @@ public class BuildModel
   public void commute(Prism prism, Model model, Path path, ArrayList<String> transitions, int depth) {
   try {
 
-    System.out.println("Started commute with depth = " + depth);
+    if (DO_PRINT) System.out.println("Started commute with depth = " + depth);
 
     // Maximum recursion depth
-    if (depth == 2) {
+    if (depth == MAX_DEPTH) {
       return;
     }
 
@@ -675,11 +687,11 @@ public class BuildModel
       ArrayList<String> nextPrefix = new ArrayList<String>();
       nextPrefix.addAll(path.prefix);
       nextPrefix.add(path.commutable.get(c));
-      System.out.println("Sending prefix " + nextPrefix + " to buildPath (c=" + c + ")");
+      if (DO_PRINT) System.out.println("Sending prefix " + nextPrefix + " to buildPath (c=" + c + ")");
       // TODO: Also check if we reached a target state within the buildPath function
       if (buildPath(prism, transitions, nextPrefix, model) == false) {
         toRemove[c] = true;
-        System.out.println("Path not built (buildPath returned false)");
+        if (DO_PRINT) System.out.println("Path not built (buildPath returned false)");
         continue;
       }
     }
@@ -695,7 +707,7 @@ public class BuildModel
     int addedPaths = path.commutable.size();
     int goBackPaths = addedPaths;
 
-    System.out.println("We added " + addedPaths + " paths (one per commutable transition)");
+    if (DO_PRINT) System.out.println("We added " + addedPaths + " paths (one per commutable transition)");
 
     // Fire each commutable transition from each state along the path
     //  and check that it matches the full-length path
@@ -703,7 +715,7 @@ public class BuildModel
     // Do this for every commutable transition
     for (int t_alpha = 0; t_alpha < path.commutable.size(); t_alpha++) {
 
-      System.out.println("Attempting to commute transition " + t_alpha + " of " + path.commutable.size() + "(" + path.commutable.get(t_alpha) + ")");
+      if (DO_PRINT) System.out.println("Attempting to commute transition " + t_alpha + " of " + path.commutable.size() + "(" + path.commutable.get(t_alpha) + ")");
 
       // Create a new simulation from the initial state
       SimulatorEngine sim = prism.getSimulator();
@@ -727,7 +739,7 @@ public class BuildModel
 
         // Get information for the current transition
         String pathTransition = String.format("%s", path.prefix.get(t));
-        System.out.println("Checking 03. " + pathTransition);
+        if (DO_PRINT) System.out.println("Checking 03. " + pathTransition);
         for (int i=0; i < sim.getNumTransitions(); i++) {
           // Get transition strings from path and simulation
           String simTransition = sim.getTransitionActionString(i);
@@ -739,7 +751,7 @@ public class BuildModel
         }
 
         if (index == -1) {
-          System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 03.");
+          if (DO_PRINT) System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 03.");
           index = 0;
         }
 
@@ -749,7 +761,7 @@ public class BuildModel
 
       }
 
-      System.out.println("Fired the prefix. Current state is " + sim.getCurrentState());
+      if (DO_PRINT) System.out.println("Fired the prefix. Current state is " + sim.getCurrentState());
 
       // Walk along the path, firing and adding the commutable transition
       //  then backtracking to the previous state
@@ -774,7 +786,7 @@ public class BuildModel
         }
 
         if (index == -1) {
-          System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 04.");
+          if (DO_PRINT) System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 04.");
           index = 0;
         }
 
@@ -815,11 +827,11 @@ public class BuildModel
           }
         }
 
-        if (seedStateIndex == 0) System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
+        if (DO_PRINT && seedStateIndex == 0) System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
         
         // Check is state matches what it should be
         if (tempState.equals(model.states.get(equivalentIndex))) {
-          if (seedStateIndex == 0) System.out.println("STATES EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
+          if (DO_PRINT && seedStateIndex == 0) System.out.println("STATES EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
           // Add transition to the relevant state
           int from = seedStateIndex + path.firstState;
           int to = equivalentIndex;
@@ -830,7 +842,7 @@ public class BuildModel
         }
         else {
           // if (seedStateIndex != 0) System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
-          if (seedStateIndex == 0)System.out.println("STATES NOT EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
+          if (DO_PRINT && seedStateIndex == 0) System.out.println("STATES NOT EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
         }
 
         // Backtrack
@@ -866,7 +878,7 @@ public class BuildModel
   }
   // Catch common errors and give user the info
   catch (PrismException e) {
-    System.out.println("PrismException Error: " + e.getMessage());
+    if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
     System.exit(1);
   }
   }
@@ -877,7 +889,7 @@ public class BuildModel
     try {
       
       // Welcome message
-      System.out.println("Building PRISM Model based on seed path.");
+      if (DO_PRINT) System.out.println("Building PRISM Model based on seed path.");
       
       // Keep an index available for temporary use
       int index;
@@ -921,7 +933,7 @@ public class BuildModel
       
       // Let n_seed be the length of the seed path (in STATES, not transitions)
       int n_seed = transitions.size() + 1;
-      System.out.println("n_seed (states in seed path) = " + n_seed);
+      if (DO_PRINT) System.out.println("n_seed (states in seed path) = " + n_seed);
       model.setN(n_seed);
 
       // Build the seed path, which recursively does everything
@@ -943,17 +955,17 @@ public class BuildModel
       prism.closeDown();
 
       // Exit and alert user
-      System.out.println("Thank you. Remember to check buildModel.tra,sta,lab and out.sta,tra,lab and final_prism_report.txt if you used the makefile.");
-      System.out.println("Otherwise, your model is available at buildModel.tra,sta,lab.");
+      if (DO_PRINT) System.out.println("Thank you. Remember to check buildModel.tra,sta,lab and out.sta,tra,lab and final_prism_report.txt if you used the makefile.");
+      if (DO_PRINT) System.out.println("Otherwise, your model is available at buildModel.tra,sta,lab.");
 
     } 
     // Catch common errors and give user the info
     catch (PrismException e) {
-			System.out.println("PrismException Error: " + e.getMessage());
+			if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
 			System.exit(1);
 		}
     catch (IOException e) {
-      System.out.println("IOException Error: " + e.getMessage());
+      if (DO_PRINT) System.out.println("IOException Error: " + e.getMessage());
 			System.exit(1);
     }
   }

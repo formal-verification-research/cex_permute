@@ -95,3 +95,11 @@ def buildmodel():
   except:
     print("os.system Error in prism_api.py function buildModel() when calling make test!")
     return
+
+# Function to make the Java files once per call
+def makeit():
+  try:
+    os.system("make")
+  except:
+    print("os.system Error in prism_api.py function makeit() when calling make!")
+    return
