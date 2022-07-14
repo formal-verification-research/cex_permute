@@ -67,7 +67,8 @@ public class BuildModel
     public String prism() {
       // subtract 1 from the indices so that the initial state can be 1,
       // not 0, but PRISM can read it in as state 0.
-      return (this.from-1) + " " + (this.to-1) + " " + this.rate;
+      // return (this.from-1) + " " + (this.to-1) + " " + this.rate;
+      return (this.from) + " " + (this.to) + " " + this.rate;
     }
 
   }
@@ -105,7 +106,7 @@ public class BuildModel
     // State details for .sta files
     // Format is <index>:(<state_var>,<state_var>...)
     public String prism() {
-      String temp = (index-1) + ":(";
+      String temp = (index) + ":(";
       for (int i=0; i<vars.size(); i++) {
         if (i>0) temp += ",";
         temp += vars.get(i); 
@@ -151,8 +152,6 @@ public class BuildModel
     public void addEnabled(String transition_name) {
       enabled.add(transition_name);
     }
-
-
   }
 
   // Store a path in an object
@@ -308,50 +307,97 @@ public class BuildModel
     // This algorithm was not designed to work once the absorbing state 
     //  calculations are complete.
     public void mergeDuplicates() {
-      for (int i = 0; i < this.states.size(); i++) { // loop through states
-        System.out.println("State " + i + " outgoing size = " + this.states.get(i).outgoing.size() );
-      }
       // for (int i = 0; i < this.states.size(); i++) { // loop through states
-      //   for (int j = i+1; j < this.states.size(); j++) { // loop through comparable states
-      //     if (this.states.get(i).equals(this.states.get(j))) { // if states are equal
-      //       System.out.println("State " + i + " equals state " + j);
-
-      //       // TODO: Guarantee other attributes are equivalent
-
-      //       // Combine the outgoing transitions into one set in state i
-      //       for (int k = 0; k < this.states.get(j).outgoing.size(); k++) {
-      //         // transition is this.states.get(j).outgoing.get(k)
-      //         boolean canAdd = true;
-      //         for (int l = 0; l < this.states.get(i).outgoing.size(); l++) {
-      //           if (this.states.get(j).outgoing.get(k).to == this.states.get(i).outgoing.get(l).to) {
-      //             canAdd = false; // don't add transitions we already have
-      //           }
-      //         }
-      //         if (canAdd) {
-      //           System.out.println("Can add transition to " + k);
-      //           this.states.get(j).outgoing.add( this.states.get(j).outgoing.get(k) );
-      //         }
-      //       }
-
-      //       // Delete state j 
-      //       this.states.remove(j);
-
-      //       // Loop through every state
-      //       for (int k = 0; k < this.states.size(); k++) {
-      //         for (int l = 0; l < this.states.get(k).outgoing.size(); l++) {
-      //           // Change transitions to index j to index i
-      //           // transition is this.states.get(k).outgoing.get(l)
-      //           if (this.states.get(k).outgoing.get(l).to == j) {
-      //             this.states.get(k).outgoing.get(l).to = i;
-      //           }
-      //           // Change transitions to index a > j to go to index a-1
-      //           if (this.states.get(k).outgoing.get(l).to == j) {
-      //             this.states.get(k).outgoing.get(l).to -= 1;
-      //           }
-      //         }
-      //       }
-      //     }
+        // System.out.println("State " + i + " outgoing size = " + this.states.get(i).outgoing.size() );
+      //   for (int j = 0; j < this.states.get(i).outgoing.size(); j++) {
+          // System.out.printf("_to %d_ ", this.states.get(i).outgoing.get(j).to);
       //   }
+      //   System.out.println("");
+      // }
+      for (int i = 0; i < this.states.size(); i++) { // loop through states
+        for (int j = i+1; j < this.states.size(); j++) { // loop through comparable states
+          if (this.states.get(i).equals(this.states.get(j))) { // if states are equal
+            System.out.println("State " + i + " equals state " + j);
+
+            // TODO: Guarantee other attributes are equivalent
+
+            // Combine the outgoing transitions into one set in state i
+            for (int k = 0; k < this.states.get(j).outgoing.size(); k++) {
+              System.out.println(this.states.get(j).outgoing.size() + " transitions to compare");
+              // transition is this.states.get(j).outgoing.get(k)
+              boolean canAdd = true;
+              for (int l = 0; l < this.states.get(i).outgoing.size(); l++) {
+                // System.out.println("Comparing transition " + l + " of state " + i + " to transition " + k + " of state " + j);
+                // System.out.println(" - " + this.states.get(j).outgoing.get(k).to + " to " + this.states.get(i).outgoing.get(l).to);
+                if (this.states.get(j).outgoing.get(k).to == this.states.get(i).outgoing.get(l).to) {
+                  canAdd = false; // don't add transitions we already have
+                }
+              }
+              if (canAdd) {
+                // System.out.println("Adding transition to state " + k);
+                this.states.get(i).outgoing.add( this.states.get(j).outgoing.get(k) );
+              }
+            }
+
+            // Delete state j 
+            this.states.remove(j);
+            this.stateCount--;
+            System.out.println("There are now " + stateCount + " states.");
+
+            // Make sure state indices match up
+            for (int k = j; k < this.states.size(); k++) {
+              this.states.get(k).index = k;
+            }
+
+            // Loop through every state to fix outgoing transitions
+            for (int k = 0; k < this.states.size(); k++) {
+              for (int l = 0; l < this.states.get(k).outgoing.size(); l++) {
+                // Change transitions to index j to index i
+                // transition is this.states.get(k).outgoing.get(l)
+                if (this.states.get(k).outgoing.get(l).to == j) {
+                  this.states.get(k).outgoing.get(l).to = i;
+                  // System.out.println("Adjusting outgoing from " + this.states.get(k).outgoing.get(l).to + " to " + i + " at state " + k);
+                }
+                // Change transitions to index a > j to go to index a-1
+                if (this.states.get(k).outgoing.get(l).to > j) {
+                  // System.out.println("Decrementing " + this.states.get(k).outgoing.get(l).to + " at state " + k);
+                  this.states.get(k).outgoing.get(l).to--;
+                }
+                // Make sure all the transition from attributes match
+                this.states.get(k).outgoing.get(l).from = k;
+              }
+            }
+
+          }
+        }
+      }
+      // Merge transitions
+      for (int i = 0; i < this.states.size(); i++) { // loop through states
+        for (int j = 0; j < this.states.get(i).outgoing.size(); j++) {
+          if (this.states.get(i).outgoing.get(j).to == -1) {
+            System.out.println("ERROR -1 at state " + i);
+          }
+          for (int k = j+1; k < this.states.get(i).outgoing.size(); k++) { 
+            if (this.states.get(i).outgoing.get(j).to == this.states.get(i).outgoing.get(k).to) {
+              // if the rates are different don't merge
+              if (this.states.get(i).outgoing.get(j).transitionName.equalsIgnoreCase(this.states.get(i).outgoing.get(k).transitionName)) {
+                System.out.println("Merging:");
+                System.out.println(this.states.get(i).outgoing.get(j) + " and " + this.states.get(i).outgoing.get(k));
+                this.states.get(i).outgoing.get(j).rate += this.states.get(i).outgoing.get(k).rate;
+                this.states.get(i).outgoing.remove(k);
+              }
+              else {
+                System.out.println("Transition names not equivalent. Transitions not merged:");
+                System.out.println(this.states.get(i).outgoing.get(j) + " and " + this.states.get(i).outgoing.get(k));
+              } 
+            }
+          }
+        }
+      }
+
+      // Print report to debug
+      // for (int i = 0; i < this.states.size(); i++) { // loop through states
+      //   System.out.println("State " + i + " outgoing size = " + this.states.get(i).outgoing.size() );
       // }
     }
 
@@ -367,7 +413,7 @@ public class BuildModel
       for (int i = 0; i < numVars; i++) {
         absorbingVariables.add(Integer.valueOf(-1));
       }
-      this.absorbingIndex = stateCount - 1;
+      this.absorbingIndex = stateCount;
       this.states.add(new State(absorbingIndex, absorbingVariables, 0.0));
       System.out.println("Absorbing Index: " + absorbingIndex);
       double absorbRate = 0.0;
@@ -427,7 +473,7 @@ public class BuildModel
         // Get state and transition info by looping through states;
         //  state 0 is a filler state to make for easier math,
         //  thus, start state loop at index 1, not 0
-        for (int i = 1; i < states.size(); i++) {
+        for (int i = 0; i < states.size(); i++) {
           // Loop through transitions at each state
           for (int j = 0; j < states.get(i).outgoing.size(); j++) {
             traStr += states.get(i).outgoing.get(j).prism();
@@ -439,17 +485,17 @@ public class BuildModel
 
         // Write the state file to buildModel.sta
         BufferedWriter staWriter = new BufferedWriter(new FileWriter("buildModel.sta"));
-        staWriter.write(staStr);
+        staWriter.write(staStr.trim());
         staWriter.close();
 
         // Write the transition file to buildModel.tra
         BufferedWriter traWriter = new BufferedWriter(new FileWriter("buildModel.tra"));
-        traWriter.write(traStr);
+        traWriter.write(traStr.trim());
         traWriter.close();
 
         // Write the label file to buildModel.lab
         BufferedWriter labWriter = new BufferedWriter(new FileWriter("buildModel.lab"));
-        labWriter.write(labStr);
+        labWriter.write(labStr.trim());
         labWriter.close();
 
         // Alert user of successful termination
@@ -553,8 +599,9 @@ public class BuildModel
         System.out.println("Enabled at current state: ");
         for (int i=0; i < sim.getNumTransitions(); i++) {
           // Get transition strings from path and simulation
-          System.out.println(sim.getTransitionActionString(i));
+          System.out.printf("%s ", sim.getTransitionActionString(i));
         }
+        System.out.println("");
         // For now, if the transition is not available, return false.
         // Maybe do something clever later
         return false;
@@ -610,7 +657,7 @@ public class BuildModel
     System.out.println("Started commute with depth = " + depth);
 
     // Maximum recursion depth
-    if (depth == 1) {
+    if (depth == 2) {
       return;
     }
 
@@ -756,8 +803,17 @@ public class BuildModel
         // (adjacent index) + ( (path id) * (n) )
         // (adjacent index) + ( ( (path count) - (go back paths) ) * (n) )
         // Math from back of envelope from Molina
-
+        
         int equivalentIndex = seedStateIndex + ( (model.pathCount - goBackPaths) * model.n );
+        for (int p = 0; p < model.pathCount; p++) {
+          if ((p == model.pathCount - goBackPaths) && tempState.equals(model.states.get(equivalentIndex))) {
+            break;
+          }
+          equivalentIndex = seedStateIndex + ( (p) * model.n );
+          if (tempState.equals(model.states.get(equivalentIndex))) {
+            break;
+          }
+        }
 
         if (seedStateIndex == 0) System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
         
@@ -773,8 +829,8 @@ public class BuildModel
           model.addTransition(from, to, index, name, rate);
         }
         else {
-          if (seedStateIndex != 0) System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
-          System.out.println("STATES NOT EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
+          // if (seedStateIndex != 0) System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
+          if (seedStateIndex == 0)System.out.println("STATES NOT EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
         }
 
         // Backtrack
