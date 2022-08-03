@@ -913,7 +913,7 @@ public class BuildModel
 			int index;
 			double path_probability = 1.0;
 			double total_rate = 0.0;
-			for (int tdx=1; tdx < tr_st.length; tdx++) {
+			for (int tdx=0; tdx < tr_st.length; tdx++) {
 			  index=-1;
 			  total_rate = 0.0;
 			  for (int idx=0; idx<sim.getNumTransitions(); idx++) {
