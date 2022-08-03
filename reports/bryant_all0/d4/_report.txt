@@ -1,0 +1,607 @@
+(javac -classpath "/usr/local/prism-src/prism/classes:/usr/local/prism-src/prism/lib/*:/usr/local/prism-src/prism/prism/classes:/usr/local/prism-src/prism/prism/lib/*" -d classes src/./BuildModel.java)
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+********************************************************************************
+Welcome to the counterexample permutation explorer.
+********************************************************************************
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_0.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_1.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_2.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_3.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_4.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_5.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_6.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_7.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_8.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_9.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_10.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_11.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_12.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_13.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_14.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_15.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_16.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_17.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_18.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_19.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_20.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_21.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_22.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_23.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_24.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_25.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_26.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_27.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_28.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_29.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_30.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_31.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_32.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_33.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_34.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_35.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_36.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_37.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_38.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_39.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_40.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_41.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_42.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_43.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_44.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_45.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_46.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_47.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_48.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_49.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_50.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_51.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_52.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_53.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_54.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_55.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_56.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_57.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_58.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_59.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_60.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_61.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_62.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_63.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_64.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_65.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_66.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_67.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_68.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_69.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_70.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_71.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_72.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_73.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_74.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_75.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_76.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_77.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_78.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_79.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_80.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_81.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_82.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_83.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_84.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_85.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_86.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_87.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_88.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_89.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_90.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_91.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_92.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_93.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_94.txt
+Sending model to prism APIPRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+
+Using PRISM to model check. See reports/bryant/sm_95.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_96.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_97.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_98.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_99.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_100.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_101.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_102.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_103.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_104.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_105.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_106.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_107.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_108.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_109.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_110.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_111.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_112.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_113.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_114.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_115.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_116.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_117.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_118.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_119.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_120.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_121.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_122.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_123.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_124.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_125.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_126.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_127.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_128.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_129.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_130.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_131.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_132.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_133.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_134.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_135.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_136.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_137.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_138.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_139.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_140.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_141.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_142.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_143.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_144.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_145.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_146.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_147.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_148.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_149.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_150.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_151.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_152.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_153.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_154.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_155.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_156.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_157.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_158.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_159.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_160.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_161.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_162.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_163.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_164.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_165.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_166.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_167.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_168.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_169.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_170.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_171.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_172.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_173.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_174.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_175.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_176.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_177.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_178.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_179.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_180.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_181.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_182.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_183.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_184.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_185.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_186.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_187.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_188.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_189.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_190.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_191.txtPRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_192.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_193.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_194.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_195.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_196.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_197.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_198.txt
+Sending model to prism API
+Using PRISM to model check. See reports/bryant/sm_199.txt
+================================================================================
+Exiting without error.
+================================================================================

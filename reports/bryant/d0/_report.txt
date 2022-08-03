@@ -1,607 +1,517 @@
 (javac -classpath "/usr/local/prism-src/prism/classes:/usr/local/prism-src/prism/lib/*:/usr/local/prism-src/prism/prism/classes:/usr/local/prism-src/prism/prism/lib/*" -d classes src/./BuildModel.java)
 PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+======= tr r3 (2) 5.649870e-01 path 5.649870e-01===========
+======= tr r5 (4) 6.953751e-02 path 3.928779e-02===========
+======= tr r3 (2) 5.525277e-01 path 2.170759e-02===========
+======= tr r8 (6) 4.056103e-01 path 8.804823e-03===========
+======= tr r4 (3) 2.363228e-03 path 2.080781e-05===========
+======= tr r6 (5) 1.250250e-02 path 2.601496e-07===========
+======= tr r3 (2) 3.890733e-03 path 1.012173e-09===========
+======= tr r8 (6) 3.032986e-03 path 3.069905e-12===========
+======= tr r5 (4) 1.527039e-03 path 4.687865e-15===========
+======= tr r3 (2) 1.912313e-03 path 8.964667e-18===========
+======= tr r8 (7) 1.522124e-03 path 1.364534e-20===========
+======= tr r8 (7) 1.521736e-03 path 2.076461e-23===========
+======= tr r3 (2) 1.871116e-03 path 3.885299e-26===========
+======= tr r6 (5) 4.738384e-05 path 1.841004e-30===========
+======= tr r3 (2) 9.177441e-04 path 1.689570e-33===========
+======= tr r3 (2) 8.976964e-04 path 1.516721e-36===========
+======= tr r5 (4) 1.003032e-03 path 1.521320e-39===========
+======= tr r2 (1) 2.788907e-06 path 4.242819e-45===========
+======= tr r1 (0) 6.021584e-07 path 2.554849e-51===========
+======= tr r5 (4) 5.734690e-04 path 1.465127e-54===========
+======= tr r5 (4) 3.609892e-04 path 5.288950e-58===========
+======= tr r3 (2) 3.516734e-04 path 1.859983e-61===========
+======= tr r8 (7) 3.054184e-04 path 5.680729e-65===========
+======= tr r3 (2) 3.436505e-04 path 1.952186e-68===========
+======= tr r7 (6) 9.989441e-01 path 1.950124e-68===========
+======= tr r3 (2) 8.377686e-04 path 1.633753e-71===========
+======= tr r8 (7) 7.621774e-04 path 1.245209e-74===========
+======= tr r1 (0) 9.021555e-07 path 1.123373e-80===========
+======= tr r2 (1) 3.988397e-06 path 4.480456e-86===========
+======= tr r8 (7) 7.620840e-04 path 3.414484e-89===========
+======= tr r2 (1) 3.893036e-06 path 1.329271e-94===========
+======= tr r8 (7) 7.620059e-04 path 1.012912e-97===========
+======= tr r2 (1) 3.797695e-06 path 3.846732e-103===========
+======= tr r5 (4) 1.441254e-03 path 5.544118e-106===========
+======= tr r5 (4) 1.034687e-03 path 5.736428e-109===========
+======= tr r8 (7) 5.085595e-04 path 2.917315e-112===========
+======= tr r6 (5) 7.920868e-05 path 2.310767e-116===========
+======= tr r8 (7) 2.545127e-04 path 5.881194e-120===========
+======= tr r8 (7) 2.545027e-04 path 1.496780e-123===========
+======= tr r1 (0) 3.012686e-07 path 4.509328e-130===========
+======= tr r3 (2) 2.663831e-04 path 1.201209e-133===========
+======= tr r8 (7) 2.544828e-04 path 3.056869e-137===========
+======= tr r3 (2) 2.597049e-04 path 7.938840e-141===========
+======= tr r3 (2) 2.530376e-04 path 2.008825e-144===========
+======= tr r8 (7) 2.544563e-04 path 5.111582e-148===========
+======= tr r3 (2) 2.463611e-04 path 1.259295e-151===========
+======= tr r3 (2) 2.396949e-04 path 3.018465e-155===========
+======= tr r8 (7) 2.544298e-04 path 7.679875e-159===========
+======= tr r6 (5) 3.170340e-05 path 2.434782e-163===========
+======= tr r8 (7) 1.696901e-04 path 4.131582e-167===========
+======= tr r3 (2) 1.554130e-04 path 6.421017e-171===========
+======= tr r8 (7) 1.696820e-04 path 1.089531e-174===========
+======= tr r5 (4) 6.140106e-04 path 6.689834e-178===========
+======= tr r8 (7) 1.454622e-04 path 9.731178e-182===========
+======= tr r8 (7) 1.454590e-04 path 1.415487e-185===========
+======= tr r8 (7) 1.454558e-04 path 2.058909e-189===========
+======= tr r3 (2) 1.294121e-04 path 2.664476e-193===========
+======= tr r3 (2) 1.256035e-04 path 3.346676e-197===========
+======= tr r1 (0) 1.721807e-07 path 5.762330e-204===========
+======= tr r5 (4) 6.000927e-04 path 3.457932e-207===========
+======= tr r8 (7) 1.272838e-04 path 4.401386e-211===========
+======= tr r8 (7) 1.272814e-04 path 5.602145e-215===========
+======= tr r2 (1) 5.233903e-07 path 2.932108e-221===========
+======= tr r6 (5) 1.982545e-05 path 5.813037e-226===========
+======= tr r5 (4) 3.985128e-04 path 2.316570e-229===========
+======= tr r8 (7) 8.487725e-05 path 1.966240e-233===========
+======= tr r3 (2) 7.107391e-05 path 1.397484e-237===========
+======= tr r6 (5) 1.322046e-05 path 1.847539e-242===========
+======= tr r8 (7) 6.790768e-05 path 1.254620e-246===========
+======= tr r2 (1) 2.623199e-07 path 3.291120e-253===========
+======= tr r3 (2) 5.331028e-05 path 1.754505e-257===========
+======= tr r5 (4) 3.053047e-04 path 5.356585e-261===========
+======= tr r8 (7) 6.111944e-05 path 3.273915e-265===========
+======= tr r5 (4) 2.680855e-04 path 8.776892e-269===========
+======= tr r8 (7) 5.556530e-05 path 4.876906e-273===========
+======= tr r3 (2) 4.216699e-05 path 2.056444e-277===========
+======= tr r1 (0) 6.577733e-08 path 1.352674e-284===========
+======= tr r5 (4) 2.450548e-04 path 3.314793e-288===========
+======= tr r5 (4) 2.122499e-04 path 7.035645e-292===========
+======= tr r8 (7) 4.701961e-05 path 3.308133e-296===========
+======= tr r3 (2) 3.568195e-05 path 1.180406e-300===========
+======= tr r6 (5) 1.171815e-05 path 1.383218e-305===========
+======= tr r8 (7) 3.918455e-05 path 5.420079e-310===========
+======= tr r5 (4) 1.689200e-04 path 9.155596e-314===========
+======= tr r5 (4) 1.481301e-04 path 1.356219e-317===========
+======= tr r3 (2) 2.488385e-05 path 3.360000e-322===========
+======= tr r8 (7) 3.396127e-05 path 0.000000e+00===========
+======= tr r5 (4) 1.384895e-04 path 0.000000e+00===========
+======= tr r4 (3) 3.273187e-06 path 0.000000e+00===========
+======= tr r6 (5) 9.918779e-06 path 0.000000e+00===========
+======= tr r1 (0) 3.230777e-08 path 0.000000e+00===========
+======= tr r5 (4) 1.017524e-04 path 0.000000e+00===========
+======= tr r6 (5) 8.002034e-06 path 0.000000e+00===========
+======= tr r8 (7) 2.247614e-05 path 0.000000e+00===========
+======= tr r8 (7) 2.247608e-05 path 0.000000e+00===========
+======= tr r8 (7) 2.247602e-05 path 0.000000e+00===========
+======= tr r5 (4) 8.641693e-05 path 0.000000e+00===========
+======= tr r2 (1) 7.671014e-08 path 0.000000e+00===========
+======= tr r8 (7) 2.122756e-05 path 0.000000e+00===========
+======= tr r8 (7) 2.122751e-05 path 0.000000e+00===========
+======= tr r8 (7) 2.122746e-05 path 0.000000e+00===========
+======= tr r3 (2) 1.555354e-05 path 0.000000e+00===========
+======= tr r3 (2) 1.499803e-05 path 0.000000e+00===========
+======= tr r5 (4) 8.845381e-05 path 0.000000e+00===========
+======= tr r3 (2) 1.368254e-05 path 0.000000e+00===========
+======= tr r8 (7) 2.011029e-05 path 0.000000e+00===========
+======= tr r3 (2) 1.315624e-05 path 0.000000e+00===========
+======= tr r8 (7) 2.011021e-05 path 0.000000e+00===========
+======= tr r1 (0) 2.380643e-08 path 0.000000e+00===========
+======= tr r5 (4) 8.758883e-05 path 0.000000e+00===========
+======= tr r3 (2) 1.249850e-05 path 0.000000e+00===========
+======= tr r5 (4) 8.052595e-05 path 0.000000e+00===========
+======= tr r5 (4) 7.232752e-05 path 0.000000e+00===========
+======= tr r5 (4) 6.499330e-05 path 0.000000e+00===========
+======= tr r3 (2) 1.043379e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.661331e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.661328e-05 path 0.000000e+00===========
+======= tr r5 (4) 6.302167e-05 path 0.000000e+00===========
+======= tr r5 (4) 5.674080e-05 path 0.000000e+00===========
+======= tr r2 (1) 4.380578e-08 path 0.000000e+00===========
+======= tr r8 (7) 1.528441e-05 path 0.000000e+00===========
+======= tr r3 (2) 8.799239e-06 path 0.000000e+00===========
+======= tr r2 (1) 3.999650e-08 path 0.000000e+00===========
+======= tr r5 (4) 5.368580e-05 path 0.000000e+00===========
+======= tr r3 (2) 7.691686e-06 path 0.000000e+00===========
+======= tr r8 (7) 1.469660e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.469658e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.469656e-05 path 0.000000e+00===========
+======= tr r3 (2) 7.307068e-06 path 0.000000e+00===========
+======= tr r8 (7) 1.469653e-05 path 0.000000e+00===========
+======= tr r6 (5) 8.241036e-06 path 0.000000e+00===========
+======= tr r5 (4) 4.942230e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.257993e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.257992e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.257990e-05 path 0.000000e+00===========
+======= tr r5 (4) 4.759196e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.213067e-05 path 0.000000e+00===========
+======= tr r5 (4) 4.389712e-05 path 0.000000e+00===========
+======= tr r3 (2) 5.516878e-06 path 0.000000e+00===========
+======= tr r5 (4) 4.045708e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.132205e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.132204e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.132203e-05 path 0.000000e+00===========
+======= tr r8 (7) 1.132202e-05 path 0.000000e+00===========
+======= tr r3 (2) 5.036709e-06 path 0.000000e+00===========
+======= tr r3 (2) 4.740429e-06 path 0.000000e+00===========
+======= tr r8 (7) 1.132200e-05 path 0.000000e+00===========
+======= tr r6 (5) 7.406911e-06 path 0.000000e+00===========
+======= tr r3 (2) 3.999760e-06 path 0.000000e+00===========
+======= tr r3 (2) 3.733108e-06 path 0.000000e+00===========
+======= tr r5 (4) 3.910873e-05 path 0.000000e+00===========
+======= tr r8 (7) 9.861192e-06 path 0.000000e+00===========
+======= tr r2 (1) 1.597451e-08 path 0.000000e+00===========
+======= tr r6 (5) 6.451244e-06 path 0.000000e+00===========
+======= tr r5 (4) 3.268648e-05 path 0.000000e+00===========
+======= tr r8 (7) 8.684647e-06 path 0.000000e+00===========
+======= tr r5 (4) 2.999854e-05 path 0.000000e+00===========
+======= tr r8 (7) 8.421500e-06 path 0.000000e+00===========
+======= tr r8 (7) 8.421495e-06 path 0.000000e+00===========
+======= tr r3 (2) 2.644506e-06 path 0.000000e+00===========
+======= tr r8 (7) 8.421489e-06 path 0.000000e+00===========
+======= tr r8 (7) 8.421484e-06 path 0.000000e+00===========
+======= tr r5 (4) 2.943583e-05 path 0.000000e+00===========
+======= tr r3 (2) 2.352837e-06 path 0.000000e+00===========
+======= tr r8 (7) 8.173814e-06 path 0.000000e+00===========
+======= tr r2 (1) 1.018543e-08 path 0.000000e+00===========
+======= tr r3 (2) 1.925047e-06 path 0.000000e+00===========
+======= tr r8 (7) 8.173810e-06 path 0.000000e+00===========
+======= tr r1 (0) 9.676157e-09 path 0.000000e+00===========
+======= tr r3 (2) 1.925045e-06 path 0.000000e+00===========
+======= tr r8 (7) 8.173802e-06 path 0.000000e+00===========
+======= tr r5 (4) 2.913030e-05 path 0.000000e+00===========
+======= tr r6 (5) 5.936663e-06 path 0.000000e+00===========
+======= tr r3 (2) 1.523749e-06 path 0.000000e+00===========
+======= tr r2 (1) 6.348955e-09 path 0.000000e+00===========
+======= tr r8 (7) 7.278624e-06 path 0.000000e+00===========
+======= tr r3 (2) 1.142812e-06 path 0.000000e+00===========
+======= tr r8 (7) 7.278620e-06 path 0.000000e+00===========
+======= tr r3 (2) 9.523424e-07 path 0.000000e+00===========
+======= tr r8 (7) 7.278616e-06 path 0.000000e+00===========
+======= tr r8 (7) 7.278613e-06 path 0.000000e+00===========
+======= tr r8 (7) 7.278610e-06 path 0.000000e+00===========
+======= tr r3 (2) 7.618729e-07 path 0.000000e+00===========
+======= tr r3 (2) 5.714045e-07 path 0.000000e+00===========
+======= tr r8 (7) 7.278604e-06 path 0.000000e+00===========
+======= tr r2 (1) 1.813982e-09 path 0.000000e+00===========
+======= tr r5 (4) 2.806003e-05 path 0.000000e+00===========
+======= tr r6 (5) 5.290797e-06 path 0.000000e+00===========
+======= tr r4 (3) 1.505847e-06 path 0.000000e+00===========
+======= tr r3 (2) 3.418681e-07 path 0.000000e+00===========
+======= tr r8 (7) 6.532121e-06 path 0.000000e+00===========
+======= tr r1 (0) 7.732726e-09 path 0.000000e+00===========
+======= tr r8 (7) 6.532117e-06 path 0.000000e+00===========
+======= tr r5 (4) 2.381678e-05 path 0.000000e+00===========
+======= tr r1 (0) 7.523750e-09 path 0.000000e+00===========
+======= tr r3 (2) 4.989434e-07 path 0.000000e+00===========
+======= tr r8 (7) 6.355587e-06 path 0.000000e+00===========
+======= tr r2 (1) 1.583947e-09 path 0.000000e+00===========
+======= tr r8 (7) 6.355586e-06 path 0.000000e+00===========
+======= tr r1 (0) 7.523745e-09 path 0.000000e+00===========
+======= tr r3 (2) 3.326287e-07 path 0.000000e+00===========
+======= tr r1 (0) 7.523743e-09 path 0.000000e+00===========
+======= tr r3 (2) 3.326286e-07 path 0.000000e+00===========
+======= tr r6 (5) 4.751836e-06 path 0.000000e+00===========
+======= tr r8 (7) 5.901627e-06 path 0.000000e+00===========
+======= tr r1 (0) 6.986347e-09 path 0.000000e+00===========
+======= tr r1 (0) 6.986346e-09 path 0.000000e+00===========
+======= tr r5 (4) 2.129548e-05 path 0.000000e+00===========
+======= tr r1 (0) 6.802511e-09 path 0.000000e+00===========
+======= tr r1 (0) 6.802510e-09 path 0.000000e+00===========
+======= tr r8 (7) 5.746330e-06 path 0.000000e+00===========
+======= tr r5 (4) 1.914011e-05 path 0.000000e+00===========
+======= tr r2 (1) 3.488474e-09 path 0.000000e+00===========
+======= tr r1 (0) 6.628101e-09 path 0.000000e+00===========
+======= tr r2 (1) 3.488474e-09 path 0.000000e+00===========
+======= tr r5 (4) 1.688422e-05 path 0.000000e+00===========
+======= tr r8 (7) 5.459039e-06 path 0.000000e+00===========
+======= tr r8 (7) 5.459037e-06 path 0.000000e+00===========
+======= tr r5 (4) 1.515265e-05 path 0.000000e+00===========
+======= tr r8 (7) 5.325901e-06 path 0.000000e+00===========
+======= tr r3 (2) 5.574773e-07 path 0.000000e+00===========
+======= tr r5 (4) 1.346905e-05 path 0.000000e+00===========
+======= tr r5 (4) 1.154492e-05 path 0.000000e+00===========
+======= tr r5 (4) 9.745088e-06 path 0.000000e+00===========
+======= tr r8 (7) 4.962799e-06 path 0.000000e+00===========
+======= tr r8 (7) 4.962798e-06 path 0.000000e+00===========
+======= tr r8 (7) 4.962797e-06 path 0.000000e+00===========
+======= tr r8 (7) 4.962797e-06 path 0.000000e+00===========
+======= tr r1 (0) 5.874961e-09 path 0.000000e+00===========
+======= tr r2 (1) 2.473668e-09 path 0.000000e+00===========
+======= tr r2 (1) 1.855251e-09 path 0.000000e+00===========
+======= tr r6 (5) 4.638128e-06 path 0.000000e+00===========
+======= tr r3 (2) 2.424198e-07 path 0.000000e+00===========
+======= tr r1 (0) 5.483306e-09 path 0.000000e+00===========
+======= tr r3 (2) 2.424198e-07 path 0.000000e+00===========
+======= tr r8 (7) 4.631950e-06 path 0.000000e+00===========
+======= tr r8 (7) 4.631950e-06 path 0.000000e+00===========
+======= tr r8 (7) 4.631949e-06 path 0.000000e+00===========
+======= tr r5 (4) 8.380797e-06 path 0.000000e+00===========
+======= tr r5 (4) 6.751209e-06 path 0.000000e+00===========
+======= tr r8 (7) 4.430574e-06 path 0.000000e+00===========
+======= tr r1 (0) 5.244916e-09 path 0.000000e+00===========
+======= tr r5 (4) 5.283562e-06 path 0.000000e+00===========
+======= tr r5 (4) 3.833787e-06 path 0.000000e+00===========
+======= tr r5 (4) 2.473514e-06 path 0.000000e+00===========
+======= tr r3 (2) 2.176847e-07 path 0.000000e+00===========
+======= tr r8 (7) 4.159332e-06 path 0.000000e+00===========
+======= tr r8 (7) 4.159332e-06 path 0.000000e+00===========
+======= tr r6 (5) 4.405523e-06 path 0.000000e+00===========
+======= tr r1 (0) 4.616085e-09 path 0.000000e+00===========
+======= tr r2 (1) 9.718073e-10 path 0.000000e+00===========
+======= tr r5 (4) 1.162525e-06 path 0.000000e+00===========
+(50,2,0,50,0,0,0)
+(49,2,1,50,0,0,0)
+(49,2,0,49,1,1,0)
+(48,2,1,49,1,1,0)
+(48,2,2,49,1,1,0)
+(49,2,1,49,1,1,0)
+(49,2,1,49,0,1,1)
+(48,2,2,49,0,1,1)
+(48,2,3,49,0,1,1)
+(48,2,2,48,1,2,1)
+(47,2,3,48,1,2,1)
+(47,2,4,48,1,2,1)
+(47,2,5,48,1,2,1)
+(46,2,6,48,1,2,1)
+(46,2,6,48,0,2,2)
+(45,2,7,48,0,2,2)
+(44,2,8,48,0,2,2)
+(44,2,7,47,1,3,2)
+(43,2,7,47,1,3,2)
+(44,2,7,47,1,3,2)
+(44,2,6,46,2,4,2)
+(44,2,5,45,3,5,2)
+(43,2,6,45,3,5,2)
+(43,2,7,45,3,5,2)
+(42,2,8,45,3,5,2)
+(42,2,8,46,3,4,1)
+(41,2,9,46,3,4,1)
+(41,2,10,46,3,4,1)
+(42,2,10,46,3,4,1)
+(41,2,10,46,3,4,1)
+(41,2,11,46,3,4,1)
+(40,2,11,46,3,4,1)
+(40,2,12,46,3,4,1)
+(39,2,12,46,3,4,1)
+(39,2,11,45,4,5,1)
+(39,2,10,44,5,6,1)
+(39,2,11,44,5,6,1)
+(39,2,11,44,4,6,2)
+(39,2,12,44,4,6,2)
+(39,2,13,44,4,6,2)
+(40,2,13,44,4,6,2)
+(39,2,14,44,4,6,2)
+(39,2,15,44,4,6,2)
+(38,2,16,44,4,6,2)
+(37,2,17,44,4,6,2)
+(37,2,18,44,4,6,2)
+(36,2,19,44,4,6,2)
+(35,2,20,44,4,6,2)
+(35,2,21,44,4,6,2)
+(35,2,21,44,3,6,3)
+(35,2,22,44,3,6,3)
+(34,2,23,44,3,6,3)
+(34,2,24,44,3,6,3)
+(34,2,23,43,4,7,3)
+(34,2,24,43,4,7,3)
+(34,2,25,43,4,7,3)
+(34,2,26,43,4,7,3)
+(33,2,27,43,4,7,3)
+(32,2,28,43,4,7,3)
+(33,2,28,43,4,7,3)
+(33,2,27,42,5,8,3)
+(33,2,28,42,5,8,3)
+(33,2,29,42,5,8,3)
+(32,2,29,42,5,8,3)
+(32,2,29,42,4,8,4)
+(32,2,28,41,5,9,4)
+(32,2,29,41,5,9,4)
+(31,2,30,41,5,9,4)
+(31,2,30,41,4,9,5)
+(31,2,31,41,4,9,5)
+(30,2,31,41,4,9,5)
+(29,2,32,41,4,9,5)
+(29,2,31,40,5,10,5)
+(29,2,32,40,5,10,5)
+(29,2,31,39,6,11,5)
+(29,2,32,39,6,11,5)
+(28,2,33,39,6,11,5)
+(29,2,33,39,6,11,5)
+(29,2,32,38,7,12,5)
+(29,2,31,37,8,13,5)
+(29,2,32,37,8,13,5)
+(28,2,33,37,8,13,5)
+(28,2,33,37,7,13,6)
+(28,2,34,37,7,13,6)
+(28,2,33,36,8,14,6)
+(28,2,32,35,9,15,6)
+(27,2,33,35,9,15,6)
+(27,2,34,35,9,15,6)
+(27,2,33,34,10,16,6)
+(28,2,32,34,10,16,6)
+(28,2,32,34,9,16,7)
+(29,2,32,34,9,16,7)
+(29,2,31,33,10,17,7)
+(29,2,31,33,9,17,8)
+(29,2,32,33,9,17,8)
+(29,2,33,33,9,17,8)
+(29,2,34,33,9,17,8)
+(29,2,33,32,10,18,8)
+(28,2,33,32,10,18,8)
+(28,2,34,32,10,18,8)
+(28,2,35,32,10,18,8)
+(28,2,36,32,10,18,8)
+(27,2,37,32,10,18,8)
+(26,2,38,32,10,18,8)
+(26,2,37,31,11,19,8)
+(25,2,38,31,11,19,8)
+(25,2,39,31,11,19,8)
+(24,2,40,31,11,19,8)
+(24,2,41,31,11,19,8)
+(25,2,41,31,11,19,8)
+(25,2,40,30,12,20,8)
+(24,2,41,30,12,20,8)
+(24,2,40,29,13,21,8)
+(24,2,39,28,14,22,8)
+(24,2,38,27,15,23,8)
+(23,2,39,27,15,23,8)
+(23,2,40,27,15,23,8)
+(23,2,41,27,15,23,8)
+(23,2,40,26,16,24,8)
+(23,2,39,25,17,25,8)
+(22,2,39,25,17,25,8)
+(22,2,40,25,17,25,8)
+(21,2,41,25,17,25,8)
+(20,2,41,25,17,25,8)
+(20,2,40,24,18,26,8)
+(19,2,41,24,18,26,8)
+(19,2,42,24,18,26,8)
+(19,2,43,24,18,26,8)
+(19,2,44,24,18,26,8)
+(18,2,45,24,18,26,8)
+(18,2,46,24,18,26,8)
+(18,2,46,24,17,26,9)
+(18,2,45,23,18,27,9)
+(18,2,46,23,18,27,9)
+(18,2,47,23,18,27,9)
+(18,2,48,23,18,27,9)
+(18,2,47,22,19,28,9)
+(18,2,48,22,19,28,9)
+(18,2,47,21,20,29,9)
+(17,2,48,21,20,29,9)
+(17,2,47,20,21,30,9)
+(17,2,48,20,21,30,9)
+(17,2,49,20,21,30,9)
+(17,2,50,20,21,30,9)
+(17,2,51,20,21,30,9)
+(16,2,52,20,21,30,9)
+(15,2,53,20,21,30,9)
+(15,2,54,20,21,30,9)
+(15,2,54,20,20,30,10)
+(14,2,55,20,20,30,10)
+(13,2,56,20,20,30,10)
+(13,2,55,19,21,31,10)
+(13,2,56,19,21,31,10)
+(12,2,56,19,21,31,10)
+(12,2,56,19,20,31,11)
+(12,2,55,18,21,32,11)
+(12,2,56,18,21,32,11)
+(12,2,55,17,22,33,11)
+(12,2,56,17,22,33,11)
+(12,2,57,17,22,33,11)
+(11,2,58,17,22,33,11)
+(11,2,59,17,22,33,11)
+(11,2,60,17,22,33,11)
+(11,2,59,16,23,34,11)
+(10,2,60,16,23,34,11)
+(10,2,61,16,23,34,11)
+(9,2,61,16,23,34,11)
+(8,2,62,16,23,34,11)
+(8,2,63,16,23,34,11)
+(9,2,63,16,23,34,11)
+(8,2,64,16,23,34,11)
+(8,2,65,16,23,34,11)
+(8,2,64,15,24,35,11)
+(8,2,64,15,23,35,12)
+(7,2,65,15,23,35,12)
+(6,2,65,15,23,35,12)
+(6,2,66,15,23,35,12)
+(5,2,67,15,23,35,12)
+(5,2,68,15,23,35,12)
+(4,2,69,15,23,35,12)
+(4,2,70,15,23,35,12)
+(4,2,71,15,23,35,12)
+(4,2,72,15,23,35,12)
+(3,2,73,15,23,35,12)
+(2,2,74,15,23,35,12)
+(2,2,75,15,23,35,12)
+(1,2,75,15,23,35,12)
+(1,2,74,14,24,36,12)
+(1,2,74,14,23,36,13)
+(2,2,73,14,23,36,13)
+(1,2,74,14,23,36,13)
+(1,2,75,14,23,36,13)
+(2,2,75,14,23,36,13)
+(2,2,76,14,23,36,13)
+(2,2,75,13,24,37,13)
+(3,2,75,13,24,37,13)
+(2,2,76,13,24,37,13)
+(2,2,77,13,24,37,13)
+(1,2,77,13,24,37,13)
+(1,2,78,13,24,37,13)
+(2,2,78,13,24,37,13)
+(1,2,79,13,24,37,13)
+(2,2,79,13,24,37,13)
+(1,2,80,13,24,37,13)
+(1,2,80,13,23,37,14)
+(1,2,81,13,23,37,14)
+(2,2,81,13,23,37,14)
+(3,2,81,13,23,37,14)
+(3,2,80,12,24,38,14)
+(4,2,80,12,24,38,14)
+(5,2,80,12,24,38,14)
+(5,2,81,12,24,38,14)
+(5,2,80,11,25,39,14)
+(4,2,80,11,25,39,14)
+(5,2,80,11,25,39,14)
+(4,2,80,11,25,39,14)
+(4,2,79,10,26,40,14)
+(4,2,80,10,26,40,14)
+(4,2,81,10,26,40,14)
+(4,2,80,9,27,41,14)
+(4,2,81,9,27,41,14)
+(3,2,82,9,27,41,14)
+(3,2,81,8,28,42,14)
+(3,2,80,7,29,43,14)
+(3,2,79,6,30,44,14)
+(3,2,80,6,30,44,14)
+(3,2,81,6,30,44,14)
+(3,2,82,6,30,44,14)
+(3,2,83,6,30,44,14)
+(4,2,83,6,30,44,14)
+(3,2,83,6,30,44,14)
+(2,2,83,6,30,44,14)
+(2,2,83,6,29,44,15)
+(1,2,84,6,29,44,15)
+(2,2,84,6,29,44,15)
+(1,2,85,6,29,44,15)
+(1,2,86,6,29,44,15)
+(1,2,87,6,29,44,15)
+(1,2,88,6,29,44,15)
+(1,2,87,5,30,45,15)
+(1,2,86,4,31,46,15)
+(1,2,87,4,31,46,15)
+(2,2,87,4,31,46,15)
+(2,2,86,3,32,47,15)
+(2,2,85,2,33,48,15)
+(2,2,84,1,34,49,15)
+(1,2,85,1,34,49,15)
+(1,2,86,1,34,49,15)
+(1,2,87,1,34,49,15)
+(1,2,87,1,33,49,16)
+(2,2,87,1,33,49,16)
+(1,2,87,1,33,49,16)
+(1,2,86,0,34,50,16)
+
+Path probability: 0.000000e+00
 ********************************************************************************
 Welcome to the counterexample permutation explorer.
 ********************************************************************************
 Sending model to prism API
 Using PRISM to model check. See reports/bryant/sm_0.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_1.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_2.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_3.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_4.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_5.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_6.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_7.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_8.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_9.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_10.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_11.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_12.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_13.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_14.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_15.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_16.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_17.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_18.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_19.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_20.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_21.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_22.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_23.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_24.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_25.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_26.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_27.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_28.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_29.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_30.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_31.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_32.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_33.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_34.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_35.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_36.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_37.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_38.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_39.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_40.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_41.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_42.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_43.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_44.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_45.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_46.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_47.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_48.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_49.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_50.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_51.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_52.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_53.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_54.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_55.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_56.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_57.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_58.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_59.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_60.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_61.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_62.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_63.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_64.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_65.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_66.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_67.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_68.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_69.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_70.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_71.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_72.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_73.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_74.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_75.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_76.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_77.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_78.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_79.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_80.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_81.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_82.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_83.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_84.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_85.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_86.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_87.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_88.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_89.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_90.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_91.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_92.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_93.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_94.txt
-Sending model to prism APIPRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-
-Using PRISM to model check. See reports/bryant/sm_95.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_96.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_97.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_98.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_99.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_100.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_101.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_102.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_103.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_104.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_105.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_106.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_107.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_108.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_109.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_110.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_111.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_112.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_113.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_114.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_115.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_116.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_117.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_118.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_119.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_120.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_121.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_122.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_123.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_124.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_125.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_126.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_127.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_128.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_129.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_130.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_131.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_132.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_133.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_134.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_135.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_136.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_137.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_138.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_139.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_140.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_141.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_142.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_143.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_144.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_145.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_146.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_147.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_148.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_149.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_150.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_151.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_152.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_153.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_154.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_155.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_156.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_157.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_158.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_159.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_160.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_161.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_162.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_163.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_164.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_165.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_166.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_167.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_168.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_169.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_170.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_171.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_172.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_173.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_174.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_175.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_176.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_177.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_178.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_179.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_180.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_181.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_182.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_183.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_184.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_185.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_186.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_187.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_188.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_189.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_190.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_191.txtPRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
-
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_192.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_193.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_194.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_195.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_196.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_197.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_198.txt
-Sending model to prism API
-Using PRISM to model check. See reports/bryant/sm_199.txt
 ================================================================================
 Exiting without error.
 ================================================================================
