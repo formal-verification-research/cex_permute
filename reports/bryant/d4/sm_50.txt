@@ -1,0 +1,73 @@
+PRISM
+=====
+
+Version: 4.7.dev
+Date: Mon Jul 18 04:14:16 MDT 2022
+Hostname: horace
+Memory limits: cudd=1g, java(heap)=1g
+Command line: prism -importmodel 'buildModel.tra,sta,lab' -exportmodel 'out.tra,sta,lab' -ctmc pro.csl
+
+Importing model from "buildModel.tra", "buildModel.sta", "buildModel.lab"...
+Using specified model type: CTMC
+
+Parsing properties file "pro.csl"...
+
+1 property:
+(1) P=? [ true U[0,200] gbg=50 ]
+
+Building model...
+
+Computing reachable states...
+
+Reachability (BFS): 159 iterations in 1.14 seconds (average 0.007157, setup 0.00)
+
+Time for model construction: 6.033 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        CTMC
+States:      1735 (1 initial)
+Transitions: 6196
+
+Rate matrix: 183924 nodes (3193 terminal), 6196 minterms, vars: 36r/36c
+
+Exporting transition matrix in plain text format to file "out.tra"...
+
+Exporting list of reachable states in plain text format to file "out.sta"...
+
+Exporting labels and satisfying states in plain text format to file "out.lab"...
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ true U[0,200] gbg=50 ]
+
+Computing probabilities...
+Engine: Hybrid
+
+Number of non-absorbing states: 1690 of 1735 (97.4%)
+
+Building hybrid MTBDD matrix... [levels=36, nodes=185665] [8.5 MB]
+Adding explicit sparse matrices... [levels=36, num=1, compact] [55.2 KB]
+Creating vector for diagonals... [dist=1691, compact] [16.6 KB]
+Allocating iteration vectors... [3 x 13.6 KB]
+TOTAL: [8.6 MB]
+
+Uniformisation: q.t = 26989295.068284 x 200.000000 = 5397859013.656801
+Fox-Glynn: left = 5397344719, right = 5398482430
+
+Starting iterations...
+
+Steady state detected at iteration 21244
+
+Iterative method: 21244 iterations in 83.57 seconds (average 0.000193, setup 79.47)
+
+Value in the initial state: 0.0
+
+Time for model checking: 84.063 seconds.
+
+Result: 0.0
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+

@@ -1,0 +1,73 @@
+PRISM
+=====
+
+Version: 4.7.dev
+Date: Sat Jul 16 09:48:15 MDT 2022
+Hostname: horace
+Memory limits: cudd=1g, java(heap)=1g
+Command line: prism -importmodel 'buildModel.tra,sta,lab' -exportmodel 'out.tra,sta,lab' -ctmc pro.csl
+
+Importing model from "buildModel.tra", "buildModel.sta", "buildModel.lab"...
+Using specified model type: CTMC
+
+Parsing properties file "pro.csl"...
+
+1 property:
+(1) P=? [ true U[0,200] gbg=50 ]
+
+Building model...
+
+Computing reachable states...
+
+Reachability (BFS): 172 iterations in 0.44 seconds (average 0.002564, setup 0.00)
+
+Time for model construction: 2.3 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        CTMC
+States:      887 (1 initial)
+Transitions: 3035
+
+Rate matrix: 89769 nodes (1367 terminal), 3035 minterms, vars: 36r/36c
+
+Exporting transition matrix in plain text format to file "out.tra"...
+
+Exporting list of reachable states in plain text format to file "out.sta"...
+
+Exporting labels and satisfying states in plain text format to file "out.lab"...
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ true U[0,200] gbg=50 ]
+
+Computing probabilities...
+Engine: Hybrid
+
+Number of non-absorbing states: 879 of 887 (99.1%)
+
+Building hybrid MTBDD matrix... [levels=36, nodes=93200] [4.3 MB]
+Adding explicit sparse matrices... [levels=36, num=1, compact] [25.9 KB]
+Creating vector for diagonals... [dist=880, compact] [8.6 KB]
+Allocating iteration vectors... [3 x 6.9 KB]
+TOTAL: [4.3 MB]
+
+Uniformisation: q.t = 629756.531280 x 200.000000 = 125951306.256000
+Fox-Glynn: left = 125872744, right = 126046537
+
+Starting iterations...
+
+Steady state detected at iteration 223
+
+Iterative method: 223 iterations in 15.66 seconds (average 0.000085, setup 15.64)
+
+Value in the initial state: 0.0
+
+Time for model checking: 15.667 seconds.
+
+Result: 0.0
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+

@@ -31,13 +31,37 @@ import tempfile
 # Main procedure
 if __name__ == "__main__":
 
-  depth = 6
+  depth = 1
 
   # Clean up the folders we're working in
   utils.cleanup()
 
   # Print a welcome message to stdout and stderr
   utils.printall(80*"*" + "\nWelcome to the counterexample permutation explorer.\n" + 80*"*")
+
+  lineno = 0
+
+  # new loop to run many paths
+  with open("paths/bryant/250.txt", "r") as trace_file:
+    for path in trace_file:
+      with open("forprism.trace", "w") as p:
+        p.write(path)
+      # Send the file to the PRISM API to build the state-transition matrix
+      utils.printall("Sending model to prism API")
+      prism_api.buildmodel()
+      
+      # Call PRISM from command line to model check the constructed model
+      report_name = "reports/bryant/sm_" + str(lineno) + ".txt"
+      time_name = "reports/bryant/time_" + str(lineno) + ".txt"
+      utils.printall("Using PRISM to model check. See " + report_name)
+      os.system("time -o " + time_name + " prism -importmodel buildModel.tra,sta,lab -exportmodel out.tra,sta,lab -ctmc pro.csl > " + report_name)
+      lineno = lineno + 1
+
+      if (lineno >= 200):
+        break
+
+
+
 
   # Get the names of files
   # ivy_file = utils.get_ivy_file()
@@ -50,8 +74,8 @@ if __name__ == "__main__":
   # Get the seed path from a file instead of running ivy_check,
   #   since we already have the path.
   # with open("model.trace", 'r') as ivy_trace:
-  with open("mo.trace", 'r') as ivy_trace:
-    ivy_path = ivy_trace.read().replace(" ", "\t")
+  # with open("mo.trace", 'r') as ivy_trace:
+  #   ivy_path = ivy_trace.read().replace(" ", "\t")
   # uncomment the next 2 lines to use the shortest path instead
   # with open("shortest.trace", 'r') as ivy_trace:
   #   ivy_path = ivy_trace.read().replace(" ", "\t")
@@ -70,8 +94,8 @@ if __name__ == "__main__":
   #   BUILD_MODEL
   #   commutable transitions, tab-separated
   #   seed path
-  utils.printall("Printing file to send to prism API")
-  with open("forprism.trace", "w") as p:
+  # utils.printall("Printing file to send to prism API")
+  # with open("forprism.trace", "w") as p:
     # Print BUILD_MODEL keyword (NOT OPTIONAL)
     # p.write("BUILD_MODEL\n")
     # Print the tab-separated commutable transitions
@@ -81,16 +105,16 @@ if __name__ == "__main__":
     #   p.write(intersection[i])
     # p.write("\n")
     # Print the tab-separated seed path
-    p.write(ivy_path)
+    # p.write(ivy_path)
 
-  # Send the file to the PRISM API to build the state-transition matrix
-  utils.printall("Sending model to prism API")
-  prism_api.buildmodel()
+  # # Send the file to the PRISM API to build the state-transition matrix
+  # utils.printall("Sending model to prism API")
+  # prism_api.buildmodel()
   
-  # Call PRISM from command line to model check the constructed model
-  report_name = "sm_mo" + str(depth) + ".txt"
-  utils.printall("Using PRISM to model check. See " + report_name)
-  os.system("prism -importmodel buildModel.tra,sta,lab -exportmodel out.tra,sta,lab -ctmc pro.csl > " + report_name)
+  # # Call PRISM from command line to model check the constructed model
+  # report_name = "sm_mo" + str(depth) + ".txt"
+  # utils.printall("Using PRISM to model check. See " + report_name)
+  # os.system("prism -importmodel buildModel.tra,sta,lab -exportmodel out.tra,sta,lab -ctmc pro.csl > " + report_name)
 
   # Give exit message
   utils.printall(80*"=")
