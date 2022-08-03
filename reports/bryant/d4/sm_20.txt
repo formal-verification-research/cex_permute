@@ -1,0 +1,73 @@
+PRISM
+=====
+
+Version: 4.7.dev
+Date: Sun Jul 17 08:36:52 MDT 2022
+Hostname: horace
+Memory limits: cudd=1g, java(heap)=1g
+Command line: prism -importmodel 'buildModel.tra,sta,lab' -exportmodel 'out.tra,sta,lab' -ctmc pro.csl
+
+Importing model from "buildModel.tra", "buildModel.sta", "buildModel.lab"...
+Using specified model type: CTMC
+
+Parsing properties file "pro.csl"...
+
+1 property:
+(1) P=? [ true U[0,200] gbg=50 ]
+
+Building model...
+
+Computing reachable states...
+
+Reachability (BFS): 175 iterations in 0.79 seconds (average 0.004514, setup 0.00)
+
+Time for model construction: 5.59 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        CTMC
+States:      1621 (1 initial)
+Transitions: 5988
+
+Rate matrix: 197116 nodes (3048 terminal), 5988 minterms, vars: 37r/37c
+
+Exporting transition matrix in plain text format to file "out.tra"...
+
+Exporting list of reachable states in plain text format to file "out.sta"...
+
+Exporting labels and satisfying states in plain text format to file "out.lab"...
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ true U[0,200] gbg=50 ]
+
+Computing probabilities...
+Engine: Hybrid
+
+Number of non-absorbing states: 1610 of 1621 (99.3%)
+
+Building hybrid MTBDD matrix... [levels=37, nodes=200001] [9.2 MB]
+Adding explicit sparse matrices... [levels=37, num=1, compact] [53.4 KB]
+Creating vector for diagonals... [dist=1610, compact] [15.7 KB]
+Allocating iteration vectors... [3 x 12.7 KB]
+TOTAL: [9.3 MB]
+
+Uniformisation: q.t = 2676452.418792 x 200.000000 = 535290483.758400
+Fox-Glynn: left = 535128526, right = 535486803
+
+Starting iterations...
+
+Steady state detected at iteration 762
+
+Iterative method: 762 iterations in 88.84 seconds (average 0.000171, setup 88.71)
+
+Value in the initial state: 0.0
+
+Time for model checking: 89.304 seconds.
+
+Result: 0.0
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
