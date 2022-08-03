@@ -113,8 +113,11 @@ It is desirable to find the probability of a transition in a CTMC. From *Introdu
 > For an ergodic CTMC the one-step transition probabilities of its EMC, denoted by $s_{ij}$ [...] are given by
 > 
 > $$
-> s_{ij} = \frac{q_{ij}}{\sum_{j\neq i}q_{ij}}, j \neq i \\
-s_{ij} = 0, j = i
+> s_{ij} = \frac{q_{ij}}{\sum_{j\neq i}q_{ij}}, j \neq i
+> $$
+> 
+> $$
+> s_{ij} = 0, j = i
 > $$
 
 That is, the probability of transition `i` equals the rate of transition `i` divided by the sum of all other outgoing transition rates from the current state.
