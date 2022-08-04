@@ -61,8 +61,13 @@ if __name__ == "__main__":
       # os.system("mv buildModel.lab " + model_name + ".lab")
       lineno = lineno + 1
 
+<<<<<<< HEAD
       # if (lineno >= 250):
       #   break
+=======
+      if (lineno >= 250):
+        break
+>>>>>>> 151e1f92627ce1a50dbc06a7f2c79fcc494a0470
 
 
 
