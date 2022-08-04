@@ -42,7 +42,7 @@ if __name__ == "__main__":
   lineno = 0
 
   # new loop to run many paths
-  with open("paths/bryant/250.txt", "r") as trace_file:
+  with open("paths/quick/lazy.txt", "r") as trace_file:
     for path in trace_file:
       with open("forprism.trace", "w") as p:
         p.write(path)
@@ -51,9 +51,9 @@ if __name__ == "__main__":
       prism_api.buildmodel()
       
       # Call PRISM from command line to model check the constructed model
-      model_name = "reports/bryant/model_" + str(lineno)
-      report_name = "reports/bryant/sm_" + str(lineno) + ".txt"
-      time_name = "reports/bryant/time_" + str(lineno) + ".txt"
+      model_name = "reports/lazy_sim/model_" + str(lineno)
+      report_name = "reports/lazy_sim/sm_" + str(lineno) + ".txt"
+      time_name = "reports/lazy_sim/time_" + str(lineno) + ".txt"
       utils.printall("Using PRISM to model check. See " + report_name)
       os.system("time -o " + time_name + " prism -importmodel buildModel.tra,sta,lab -exportmodel " + model_name + "_out.tra,sta,lab -ctmc pro.csl > " + report_name)
       os.system("mv buildModel.tra " + model_name + ".tra")
@@ -61,7 +61,7 @@ if __name__ == "__main__":
       os.system("mv buildModel.lab " + model_name + ".lab")
       lineno = lineno + 1
 
-      if (lineno >= 200):
+      if (lineno >= 250):
         break
 
 
