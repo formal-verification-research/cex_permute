@@ -34,7 +34,7 @@ public class BuildModel
 {
 
   // Maximum recursion depth
-  public static final int MAX_DEPTH = 5;
+  public static final int MAX_DEPTH = 2;
   // turn off printing to save time
   public static final boolean DO_PRINT = false;
 
@@ -922,24 +922,35 @@ public class BuildModel
 			FileReader fr = new FileReader("forprism.trace");
 			BufferedReader br = new BufferedReader(fr);
 
-      // Read in the seed path line
-      String x_transitions = br.readLine();
-      String[] strarr_transitions = x_transitions.split("\\s+");
-      ArrayList<String> transitions = new ArrayList<String>();
-      for (int i = 0; i < strarr_transitions.length; i++) {
-        transitions.add(strarr_transitions[i]);
-      }
-      // transitions = Arrays.asList(x_transitions.split("\\s+"));
-      
-      // Let n_seed be the length of the seed path (in STATES, not transitions)
-      int n_seed = transitions.size() + 1;
-      if (DO_PRINT) System.out.println("n_seed (states in seed path) = " + n_seed);
-      model.setN(n_seed);
+      String x_transitions;
+      ArrayList<String> transitions;
+      String[] strarr_transitions;
+      int n_seed;
 
-      // Build the seed path, which recursively does everything
-      ArrayList<String> prefix = new ArrayList<String>();
-      buildPath(prism, transitions, prefix, model);
-      commute(prism, model, model.paths.get(0), transitions, 0); 
+      // loop until we're done reading in the paths
+      while (true) {
+          // Read in the seed path line
+          x_transitions = br.readLine();
+          // System.out.println(x_transitions);
+          if (x_transitions == null) break;
+          strarr_transitions = x_transitions.split("\\s+");
+          transitions = new ArrayList<String>();
+          for (int i = 0; i < strarr_transitions.length; i++) {
+            transitions.add(strarr_transitions[i]);
+          }
+          // transitions = Arrays.asList(x_transitions.split("\\s+"));
+          
+          // Let n_seed be the length of the seed path (in STATES, not transitions)
+          n_seed = transitions.size() + 1;
+          if (DO_PRINT) System.out.println("n_seed (states in seed path) = " + n_seed);
+          model.setN(n_seed);
+
+          // Build the seed path, which recursively does everything
+          ArrayList<String> prefix = new ArrayList<String>();
+          buildPath(prism, transitions, prefix, model);
+          commute(prism, model, model.paths.get(0), transitions, 0); 
+
+      }
 
       // Merge duplicate states
       model.mergeDuplicates();

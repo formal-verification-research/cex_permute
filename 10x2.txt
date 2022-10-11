@@ -1,0 +1,10 @@
+(javac -classpath "/usr/local/prism-src/prism/classes:/usr/local/prism-src/prism/lib/*:/usr/local/prism-src/prism/prism/classes:/usr/local/prism-src/prism/prism/lib/*" -d classes src/./BuildModel.java)
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+********************************************************************************
+Welcome to the counterexample permutation explorer.
+********************************************************************************
+Sending model to prism API
+Using PRISM to model check. See reports/lazy_sim/sm_10x2.txt
+================================================================================
+Exiting commuting script.
+================================================================================

@@ -36,7 +36,7 @@ public class BuildModel
   // Maximum recursion depth
   public static final int MAX_DEPTH = 0;
   // turn off printing to save time
-  public static final boolean DO_PRINT = false;
+  public static final boolean DO_PRINT = true;
 
   // By default, call BuildModel().run()
   public static void main(String[] args)
@@ -883,92 +883,6 @@ public class BuildModel
   }
   }
 
-  public void simulate(String x) {
-  try {
-    // Create a log for PRISM output (hidden or stdout)
-			PrismLog mainLog = new PrismDevNullLog();
-			//PrismLog mainLog = new PrismFileLog("stdout");
-
-			// Initialise PRISM engine 
-			Prism prism = new Prism(mainLog);
-			prism.initialise();
-
-			// Parse and load a PRISM model from a file
-			ModulesFile modulesFile = prism.parseModelFile(new File("model.sm"));
-			prism.loadPRISMModel(modulesFile);
-						
-			// Load the model into the simulator
-			prism.loadModelIntoSimulator();
-			SimulatorEngine sim = prism.getSimulator();
-
-			String[] tr_st=x.split("\\s+"); 
-
-			// Create a new path and take 3 random steps
-			// (for debugging purposes, we use sim.createNewPath;
-			// for greater efficiency, you could use sim.createNewOnTheFlyPath();
-			sim.createNewPath();
-			sim.initialisePath(null);
-
-      int pathLength = 0;
-			int index;
-			double path_probability = 1.0;
-			double total_rate = 0.0;
-			for (int tdx=0; tdx < tr_st.length; tdx++) {
-			  index=-1;
-			  total_rate = 0.0;
-			  for (int idx=0; idx<sim.getNumTransitions(); idx++) {
-				  // System.out.printf("tr %d: %s %f\n",idx,sim.getTransitionActionString(idx),sim.getTransitionProbability(idx));
-				  total_rate += sim.getTransitionProbability(idx);
-			  }
-			  for (int idx=0; idx<sim.getNumTransitions(); idx++) {
-				  String s1 = String.format("[%s]",tr_st[tdx]);
-				  String s2 = sim.getTransitionActionString(idx);
-				  // System.out.printf("%d:%s=%s?",idx,s1,s2);
-				  if (s1.equalsIgnoreCase(s2)) {
-				    index = idx;
-				    // System.out.printf(" yes.");
-				    break;
-				  }
-			  }
-        if (index == -1) {
-          System.out.println("ERROR in simulate: Index is -1");
-          for (int idx=0; idx<sim.getNumTransitions(); idx++) {
-            String s1 = String.format("[%s]",tr_st[tdx]);
-            String s2 = sim.getTransitionActionString(idx);
-            System.out.printf("%d:%s=%s?",idx,s1,s2);
-            System.out.printf("\n");
-          }
-          System.out.println("\nERROR indicates desired transition is not enabled in current state.\n");
-          System.out.println("\n\n\n================================================================\n\n\n");
-          System.exit(0);
-        }
- 			  double transition_probability = sim.getTransitionProbability(index)/total_rate;
-			  path_probability *= transition_probability;
-        pathLength++;
-        System.out.printf("%3d\ttr %s (%d) %e path %e\n",pathLength,tr_st[tdx],index,transition_probability, path_probability);
-			  sim.manualTransition(index);
-			}
-
-			// System.out.println(sim.getPath());
-			
-			// sim.getPathFull().exportToLog(new PrismPrintStreamLog(System.out), true, ",", null);
-			System.out.printf("\nPath probability: %e\n", path_probability);
-      System.out.println("\n\n\n================================================================\n\n\n");
-
-
-			// Close down PRISM
-			prism.closeDown();
-    }
-    // Catch common errors and give user the info
-    catch (PrismException e) {
-			if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
-			System.exit(1);
-		}
-    catch (IOException e) {
-      if (DO_PRINT) System.out.println("IOException Error: " + e.getMessage());
-			System.exit(1);
-    }
-  }
   // Main run function - runs every call
   public void run()
   {
@@ -1008,28 +922,35 @@ public class BuildModel
 			FileReader fr = new FileReader("forprism.trace");
 			BufferedReader br = new BufferedReader(fr);
 
-      // Read in the seed path line
-      String x_transitions = br.readLine();
-      simulate(x_transitions);
-      String[] strarr_transitions = x_transitions.split("\\s+");
-      ArrayList<String> transitions = new ArrayList<String>();
-      for (int i = 0; i < strarr_transitions.length; i++) {
-        transitions.add(strarr_transitions[i]);
+      String x_transitions;
+      ArrayList<String> transitions;
+      String[] strarr_transitions;
+      int n_seed;
+
+      // loop until we're done reading in the paths
+      while (true) {
+          // Read in the seed path line
+          x_transitions = br.readLine();
+          // System.out.println(x_transitions);
+          if (x_transitions == null) break;
+          strarr_transitions = x_transitions.split("\\s+");
+          transitions = new ArrayList<String>();
+          for (int i = 0; i < strarr_transitions.length; i++) {
+            transitions.add(strarr_transitions[i]);
+          }
+          // transitions = Arrays.asList(x_transitions.split("\\s+"));
+          
+          // Let n_seed be the length of the seed path (in STATES, not transitions)
+          n_seed = transitions.size() + 1;
+          if (DO_PRINT) System.out.println("n_seed (states in seed path) = " + n_seed);
+          model.setN(n_seed);
+
+          // Build the seed path, which recursively does everything
+          ArrayList<String> prefix = new ArrayList<String>();
+          buildPath(prism, transitions, prefix, model);
+          commute(prism, model, model.paths.get(0), transitions, 0); 
+
       }
-      // transitions = Arrays.asList(x_transitions.split("\\s+"));
-
-      // for now, exit
-      System.exit(0);
-      
-      // Let n_seed be the length of the seed path (in STATES, not transitions)
-      int n_seed = transitions.size() + 1;
-      if (DO_PRINT) System.out.println("n_seed (states in seed path) = " + n_seed);
-      model.setN(n_seed);
-
-      // Build the seed path, which recursively does everything
-      ArrayList<String> prefix = new ArrayList<String>();
-      buildPath(prism, transitions, prefix, model);
-      commute(prism, model, model.paths.get(0), transitions, 0); 
 
       // Merge duplicate states
       model.mergeDuplicates();

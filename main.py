@@ -39,35 +39,38 @@ if __name__ == "__main__":
   # Print a welcome message to stdout and stderr
   utils.printall(80*"*" + "\nWelcome to the counterexample permutation explorer.\n" + 80*"*")
 
+
+
+  num_paths = 10
+  rec_depth = 2
+  
+  
   lineno = 0
 
   # new loop to run many paths
   with open("paths/quick/lazy.txt", "r") as trace_file:
-    for path in trace_file:
-      with open("forprism.trace", "w") as p:
+    with open("forprism.trace", "a") as p:
+      for path in trace_file:
         p.write(path)
-      # Send the file to the PRISM API to build the state-transition matrix
-      utils.printall("Sending model to prism API")
-      prism_api.buildmodel()
-      
-      # Call PRISM from command line to model check the constructed model
-      model_name = "reports/lazy_sim/model_" + str(lineno)
-      report_name = "reports/lazy_sim/sm_" + str(lineno) + ".txt"
-      time_name = "reports/lazy_sim/time_" + str(lineno) + ".txt"
-      utils.printall("Using PRISM to model check. See " + report_name)
-      # os.system("time -o " + time_name + " prism -importmodel buildModel.tra,sta,lab -exportmodel " + model_name + "_out.tra,sta,lab -ctmc pro.csl > " + report_name)
-      # os.system("mv buildModel.tra " + model_name + ".tra")
-      # os.system("mv buildModel.sta " + model_name + ".sta")
-      # os.system("mv buildModel.lab " + model_name + ".lab")
-      lineno = lineno + 1
+        lineno = lineno + 1
+        if (lineno >= num_paths):
+          break
 
-<<<<<<< HEAD
-      # if (lineno >= 250):
-      #   break
-=======
-      if (lineno >= 250):
-        break
->>>>>>> 151e1f92627ce1a50dbc06a7f2c79fcc494a0470
+  # Send the file to the PRISM API to build the state-transition matrix
+  utils.printall("Sending model to prism API")
+  prism_api.buildmodel()
+  
+
+  # Call PRISM from command line to model check the constructed model
+  model_name = "reports/lazy_sim/model_" + str(num_paths) + "x" + str(rec_depth) 
+  report_name = "reports/lazy_sim/sm_" + str(num_paths) + "x" + str(rec_depth) + ".txt"
+  time_name = "reports/lazy_sim/time_" + str(num_paths) + "x" + str(rec_depth) + ".txt"
+  utils.printall("Using PRISM to model check. See " + report_name)
+  os.system("time -o " + time_name + " prism -importmodel buildModel.tra,sta,lab -exportmodel " + model_name + "_out.tra,sta,lab -ctmc pro.csl > " + report_name)
+  # os.system("mv buildModel.tra " + model_name + ".tra")
+  # os.system("mv buildModel.sta " + model_name + ".sta")
+  # os.system("mv buildModel.lab " + model_name + ".lab")
+
 
 
 
@@ -127,7 +130,7 @@ if __name__ == "__main__":
 
   # Give exit message
   utils.printall(80*"=")
-  utils.printall("Exiting without error.")
+  utils.printall("Exiting commuting script.")
   utils.printall(80*"=")
   
   # User can check the probability in final_prism_report.txt
