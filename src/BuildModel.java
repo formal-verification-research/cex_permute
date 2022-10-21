@@ -225,7 +225,7 @@ public class BuildModel
         // If we never found the correct transitions, report error
         if (transitionIndex == -1) {
           System.out.println("ERROR: Prefix transition not available from current state.");
-          System.exit(1);
+          System.exit(10001);
         }
         // Take the transition
         sim.manualTransition(transitionIndex);
@@ -271,7 +271,7 @@ public class BuildModel
         // If we never found the correct transitions, report error
         if (transitionIndex == -1) {
           System.out.println("ERROR: Trace transition not available from current state.");
-          System.exit(1);
+          System.exit(10002);
         }
         // Take the transition
         sim.manualTransition(transitionIndex);
