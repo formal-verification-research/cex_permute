@@ -319,9 +319,9 @@ public class BuildModel
 
         // Check if the state exists yet
         int indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
-        if (indexOfFoundState == -1) {
-          System.out.println("Discovered state is unique.");
-        }
+        // if (indexOfFoundState == -1) {
+        //   System.out.println("Discovered state is unique.");
+        // }
         
         // figure out what state to link here
         State stateToAdd = null;
@@ -332,7 +332,7 @@ public class BuildModel
           stateToAdd = stateList.get(indexOfFoundState);
           // make sure we haven't already made this transition
           if (currentState.nextStates.contains(stateToAdd)) {
-            System.out.println("NEXT STATE ALREADY FOUND");
+            // System.out.println("NEXT STATE ALREADY FOUND");
             seedPath.states.add(currentState);
             currentState = stateToAdd;
             continue;
