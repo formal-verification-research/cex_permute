@@ -196,12 +196,12 @@ public class BuildModel
       // temporary found transition index variable
       int transitionIndex;
       
-      System.out.println("Prism simulator initialized successfully.");
       // initialize to the initial state each time
       int currentStateIndex = 0;
-
+      
       // check if we've created an initial state
       if (stateList.size() == 0) {
+        System.out.println("Initial state generated.");
         stateList.add(new State(sim.getCurrentState().varValues));
       }
 
@@ -209,7 +209,9 @@ public class BuildModel
       State currentState = stateList.get(0);
 
       // Walk along the prefix to get the new initial state
-      for (int path_tran = 0; path_tran < prefix.length; path_tran++) {
+      int prefixLength = 0;
+      if (prefix != null) prefixLength = prefix.length;
+      for (int path_tran = 0; path_tran < prefixLength; path_tran++) {
         // start with a fresh transitionIndex
         transitionIndex = -1;
         // Compare our transition string with available transition strings
