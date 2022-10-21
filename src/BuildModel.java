@@ -324,6 +324,8 @@ public class BuildModel
   {
     try
     {
+
+      System.out.println("HEY THERE!");
       // start by resetting the state count
       stateCount = 0;
 
