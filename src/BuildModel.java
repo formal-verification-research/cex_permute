@@ -129,7 +129,6 @@ public class BuildModel
       String temp = "";
       for (int i=0; i<this.outgoingTrans.size(); i++) {
         temp += this.outgoingTrans.get(i).prismTRA(); 
-        temp += "\n";
       }
       return temp;
     }
@@ -357,6 +356,12 @@ public class BuildModel
         }
         
       } // end walk along actual trace
+
+      System.out.println("One path explored: ");
+      for (int i = 0; i < seedPath.states.size(); i++) {
+        System.out.printf("%d ", seedPath.states.get(i).index);
+      }
+      System.out.println(".");
 
       // NOTE:
       // commutable transitions are now stored in isEnabled.
