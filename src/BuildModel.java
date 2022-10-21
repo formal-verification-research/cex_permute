@@ -145,7 +145,7 @@ public class BuildModel
         if (i>0) temp += ",";
         temp += stateVars[i]; 
       }
-      return temp + ")";
+      return temp + ")\n";
     }
 
     // State details for .tra files
@@ -528,8 +528,8 @@ public class BuildModel
 
       
       for (int a = 0; a < stateList.size(); a++) {
-        staStr += stateList.get(a).prismSTA() + "\n";
-        traStr += stateList.get(a).prismTRA() + "\n";
+        staStr += stateList.get(a).prismSTA();
+        traStr += stateList.get(a).prismTRA();
       }
 
       
