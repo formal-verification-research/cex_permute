@@ -160,7 +160,7 @@ public class BuildModel
     return varVals.length;
   }
 
-  public void buildAndCommute(Prism prism, String[] transitions, String[] prefix, Model model)
+  public void buildAndCommute(Prism prism, String[] transitions, String[] prefix)
   {
     try {
 
