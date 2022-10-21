@@ -76,9 +76,12 @@ public class BuildModel
     public int to;
     public double rate;
     public String name;
-    public Transition(int prismIndex, String name) {
+    public Transition(int prismIndex, String name, int from, int to, double rate) {
       this.prismIndex = prismIndex;
       this.name = name;
+      this.from = from;
+      this.to = to;
+      this.rate = rate;
     }
     public String prismTRA() {
       return (this.from) + " " + (this.to) + " " + (this.rate);
@@ -289,14 +292,17 @@ public class BuildModel
 
         // start with a fresh transitionIndex
         transitionIndex = -1;
+        double newTranRate = -1.0f;
+        double totalOutgoingRate = 0.0f;
         // Compare our transition string with available transition strings
         for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
           // Update transitionIndex if we found the desired transition (i.e. names match)
           System.out.println("Check transition " + sim.getTransitionActionString(sim_tran));
+          totalOutgoingRate += sim.getTransitionProbability(i);
           if (transitions[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
             transitionIndex = sim_tran;
+            newTranRate = sim.getTransitionProbability(i);
             System.out.println("Found transition " + transitions[path_tran]);
-            break;
           }
         }
         // If we never found the correct transitions, report error
@@ -308,6 +314,9 @@ public class BuildModel
         // Take the transition
         sim.manualTransition(transitionIndex);
         
+        // update the total outgoing rate of the current state
+        currentState.totalOutgoingRate = totalOutgoingRate;
+
         // Check if the state exists yet
         int indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
         System.out.println("New state is unique? Found at state " + indexOfFoundState);
@@ -326,9 +335,9 @@ public class BuildModel
             continue;
           }
         }
-
         // add the transition to the discovered state
         currentState.nextStates.add(stateToAdd);
+        Transition newTrans = new Transition(transitionIndex, transitions[path_tran], currentState.index, stateToAdd.index, newTranRate);
         currentState.outgoingTrans.add(new Transition(transitionIndex, transitions[path_tran]));
         
         // save the current state into the path
