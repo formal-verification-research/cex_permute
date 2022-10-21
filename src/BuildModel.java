@@ -120,7 +120,7 @@ public class BuildModel
     public ArrayList<StateVarNode> children;
     public StateVarNode() {
       this.value = -1;
-      this.children = null;
+      this.children = new ArrayList<StateVarNode>();
     }
     public StateVarNode(int value) {
       this.value = value;
@@ -140,7 +140,6 @@ public class BuildModel
   public int stateIsUnique(int varVals[]) {
     // loop through all the state variables to see if they exist
     StateVarNode cur = StateVarRoot;
-    boolean newStateCreated = false;
     boolean foundStateVar = false;
     int foundStateIndex = -1;
     for (int stateVar = 0; stateVar < numStateVariables; stateVar++) {
@@ -156,7 +155,6 @@ public class BuildModel
       if (!foundStateVar) { // if we didn't find it (i.e. state doesn't exist)
         cur.children.add(new StateVarNode(varVals[stateVar]));
         cur = cur.children.get(cur.children.size()-1);
-        newStateCreated = true;
         foundStateIndex = -1;
       }
     }
