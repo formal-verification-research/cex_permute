@@ -49,6 +49,21 @@ public class BuildModel
     new BuildModel().run();
   }
 
+  public int[] getIntVarVals(Object[] varVals) {
+    int[] retArr = new int[varVals.length];
+    for (int i = 0; i < varVals.length; i++) {
+      // Check if Object is an Integer or a String, handle appropriately
+      if (varVals[i] instanceof Integer) {
+        retArr[i] = varVals[i];
+        // intVars.add((Integer) vars.get(i));
+      }
+      else if (varVals[i] instanceof String) {
+        retArr[i] = Integer.parseInt((String) varVals[i]);
+        // intVars.add(Integer.parseInt((String) vars.get(i)));
+      }
+    }
+  }
+
   // global running state index
   public int stateCount;
 
