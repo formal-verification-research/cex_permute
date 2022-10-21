@@ -244,6 +244,8 @@ public class BuildModel
 
       } // end walk along path prefix
 
+      System.out.println("Successfully walked along trace prefix (set of commuted transitions)");
+
       // Save these states into a path
       Path seedPath = new Path();
 
@@ -265,12 +267,14 @@ public class BuildModel
           // Update transitionIndex if we found the desired transition (i.e. names match)
           if (transitions[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
             transitionIndex = sim_tran;
+            System.out.println("Found transition " + transitions[path_tran]);
             break;
           }
         }
         // If we never found the correct transitions, report error
         if (transitionIndex == -1) {
           System.out.println("ERROR: Trace transition not available from current state.");
+          System.out.println(sim.getCurrentState());
           System.exit(10002);
         }
         // Take the transition
