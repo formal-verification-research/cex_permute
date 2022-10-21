@@ -41,7 +41,8 @@ public class BuildModel
 
   // static model name
   public static final String MODEL_NAME = "model.sm";
-  public static final String TRACE_LIST_NAME = "forprism.trace";
+  // public static final String TRACE_LIST_NAME = "forprism.trace";
+  public static final String TRACE_LIST_NAME = "paths/manual/lazy.txt";
 
   // By default, call BuildModel().run()
   public static void main(String[] args)
