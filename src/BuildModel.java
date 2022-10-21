@@ -54,7 +54,7 @@ public class BuildModel
     for (int i = 0; i < varVals.length; i++) {
       // Check if Object is an Integer or a String, handle appropriately
       if (varVals[i] instanceof Integer) {
-        retArr[i] = varVals[i];
+        retArr[i] = (Integer) varVals[i];
         // intVars.add((Integer) vars.get(i));
       }
       else if (varVals[i] instanceof String) {
@@ -62,6 +62,7 @@ public class BuildModel
         // intVars.add(Integer.parseInt((String) vars.get(i)));
       }
     }
+    return retArr;
   }
 
   // global running state index
@@ -92,8 +93,7 @@ public class BuildModel
     public State(Object varVals[]) {
       this.index = stateCount;
       stateCount++;
-      this.stateVars = new int[numStateVariables];
-      // TODO: Probably have to convert to Integer or something
+      this.stateVars = getIntVarVals(varVals);
       for (int i = 0; i < numStateVariables; i++) {
         this.stateVars[i] = varVals[i];
       }
