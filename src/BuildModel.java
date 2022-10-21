@@ -166,13 +166,19 @@ public class BuildModel
 
   // save the number of state variables
   public int setNumStateVariables(Prism prism) {
-    // Create a new simulation from the initial state
-    SimulatorEngine sim = prism.getSimulator();
-    sim.createNewPath();
-    sim.initialisePath(null);
-    Object varVals[] = sim.getCurrentState().varValues;
-    numStateVariables = varVals.length;
-    return varVals.length;
+    try {
+      // Create a new simulation from the initial state
+      SimulatorEngine sim = prism.getSimulator();
+      sim.createNewPath();
+      sim.initialisePath(null);
+      Object varVals[] = sim.getCurrentState().varValues;
+      numStateVariables = varVals.length;
+      return varVals.length;
+    }
+    catch (PrismException e) {
+			if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
+			System.exit(1);
+		}
   }
 
   public void buildAndCommute(Prism prism, String[] transitions, String[] prefix)
@@ -382,10 +388,14 @@ public class BuildModel
 			if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
 			System.exit(1);
 		}
-    // catch (IOException e) {
-    //   if (DO_PRINT) System.out.println("IOException Error: " + e.getMessage());
-		// 	System.exit(1);
-    // }
+    catch (IOException e) {
+      if (DO_PRINT) System.out.println("IOException Error: " + e.getMessage());
+			System.exit(1);
+    }
+    catch (FileNotFoundException e) {
+      if (DO_PRINT) System.out.println("FileNotFoundException Error: " + e.getMessage());
+			System.exit(1);
+    }
 
 
   }
