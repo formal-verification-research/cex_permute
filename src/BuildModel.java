@@ -389,6 +389,9 @@ public class BuildModel
         
         // break the trace into an array of individual transitions
         transitions = trace.split("\\s+");
+        for (int i = 0; i < transitions.length; i++) {
+          transitions[i] = String.format("[%s]", transitions[i]);
+        }
         num_transitions = transitions.length;
         
         System.out.println("Read trace with " + num_transitions + " transitions.");
