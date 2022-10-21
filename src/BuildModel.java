@@ -94,7 +94,7 @@ public class BuildModel
   public class Path {
     public ArrayList<State> states;
     public Path() {
-      states = new ArrayList<State>()
+      states = new ArrayList<State>();
     }
   }
 
@@ -112,7 +112,7 @@ public class BuildModel
       this.stateIndex = stateCount;
       this.children = new ArrayList<StateVarNode>();
     }
-    public addChild(int value) {
+    public void addChild(int value) {
       this.children.add(new StateVarNode(value));
       // maybe sort the list as well eventually?
     }
