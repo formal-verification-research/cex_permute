@@ -296,12 +296,12 @@ public class BuildModel
         // Compare our transition string with available transition strings
         for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
           // Update transitionIndex if we found the desired transition (i.e. names match)
-          System.out.println("Check transition " + sim.getTransitionActionString(sim_tran));
+          // System.out.println("Check transition " + sim.getTransitionActionString(sim_tran));
           totalOutgoingRate += sim.getTransitionProbability(sim_tran);
           if (transitions[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
             transitionIndex = sim_tran;
             newTranRate = sim.getTransitionProbability(sim_tran);
-            System.out.println("Found transition " + transitions[path_tran]);
+            // System.out.println("Found transition " + transitions[path_tran]);
           }
         }
         // If we never found the correct transitions, report error
@@ -318,7 +318,9 @@ public class BuildModel
 
         // Check if the state exists yet
         int indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
-        System.out.println("New state is unique? Found at state " + indexOfFoundState);
+        if (indexOfFoundState == -1) {
+          System.out.println("Discovered state is unique.");
+        }
         
         // figure out what state to link here
         State stateToAdd = null;
