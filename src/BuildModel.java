@@ -72,10 +72,16 @@ public class BuildModel
   // for a state's outgoing transition in a single object.
   public class Transition {
     public int prismIndex;
+    public int from;
+    public int to;
+    public double rate;
     public String name;
     public Transition(int prismIndex, String name) {
       this.prismIndex = prismIndex;
       this.name = name;
+    }
+    public String prismTRA() {
+      return (this.from) + " " + (this.to) + " " + (this.rate);
     }
   }
 
@@ -102,6 +108,29 @@ public class BuildModel
       this.nextStates = new ArrayList<State>();
       stateList.add(this);
     }
+
+    // State details for .sta files
+    // Format is <index>:(<state_var>,<state_var>...)
+    public String prismSTA() {
+      String temp = (index) + ":(";
+      for (int i=0; i<numStateVariables; i++) {
+        if (i>0) temp += ",";
+        temp += stateVars[i]; 
+      }
+      return temp + ")";
+    }
+
+    // State details for .tra files
+    // Format is <index>:(<state_var>,<state_var>...)
+    public String prismTRA() {
+      String temp = "";
+      for (int i=0; i<this.outgoingTrans.size(); i++) {
+        temp += this.outgoingTrans.get(i).prismTRA(); 
+        temp += "\n";
+      }
+      return temp;
+    }
+
   }
 
   public ArrayList<State> stateList = new ArrayList<State>();
@@ -399,6 +428,17 @@ public class BuildModel
         buildAndCommute(prism, transitions, null);
 
       }
+      
+      System.out.println("\n\n\n------------STATES\n");
+      for (int a = 0; a < stateList.size(); a++) {
+        System.out.println(stateList.get(a).prismSTA());
+      }
+      System.out.println("\n------------TRANSITIONS\n");
+
+      for (int a = 0; a < stateList.size(); a++) {
+        System.out.println(stateList.get(a).prismTRA());
+      }
+      System.out.println("\n------------DONE!\n");
 
       // Configure the absorbing state
       // model.addAbsorbingState();
