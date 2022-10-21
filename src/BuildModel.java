@@ -229,7 +229,7 @@ public class BuildModel
       // check if we've created an initial state
       if (stateList.size() == 0) {
         System.out.println("Initial state generated.");
-        stateList.add(new State(sim.getCurrentState().varValues));
+        new State(sim.getCurrentState().varValues);
       }
 
       // update current state to be the model's initial state
