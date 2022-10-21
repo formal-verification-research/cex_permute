@@ -115,9 +115,21 @@ public class BuildModel
       stateList.add(this);
     }
 
+    public State(int varVals[]) {
+      this.index = stateCount;
+      stateCount++;
+      for (int i = 0; i < numStateVariables; i++) {
+        this.stateVars[i] = varVals[i];
+      }
+      this.totalOutgoingRate = 0.0;
+      this.outgoingTrans = new ArrayList<Transition>();
+      this.nextStates = new ArrayList<State>();
+      stateList.add(this);
+    }
+
     // get outgoing rate not captured by notated transitions
     public double getAbsorbingRate() {
-      double absorbRate = this.totalRate;
+      double absorbRate = this.totalOutgoingRate;
       for (int i = 0; i < this.outgoingTrans.size(); i++) {
         absorbRate -= this.outgoingTrans.get(i).rate;
       }
