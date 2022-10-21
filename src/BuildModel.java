@@ -94,9 +94,9 @@ public class BuildModel
       this.index = stateCount;
       stateCount++;
       this.stateVars = getIntVarVals(varVals);
-      for (int i = 0; i < numStateVariables; i++) {
-        this.stateVars[i] = varVals[i];
-      }
+      // for (int i = 0; i < numStateVariables; i++) {
+      //   this.stateVars[i] = varVals[i];
+      // }
       this.totalOutgoingRate = 0.0;
       this.outgoingTrans = new ArrayList<Transition>();
       this.nextStates = new ArrayList<State>();
