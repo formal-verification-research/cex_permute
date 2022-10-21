@@ -221,7 +221,7 @@ public class BuildModel
       sim.createNewPath();
       sim.initialisePath(null);
 
-      System.out.println("Prism simulator initialized successfully.");
+      if (DO_PRINT) System.out.println("Prism simulator initialized successfully.");
       
       // temporary found transition index variable
       int transitionIndex;
@@ -231,7 +231,7 @@ public class BuildModel
       
       // check if we've created an initial state
       if (stateList.size() == 0) {
-        System.out.println("Initial state generated.");
+        if (DO_PRINT) System.out.println("Initial state generated.");
         new State(sim.getCurrentState().varValues);
       }
 
@@ -274,7 +274,7 @@ public class BuildModel
 
       } // end walk along path prefix
 
-      System.out.println("Successfully walked along trace prefix (set of commuted transitions)");
+      if (DO_PRINT) System.out.println("Successfully walked along trace prefix (set of commuted transitions)");
 
       // Save these states into a path
       Path seedPath = new Path();
@@ -361,12 +361,13 @@ public class BuildModel
         
       } // end walk along actual trace
 
-      System.out.println("One path explored: ");
-      for (int i = 0; i < seedPath.states.size(); i++) {
-        System.out.printf("%d ", seedPath.states.get(i).index);
+      if (DO_PRINT)  {
+        System.out.println("One path explored: ");
+        for (int i = 0; i < seedPath.states.size(); i++) {
+          System.out.printf("%d ", seedPath.states.get(i).index);
+        }
+        System.out.println(".");
       }
-      System.out.println(".");
-
       // NOTE:
       // commutable transitions are now stored in isEnabled.
       
@@ -387,7 +388,7 @@ public class BuildModel
     try
     {
 
-      System.out.println("HEY THERE!");
+      if (DO_PRINT) System.out.println("HEY THERE!");
       // start by resetting the state count
       stateCount = 0;
       
@@ -398,23 +399,23 @@ public class BuildModel
       Prism prism = new Prism(mainLog);
       prism.initialise();
       
-      System.out.println("Prism initialized successfully.");
+      if (DO_PRINT) System.out.println("Prism initialized successfully.");
       // Parse the prism model
       // For now, MODEL_NAME is the hard-coded model file name
       ModulesFile modulesFile = prism.parseModelFile(new File(MODEL_NAME));
-      System.out.println("Prism model parsed successfully.");
+      if (DO_PRINT) System.out.println("Prism model parsed successfully.");
       
       // Load the prism model for checking
       prism.loadPRISMModel(modulesFile);
-      System.out.println("Prism model loaded successfully.");
+      if (DO_PRINT) System.out.println("Prism model loaded successfully.");
       
       // Load the model into the simulator engine
       prism.loadModelIntoSimulator();
-      System.out.println("Prism model loaded into simulator successfully.");
+      if (DO_PRINT) System.out.println("Prism model loaded into simulator successfully.");
 
       // set the number of state variables for the model
       setNumStateVariables(prism);
-      System.out.printf("Number of state variables: %d\n", numStateVariables);
+      if (DO_PRINT) System.out.printf("Number of state variables: %d\n", numStateVariables);
 
       // Read in the first line of the trace as a string
       // For now, the trace must go in forprism.trace (handled in python script)
@@ -439,7 +440,7 @@ public class BuildModel
         }
         num_transitions = transitions.length;
         
-        System.out.println("Read trace with " + num_transitions + " transitions.");
+        if (DO_PRINT) System.out.println("Read trace with " + num_transitions + " transitions.");
         
         // construct states with transitions along the trace
         // then commute along the generated path
