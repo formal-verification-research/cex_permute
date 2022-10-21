@@ -298,10 +298,10 @@ public class BuildModel
         for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
           // Update transitionIndex if we found the desired transition (i.e. names match)
           System.out.println("Check transition " + sim.getTransitionActionString(sim_tran));
-          totalOutgoingRate += sim.getTransitionProbability(i);
+          totalOutgoingRate += sim.getTransitionProbability(sim_tran);
           if (transitions[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
             transitionIndex = sim_tran;
-            newTranRate = sim.getTransitionProbability(i);
+            newTranRate = sim.getTransitionProbability(sim_tran);
             System.out.println("Found transition " + transitions[path_tran]);
           }
         }
@@ -338,7 +338,7 @@ public class BuildModel
         // add the transition to the discovered state
         currentState.nextStates.add(stateToAdd);
         Transition newTrans = new Transition(transitionIndex, transitions[path_tran], currentState.index, stateToAdd.index, newTranRate);
-        currentState.outgoingTrans.add(new Transition(transitionIndex, transitions[path_tran]));
+        currentState.outgoingTrans.add(newTrans);
         
         // save the current state into the path
         seedPath.states.add(currentState);
