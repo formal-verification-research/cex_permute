@@ -191,11 +191,21 @@ public class BuildModel
       sim.createNewPath();
       sim.initialisePath(null);
 
+      System.out.println("Prism simulator initialized successfully.");
+      
       // temporary found transition index variable
       int transitionIndex;
-
+      
+      System.out.println("Prism simulator initialized successfully.");
       // initialize to the initial state each time
       int currentStateIndex = 0;
+
+      // check if we've created an initial state
+      if (stateList.size() == 0) {
+        stateList.add(new State(sim.getCurrentState().varValues));
+      }
+
+      // update current state to be the model's initial state
       State currentState = stateList.get(0);
 
       // Walk along the prefix to get the new initial state
@@ -369,10 +379,13 @@ public class BuildModel
         trace = br.readLine();
         if (trace == null) break;
 
+        
         // break the trace into an array of individual transitions
         transitions = trace.split("\\s+");
         num_transitions = transitions.length;
-
+        
+        System.out.println("Read trace with " + num_transitions + " transitions.");
+        
         // construct states with transitions along the trace
         // then commute along the generated path
         buildAndCommute(prism, transitions, null);
