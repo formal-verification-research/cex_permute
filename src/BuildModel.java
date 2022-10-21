@@ -328,23 +328,27 @@ public class BuildModel
       System.out.println("HEY THERE!");
       // start by resetting the state count
       stateCount = 0;
-
+      
       // give PRISM output a log file
       PrismLog mainLog = new PrismDevNullLog();
-  
+      
       // initialise (with an s) PRISM engine
       Prism prism = new Prism(mainLog);
       prism.initialise();
-
+      
+      System.out.println("Prism initialized successfully.");
       // Parse the prism model
       // For now, MODEL_NAME is the hard-coded model file name
       ModulesFile modulesFile = prism.parseModelFile(new File(MODEL_NAME));
-
+      System.out.println("Prism model parsed successfully.");
+      
       // Load the prism model for checking
       prism.loadPRISMModel(modulesFile);
-
+      System.out.println("Prism model loaded successfully.");
+      
       // Load the model into the simulator engine
       prism.loadModelIntoSimulator();
+      System.out.println("Prism model loaded into simulator successfully.");
 
       // set the number of state variables for the model
       setNumStateVariables(prism);
