@@ -87,7 +87,7 @@ public class BuildModel
       transitionCount++;
     }
     public String prismTRA() {
-      return (this.from) + " " + (this.to) + " " + (this.rate);
+      return (this.from) + " " + (this.to) + " " + (this.rate) + "\n";
     }
   }
 
