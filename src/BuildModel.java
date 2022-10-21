@@ -68,6 +68,7 @@ public class BuildModel
 
   // global running state index
   public int stateCount;
+  public int transitionCount;
 
   // transition objects store the in-place index and the string name
   // for a state's outgoing transition in a single object.
@@ -83,6 +84,7 @@ public class BuildModel
       this.from = from;
       this.to = to;
       this.rate = rate;
+      transitionCount++;
     }
     public String prismTRA() {
       return (this.from) + " " + (this.to) + " " + (this.rate);
@@ -111,6 +113,15 @@ public class BuildModel
       this.outgoingTrans = new ArrayList<Transition>();
       this.nextStates = new ArrayList<State>();
       stateList.add(this);
+    }
+
+    // get outgoing rate not captured by notated transitions
+    public double getAbsorbingRate() {
+      double absorbRate = this.totalRate;
+      for (int i = 0; i < this.outgoingTrans.size(); i++) {
+        absorbRate -= this.outgoingTrans.get(i).rate;
+      }
+      return absorbRate;
     }
 
     // State details for .sta files
@@ -382,6 +393,24 @@ public class BuildModel
     }
   }
 
+  public int setAbsorbingState() {
+    // set absorbing state to all -1
+    int[] tempAbsorb = new int[numStateVariables];
+    int absIndex = stateCount;
+    for (int i = 0; i < numStateVariables; i++) {
+      tempAbsorb[i] = -1;
+    }
+    State absorbingState = new State(tempAbsorb);
+    double stateAbsorbRate;
+    for (int i = 0; i < stateList.size(); i++) {
+      stateAbsorbRate = stateList.get(i).getAbsorbingRate();
+      if (stateAbsorbRate > 0) {
+        stateList.get(i).outgoingTrans.add(new Transition(-1, "ABS", i, absIndex, stateAbsorbRate));
+      }
+    }
+    return absIndex;
+  }
+
   // Top-level function, runs algorithm
   public void run() 
   {
@@ -425,6 +454,8 @@ public class BuildModel
       String[] transitions;
       int num_transitions;
 
+      int numPaths = 0;
+
       // For each input trace
       while (true) {
 
@@ -432,6 +463,7 @@ public class BuildModel
         trace = br.readLine();
         if (trace == null) break;
 
+        numPaths++;
         
         // break the trace into an array of individual transitions
         transitions = trace.split("\\s+");
@@ -447,17 +479,64 @@ public class BuildModel
         buildAndCommute(prism, transitions, null);
 
       }
-      
-      System.out.println("\n\n\n------------STATES\n");
-      for (int a = 0; a < stateList.size(); a++) {
-        System.out.println(stateList.get(a).prismSTA());
-      }
-      System.out.println("\n------------TRANSITIONS\n");
 
-      for (int a = 0; a < stateList.size(); a++) {
-        System.out.println(stateList.get(a).prismTRA());
+      int absorbIndex = setAbsorbingState();
+
+      // Initialize label string
+      // TODO: Play with deadlock vs sink
+      String labStr = "0=\"init\" 1=\"sink\"\n0: 0\n";
+      labStr += (absorbIndex + ": 1");
+
+      // Initialize transition string
+      String traStr = "";
+      traStr += ((stateList.size()) + " " + transitionCount + "\n");
+
+      // Initialize state string
+      String staStr = "";
+      staStr += "(";
+
+      // Create a new simulation from the initial state, to get the var names
+      SimulatorEngine sim = prism.getSimulator();
+      sim.createNewPath();
+      sim.initialisePath(null);
+      // Get variable names for first line of .sta file
+      int vari = 0;
+      String varName = "";
+      while (true) {
+        varName = sim.getVariableName(vari);
+        staStr += varName;
+        if (sim.getVariableName(vari+1) == null) {
+          staStr += ")\n";
+          break;
+        }
+        staStr += ",";
+        vari++;
       }
-      System.out.println("\n------------DONE!\n");
+
+      
+      for (int a = 0; a < stateList.size(); a++) {
+        staStr += stateList.get(a).prismSTA() + "\n";
+        traStr += stateList.get(a).prismTRA() + "\n";
+      }
+
+      
+      // Write the state file to buildModel.sta
+      BufferedWriter staWriter = new BufferedWriter(new FileWriter("buildModel.sta"));
+      staWriter.write(staStr.trim());
+      staWriter.close();
+
+      // Write the transition file to buildModel.tra
+      BufferedWriter traWriter = new BufferedWriter(new FileWriter("buildModel.tra"));
+      traWriter.write(traStr.trim());
+      traWriter.close();
+
+      // Write the label file to buildModel.lab
+      BufferedWriter labWriter = new BufferedWriter(new FileWriter("buildModel.lab"));
+      labWriter.write(labStr.trim());
+      labWriter.close();
+
+
+      System.out.println("Finished! Processed " + numPaths + " paths.");
 
       // Configure the absorbing state
       // model.addAbsorbingState();
