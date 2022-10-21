@@ -49,18 +49,113 @@ public class BuildModel
     new BuildModel().run();
   }
 
+  // global running state index
+  public int stateCount;
+
+  // transition objects store the in-place index and the string name
+  // for a state's outgoing transition in a single object.
+  public class Transition {
+    public int prismIndex;
+    public String name;
+    public Transition(int prismIndex, String name) {
+      this.prismIndex = prismIndex;
+      this.name = name;
+    }
+  }
+
+  // global variable to store number of state variables
+  public int numStateVariables;
+
+  // state objects store the bulk of information about the model
   public class State {
     public int index;
     public int[] stateVars;
     public double totalOutgoingRate;
-    public String[] outgoingTrans;
-    public State[] nextStates;
+    public ArrayList<Transition> outgoingTrans;
+    public ArrayList<State> nextStates;
+
+    public State(Object varVals[]) {
+      this.index = stateCount;
+      stateCount++;
+      this.stateVars = new int[numStateVariables];
+      // TODO: Probably have to convert to Integer or something
+      for (int i = 0; i < numStateVariables; i++) {
+        this.stateVars[i] = varVals[i];
+      }
+      this.totalOutgoingRate = 0.0;
+      this.outgoingTrans = new ArrayList<Transition>();
+      this.nextStates = new ArrayList<State>();
+      stateList.add(this);
+    }
   }
 
+  public ArrayList stateList = new ArrayList<State>();
 
+  public class Path {
+    public ArrayList<State> states;
+  }
 
+  // object to store state variables in the tree structure
+  public class StateVarNode {
+    public int value;
+    public int stateIndex; // index of the first discovered state to have this value
+    public ArrayList<StateVarNode> children;
+    public StateVarNode() {
+      this.value = -1;
+      this.children = null;
+    }
+    public StateVarNode(int value) {
+      this.value = value;
+      this.stateIndex = stateCount;
+      this.children = new ArrayList<StateVarNode>();
+    }
+    public addChild(int value) {
+      this.children.add(new StateVarNode(value));
+      // maybe sort the list as well eventually?
+    }
+  }
 
+  // global state variable root is null for now
+  public StateVarNode StateVarRoot = new StateVarNode();
 
+  // function to check uniqueness and update unique state tree
+  public int stateIsUnique(Object varVals[]) {
+    // loop through all the state variables to see if they exist
+    StateVarNode cur = StateVarRoot;
+    boolean newStateCreated = false;
+    boolean foundStateVar = false;
+    int foundStateIndex = -1;
+    for (int stateVar = 0; stateVar < numStateVariables; stateVar++) {
+      foundStateVar = false;
+      for (int i = 0; i < cur.children.size(); i++) { // new states have 0 kids anyway
+        if (cur.children.get(i).value == varVals[stateVar]) {
+          cur = cur.children.get(i);
+          foundStateVar = true;
+          foundStateIndex = cur.stateIndex;
+          break;
+        }
+      }
+      if (!foundStateVar) { // if we didn't find it (i.e. state doesn't exist)
+        cur.children.add(new StateVarNode(varVals[stateVar]));
+        cur = cur.children.get(cur.children.size()-1);
+        newStateCreated = true;
+        foundStateIndex = -1;
+      }
+    }
+
+    return foundStateIndex;
+  }
+
+  // save the number of state variables
+  public int setNumStateVariables(Prism prism) {
+    // Create a new simulation from the initial state
+    SimulatorEngine sim = prism.getSimulator();
+    sim.createNewPath();
+    sim.initialisePath(null);
+    Object varVals[] = sim.getCurrentState().varValues;
+    numStateVariables = varVals.length;
+    return varVals.length;
+  }
 
   public void buildAndCommute(Prism prism, String[] transitions, String[] prefix, Model model)
   {
@@ -71,50 +166,82 @@ public class BuildModel
       sim.createNewPath();
       sim.initialisePath(null);
 
-      int index;
+      // temporary found transition index variable
+      int transitionIndex;
+
+      // initialize to the initial state each time
+      int currentStateIndex = 0;
+      State currentState = stateList.get(0);
 
       // Walk along the prefix to get the new initial state
       for (int path_tran = 0; path_tran < prefix.length; path_tran++) {
-        // start with a fresh index
-        index = -1;
+        // start with a fresh transitionIndex
+        transitionIndex = -1;
         // Compare our transition string with available transition strings
         for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
-          // Update index if we found the desired transition (i.e. names match)
+          // Update transitionIndex if we found the desired transition (i.e. names match)
           if (prefix[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
-            index = sim_tran;
+            transitionIndex = sim_tran;
             break;
           }
         }
         // If we never found the correct transitions, report error
-        if (index == -1) {
+        if (transitionIndex == -1) {
           System.out.println("ERROR: Prefix transition not available from current state.");
           System.exit(1);
         }
         // Take the transition
-        sim.manualTransition(index);
+        sim.manualTransition(transitionIndex);
+
+
+        // Find out what state we ended up at in our own model
+        int transitionTaken = -1;
+        for (int i = 0; i < currentState.outgoingTrans.size(); i++) {
+          if (prefix[path_tran].equalsIgnoreCase(currentState.outgoingTrans.get(i).name) {
+            transitionTaken = i;
+            break;
+          }
+        }
+        // Walk along our own model
+        currentState = currentState.nextStates.get(transitionTaken);
+
       } // end walk along path prefix
 
 
       // Walk along the actual trace, making new states
       // TODO: Add state information
       for (int path_tran = 0; path_tran < transitions.length; path_tran++) {
-        // start with a fresh index
-        index = -1;
+        // start with a fresh transitionIndex
+        transitionIndex = -1;
         // Compare our transition string with available transition strings
         for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
-          // Update index if we found the desired transition (i.e. names match)
+          // Update transitionIndex if we found the desired transition (i.e. names match)
           if (transitions[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
-            index = sim_tran;
+            transitionIndex = sim_tran;
             break;
           }
         }
         // If we never found the correct transitions, report error
-        if (index == -1) {
+        if (transitionIndex == -1) {
           System.out.println("ERROR: Trace transition not available from current state.");
           System.exit(1);
         }
         // Take the transition
-        sim.manualTransition(index);
+        sim.manualTransition(transitionIndex);
+
+        // Check if the state exists yet
+        int indexOfFoundState = stateIsUnique(sim.getCurrentState().varValues);
+        System.out.println("New state is unique? Found at state " + indexOfFoundState);
+
+        // figure out what state to link here
+        State stateToAdd = null;
+        if (indexOfFoundState == -1) {
+          stateToAdd = new State(sim.getCurrentState().varValues);
+        }
+        else {
+          stateToAdd = stateList.get(indexOfFoundState);
+        }
+
 
 
       } // end walk along path prefix
@@ -137,6 +264,8 @@ public class BuildModel
   {
     try
     {
+      // start by resetting the state count
+      stateCount = 0;
 
       // give PRISM output a log file
       PrismLog mainLog = new PrismDevNullLog();
@@ -155,6 +284,10 @@ public class BuildModel
       // Load the model into the simulator engine
       prism.loadModelIntoSimulator();
 
+      // set the number of state variables for the model
+      setNumStateVariables(prism);
+      System.out.printf("Number of state variables: %d\n", numStateVariables);
+
       // Initialize the model
       // TODO: Make model object
       Model model = new Model();
@@ -167,6 +300,7 @@ public class BuildModel
       String[] transitions;
       int num_transitions;
 
+      // For each input trace
       while (true) {
 
         // read in a single seed trace
