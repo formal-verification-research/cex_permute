@@ -104,7 +104,7 @@ public class BuildModel
     }
   }
 
-  public ArrayList stateList = new ArrayList<State>();
+  public ArrayList<State> stateList = new ArrayList<State>();
 
   public class Path {
     public ArrayList<State> states;
@@ -137,7 +137,7 @@ public class BuildModel
   public StateVarNode StateVarRoot = new StateVarNode();
 
   // function to check uniqueness and update unique state tree
-  public int stateIsUnique(Object varVals[]) {
+  public int stateIsUnique(int varVals[]) {
     // loop through all the state variables to see if they exist
     StateVarNode cur = StateVarRoot;
     boolean newStateCreated = false;
@@ -258,7 +258,7 @@ public class BuildModel
         sim.manualTransition(transitionIndex);
         
         // Check if the state exists yet
-        int indexOfFoundState = stateIsUnique(sim.getCurrentState().varValues);
+        int indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
         System.out.println("New state is unique? Found at state " + indexOfFoundState);
         
         // figure out what state to link here
@@ -341,10 +341,6 @@ public class BuildModel
       setNumStateVariables(prism);
       System.out.printf("Number of state variables: %d\n", numStateVariables);
 
-      // Initialize the model
-      // TODO: Make model object
-      Model model = new Model();
-
       // Read in the first line of the trace as a string
       // For now, the trace must go in forprism.trace (handled in python script)
 			FileReader fr = new FileReader(TRACE_LIST_NAME);
@@ -361,7 +357,7 @@ public class BuildModel
         if (trace == null) break;
 
         // break the trace into an array of individual transitions
-        transitions = x_transitions.split("\\s+");
+        transitions = trace.split("\\s+");
         num_transitions = transitions.length;
 
         // construct states with transitions along the trace
