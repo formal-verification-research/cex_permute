@@ -330,6 +330,7 @@ public class BuildModel
           // make sure we haven't already made this transition
           if (currentState.nextStates.contains(stateToAdd)) {
             System.out.println("NEXT STATE ALREADY FOUND");
+            seedPath.states.add(currentState);
             currentState = stateToAdd;
             continue;
           }
