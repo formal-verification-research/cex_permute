@@ -37,7 +37,7 @@ public class BuildModel
   public static final int MAX_DEPTH = 2;
 
   // turn off printing to save time
-  public static final boolean DO_PRINT = true;
+  public static final boolean DO_PRINT = false;
 
   // static model name
   public static final String MODEL_NAME = "model.sm";
