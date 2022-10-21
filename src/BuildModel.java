@@ -93,6 +93,9 @@ public class BuildModel
 
   public class Path {
     public ArrayList<State> states;
+    public Path() {
+      states = new ArrayList<State>()
+    }
   }
 
   // object to store state variables in the tree structure
@@ -197,7 +200,7 @@ public class BuildModel
         // Find out what state we ended up at in our own model
         int transitionTaken = -1;
         for (int i = 0; i < currentState.outgoingTrans.size(); i++) {
-          if (prefix[path_tran].equalsIgnoreCase(currentState.outgoingTrans.get(i).name) {
+          if (prefix[path_tran].equalsIgnoreCase(currentState.outgoingTrans.get(i).name)) {
             transitionTaken = i;
             break;
           }
@@ -207,10 +210,20 @@ public class BuildModel
 
       } // end walk along path prefix
 
+      // Save these states into a path
+      Path seedPath = new Path();
+
+      // Set up lists to check commutable transitions
+      ArrayList<String> wasEnabled = new ArrayList<String>();
+      ArrayList<String> isEnabled = new ArrayList<String>();
+      for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+        isEnabled.add(sim.getTransitionActionString(sim_tran));
+      }
 
       // Walk along the actual trace, making new states
-      // TODO: Add state information
+      // and getting commutable transitions
       for (int path_tran = 0; path_tran < transitions.length; path_tran++) {
+
         // start with a fresh transitionIndex
         transitionIndex = -1;
         // Compare our transition string with available transition strings
@@ -228,11 +241,11 @@ public class BuildModel
         }
         // Take the transition
         sim.manualTransition(transitionIndex);
-
+        
         // Check if the state exists yet
         int indexOfFoundState = stateIsUnique(sim.getCurrentState().varValues);
         System.out.println("New state is unique? Found at state " + indexOfFoundState);
-
+        
         // figure out what state to link here
         State stateToAdd = null;
         if (indexOfFoundState == -1) {
@@ -240,18 +253,43 @@ public class BuildModel
         }
         else {
           stateToAdd = stateList.get(indexOfFoundState);
+          // make sure we haven't already made this transition
+          if (currentState.nextStates.contains(stateToAdd)) {
+            System.out.println("NEXT STATE ALREADY FOUND");
+            currentState = stateToAdd;
+            continue;
+          }
         }
 
+        // add the transition to the discovered state
+        currentState.nextStates.add(stateToAdd);
+        currentState.outgoingTrans.add(new Transition(transitionIndex, transitions[path_tran]));
+        
+        // save the current state into the path
+        seedPath.states.add(currentState);
 
+        // walk along the trace
+        currentState = stateToAdd;
+        
+        // update commutable transitions based on new state
+        wasEnabled = isEnabled;
+        isEnabled = new ArrayList<String>();
+        for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+          String tempStr = sim.getTransitionActionString(sim_tran);
+          if (wasEnabled.contains(tempStr)) {
+            isEnabled.add(tempStr);
+          }
+        }
+        
+      } // end walk along actual trace
 
-      } // end walk along path prefix
-
-
-
-
-
-
-
+      // NOTE:
+      // commutable transitions are now stored in isEnabled.
+      
+      // for each commutable trace
+      
+      // commute here
+      
     }
     catch (PrismException e) {
       if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
