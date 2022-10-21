@@ -362,16 +362,16 @@ public class BuildModel
 
         // construct states with transitions along the trace
         // then commute along the generated path
-        buildAndCommute(prism, transitions);
+        buildAndCommute(prism, transitions, null);
 
       }
 
       // Configure the absorbing state
-      model.addAbsorbingState();
+      // model.addAbsorbingState();
 
       // Print to files
-      SimulatorEngine sim = prism.getSimulator();
-      model.exportFiles(sim);
+      // SimulatorEngine sim = prism.getSimulator();
+      // model.exportFiles(sim);
 
       // close PRISM
       prism.closeDown();
