@@ -179,6 +179,7 @@ public class BuildModel
 			if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
 			System.exit(1);
 		}
+    return -1;
   }
 
   public void buildAndCommute(Prism prism, String[] transitions, String[] prefix)
@@ -392,11 +393,6 @@ public class BuildModel
       if (DO_PRINT) System.out.println("IOException Error: " + e.getMessage());
 			System.exit(1);
     }
-    catch (FileNotFoundException e) {
-      if (DO_PRINT) System.out.println("FileNotFoundException Error: " + e.getMessage());
-			System.exit(1);
-    }
-
 
   }
 
