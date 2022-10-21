@@ -37,7 +37,7 @@ public class BuildModel
   public static final int MAX_DEPTH = 2;
 
   // turn off printing to save time
-  public static final boolean DO_PRINT = false;
+  public static final boolean DO_PRINT = true;
 
   // static model name
   public static final String MODEL_NAME = "model.sm";
@@ -118,6 +118,7 @@ public class BuildModel
     public State(int varVals[]) {
       this.index = stateCount;
       stateCount++;
+      this.stateVars = new int[numStateVariables];
       for (int i = 0; i < numStateVariables; i++) {
         this.stateVars[i] = varVals[i];
       }
