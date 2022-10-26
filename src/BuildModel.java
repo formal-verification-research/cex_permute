@@ -41,8 +41,8 @@ public class BuildModel
 
   // static model name
   public static final String MODEL_NAME = "model.sm";
-  // public static final String TRACE_LIST_NAME = "forprism.trace";
-  public static final String TRACE_LIST_NAME = "paths/manual/lazy.txt";
+  public static final String TRACE_LIST_NAME = "forprism.trace";
+  // public static final String TRACE_LIST_NAME = "paths/manual/lazy.txt";
 
   // By default, call BuildModel().run()
   public static void main(String[] args)
@@ -164,8 +164,10 @@ public class BuildModel
 
   public class Path {
     public ArrayList<State> states;
+    public ArrayList<String> commutable;
     public Path() {
-      states = new ArrayList<State>();
+      this.states = new ArrayList<State>();
+      this.commutable = new ArrayList<String>();
     }
   }
 
@@ -189,7 +191,7 @@ public class BuildModel
     }
   }
 
-  // global state variable root is null for now
+  // global state variable root is just an empty node
   public StateVarNode StateVarRoot = new StateVarNode();
 
   // function to check uniqueness and update unique state tree
@@ -236,9 +238,14 @@ public class BuildModel
     return -1;
   }
 
-  public void buildAndCommute(Prism prism, String[] transitions, String[] prefix)
+  public void buildAndCommute(Prism prism, String[] transitions, String[] prefix, int depth, Path parentPath, Expression target)
   {
     try {
+
+      if (depth > MAX_DEPTH) {
+        if (DO_PRINT) System.out.println("Max recursion depth reached.");
+        return;
+      }
 
       // Create a new simulation from the initial state
       SimulatorEngine sim = prism.getSimulator();
@@ -246,6 +253,7 @@ public class BuildModel
       sim.initialisePath(null);
 
       if (DO_PRINT) System.out.println("Prism simulator initialized successfully.");
+      if (DO_PRINT) System.out.println("Initial state: " + sim.getCurrentState());
       
       // temporary found transition index variable
       int transitionIndex;
@@ -258,44 +266,64 @@ public class BuildModel
         if (DO_PRINT) System.out.println("Initial state generated.");
         new State(sim.getCurrentState().varValues);
       }
-
+      
       // update current state to be the model's initial state
       State currentState = stateList.get(0);
-
+      
       // Walk along the prefix to get the new initial state
       int prefixLength = 0;
       if (prefix != null) prefixLength = prefix.length;
       for (int path_tran = 0; path_tran < prefixLength; path_tran++) {
+
         // start with a fresh transitionIndex
         transitionIndex = -1;
+        double newTranRate = -1.0f;
+        double totalOutgoingRate = 0.0f;
         // Compare our transition string with available transition strings
         for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
           // Update transitionIndex if we found the desired transition (i.e. names match)
+          totalOutgoingRate += sim.getTransitionProbability(sim_tran);
           if (prefix[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
             transitionIndex = sim_tran;
-            break;
+            newTranRate = sim.getTransitionProbability(sim_tran);
           }
         }
         // If we never found the correct transitions, report error
         if (transitionIndex == -1) {
-          System.out.println("ERROR: Prefix transition not available from current state.");
+          System.out.printf("ERROR: Prefix transition not available from current state: ");
+          System.out.println(sim.getCurrentState());
           System.exit(10001);
         }
         // Take the transition
         sim.manualTransition(transitionIndex);
+        
+        // update the total outgoing rate of the current state
+        currentState.totalOutgoingRate = totalOutgoingRate;
 
-
-        // Find out what state we ended up at in our own model
-        int transitionTaken = -1;
-        for (int i = 0; i < currentState.outgoingTrans.size(); i++) {
-          if (prefix[path_tran].equalsIgnoreCase(currentState.outgoingTrans.get(i).name)) {
-            transitionTaken = i;
-            break;
+        // Check if the state exists yet
+        int indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+        
+        // figure out what state to link here
+        State stateToAdd = null;
+        if (indexOfFoundState == -1) {
+          stateToAdd = new State(sim.getCurrentState().varValues);
+        }
+        else {
+          stateToAdd = stateList.get(indexOfFoundState);
+          // make sure we haven't already made this transition
+          if (currentState.nextStates.contains(stateToAdd)) {
+            currentState = stateToAdd;
+            continue;
           }
         }
-        // Walk along our own model
-        currentState = currentState.nextStates.get(transitionTaken);
+        // add the transition to the discovered state
+        currentState.nextStates.add(stateToAdd);
+        Transition newTrans = new Transition(transitionIndex, transitions[path_tran], currentState.index, stateToAdd.index, newTranRate);
+        currentState.outgoingTrans.add(newTrans);
 
+        // walk along the trace
+        currentState = stateToAdd;
+        
       } // end walk along path prefix
 
       if (DO_PRINT) System.out.println("Successfully walked along trace prefix (set of commuted transitions)");
@@ -305,9 +333,10 @@ public class BuildModel
 
       // Set up lists to check commutable transitions
       ArrayList<String> wasEnabled = new ArrayList<String>();
-      ArrayList<String> isEnabled = new ArrayList<String>();
+      
+      // Add initially enabled transitions to start the commutable check
       for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
-        isEnabled.add(sim.getTransitionActionString(sim_tran));
+        seedPath.commutable.add(sim.getTransitionActionString(sim_tran));
       }
 
       // Walk along the actual trace, making new states
@@ -318,22 +347,28 @@ public class BuildModel
         transitionIndex = -1;
         double newTranRate = -1.0f;
         double totalOutgoingRate = 0.0f;
+        if (DO_PRINT) System.out.println(sim.getCurrentState());
         // Compare our transition string with available transition strings
         for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
           // Update transitionIndex if we found the desired transition (i.e. names match)
-          // System.out.println("Check transition " + sim.getTransitionActionString(sim_tran));
           totalOutgoingRate += sim.getTransitionProbability(sim_tran);
+          // if (DO_PRINT) System.out.println("Enabled transition " + sim.getTransitionActionString(sim_tran));
           if (transitions[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
             transitionIndex = sim_tran;
             newTranRate = sim.getTransitionProbability(sim_tran);
-            // System.out.println("Found transition " + transitions[path_tran]);
+            if (DO_PRINT) System.out.println("Found transition " + transitions[path_tran]);
           }
         }
         // If we never found the correct transitions, report error
         if (transitionIndex == -1) {
-          System.out.printf("ERROR: Trace transition not available from current state: ");
-          System.out.println(sim.getCurrentState());
-          System.exit(10002);
+          if (depth > 0) {
+            System.out.printf("WARNING: Trace transition %s not available from current state %s\n", transitions[path_tran], sim.getCurrentState());
+            return; // basically just skip this path
+          }
+          else { // if we're still at the base seed path
+          System.out.printf("ERROR: Initial trace transition %s not available from current state %s\n", transitions[path_tran], sim.getCurrentState());
+            System.exit(10002);
+          }
         }
         // Take the transition
         sim.manualTransition(transitionIndex);
@@ -346,6 +381,8 @@ public class BuildModel
         // if (indexOfFoundState == -1) {
         //   System.out.println("Discovered state is unique.");
         // }
+
+        // TODO: Since we're trying to commute, if this doesn't work, return
         
         // figure out what state to link here
         State stateToAdd = null;
@@ -370,16 +407,25 @@ public class BuildModel
         // save the current state into the path
         seedPath.states.add(currentState);
 
+        // if we have reached the target 
+        if (target.evaluateBoolean(sim.getCurrentState())) {
+          if (DO_PRINT) System.out.println("Target Reached");
+          seedPath.states.add(stateToAdd);
+        }
+
         // walk along the trace
         currentState = stateToAdd;
+
+        // TODO: Fire transitions from the parent path and see if they match.
+        // If they do match, keep them
         
         // update commutable transitions based on new state
-        wasEnabled = isEnabled;
-        isEnabled = new ArrayList<String>();
+        wasEnabled = seedPath.commutable;
+        seedPath.commutable = new ArrayList<String>();
         for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
           String tempStr = sim.getTransitionActionString(sim_tran);
           if (wasEnabled.contains(tempStr)) {
-            isEnabled.add(tempStr);
+            seedPath.commutable.add(tempStr);
           }
         }
         
@@ -393,12 +439,128 @@ public class BuildModel
         System.out.println(".");
       }
       // NOTE:
-      // commutable transitions are now stored in isEnabled.
+      // commutable transitions are now stored in seedPath.commutable.
+
+      //
+      //
+      // COMMUTING TRANSITIONS FIRST ALONG THE CURRENT SAVED SEED PATH
+      //
+      //
+
+      // sim.backtrackTo(seedPath.states.size()-0);
+      // System.out.println("Backtrack seedPath.states.size()-0: " + sim.getCurrentState());
+      // sim.backtrackTo(seedPath.states.size()-1);
+      // System.out.println("Backtrack seedPath.states.size()-1: " + sim.getCurrentState());
+      // sim.backtrackTo(seedPath.states.size()-2);
+      // System.out.println("Backtrack seedPath.states.size()-2: " + sim.getCurrentState());
+      // sim.backtrackTo(seedPath.states.size()-3);
+      // System.out.println("Backtrack seedPath.states.size()-3: " + sim.getCurrentState());
+      // sim.backtrackTo(seedPath.states.size()-4);
+
+
+
+      // for each state in the seed path, backtracking toward the initial state + prefix
+      for (int seedIndex = seedPath.states.size()-1; seedIndex >= 0; seedIndex--) {
+
+        // set our current state to the seedpath state
+        currentState = seedPath.states.get(seedIndex);
+        if (DO_PRINT) System.out.println("currentState " + currentState.prismSTA());
+        sim.backtrackTo(seedIndex);
+        if (DO_PRINT) System.out.println("sim: " + sim.getCurrentState());
+        
+        if (DO_PRINT) System.out.println();
+        if (DO_PRINT) System.out.println();
+
+        // for each commutable transition
+        for (int ctran = 0; ctran < seedPath.commutable.size(); ctran++) {
+          // fire the transition
+          transitionIndex = -1;
+          double newTranRate = -1.0f;
+          double totalOutgoingRate = 0.0f;
+          // Compare our transition string with available transition strings
+          for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+            // Update transitionIndex if we found the desired transition (i.e. names match)
+            totalOutgoingRate += sim.getTransitionProbability(sim_tran);
+            if (seedPath.commutable.get(ctran).equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
+              transitionIndex = sim_tran;
+              newTranRate = sim.getTransitionProbability(sim_tran);
+            }
+          }
+
+          // If we never found the correct transitions, report error
+          if (transitionIndex == -1) {
+            System.out.printf("WARNING: Commutable transition %s not available from current state %s\n", seedPath.commutable.get(ctran), sim.getCurrentState());
+            continue;
+          }
+
+          // Take the transition
+          sim.manualTransition(transitionIndex);
+          
+          // update the total outgoing rate of the current state
+          currentState.totalOutgoingRate = totalOutgoingRate;
+  
+          // Check if the state exists yet
+          int indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+          
+          // figure out what state to link here
+          State stateToAdd = null;
+          if (indexOfFoundState == -1) {
+            stateToAdd = new State(sim.getCurrentState().varValues);
+          }
+          else {
+            stateToAdd = stateList.get(indexOfFoundState);
+            // make sure we haven't already made this transition
+            if (currentState.nextStates.contains(stateToAdd)) {
+              currentState = stateToAdd;
+              continue;
+            }
+          }
+
+          // add the transition to the discovered state
+          currentState.nextStates.add(stateToAdd);
+
+          Transition newTrans = new Transition(transitionIndex, seedPath.commutable.get(ctran), currentState.index, stateToAdd.index, newTranRate);
+          currentState.outgoingTrans.add(newTrans);
+
+          if (DO_PRINT) System.out.printf("Added transition %s\n", newTrans.prismTRA() );
+
+      }
+    }
+
+
+
+
+
+
+
       
-      // for each commutable trace
-      
-      // commute here
-      
+      // get the length of the prefix
+      int prefixLen;
+      if (prefix == null) {
+        prefixLen = 0;
+      }
+      else {
+        prefixLen = prefix.length;
+      }
+
+      // commute if we're within depth bounds
+      if (depth < MAX_DEPTH) {
+        // for each commutable transition
+        for (int ctran = 0; ctran < seedPath.commutable.size(); ctran++) {
+
+          // append the commutable transition to the existing prefix
+          String[] newPrefix = new String[prefixLen + 1];
+          for (int i = 0; i < prefixLen; i++) {
+            newPrefix[i] = prefix[i];
+          }
+          newPrefix[prefixLen] = seedPath.commutable.get(ctran);
+  
+          if (DO_PRINT) System.out.println("Recursing into next prefix: " + seedPath.commutable.get(ctran) + " with depth " + (depth+1));
+  
+          // build a new path and commute
+          buildAndCommute(prism, transitions, newPrefix, depth+1, seedPath, target);
+        }
+      }
     }
     catch (PrismException e) {
       if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
@@ -455,6 +617,11 @@ public class BuildModel
       prism.loadModelIntoSimulator();
       if (DO_PRINT) System.out.println("Prism model loaded into simulator successfully.");
 
+      // Load the target property
+      // TODO: Read the file
+      Expression target = prism.parsePropertiesString("gbg = 50").getProperty(0);
+      // Expression target = prism.parsePropertiesString(targetString).getProperty(0);
+
       // set the number of state variables for the model
       setNumStateVariables(prism);
       if (DO_PRINT) System.out.printf("Number of state variables: %d\n", numStateVariables);
@@ -489,7 +656,7 @@ public class BuildModel
         
         // construct states with transitions along the trace
         // then commute along the generated path
-        buildAndCommute(prism, transitions, null);
+        buildAndCommute(prism, transitions, null, 0, null, target);
 
       }
 
