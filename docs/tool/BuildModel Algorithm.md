@@ -88,7 +88,7 @@ If we use a hash table, we use much more memory to store states in the hash tabl
 
 - Use PRISM's default way to store states (maybe -- they don't have all the features I want, like outgoing transition information, but I might be able to work around that)
 
-
+- Check the state generation numbers to somehow reduce the input trace set to a better set (useful information to give a user)
 
 
 
