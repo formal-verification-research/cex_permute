@@ -41,8 +41,8 @@ public class BuildModel
 
   // static model name
   public static final String MODEL_NAME = "model.sm";
-  public static final String TRACE_LIST_NAME = "forprism.trace";
-  // public static final String TRACE_LIST_NAME = "paths/manual/lazy.txt";
+  // public static final String TRACE_LIST_NAME = "forprism.trace";
+  public static final String TRACE_LIST_NAME = "paths/manual/lazy.txt";
 
   // By default, call BuildModel().run()
   public static void main(String[] args)
@@ -362,7 +362,7 @@ public class BuildModel
         // If we never found the correct transitions, report error
         if (transitionIndex == -1) {
           if (depth > 0) {
-            System.out.printf("WARNING: Trace transition %s not available from current state %s\n", transitions[path_tran], sim.getCurrentState());
+            if (DO_PRINT) System.out.printf("WARNING: Trace transition %s not available from current state %s\n", transitions[path_tran], sim.getCurrentState());
             return; // basically just skip this path
           }
           else { // if we're still at the base seed path
@@ -489,7 +489,7 @@ public class BuildModel
 
           // If we never found the correct transitions, report error
           if (transitionIndex == -1) {
-            System.out.printf("WARNING: Commutable transition %s not available from current state %s\n", seedPath.commutable.get(ctran), sim.getCurrentState());
+            if (DO_PRINT) System.out.printf("WARNING: Commutable transition %s not available from current state %s\n", seedPath.commutable.get(ctran), sim.getCurrentState());
             continue;
           }
 
@@ -561,6 +561,7 @@ public class BuildModel
           buildAndCommute(prism, transitions, newPrefix, depth+1, seedPath, target);
         }
       }
+      if (DO_PRINT) System.out.println("A path has been successfully commuted");
     }
     catch (PrismException e) {
       if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
@@ -592,7 +593,7 @@ public class BuildModel
     try
     {
 
-      if (DO_PRINT) System.out.println("HEY THERE!");
+      System.out.println("Welcome to the model commutation tool.");
       // start by resetting the state count
       stateCount = 0;
       
@@ -616,12 +617,13 @@ public class BuildModel
       // Load the model into the simulator engine
       prism.loadModelIntoSimulator();
       if (DO_PRINT) System.out.println("Prism model loaded into simulator successfully.");
-
+      
       // Load the target property
       // TODO: Read the file
       Expression target = prism.parsePropertiesString("gbg = 50").getProperty(0);
       // Expression target = prism.parsePropertiesString(targetString).getProperty(0);
-
+      
+      System.out.println("Prism model loaded succesfully.");
       // set the number of state variables for the model
       setNumStateVariables(prism);
       if (DO_PRINT) System.out.printf("Number of state variables: %d\n", numStateVariables);
@@ -644,6 +646,13 @@ public class BuildModel
         if (trace == null) break;
 
         numPaths++;
+
+        if (numPaths % 25 == 0) {
+          System.out.printf("Processed %d paths with a state count of %d\n", numPaths, stateCount);
+        }
+
+        // TODO: POSSIBLY TERMINATE BASED ON DELTA-STATECOUNT?
+        // i.e. if stateCount hasn't changed in many paths, terminate
         
         // break the trace into an array of individual transitions
         transitions = trace.split("\\s+");
@@ -660,7 +669,11 @@ public class BuildModel
 
       }
 
+      System.out.println("Establishing an absorbing state.");
+      
       int absorbIndex = setAbsorbingState();
+
+      System.out.println("Begin printing model files.");
 
       // Initialize label string
       // TODO: Play with deadlock vs sink
@@ -699,6 +712,7 @@ public class BuildModel
         traStr += stateList.get(a).prismTRA();
       }
 
+      System.out.println("Now printing " + numPaths + " paths to model files.");
       
       // Write the state file to buildModel.sta
       BufferedWriter staWriter = new BufferedWriter(new FileWriter("buildModel.sta"));
