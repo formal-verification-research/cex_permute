@@ -34,7 +34,7 @@ public class BuildModel
 {
 
   // Maximum recursion depth
-  public static final int MAX_DEPTH = 2;
+  public static final int MAX_DEPTH = 5;
 
   // turn off printing to save time
   public static final boolean DO_PRINT = false;
@@ -42,7 +42,8 @@ public class BuildModel
   // static model name
   public static final String MODEL_NAME = "model.sm";
   // public static final String TRACE_LIST_NAME = "forprism.trace";
-  public static final String TRACE_LIST_NAME = "paths/manual/lazy.txt";
+  // public static final String TRACE_LIST_NAME = "paths/manual/lazy.txt";
+  public static final String TRACE_LIST_NAME = "paths/ragtimer/a_20.txt";
 
   // By default, call BuildModel().run()
   public static void main(String[] args)
@@ -650,7 +651,7 @@ public class BuildModel
         if (numPaths % 25 == 0) {
           System.out.printf("Processed %d paths with a state count of %d\n", numPaths, stateCount);
         }
-
+        
         // TODO: POSSIBLY TERMINATE BASED ON DELTA-STATECOUNT?
         // i.e. if stateCount hasn't changed in many paths, terminate
         
@@ -668,6 +669,8 @@ public class BuildModel
         buildAndCommute(prism, transitions, null, 0, null, target);
 
       }
+
+      System.out.printf("Processed %d paths with a state count of %d\n", numPaths, stateCount);
 
       System.out.println("Establishing an absorbing state.");
       

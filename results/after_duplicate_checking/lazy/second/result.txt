@@ -1,0 +1,28 @@
+Run on the 20 first bad ragtimer traces a_20.txt
+
+
+...
+
+
+Iteration 6089185 (of 199541668): max relative diff=0.000000, 127251.81 sec so far
+Iteration 6089422 (of 199541668): max relative diff=0.000001, 127256.82 sec so far
+Iteration 6089659 (of 199541668): max relative diff=0.000000, 127261.82 sec so far
+Iteration 6089896 (of 199541668): max relative diff=0.000001, 127266.82 sec so far
+Iteration 6090134 (of 199541668): max relative diff=0.000011, 127271.85 sec so far
+Iteration 6090371 (of 199541668): max relative diff=0.000000, 127276.85 sec so far
+Iteration 6090609 (of 199541668): max relative diff=0.000000, 127281.87 sec so far
+Iteration 6090847 (of 199541668): max relative diff=0.000000, 127286.88 sec so far
+
+Steady state detected at iteration 6091027
+
+Iterative method: 6091027 iterations in 131984.25 seconds (average 0.020898, setup 4693.57)
+
+Value in the initial state: 5.031960783961737E-242
+
+Time for model checking: 132036.813 seconds.
+
+Result: 5.031960783961737E-242
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
