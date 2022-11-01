@@ -1,5 +1,6 @@
 Run on the 20 first bad ragtimer traces a_20.txt
-
+MAX_DEPTH is 2
+Path probabilities used to be zero
 
 ...
 
