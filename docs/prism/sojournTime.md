@@ -8,3 +8,5 @@ Found in SimulatorEngine.java
 1355: public double getCumulativeTimeUpToPathStep(int step)
 1376: public double getTimeSpentInPathStep(int step)
 ```
+
+See page 5 of Stewart Intro to Numerical Solution to get started on the math.

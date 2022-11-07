@@ -34,7 +34,7 @@ public class BuildModel
 {
 
   // Maximum recursion depth
-  public static final int MAX_DEPTH = 9;
+  public static final int MAX_DEPTH = 10;
 
   // turn off printing to save time
   public static final boolean DO_PRINT = false;
