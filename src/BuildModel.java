@@ -34,7 +34,7 @@ public class BuildModel
 {
 
   // Maximum recursion depth
-  public static final int MAX_DEPTH = 0;
+  public static final int MAX_DEPTH = 8;
 
   // turn off printing to save time
   public static final boolean DO_PRINT = false;
@@ -743,13 +743,13 @@ public class BuildModel
       
       System.out.println("Now printing " + numPaths + " paths to STORM model files.");
       
-      // Write the transition file to storm2.tra
-      BufferedWriter traWriterS = new BufferedWriter(new FileWriter("storm2.tra"));
+      // Write the transition file to storm.tra
+      BufferedWriter traWriterS = new BufferedWriter(new FileWriter("storm.tra"));
       traWriterS.write(traStrS.trim());
       traWriterS.close();
 
-      // Write the label file to storm2.lab
-      BufferedWriter labWriterS = new BufferedWriter(new FileWriter("storm2.lab"));
+      // Write the label file to storm.lab
+      BufferedWriter labWriterS = new BufferedWriter(new FileWriter("storm.lab"));
       labWriterS.write(labStrS.trim());
       labWriterS.close();
 
