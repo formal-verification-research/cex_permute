@@ -1,0 +1,7 @@
+Notes about checking with STORM:
+
+- Need to annotate every target state when the label file is generated
+- Need to have absorbing state (or at least one state) transition back to itself
+- What if we use 1 - the probability of absorbing state to get overapproximation
+- Need to find out how to annotate the target state and initial state (0=init?)
+- STORM command that worked: storm --explicit buildModel.tra buildModel.lab --prop 'P=? [F "absorb"]'

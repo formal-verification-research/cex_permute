@@ -34,7 +34,7 @@ public class BuildModel
 {
 
   // Maximum recursion depth
-  public static final int MAX_DEPTH = 5;
+  public static final int MAX_DEPTH = 0;
 
   // turn off printing to save time
   public static final boolean DO_PRINT = false;
@@ -43,7 +43,8 @@ public class BuildModel
   public static final String MODEL_NAME = "model.sm";
   // public static final String TRACE_LIST_NAME = "forprism.trace";
   // public static final String TRACE_LIST_NAME = "paths/manual/lazy.txt";
-  public static final String TRACE_LIST_NAME = "paths/ragtimer/a_20.txt";
+  // public static final String TRACE_LIST_NAME = "paths/ragtimer/a_20.txt";
+  public static final String TRACE_LIST_NAME = "paths/other/shortest.txt";
 
   // By default, call BuildModel().run()
   public static void main(String[] args)
@@ -102,14 +103,13 @@ public class BuildModel
     public double totalOutgoingRate;
     public ArrayList<Transition> outgoingTrans;
     public ArrayList<State> nextStates;
+    public boolean isTarget;
 
     public State(Object varVals[]) {
+      this.isTarget = false;
       this.index = stateCount;
       stateCount++;
       this.stateVars = getIntVarVals(varVals);
-      // for (int i = 0; i < numStateVariables; i++) {
-      //   this.stateVars[i] = varVals[i];
-      // }
       this.totalOutgoingRate = 0.0;
       this.outgoingTrans = new ArrayList<Transition>();
       this.nextStates = new ArrayList<State>();
@@ -117,6 +117,7 @@ public class BuildModel
     }
 
     public State(int varVals[]) {
+      this.isTarget = false;
       this.index = stateCount;
       stateCount++;
       this.stateVars = new int[numStateVariables];
@@ -411,14 +412,12 @@ public class BuildModel
         // if we have reached the target 
         if (target.evaluateBoolean(sim.getCurrentState())) {
           if (DO_PRINT) System.out.println("Target Reached");
+          stateToAdd.isTarget = true;
           seedPath.states.add(stateToAdd);
         }
 
         // walk along the trace
         currentState = stateToAdd;
-
-        // TODO: Fire transitions from the parent path and see if they match.
-        // If they do match, keep them
         
         // update commutable transitions based on new state
         wasEnabled = seedPath.commutable;
@@ -642,10 +641,11 @@ public class BuildModel
       // For each input trace
       while (true) {
 
+        
         // read in a single seed trace
         trace = br.readLine();
         if (trace == null) break;
-
+        
         numPaths++;
 
         if (numPaths % 25 == 0) {
@@ -682,9 +682,12 @@ public class BuildModel
       // TODO: Play with deadlock vs sink
       String labStr = "0=\"init\" 1=\"sink\"\n0: 0\n";
       labStr += (absorbIndex + ": 1");
+      
+      String labStrS = "#DECLARATION\ninit absorb target\n#END\n0 init\n";
 
       // Initialize transition string
       String traStr = "";
+      String traStrS = "ctmc\n";
       traStr += ((stateList.size()) + " " + transitionCount + "\n");
 
       // Initialize state string
@@ -709,38 +712,48 @@ public class BuildModel
         vari++;
       }
 
-      
       for (int a = 0; a < stateList.size(); a++) {
         staStr += stateList.get(a).prismSTA();
         traStr += stateList.get(a).prismTRA();
+        traStrS += stateList.get(a).prismTRA();
+        if (stateList.get(a).isTarget) {
+          labStrS += (stateList.get(a).index + " target\n");
+        }
       }
 
-      System.out.println("Now printing " + numPaths + " paths to model files.");
+      traStrS += (absorbIndex + " " + absorbIndex + " 0.0");
+      labStrS += (absorbIndex + " absorb");
+
+      System.out.println("Now printing " + numPaths + " paths to PRISM model files.");
       
-      // Write the state file to buildModel.sta
-      BufferedWriter staWriter = new BufferedWriter(new FileWriter("buildModel.sta"));
+      // Write the state file to prism.sta
+      BufferedWriter staWriter = new BufferedWriter(new FileWriter("prism.sta"));
       staWriter.write(staStr.trim());
       staWriter.close();
-
-      // Write the transition file to buildModel.tra
-      BufferedWriter traWriter = new BufferedWriter(new FileWriter("buildModel.tra"));
+      
+      // Write the transition file to prism.tra
+      BufferedWriter traWriter = new BufferedWriter(new FileWriter("prism.tra"));
       traWriter.write(traStr.trim());
       traWriter.close();
-
-      // Write the label file to buildModel.lab
-      BufferedWriter labWriter = new BufferedWriter(new FileWriter("buildModel.lab"));
+      
+      // Write the label file to prism.lab
+      BufferedWriter labWriter = new BufferedWriter(new FileWriter("prism.lab"));
       labWriter.write(labStr.trim());
       labWriter.close();
+      
+      System.out.println("Now printing " + numPaths + " paths to STORM model files.");
+      
+      // Write the transition file to storm2.tra
+      BufferedWriter traWriterS = new BufferedWriter(new FileWriter("storm2.tra"));
+      traWriterS.write(traStrS.trim());
+      traWriterS.close();
 
+      // Write the label file to storm2.lab
+      BufferedWriter labWriterS = new BufferedWriter(new FileWriter("storm2.lab"));
+      labWriterS.write(labStrS.trim());
+      labWriterS.close();
 
       System.out.println("Finished! Processed " + numPaths + " paths.");
-
-      // Configure the absorbing state
-      // model.addAbsorbingState();
-
-      // Print to files
-      // SimulatorEngine sim = prism.getSimulator();
-      // model.exportFiles(sim);
 
       // close PRISM
       prism.closeDown();

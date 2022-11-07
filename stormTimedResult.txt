@@ -1,0 +1,21 @@
+Storm 1.7.0
+
+Date: Mon Nov  7 11:04:49 2022
+Command line arguments: --explicit storm.tra storm.lab --prop 'P=? [true U[0,200] "target"]'
+Current working directory: /home/landon/cex_permute
+
+Time for model construction: 0.430s.
+
+-------------------------------------------------------------- 
+Model type: 	CTMC (sparse)
+States: 	70644
+Transitions: 	949208
+Reward Models:  none
+State Labels: 	3 labels
+   * target -> 750 item(s)
+   * absorb -> 1 item(s)
+   * init -> 1 item(s)
+Choice Labels: 	none
+-------------------------------------------------------------- 
+
+Model checking property "1": P=? [true U[0, 200] "target"] ...

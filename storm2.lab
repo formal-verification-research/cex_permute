@@ -1,0 +1,6 @@
+#DECLARATION
+init absorb target
+#END
+0 init
+100 target
+347 absorb
