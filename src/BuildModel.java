@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.xml.transform.Source;
+
 // PRISM Parser things
 import parser.Values;
 import parser.ast.Expression;
@@ -34,7 +36,7 @@ public class BuildModel
 {
 
   // Maximum recursion depth
-  public static final int MAX_DEPTH = 24;
+  public static final int MAX_DEPTH = 3;
 
   // turn off printing to save time
   public static final boolean DO_PRINT = false;
@@ -54,17 +56,21 @@ public class BuildModel
 
   public int[] getIntVarVals(Object[] varVals) {
     int[] retArr = new int[varVals.length];
+    // System.out.printf("getIntVarVals:");
     for (int i = 0; i < varVals.length; i++) {
       // Check if Object is an Integer or a String, handle appropriately
       if (varVals[i] instanceof Integer) {
         retArr[i] = (Integer) varVals[i];
+        // System.out.printf(" I_%03d", retArr[i]);
         // intVars.add((Integer) vars.get(i));
       }
       else if (varVals[i] instanceof String) {
         retArr[i] = Integer.parseInt((String) varVals[i]);
+        // System.out.printf(" S_%03d", retArr[i]);
         // intVars.add(Integer.parseInt((String) vars.get(i)));
       }
     }
+    // System.out.println(".");
     return retArr;
   }
 
@@ -104,9 +110,11 @@ public class BuildModel
     public ArrayList<Transition> outgoingTrans;
     public ArrayList<State> nextStates;
     public boolean isTarget;
+    public boolean isNewInit;
 
     public State(Object varVals[]) {
       this.isTarget = false;
+      this.isNewInit = false;
       this.index = stateCount;
       stateCount++;
       this.stateVars = getIntVarVals(varVals);
@@ -118,6 +126,7 @@ public class BuildModel
 
     public State(int varVals[]) {
       this.isTarget = false;
+      this.isNewInit = false;
       this.index = stateCount;
       stateCount++;
       this.stateVars = new int[numStateVariables];
@@ -176,19 +185,26 @@ public class BuildModel
   // object to store state variables in the tree structure
   public class StateVarNode {
     public int value;
-    public int stateIndex; // index of the first discovered state to have this value
+    // public int stateIndex; // index of the first discovered state to have this value
+    public ArrayList<Integer> stateIndices;
     public ArrayList<StateVarNode> children;
+    public StateVarNode parent;
     public StateVarNode() {
+      this.stateIndices = new ArrayList<Integer>();
       this.value = -1;
       this.children = new ArrayList<StateVarNode>();
+      this.parent = null;
     }
     public StateVarNode(int value) {
       this.value = value;
-      this.stateIndex = stateCount;
+      this.stateIndices = new ArrayList<Integer>();
+      this.stateIndices.add((Integer) stateCount-1);
+      // System.out.println("New StateVarNode for State " + (stateCount-1));
       this.children = new ArrayList<StateVarNode>();
     }
     public void addChild(int value) {
       this.children.add(new StateVarNode(value));
+      this.children.get(this.children.size()-1).parent = this;
       // maybe sort the list as well eventually?
     }
   }
@@ -196,19 +212,55 @@ public class BuildModel
   // global state variable root is just an empty node
   public StateVarNode StateVarRoot = new StateVarNode();
 
+  // public String printUniqueString() {
+  //   String running = "";
+  //   StateVarNode cur = StateVarRoot;
+  //   for (int stateVar = 0; stateVar < numStateVariables; stateVar++) {
+  //     for (int i = 0; i < cur.children.size(); i++) {
+  //       running += (" " + cur.children.get(i).value);
+  //     }
+  //     // running += ("[" + cur.stateIndices.get(0) + "]");
+  //     cur = cur.children.get(0);
+  //   }
+  //   return running;
+  // }
+
   // function to check uniqueness and update unique state tree
   public int stateIsUnique(int varVals[]) {
+    // System.out.printf("stateIsUnique? ");
+    for (int i = 0; i < varVals.length; i++) {
+      // System.out.printf(" %d", varVals[i]);
+    }
+    // System.out.println(" ");
+
     // loop through all the state variables to see if they exist
+    ArrayList<Integer> possibleStates = new ArrayList<Integer>();
     StateVarNode cur = StateVarRoot;
     boolean foundStateVar = false;
     int foundStateIndex = -1;
+
     for (int stateVar = 0; stateVar < numStateVariables; stateVar++) {
+      
       foundStateVar = false;
       for (int i = 0; i < cur.children.size(); i++) { // new states have 0 kids anyway
         if (cur.children.get(i).value == varVals[stateVar]) {
+          // System.out.println("MATCH at index " + i);
           cur = cur.children.get(i);
           foundStateVar = true;
-          foundStateIndex = cur.stateIndex;
+          // add all the possibilities as an intersection
+          if (stateVar == 0) {
+            for (int a = 0; a < cur.stateIndices.size(); a++) {
+              possibleStates.add(cur.stateIndices.get(a));
+            }
+          }
+          else {
+            for (int a = 0; a < possibleStates.size(); a++) {
+              if (!(cur.stateIndices.contains(possibleStates.get(a)))) {
+                possibleStates.remove(a);
+              }
+            }
+          }
+          // foundStateIndex = cur.stateIndex; // TODO: This line breaks things
           break;
         }
       }
@@ -216,7 +268,31 @@ public class BuildModel
         cur.children.add(new StateVarNode(varVals[stateVar]));
         cur = cur.children.get(cur.children.size()-1);
         foundStateIndex = -1;
+        for (int j = 0; j < possibleStates.size(); j++) {
+          possibleStates.remove(j);
+        }
       }
+    }
+
+    if (possibleStates.size() == 0) {
+      foundStateIndex = -1;
+      // System.out.println(" State not found. Size is 0.");
+      while (cur != null) {
+        cur.stateIndices.add(stateCount);
+        cur = cur.parent;
+      }
+    }
+    else if (possibleStates.size() == 1) {
+      foundStateIndex = possibleStates.get(0).intValue();
+      // System.out.println(" State found. Size is 1. Index is " + foundStateIndex);
+    }
+    else {
+      foundStateIndex = -1;
+      System.out.println(" ERROR ");
+      System.out.println(" ERROR ");
+      System.out.println(" Multiple states found. Size is " + possibleStates.size());
+      System.out.println(" ERROR ");
+      System.out.println(" ERROR ");
     }
 
     return foundStateIndex;
@@ -243,17 +319,32 @@ public class BuildModel
   public void buildAndCommute(Prism prism, String[] transitions, String[] prefix, int depth, Path parentPath, Expression target)
   {
     try {
-
+      
       if (depth > MAX_DEPTH) {
         if (DO_PRINT) System.out.println("Max recursion depth reached.");
         return;
       }
-
+      
+      int indexOfFoundState = -1;
+      if (DO_PRINT) {
+        if (prefix != null) {
+          System.out.printf("\n%2d Prefix ", depth);
+          for (int i = 0; i < prefix.length; i++) {
+            System.out.printf("%s ", prefix[i]);
+          }
+          System.out.println(".");
+        }
+        else {
+          System.out.println("\n 0 Prefix none");
+        }
+      }
+      
+      
       // Create a new simulation from the initial state
       SimulatorEngine sim = prism.getSimulator();
       sim.createNewPath();
       sim.initialisePath(null);
-
+      
       if (DO_PRINT) System.out.println("Prism simulator initialized successfully.");
       if (DO_PRINT) System.out.println("Initial state: " + sim.getCurrentState());
       
@@ -267,15 +358,21 @@ public class BuildModel
       if (stateList.size() == 0) {
         if (DO_PRINT) System.out.println("Initial state generated.");
         new State(sim.getCurrentState().varValues);
+        // we know initial state is unique but we need to log its values with stateIsUnique.
+        stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+        // System.out.println("ROOT " + printUniqueString());
       }
       
       // update current state to be the model's initial state
       State currentState = stateList.get(0);
+      currentState.isNewInit = true;
       
       // Walk along the prefix to get the new initial state
       int prefixLength = 0;
       if (prefix != null) prefixLength = prefix.length;
       for (int path_tran = 0; path_tran < prefixLength; path_tran++) {
+
+        if (DO_PRINT) System.out.printf("Intermediate Prefix State is %s", currentState.prismSTA());
 
         // start with a fresh transitionIndex
         transitionIndex = -1;
@@ -298,12 +395,13 @@ public class BuildModel
         }
         // Take the transition
         sim.manualTransition(transitionIndex);
-        
+
         // update the total outgoing rate of the current state
         currentState.totalOutgoingRate = totalOutgoingRate;
-
+        
         // Check if the state exists yet
-        int indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+        indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+
         
         // figure out what state to link here
         State stateToAdd = null;
@@ -322,13 +420,29 @@ public class BuildModel
         currentState.nextStates.add(stateToAdd);
         Transition newTrans = new Transition(transitionIndex, transitions[path_tran], currentState.index, stateToAdd.index, newTranRate);
         currentState.outgoingTrans.add(newTrans);
-
+        
         // walk along the trace
         currentState = stateToAdd;
         
       } // end walk along path prefix
 
       if (DO_PRINT) System.out.println("Successfully walked along trace prefix (set of commuted transitions)");
+
+      if (DO_PRINT) System.out.printf("Prefix Terminal State is %s", currentState.prismSTA());
+      if (DO_PRINT) System.out.printf("At sim state %s\n", sim.getCurrentState());
+      
+      // if we already end up in a known state after the prefix, end it here
+      if (indexOfFoundState != -1 && currentState.isNewInit) {
+        // if (DO_PRINT) System.out.println("Prefix Terminal State Exists. End Recursion Branch.\n");
+        if (DO_PRINT) System.out.printf("Prefix Terminal State Exists at State %d. End Recursion Branch.\n", indexOfFoundState);
+        // skip walking along the trace and jump right to terminal state
+        // currentState = stateList.get(currentState.index + transitions.length);
+        // System.out.printf("Jumped to state %s", currentState.prismSTA());
+        return;
+      }
+
+      // Mark we have a new "path initial state", as it were
+      currentState.isNewInit = true;
 
       // Save these states into a path
       Path seedPath = new Path();
@@ -379,7 +493,7 @@ public class BuildModel
         currentState.totalOutgoingRate = totalOutgoingRate;
 
         // Check if the state exists yet
-        int indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+        indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
         // if (indexOfFoundState == -1) {
         //   System.out.println("Discovered state is unique.");
         // }
@@ -500,7 +614,7 @@ public class BuildModel
           currentState.totalOutgoingRate = totalOutgoingRate;
   
           // Check if the state exists yet
-          int indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+          indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
           
           // figure out what state to link here
           State stateToAdd = null;
@@ -526,12 +640,6 @@ public class BuildModel
 
       }
     }
-
-
-
-
-
-
 
       
       // get the length of the prefix
@@ -620,10 +728,10 @@ public class BuildModel
       
       // Load the target property
       // TODO: Read the file
-      Expression target = prism.parsePropertiesString("gbg = 50").getProperty(0);
+      Expression target = prism.parsePropertiesString("G_bg = 50").getProperty(0);
       // Expression target = prism.parsePropertiesString(targetString).getProperty(0);
       
-      System.out.println("Prism model loaded succesfully.");
+      System.out.println("Prism model and property loaded succesfully.");
       // set the number of state variables for the model
       setNumStateVariables(prism);
       if (DO_PRINT) System.out.printf("Number of state variables: %d\n", numStateVariables);
