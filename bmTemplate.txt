@@ -122,8 +122,9 @@ public class BuildModel
       this.outgoingTrans = new ArrayList<Transition>();
       this.nextStates = new ArrayList<State>();
       stateList.add(this);
+      if (DO_PRINT) System.out.printf("New state %s", this.prismSTA());
     }
-
+    
     public State(int varVals[]) {
       this.isTarget = false;
       this.isNewInit = false;
@@ -137,6 +138,7 @@ public class BuildModel
       this.outgoingTrans = new ArrayList<Transition>();
       this.nextStates = new ArrayList<State>();
       stateList.add(this);
+      System.out.printf("New state %s", this.prismSTA());
     }
 
     // get outgoing rate not captured by notated transitions
@@ -198,15 +200,16 @@ public class BuildModel
     public StateVarNode(int value) {
       this.value = value;
       this.stateIndices = new ArrayList<Integer>();
-      this.stateIndices.add((Integer) stateCount-1);
+      // this.stateIndices.add((Integer) stateCount-1); // was causing problems due to this line being duplicated
       // System.out.println("New StateVarNode for State " + (stateCount-1));
       this.children = new ArrayList<StateVarNode>();
     }
-    public void addChild(int value) {
-      this.children.add(new StateVarNode(value));
-      this.children.get(this.children.size()-1).parent = this;
-      // maybe sort the list as well eventually?
-    }
+    // public void addChild(int value) {
+    //   this.children.add(new StateVarNode(value));
+    //   this.children.get(this.children.size()-1).parent = this;
+    //   System.out.println("New parent " + this.children.get(this.children.size()-1).parent.value + " for " + this.children.get(this.children.size()-1).value );
+    //   // maybe sort the list as well eventually?
+    // }
   }
 
   // global state variable root is just an empty node
@@ -227,11 +230,12 @@ public class BuildModel
 
   // function to check uniqueness and update unique state tree
   public int stateIsUnique(int varVals[]) {
-    // System.out.printf("stateIsUnique? ");
-    for (int i = 0; i < varVals.length; i++) {
-      // System.out.printf(" %d", varVals[i]);
-    }
-    // System.out.println(" ");
+    // System.out.printf("stateIsUnique? (");
+    // for (int i = 0; i < varVals.length; i++) {
+    //   System.out.printf("%d", varVals[i]);
+    //   if (i == varVals.length-1) System.out.printf(")\n");
+    //   else System.out.printf(",");
+    // }
 
     // loop through all the state variables to see if they exist
     ArrayList<Integer> possibleStates = new ArrayList<Integer>();
@@ -244,20 +248,28 @@ public class BuildModel
       foundStateVar = false;
       for (int i = 0; i < cur.children.size(); i++) { // new states have 0 kids anyway
         if (cur.children.get(i).value == varVals[stateVar]) {
-          // System.out.println("MATCH at index " + i);
+          if (DO_PRINT) {
+            System.out.printf("\nM(");
+            for (int aa = 0; aa < cur.children.get(i).stateIndices.size(); aa++) {
+              System.out.printf("%s.", cur.children.get(i).stateIndices.get(aa));
+            }
+            System.out.printf(") %d and %d", varVals[stateVar], cur.children.get(i).value);
+          }
           cur = cur.children.get(i);
           foundStateVar = true;
           // add all the possibilities as an intersection
+
           if (stateVar == 0) {
             for (int a = 0; a < cur.stateIndices.size(); a++) {
               possibleStates.add(cur.stateIndices.get(a));
             }
           }
-          else {
-            for (int a = 0; a < possibleStates.size(); a++) {
-              if (!(cur.stateIndices.contains(possibleStates.get(a)))) {
-                possibleStates.remove(a);
-              }
+          for (int a = 0; a < possibleStates.size(); a++) {
+            // System.out.println("Checking possible state " + possibleStates.get(a));
+            if (!(cur.stateIndices.contains(possibleStates.get(a)))) {
+              // System.out.println("Removed possible state " + possibleStates.get(a));
+              possibleStates.remove(a);
+              a--;
             }
           }
           // foundStateIndex = cur.stateIndex; // TODO: This line breaks things
@@ -265,32 +277,57 @@ public class BuildModel
         }
       }
       if (!foundStateVar) { // if we didn't find it (i.e. state doesn't exist)
+        if (DO_PRINT) {
+          System.out.printf("X() %d\n", varVals[stateVar]);
+        }
         cur.children.add(new StateVarNode(varVals[stateVar]));
+        cur.children.get(cur.children.size()-1).parent = cur;
         cur = cur.children.get(cur.children.size()-1);
+        // System.out.println("\nAdded parental relationship " + cur.value + " child of " + cur.parent.value);
         foundStateIndex = -1;
-        for (int j = 0; j < possibleStates.size(); j++) {
+        // System.out.println("AAAA");
+        // for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+        //   System.out.println(possibleStates.get(aaa));
+        // }
+        for (int j = 0; j < possibleStates.size(); ) {
           possibleStates.remove(j);
         }
       }
+      // System.out.println("BBBB");
+      // for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+      //   System.out.println(possibleStates.get(aaa));
+      // }
     }
+    // System.out.println("CCCC");
+    // for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+    //   System.out.println(possibleStates.get(aaa));
+    // }
+    // System.out.println("foundStateVar? " + foundStateVar);
 
-    if (possibleStates.size() == 0) {
+    if (possibleStates.size() == 0 || !foundStateVar) {
       foundStateIndex = -1;
-      // System.out.println(" State not found. Size is 0.");
+      // if (DO_PRINT) System.out.println(" State not found. Size is 0.");
       while (cur != null) {
-        cur.stateIndices.add(stateCount);
+        if (!cur.stateIndices.contains(stateCount)) {
+          cur.stateIndices.add(stateCount);
+          // if (DO_PRINT) System.out.println("added state " + stateCount + " to state var " + cur.value);
+        }
         cur = cur.parent;
       }
     }
     else if (possibleStates.size() == 1) {
       foundStateIndex = possibleStates.get(0).intValue();
-      // System.out.println(" State found. Size is 1. Index is " + foundStateIndex);
+      if (DO_PRINT) System.out.println(" State found. Index is " + foundStateIndex);
+      if (DO_PRINT) System.out.printf("State %s", stateList.get(foundStateIndex).prismSTA());
     }
     else {
       foundStateIndex = -1;
-      System.out.println(" ERROR ");
+      System.out.println("\n ERROR ");
       System.out.println(" ERROR ");
       System.out.println(" Multiple states found. Size is " + possibleStates.size());
+      for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+        System.out.println(possibleStates.get(aaa));
+      }
       System.out.println(" ERROR ");
       System.out.println(" ERROR ");
     }
@@ -494,9 +531,9 @@ public class BuildModel
 
         // Check if the state exists yet
         indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
-        // if (indexOfFoundState == -1) {
-        //   System.out.println("Discovered state is unique.");
-        // }
+        if (DO_PRINT && indexOfFoundState == -1) {
+          // System.out.println("Path state is unique.");
+        }
 
         // TODO: Since we're trying to commute, if this doesn't work, return
         
@@ -572,21 +609,27 @@ public class BuildModel
       // sim.backtrackTo(seedPath.states.size()-4);
 
 
+      if (DO_PRINT) System.out.printf("\n\nEntered commuting phase with %d transitions\n\n\n", seedPath.commutable.size());
+      if (DO_PRINT) {
+        for (int mm = 0; mm < seedPath.commutable.size(); mm++) {
+          System.out.printf(" %s", seedPath.commutable.get(mm));
+        }
+        System.out.println(".\n");
+      }
 
       // for each state in the seed path, backtracking toward the initial state + prefix
       for (int seedIndex = seedPath.states.size()-1; seedIndex >= 0; seedIndex--) {
 
-        // set our current state to the seedpath state
-        currentState = seedPath.states.get(seedIndex);
-        if (DO_PRINT) System.out.println("currentState " + currentState.prismSTA());
-        sim.backtrackTo(seedIndex);
-        if (DO_PRINT) System.out.println("sim: " + sim.getCurrentState());
         
-        if (DO_PRINT) System.out.println();
-        if (DO_PRINT) System.out.println();
-
         // for each commutable transition
         for (int ctran = 0; ctran < seedPath.commutable.size(); ctran++) {
+          
+          // set our current state to the seedpath state
+          currentState = seedPath.states.get(seedIndex);
+          sim.backtrackTo(seedIndex);
+          if (DO_PRINT) System.out.println(seedPath.commutable.get(ctran));
+          if (DO_PRINT) System.out.printf("currentState %s", currentState.prismSTA());
+          
           // fire the transition
           transitionIndex = -1;
           double newTranRate = -1.0f;
@@ -600,21 +643,25 @@ public class BuildModel
               newTranRate = sim.getTransitionProbability(sim_tran);
             }
           }
-
+          
           // If we never found the correct transitions, report error
           if (transitionIndex == -1) {
             if (DO_PRINT) System.out.printf("WARNING: Commutable transition %s not available from current state %s\n", seedPath.commutable.get(ctran), sim.getCurrentState());
             continue;
           }
-
+          
           // Take the transition
           sim.manualTransition(transitionIndex);
+          if (DO_PRINT) System.out.println("sim: " + sim.getCurrentState());
           
           // update the total outgoing rate of the current state
           currentState.totalOutgoingRate = totalOutgoingRate;
-  
+          
           // Check if the state exists yet
           indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+
+          if (DO_PRINT) System.out.printf("Sim state after commuting: %s\n", sim.getCurrentState());
+          if (DO_PRINT) System.out.printf("Index of found state: %d\n", indexOfFoundState);
           
           // figure out what state to link here
           State stateToAdd = null;
