@@ -19,3 +19,5 @@ Choice Labels: 	none
 -------------------------------------------------------------- 
 
 Model checking property "1": P=? [true U[0, 200] "target"] ...
+Result (for initial states): 3.960873988e-220
+Time for model checking: 198918.892s.
