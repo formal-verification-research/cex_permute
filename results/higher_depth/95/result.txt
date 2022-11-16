@@ -1,0 +1,10 @@
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Prism model and property loaded succesfully.
+Processed 1 paths with a state count of 39050
+Establishing an absorbing state.
+New state 39050:(-1,-1,-1,-1,-1,-1,-1)
+Begin printing model files.
+Now printing 1 paths to PRISM model files.
+Now printing 1 paths to STORM model files.
+Finished! Processed 1 paths.

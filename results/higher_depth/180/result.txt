@@ -1,0 +1,3 @@
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Prism model and property loaded succesfully.
