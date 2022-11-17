@@ -1,0 +1,68 @@
+PRISM
+=====
+
+Version: 4.7
+Date: Wed Nov 16 14:59:53 MST 2022
+Hostname: el304b
+Memory limits: cudd=1g, java(heap)=1g
+Command line: prism -importmodel 'results/higher_depth/50/prism.sta,tra,lab' -ctmc scripts/pro2.csl
+
+Importing model from "results/higher_depth/50/prism.tra", "results/higher_depth/50/prism.sta", "results/higher_depth/50/prism.lab"...
+Using specified model type: CTMC
+
+Parsing properties file "scripts/pro2.csl"...
+
+1 property:
+(1) P=? [ true U[0,200] G_bg=50 ]
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ true U[0,200] G_bg=50 ]
+
+Building model...
+
+Computing reachable states...
+
+Reachability (BFS): 150 iterations in 1.54 seconds (average 0.010300, setup 0.00)
+
+Time for model construction: 10.149 seconds.
+
+Warning: Deadlocks detected and fixed in 1597 states
+
+Type:        CTMC
+States:      19480 (1 initial)
+Transitions: 151585
+
+Rate matrix: 926285 nodes (4229 terminal), 151585 minterms, vars: 34r/34c
+
+Computing probabilities...
+Engine: Hybrid
+
+Number of non-absorbing states: 19193 of 19480 (98.5%)
+
+Building hybrid MTBDD matrix... [levels=34, nodes=1063370] [48.7 MB]
+Adding explicit sparse matrices... [levels=23, num=2871, compact] [951.9 KB]
+Creating vector for diagonals... [dist=12034, compact] [132.1 KB]
+Allocating iteration vectors... [3 x 152.2 KB]
+TOTAL: [50.2 MB]
+
+Uniformisation: q.t = 56.951904 x 200.000000 = 11390.380800
+Fox-Glynn: left = 10640, right = 12298
+
+Starting iterations...
+Iteration 4030 (of 12298): max relative diff=0.000269, 5.00 sec so far
+Iteration 8052 (of 12298): max relative diff=0.000129, 10.00 sec so far
+Iteration 12065 (of 12298): max relative diff=0.000085, 15.00 sec so far
+
+Iterative method: 12298 iterations in 625.41 seconds (average 0.001244, setup 610.11)
+
+Value in the initial state: 1.5663503836158506E-65
+
+Time for model checking: 626.267 seconds.
+
+Result: 1.5663503836158506E-65
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+
