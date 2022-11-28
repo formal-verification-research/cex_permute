@@ -35,23 +35,66 @@ import simulator.SimulatorEngine;
 public class BuildModel
 {
 
-  // Maximum recursion depth
-  public static final int MAX_DEPTH = 50;
+  // User-passed parameter file, see docs/tool/input.md
+  public static final String OPTION_FILE = "options.txt";
+  
+  // Required parameters
+  public String MODEL_NAME = "model.sm";
+  public String TRACE_LIST_NAME = "forprism.trace";
+  public String PROPERTY = "A=100";
 
-  // turn off printing to save time
-  public static final boolean DO_PRINT = false;
-
-  // static model name
-  public static final String MODEL_NAME = "model.sm";
-  // public static final String TRACE_LIST_NAME = "forprism.trace";
-  // public static final String TRACE_LIST_NAME = "paths/manual/lazy.txt";
-  public static final String TRACE_LIST_NAME = "paths/ragtimer/a_20.txt";
-  // public static final String TRACE_LIST_NAME = "paths/other/shortest.txt";
-
+  // Optional parameters
+  public int MAX_DEPTH = 30;
+  public double TIME_BOUND = 200.0;
+  public boolean DO_PRINT = false;
+  public boolean EXPORT_PRISM = true;
+  public boolean EXPORT_STORM = true;
+  
   // By default, call BuildModel().run()
   public static void main(String[] args)
   {
     new BuildModel().run();
+  }
+
+  // Get options line-by-line
+  public void getParams() {
+    FileReader fr = new FileReader(OPTION_FILE);
+		BufferedReader br = new BufferedReader(fr);
+    String line;
+    while (line = br.readLine() != null) {
+      String option = line.split(" ")[0];
+      String parameter = "";
+      if (line.split(" ").length > 1) {
+        parameter = line.split(" ")[1];
+      }
+      if (first.contains("model")) {
+        MODEL_NAME = parameter;
+      }
+      else if (first.contains("trace")) {
+        TRACE_LIST_NAME = parameter;
+      }
+      else if (first.contains("property")) {
+        PROPERTY = parameter;
+      }
+      else if (first.contains("timeBound")) {
+        TIME_BOUND = Double.parseDouble(parameter);
+      }
+      else if (first.contains("recursionBound")) {
+        MAX_DEPTH = Integer.parseInt(parameter);
+      }
+      else if (first.contains("export")) {
+        if (parameter.contains("storm")) {
+          EXPORT_PRISM = false;
+        }
+        else if (parameter.contains("prism")) {
+          EXPORT_STORM = false;
+        }
+      }
+      else if (first.contains("verbose")) {
+        DO_PRINT = true;
+      }
+    }
+    br.close();
   }
 
   public int[] getIntVarVals(Object[] varVals) {
@@ -830,7 +873,7 @@ public class BuildModel
       
       // Load the target property
       // TODO: Read the file
-      Expression target = prism.parsePropertiesString("G_bg = 50").getProperty(0);
+      Expression target = prism.parsePropertiesString(PROPERTY).getProperty(0);
       // Expression target = prism.parsePropertiesString(targetString).getProperty(0);
       
       System.out.println("Prism model and property loaded succesfully.");
@@ -895,77 +938,83 @@ public class BuildModel
       // Initialize label string
       // TODO: Play with deadlock vs sink
       String labStr = "0=\"init\" 1=\"sink\"\n0: 0\n";
-      labStr += (absorbIndex + ": 1");
+      if (EXPORT_PRISM) labStr += (absorbIndex + ": 1");
       
       String labStrS = "#DECLARATION\ninit absorb target\n#END\n0 init\n";
 
       // Initialize transition string
       String traStr = "";
       String traStrS = "ctmc\n";
-      traStr += ((stateList.size()) + " " + transitionCount + "\n");
+      if (EXPORT_PRISM) traStr += ((stateList.size()) + " " + transitionCount + "\n");
 
       // Initialize state string
       String staStr = "";
-      staStr += "(";
+      if (EXPORT_PRISM) staStr += "(";
 
       // Create a new simulation from the initial state, to get the var names
       SimulatorEngine sim = prism.getSimulator();
       sim.createNewPath();
       sim.initialisePath(null);
-      // Get variable names for first line of .sta file
-      int vari = 0;
-      String varName = "";
-      while (true) {
-        varName = sim.getVariableName(vari);
-        staStr += varName;
-        if (sim.getVariableName(vari+1) == null) {
-          staStr += ")\n";
-          break;
+      
+      if (EXPORT_PRISM) {
+        // Get variable names for first line of .sta file
+        int vari = 0;
+        String varName = "";
+        while (true) {
+          varName = sim.getVariableName(vari);
+          staStr += varName;
+          if (sim.getVariableName(vari+1) == null) {
+            staStr += ")\n";
+            break;
+          }
+          staStr += ",";
+          vari++;
         }
-        staStr += ",";
-        vari++;
       }
 
       for (int a = 0; a < stateList.size(); a++) {
-        staStr += stateList.get(a).prismSTA();
-        traStr += stateList.get(a).prismTRA();
-        traStrS += stateList.get(a).prismTRA();
-        if (stateList.get(a).isTarget) {
+        if (EXPORT_PRISM) staStr += stateList.get(a).prismSTA();
+        if (EXPORT_PRISM) traStr += stateList.get(a).prismTRA();
+        if (EXPORT_STORM) traStrS += stateList.get(a).prismTRA();
+        if (EXPORT_STORM && stateList.get(a).isTarget) {
           labStrS += (stateList.get(a).index + " target\n");
         }
       }
 
-      traStrS += (absorbIndex + " " + absorbIndex + " 0.0");
-      labStrS += (absorbIndex + " absorb");
+      if (EXPORT_STORM) traStrS += (absorbIndex + " " + absorbIndex + " 0.0");
+      if (EXPORT_STORM) labStrS += (absorbIndex + " absorb");
 
-      System.out.println("Now printing " + numPaths + " paths to PRISM model files.");
-      
-      // Write the state file to prism.sta
-      BufferedWriter staWriter = new BufferedWriter(new FileWriter("prism.sta"));
-      staWriter.write(staStr.trim());
-      staWriter.close();
-      
-      // Write the transition file to prism.tra
-      BufferedWriter traWriter = new BufferedWriter(new FileWriter("prism.tra"));
-      traWriter.write(traStr.trim());
-      traWriter.close();
-      
-      // Write the label file to prism.lab
-      BufferedWriter labWriter = new BufferedWriter(new FileWriter("prism.lab"));
-      labWriter.write(labStr.trim());
-      labWriter.close();
-      
-      System.out.println("Now printing " + numPaths + " paths to STORM model files.");
-      
-      // Write the transition file to storm.tra
-      BufferedWriter traWriterS = new BufferedWriter(new FileWriter("storm.tra"));
-      traWriterS.write(traStrS.trim());
-      traWriterS.close();
+      if (EXPORT_PRISM) {
+        System.out.println("Now printing " + numPaths + " paths to PRISM model files.");
+        // Write the state file to prism.sta
+        BufferedWriter staWriter = new BufferedWriter(new FileWriter("prism.sta"));
+        staWriter.write(staStr.trim());
+        staWriter.close();
+        
+        // Write the transition file to prism.tra
+        BufferedWriter traWriter = new BufferedWriter(new FileWriter("prism.tra"));
+        traWriter.write(traStr.trim());
+        traWriter.close();
+        
+        // Write the label file to prism.lab
+        BufferedWriter labWriter = new BufferedWriter(new FileWriter("prism.lab"));
+        labWriter.write(labStr.trim());
+        labWriter.close();
+        
+      }
 
-      // Write the label file to storm.lab
-      BufferedWriter labWriterS = new BufferedWriter(new FileWriter("storm.lab"));
-      labWriterS.write(labStrS.trim());
-      labWriterS.close();
+      if (EXPORT_STORM) {
+        System.out.println("Now printing " + numPaths + " paths to STORM model files.");
+        // Write the transition file to storm.tra
+        BufferedWriter traWriterS = new BufferedWriter(new FileWriter("storm.tra"));
+        traWriterS.write(traStrS.trim());
+        traWriterS.close();
+  
+        // Write the label file to storm.lab
+        BufferedWriter labWriterS = new BufferedWriter(new FileWriter("storm.lab"));
+        labWriterS.write(labStrS.trim());
+        labWriterS.close();
+      }
 
       System.out.println("Finished! Processed " + numPaths + " paths.");
 
