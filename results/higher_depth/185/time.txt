@@ -1,3 +1,0 @@
-Command terminated by signal 2
-2.94user 0.09system 0:01.12elapsed 270%CPU (0avgtext+0avgdata 285436maxresident)k
-0inputs+72outputs (8major+28505minor)pagefaults 0swaps

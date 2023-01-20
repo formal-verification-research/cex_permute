@@ -1,0 +1,6 @@
+model models/8react/model.sm
+trace forprism.trace
+property gbg = 50
+recursionBound 30
+export both
+verbose false
