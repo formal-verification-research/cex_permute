@@ -58,43 +58,53 @@ public class BuildModel
 
   // Get options line-by-line
   public void getParams() {
-    FileReader fr = new FileReader(OPTION_FILE);
+	try {
+		FileReader fr = new FileReader(OPTION_FILE);
 		BufferedReader br = new BufferedReader(fr);
-    String line;
-    while ((line = br.readLine()) != null) {
-      String first = line.split(" ")[0];
-      String parameter = "";
-      if (line.split(" ").length > 1) {
-        parameter = line.split(" ")[1];
-      }
-      if (first.contains("model")) {
-        MODEL_NAME = parameter;
-      }
-      else if (first.contains("trace")) {
-        TRACE_LIST_NAME = parameter;
-      }
-      else if (first.contains("property")) {
-        PROPERTY = parameter;
-      }
-      else if (first.contains("timeBound")) {
-        TIME_BOUND = Double.parseDouble(parameter);
-      }
-      else if (first.contains("recursionBound")) {
-        MAX_DEPTH = Integer.parseInt(parameter);
-      }
-      else if (first.contains("export")) {
-        if (parameter.contains("storm")) {
-          EXPORT_PRISM = false;
-        }
-        else if (parameter.contains("prism")) {
-          EXPORT_STORM = false;
-        }
-      }
-      else if (first.contains("verbose")) {
-        DO_PRINT = true;
-      }
-    }
-    br.close();
+		String line;
+		while ((line = br.readLine()) != null) {
+		  String first = line.split(" ")[0];
+		  String parameter = "";
+		  if (line.split(" ").length > 1) {
+			parameter = line.split(" ")[1];
+		  }
+		  if (first.contains("model")) {
+			MODEL_NAME = parameter;
+		  }
+		  else if (first.contains("trace")) {
+			TRACE_LIST_NAME = parameter;
+		  }
+		  else if (first.contains("property")) {
+			PROPERTY = parameter;
+		  }
+		  else if (first.contains("timeBound")) {
+			TIME_BOUND = Double.parseDouble(parameter);
+		  }
+		  else if (first.contains("recursionBound")) {
+			MAX_DEPTH = Integer.parseInt(parameter);
+		  }
+		  else if (first.contains("export")) {
+			if (parameter.contains("storm")) {
+			  EXPORT_PRISM = false;
+			}
+			else if (parameter.contains("prism")) {
+			  EXPORT_STORM = false;
+			}
+		  }
+		  else if (first.contains("verbose")) {
+			DO_PRINT = true;
+		  }
+		}
+		br.close();
+	}
+	catch (FileNotFoundException e) {
+		System.out.println("FileNotFoundException Error: " + e.getMessage());
+		System.exit(1);
+	}
+	catch (IOException e) {
+		System.out.println("IOException Error: " + e.getMessage());
+		System.exit(1);
+	}
   }
 
   public int[] getIntVarVals(Object[] varVals) {
