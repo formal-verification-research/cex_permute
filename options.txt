@@ -1,5 +1,5 @@
 model models/8react/model.sm
-trace forprism.trace
+trace paths/other/a.txt
 property G_bg = 50
 recursionBound 30
 export both
