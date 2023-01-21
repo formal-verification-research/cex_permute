@@ -1041,10 +1041,6 @@ public class BuildModel
       if (DO_PRINT) System.out.println("IOException Error: " + e.getMessage());
 			System.exit(1);
     }
-	catch (FileNotFoundException e) {
-      if (DO_PRINT) System.out.println("FileNotFoundException Error: " + e.getMessage());
-			System.exit(1);
-    }
 
   }
 
