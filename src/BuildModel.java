@@ -80,7 +80,7 @@ public class BuildModel
 		  else if (first.contains("property")) {
 			PROPERTY = "";
 			for (int i = 1; i < line.split(" ").length; i++) {
-				PROPERTY += line.split(" ")[i]
+				PROPERTY += line.split(" ")[i];
 			}
 			// PROPERTY = parameter;
 			System.out.println("Property: " + PROPERTY);
