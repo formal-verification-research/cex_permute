@@ -104,7 +104,7 @@ public class BuildModel
 			}
 		  }
 		  else if (first.contains("verbose")) {
-			if (parameter.contains("t") {
+			if (parameter.contains("t")) {
 				DO_PRINT = true;
 				System.out.println("Verbose mode enabled");
 			}
