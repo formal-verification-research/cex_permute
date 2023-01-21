@@ -3,4 +3,4 @@ trace forprism.trace
 property G_bg = 50
 recursionBound 30
 export both
-verbose false
+verbose
