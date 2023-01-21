@@ -62,7 +62,7 @@ public class BuildModel
 		BufferedReader br = new BufferedReader(fr);
     String line;
     while (line = br.readLine() != null) {
-      String option = line.split(" ")[0];
+      String first = line.split(" ")[0];
       String parameter = "";
       if (line.split(" ").length > 1) {
         parameter = line.split(" ")[1];
