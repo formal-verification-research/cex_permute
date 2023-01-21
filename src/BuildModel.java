@@ -61,7 +61,7 @@ public class BuildModel
     FileReader fr = new FileReader(OPTION_FILE);
 		BufferedReader br = new BufferedReader(fr);
     String line;
-    while (line = br.readLine() != null) {
+    while ((line = br.readLine()) != null) {
       String first = line.split(" ")[0];
       String parameter = "";
       if (line.split(" ").length > 1) {
