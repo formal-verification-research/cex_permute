@@ -78,7 +78,11 @@ public class BuildModel
 			System.out.println("Trace List Name: " + TRACE_LIST_NAME);
 		  }
 		  else if (first.contains("property")) {
-			PROPERTY = parameter;
+			PROPERTY = "";
+			for (int i = 1; i < line.split(" ").length; i++) {
+				PROPERTY += line.split(" ")[i]
+			}
+			// PROPERTY = parameter;
 			System.out.println("Property: " + PROPERTY);
 		  }
 		  else if (first.contains("timeBound")) {
