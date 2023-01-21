@@ -104,8 +104,13 @@ public class BuildModel
 			}
 		  }
 		  else if (first.contains("verbose")) {
-			DO_PRINT = true;
-			System.out.println("Verbose mode enabled");
+			if (parameter.contains("t") {
+				DO_PRINT = true;
+				System.out.println("Verbose mode enabled");
+			}
+			else {
+				System.out.println("Verbose mode disabled");
+			}
 		  }
 		}
 		br.close();
