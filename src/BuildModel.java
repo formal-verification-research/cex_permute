@@ -58,7 +58,7 @@ public class BuildModel
 
   // Get options line-by-line
   public void getParams() {
-	if (DO_PRINT) System.out.println("Getting Parameters");
+	System.out.println("Getting Parameters from input file");
 	try {
 		FileReader fr = new FileReader(OPTION_FILE);
 		BufferedReader br = new BufferedReader(fr);
@@ -71,29 +71,37 @@ public class BuildModel
 		  }
 		  if (first.contains("model")) {
 			MODEL_NAME = parameter;
+			System.out.println("Model Name: " + MODEL_NAME);
 		  }
 		  else if (first.contains("trace")) {
 			TRACE_LIST_NAME = parameter;
+			System.out.println("Trace List Name: " + TRACE_LIST_NAME);
 		  }
 		  else if (first.contains("property")) {
 			PROPERTY = parameter;
+			System.out.println("Property: " + PROPERTY);
 		  }
 		  else if (first.contains("timeBound")) {
 			TIME_BOUND = Double.parseDouble(parameter);
+			System.out.println("Time Bound: " + TIME_BOUND);
 		  }
 		  else if (first.contains("recursionBound")) {
 			MAX_DEPTH = Integer.parseInt(parameter);
+			System.out.println("Max Depth: " + MAX_DEPTH);
 		  }
 		  else if (first.contains("export")) {
 			if (parameter.contains("storm")) {
 			  EXPORT_PRISM = false;
+			  System.out.println("Export Storm Only");
 			}
 			else if (parameter.contains("prism")) {
 			  EXPORT_STORM = false;
+			  System.out.println("Export Prism Only");
 			}
 		  }
 		  else if (first.contains("verbose")) {
 			DO_PRINT = true;
+			System.out.println("Verbose mode enabled");
 		  }
 		}
 		br.close();
