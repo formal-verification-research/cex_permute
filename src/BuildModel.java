@@ -58,7 +58,7 @@ public class BuildModel
   }
 
   // Get options line-by-line
-  public void getParams() {
+  public static void getParams() {
 	if (DO_PRINT) System.out.println("Getting Parameters");
 	try {
 		FileReader fr = new FileReader(OPTION_FILE);
