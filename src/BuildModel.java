@@ -53,12 +53,11 @@ public class BuildModel
   // By default, call BuildModel().run()
   public static void main(String[] args)
   {
-	getParams();
     new BuildModel().run();
   }
 
   // Get options line-by-line
-  public static void getParams() {
+  public void getParams() {
 	if (DO_PRINT) System.out.println("Getting Parameters");
 	try {
 		FileReader fr = new FileReader(OPTION_FILE);
@@ -857,8 +856,9 @@ public class BuildModel
   {
     try
     {
-
+	
       System.out.println("Welcome to the model commutation tool.");
+	  getParams();
       // start by resetting the state count
       stateCount = 0;
       
