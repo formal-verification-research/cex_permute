@@ -46,18 +46,20 @@ public class BuildModel
   // Optional parameters
   public int MAX_DEPTH = 30;
   public double TIME_BOUND = 200.0;
-  public boolean DO_PRINT = false;
+  public boolean DO_PRINT = true;
   public boolean EXPORT_PRISM = true;
   public boolean EXPORT_STORM = true;
   
   // By default, call BuildModel().run()
   public static void main(String[] args)
   {
+	getParams();
     new BuildModel().run();
   }
 
   // Get options line-by-line
   public void getParams() {
+	if (DO_PRINT) System.out.println("Getting Parameters");
 	try {
 		FileReader fr = new FileReader(OPTION_FILE);
 		BufferedReader br = new BufferedReader(fr);
