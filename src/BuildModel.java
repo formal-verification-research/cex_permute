@@ -46,7 +46,7 @@ public class BuildModel
   // Optional parameters
   public int MAX_DEPTH = 30;
   public double TIME_BOUND = 200.0;
-  public boolean DO_PRINT = true;
+  public boolean DO_PRINT = false;
   public boolean EXPORT_PRISM = true;
   public boolean EXPORT_STORM = true;
   
