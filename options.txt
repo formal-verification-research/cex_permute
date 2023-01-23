@@ -1,6 +1,6 @@
 model models/8react/model.sm
 trace paths/other/a.txt
 property G_bg = 50
-recursionBound 3
+recursionBound 100
 export both
 verbose

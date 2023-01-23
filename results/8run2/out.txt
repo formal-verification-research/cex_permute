@@ -1,0 +1,22 @@
+PRISM_DIR=/home/bryanti/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Getting Parameters from input file
+Model Name: models/8react/model.sm
+Trace List Name: paths/other/a.txt
+Property: G_bg=50
+Max Depth: 2
+Verbose mode disabled
+Prism model and property loaded succesfully.
+Processed 1 paths with a state count of 1844
+Removed 851 dead-end states and 398 corresponding transitions.
+
+Final Count:
+993 states
+7070 transitions
+
+Establishing an absorbing state.
+New state 993:(-1,-1,-1,-1,-1,-1,-1)
+Begin printing model files.
+Now printing 1 paths to PRISM model files.
+Now printing 1 paths to STORM model files.
+Finished! Processed 1 paths.

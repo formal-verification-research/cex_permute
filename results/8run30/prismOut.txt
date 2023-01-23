@@ -1,0 +1,14 @@
+PRISM
+=====
+
+Version: 4.5
+Date: Mon Jan 23 09:41:20 MST 2023
+Hostname: deeplearning
+Memory limits: cudd=1g, java(heap)=1g
+Command line: prism -importmodel 'results/8run30/prism.tra,sta,lab' -ctmc models/8react/fullPro.csl
+
+Importing model (CTMC) from "results/8run30/prism.tra", "results/8run30/prism.sta", "results/8run30/prism.lab"...
+
+Parsing properties file "models/8react/fullPro.csl"...
+
+Error: Undeclared identifier ("gbg", line 1, column 20).
