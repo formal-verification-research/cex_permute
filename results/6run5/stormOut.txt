@@ -1,0 +1,8 @@
+Storm 1.6.4
+
+Date: Tue Jan 24 12:14:47 2023
+Command line arguments: --explicit storm.tra storm.lab --prop 'P=? [true U[0,100] "target"]'
+Current working directory: /home/bryanti/cex_permute
+
+ERROR (ArgumentValidators.cpp:82): Unable to read from non-existing file 'storm.tra'.
+ERROR (storm.cpp:21): An exception caused Storm to terminate. The message of the exception is: IllegalArgumentValueException: Unable to read from non-existing file 'storm.tra'.

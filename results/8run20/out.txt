@@ -4,18 +4,17 @@ Getting Parameters from input file
 Model Name: models/8react/model.sm
 Trace List Name: paths/other/a.txt
 Property: G_bg=50
-Max Depth: 20
 Verbose mode disabled
 Prism model and property loaded succesfully.
-Processed 1 paths with a state count of 13592
-Removed 2498 dead-end states and 5140 corresponding transitions.
+Processed 1 paths with a state count of 24643
+Removed 3501 dead-end states and 9777 corresponding transitions.
 
 Final Count:
-11094 states
-112924 transitions
+21142 states
+213251 transitions
 
 Establishing an absorbing state.
-New state 11094:(-1,-1,-1,-1,-1,-1,-1)
+New state 21142:(-1,-1,-1,-1,-1,-1,-1)
 Begin printing model files.
 Now printing 1 paths to PRISM model files.
 Now printing 1 paths to STORM model files.

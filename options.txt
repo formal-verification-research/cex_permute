@@ -1,6 +1,6 @@
-model models/8react/model.sm
-trace paths/other/a.txt
-property G_bg = 50
-recursionBound 100
+model models/2react/model.sm
+trace paths/other/2trace_list.txt
+property s2 >= 80
+recursion bound 100
 export both
 verbose

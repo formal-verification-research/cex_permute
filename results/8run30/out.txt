@@ -4,7 +4,6 @@ Getting Parameters from input file
 Model Name: models/8react/model.sm
 Trace List Name: paths/other/a.txt
 Property: G_bg=50
-Max Depth: 30
 Verbose mode disabled
 Prism model and property loaded succesfully.
 Processed 1 paths with a state count of 24643
