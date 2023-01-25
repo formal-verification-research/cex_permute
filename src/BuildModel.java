@@ -362,6 +362,8 @@ public class BuildModel
       
       State zeroState = new State(numStateVariables);
       
+
+      // TODO: Maybe we can do something more clever than just setting them to 5
       for (int i = 0; i < numStateVariables; i++) {
         zeroState.setValue(i, 5);
       }
@@ -372,10 +374,15 @@ public class BuildModel
       System.out.println("Zero State: " + zeroState);
       
       System.out.printf("Getting reaction list: ");
-      
+
+      ArrayList<String> reactionList = new ArrayList<String>();
+      String r;
+
       // Compare our transition string with available transition strings
       for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
-        System.out.printf("%s ", sim.getTransitionActionString(sim_tran));
+        r = sim.getTransitionActionString(sim_tran)
+        System.out.printf("%s ", r);
+        reactionList.append(r);
         // if (prefix[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
         //   transitionIndex = sim_tran;
         //   newTranRate = sim.getTransitionProbability(sim_tran);
@@ -390,6 +397,7 @@ public class BuildModel
       // // Take the transition
       // sim.manualTransition(transitionIndex);
 
+      System.out.println(reactionList);
 
       System.out.println(" ");
       System.out.println("\n----------------------------------");
