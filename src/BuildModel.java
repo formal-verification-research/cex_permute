@@ -355,7 +355,7 @@ public class BuildModel
   // and also https://github.com/prismmodelchecker/prism/blob/master/prism/src/simulator/SimulatorEngine.java
   public void addCycles(Prism prism) {
 
-    State zeroState = new State(numStateVariables);
+    State zeroState = State(numStateVariables);
     for (int i = 0; i < numStateVariables; i++) {
       zeroState.setValue(5);
     }
