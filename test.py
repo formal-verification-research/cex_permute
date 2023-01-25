@@ -30,4 +30,4 @@ os.system(f"/usr/bin/time -o results/{directory}/prismTime.txt prism -importmode
 
 
 
-os.system(f"""/usr/bin/time -o results/{directory}/stormTime.txt storm --explicit storm.tra storm.lab --prop 'P=? [true U[0,{timeUnits}] "target"]' > results/{directory}/stormOut.txt""")
+os.system(f"""/usr/bin/time -o results/{directory}/stormTime.txt storm --explicit results/{directory}/storm.tra results/{directory}/storm.lab --prop 'P=? [true U[0,{timeUnits}] "target"]' > results/{directory}/stormOut.txt""")
