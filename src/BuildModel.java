@@ -356,16 +356,45 @@ public class BuildModel
   public void addCycles(Prism prism) {
     try {
 
+      System.out.println("\n----------------------------------")
+      System.out.println("Begin Cycles")
+      System.out.println("----------------------------------\n")
+      
       State zeroState = new State(numStateVariables);
-  
+      
       for (int i = 0; i < numStateVariables; i++) {
         zeroState.setValue(i, 5);
       }
       SimulatorEngine sim = prism.getSimulator();
       sim.createNewPath();
       sim.initialisePath(zeroState);
-  
+      
       System.out.println("Zero State: " + zeroState);
+      
+      System.out.printf("Getting reaction list: ");
+      
+      // Compare our transition string with available transition strings
+      for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+        System.out.printf("%s ", sim.getTransitionActionString(sim_tran));
+        // if (prefix[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
+        //   transitionIndex = sim_tran;
+        //   newTranRate = sim.getTransitionProbability(sim_tran);
+        // }
+      }
+      // // If we never found the correct transitions, report error
+      // if (transitionIndex == -1) {
+      //   System.out.printf("ERROR: Prefix transition not available from current state: ");
+      //   System.out.println(sim.getCurrentState());
+      //   System.exit(10001);
+      // }
+      // // Take the transition
+      // sim.manualTransition(transitionIndex);
+
+
+      System.out.println(" ")
+      System.out.println("\n----------------------------------")
+      System.out.println("End Cycles")
+      System.out.println("----------------------------------\n")
     }
     // Catch exceptions and give user the info
     catch (PrismException e) {
