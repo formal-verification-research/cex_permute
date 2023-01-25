@@ -1034,7 +1034,7 @@ public class BuildModel
 
       System.out.printf("Processed %d paths with a state count of %d\n", numPaths, stateCount);
 
-      addCycles();
+      addCycles(prism);
 
       removeDeadEnds();
       
