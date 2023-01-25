@@ -380,7 +380,7 @@ public class BuildModel
 
       // Compare our transition string with available transition strings
       for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
-        r = sim.getTransitionActionString(sim_tran)
+        r = sim.getTransitionActionString(sim_tran);
         System.out.printf("%s ", r);
         reactionList.append(r);
         // if (prefix[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
