@@ -356,9 +356,9 @@ public class BuildModel
   public void addCycles(Prism prism) {
     try {
 
-      System.out.println("\n----------------------------------")
-      System.out.println("Begin Cycles")
-      System.out.println("----------------------------------\n")
+      System.out.println("\n----------------------------------");
+      System.out.println("Begin Cycles");
+      System.out.println("----------------------------------\n");
       
       State zeroState = new State(numStateVariables);
       
@@ -391,10 +391,10 @@ public class BuildModel
       // sim.manualTransition(transitionIndex);
 
 
-      System.out.println(" ")
-      System.out.println("\n----------------------------------")
-      System.out.println("End Cycles")
-      System.out.println("----------------------------------\n")
+      System.out.println(" ");
+      System.out.println("\n----------------------------------");
+      System.out.println("End Cycles");
+      System.out.println("----------------------------------\n");
     }
     // Catch exceptions and give user the info
     catch (PrismException e) {
