@@ -355,9 +355,10 @@ public class BuildModel
   // and also https://github.com/prismmodelchecker/prism/blob/master/prism/src/simulator/SimulatorEngine.java
   public void addCycles(Prism prism) {
 
-    State zeroState = State(numStateVariables);
+    State zeroState = new State(numStateVariables);
+
     for (int i = 0; i < numStateVariables; i++) {
-      zeroState.setValue(5);
+      zeroState.setValue(i, 5);
     }
     SimulatorEngine sim = prism.getSimulator();
     sim.createNewPath();
@@ -618,7 +619,7 @@ public class BuildModel
         // figure out what state to link here
         My_State stateToAdd = null;
         if (indexOfFoundState == -1) {
-          stateToAdd = new State(sim.getCurrentState().varValues);
+          stateToAdd = new My_State(sim.getCurrentState().varValues);
         }
         else {
           stateToAdd = stateList.get(indexOfFoundState);
