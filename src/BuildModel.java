@@ -347,24 +347,31 @@ public class BuildModel
   }
 
   public boolean isCycle(Prism prism, String transitions) {
-
+    return false;
   }
 
   // add cycles master function
   // relies heavily on https://github.com/prismmodelchecker/prism/blob/master/prism/src/parser/State.java
   // and also https://github.com/prismmodelchecker/prism/blob/master/prism/src/simulator/SimulatorEngine.java
   public void addCycles(Prism prism) {
+    try {
 
-    State zeroState = new State(numStateVariables);
-
-    for (int i = 0; i < numStateVariables; i++) {
-      zeroState.setValue(i, 5);
+      State zeroState = new State(numStateVariables);
+  
+      for (int i = 0; i < numStateVariables; i++) {
+        zeroState.setValue(i, 5);
+      }
+      SimulatorEngine sim = prism.getSimulator();
+      sim.createNewPath();
+      sim.initialisePath(zeroState);
+  
+      System.out.println("Zero State: " + zeroState);
     }
-    SimulatorEngine sim = prism.getSimulator();
-    sim.createNewPath();
-    sim.initialisePath(zeroState);
-
-    System.out.println("Zero State: " + zeroState);
+    // Catch exceptions and give user the info
+    catch (PrismException e) {
+			if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
+			System.exit(1);
+		}
 
   }
 
