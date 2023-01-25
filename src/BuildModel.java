@@ -49,6 +49,9 @@ public class BuildModel
   public boolean DO_PRINT = false;
   public boolean EXPORT_PRISM = true;
   public boolean EXPORT_STORM = true;
+  public double FLEXIBILITY = 1.0f;
+  public boolean TERMINATE_TIME = true;
+  public boolean TERMINATE_DEPTH = true;
   
   // By default, call BuildModel().run()
   public static void main(String[] args)
@@ -56,7 +59,6 @@ public class BuildModel
     new BuildModel().run();
   }
 
-  // Get options line-by-line
   public void getParams() {
 	System.out.println("Getting Parameters from input file");
 	try {
@@ -104,15 +106,34 @@ public class BuildModel
 			}
 		  }
 		  else if (first.contains("verbose")) {
-			if (parameter.contains("t")) {
-				DO_PRINT = true;
-				System.out.println("Verbose mode enabled");
-			}
-			else {
-				System.out.println("Verbose mode disabled");
-			}
+        if (parameter.contains("t")) {
+          DO_PRINT = true;
+          System.out.println("Verbose mode enabled");
+        }
+        else {
+          System.out.println("Verbose mode disabled");
+        }
 		  }
+      else if (first.contains("terminate")) {
+        if (parameter.contains("time")) {
+          TERMINATE_DEPTH = false;
+          System.out.println("Terminating with time bound");
+        }
+        else if (parameter.contains("depth")) {
+          TERMINATE_TIME = false;
+          System.out.println("Terminating with depth bound");
+        }
+        else {
+          System.out.println("Terminating with time and depth, whichever comes first");
+        }
+		  }
+      else if (first.contains("flexibility")) {
+        FLEXIBILITY = Double.parseDouble(parameter);
+        System.out.println("Flexibility: " + FLEXIBILITY);
+      }
 		}
+    if (TERMINATE_TIME) TIME_BOUND = TIME_BOUND * FLEXIBILITY;
+    if (TERMINATE_TIME) System.out.println("Terminating recursion at a time bound of " + TIME_BOUND);
 		br.close();
 	}
 	catch (FileNotFoundException e) {
@@ -196,6 +217,10 @@ public class BuildModel
       if (DO_PRINT) System.out.printf("New state %s", this.prismSTA());
     }
     
+    public double getMRT() {
+      return 1.0f / totalOutgoingRate;
+    }
+
     public State(int varVals[]) {
       this.isTarget = false;
       this.isNewInit = false;
@@ -302,6 +327,7 @@ public class BuildModel
   public class Path {
     public ArrayList<State> states;
     public ArrayList<String> commutable;
+    public double pathMRT;
     public Path() {
       this.states = new ArrayList<State>();
       this.commutable = new ArrayList<String>();
@@ -372,13 +398,13 @@ public class BuildModel
       foundStateVar = false;
       for (int i = 0; i < cur.children.size(); i++) { // new states have 0 kids anyway
         if (cur.children.get(i).value == varVals[stateVar]) {
-          if (DO_PRINT) {
-            System.out.printf("\nM(");
-            for (int aa = 0; aa < cur.children.get(i).stateIndices.size(); aa++) {
-              System.out.printf("%s.", cur.children.get(i).stateIndices.get(aa));
-            }
-            System.out.printf(") %d and %d", varVals[stateVar], cur.children.get(i).value);
-          }
+          // if (DO_PRINT) {
+          //   System.out.printf("\nM(");
+          //   for (int aa = 0; aa < cur.children.get(i).stateIndices.size(); aa++) {
+          //     System.out.printf("%s.", cur.children.get(i).stateIndices.get(aa));
+          //   }
+          //   System.out.printf(") %d and %d", varVals[stateVar], cur.children.get(i).value);
+          // }
           cur = cur.children.get(i);
           foundStateVar = true;
           // add all the possibilities as an intersection
@@ -481,8 +507,8 @@ public class BuildModel
   {
     try {
       
-      if (depth > MAX_DEPTH) {
-        if (DO_PRINT) System.out.println("Max recursion depth reached.");
+      if (TERMINATE_DEPTH && depth > MAX_DEPTH) {
+        System.out.println("Max recursion depth reached.");
         return;
       }
       
@@ -530,7 +556,9 @@ public class BuildModel
       
       // Walk along the prefix to get the new initial state
       int prefixLength = 0;
+      double prefixTime = 0.0f;
       if (prefix != null) prefixLength = prefix.length;
+      if (DO_PRINT) System.out.println("Prefix Length is " + prefixLength);
       for (int path_tran = 0; path_tran < prefixLength; path_tran++) {
 
         if (DO_PRINT) System.out.printf("Intermediate Prefix State is %s", currentState.prismSTA());
@@ -559,10 +587,13 @@ public class BuildModel
 
         // update the total outgoing rate of the current state
         currentState.totalOutgoingRate = totalOutgoingRate;
+
+        // Update the prefix time duration and report
+        if (TERMINATE_TIME) prefixTime += currentState.getMRT();
         
         // Check if the state exists yet
         indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
-
+        
         
         // figure out what state to link here
         State stateToAdd = null;
@@ -579,19 +610,22 @@ public class BuildModel
         }
         // add the transition to the discovered state
         currentState.nextStates.add(stateToAdd);
-        Transition newTrans = new Transition(transitionIndex, transitions[path_tran], currentState.index, stateToAdd.index, newTranRate);
+        Transition newTrans = new Transition(transitionIndex, prefix[path_tran], currentState.index, stateToAdd.index, newTranRate);
         currentState.outgoingTrans.add(newTrans);
         
         // walk along the trace
         currentState = stateToAdd;
         
+        
+        
       } // end walk along path prefix
-
+      
+      
       if (DO_PRINT) System.out.println("Successfully walked along trace prefix (set of commuted transitions)");
-
+      
       if (DO_PRINT) System.out.printf("Prefix Terminal State is %s", currentState.prismSTA());
       if (DO_PRINT) System.out.printf("At sim state %s\n", sim.getCurrentState());
-      
+            
       // if we already end up in a known state after the prefix, end it here
       if (indexOfFoundState != -1 && currentState.isNewInit) {
         // if (DO_PRINT) System.out.println("Prefix Terminal State Exists. End Recursion Branch.\n");
@@ -601,6 +635,8 @@ public class BuildModel
         // System.out.printf("Jumped to state %s", currentState.prismSTA());
         return;
       }
+      
+      if (DO_PRINT && TERMINATE_TIME) System.out.println("Prefix time is " + prefixTime);
 
       // Mark we have a new "path initial state", as it were
       currentState.isNewInit = true;
@@ -615,6 +651,9 @@ public class BuildModel
       for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
         seedPath.commutable.add(sim.getTransitionActionString(sim_tran));
       }
+
+      // start saving the path time
+      double pathTime = 0.0f;
 
       // Walk along the actual trace, making new states
       // and getting commutable transitions
@@ -653,6 +692,10 @@ public class BuildModel
         // update the total outgoing rate of the current state
         currentState.totalOutgoingRate = totalOutgoingRate;
 
+        // update the path time and report
+        if (TERMINATE_TIME) pathTime += currentState.getMRT();
+        
+        
         // Check if the state exists yet
         indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
         if (DO_PRINT && indexOfFoundState == -1) {
@@ -683,14 +726,14 @@ public class BuildModel
         
         // save the current state into the path
         seedPath.states.add(currentState);
-
+        
         // if we have reached the target 
         if (target.evaluateBoolean(sim.getCurrentState())) {
           if (DO_PRINT) System.out.println("Target Reached");
           stateToAdd.isTarget = true;
           seedPath.states.add(stateToAdd);
         }
-
+        
         // walk along the trace
         currentState = stateToAdd;
         
@@ -706,6 +749,15 @@ public class BuildModel
         
       } // end walk along actual trace
 
+      if (DO_PRINT && TERMINATE_TIME) System.out.println("Path time is " + pathTime);
+      if (DO_PRINT || TERMINATE_TIME) System.out.printf("Mean Time for Prefix %2.6f \tPath %2.6f\tTotal %2.6f\n", prefixTime, pathTime, (prefixTime + pathTime));
+
+      // end recursion based on mean residence time
+      if (TERMINATE_TIME && ((prefixTime + pathTime) > TIME_BOUND)) {
+        System.out.println("Reached time bound recursion threshold at depth " + depth);
+        return;
+      }
+
       if (DO_PRINT)  {
         System.out.println("One path explored: ");
         for (int i = 0; i < seedPath.states.size(); i++) {
@@ -715,13 +767,13 @@ public class BuildModel
       }
       // NOTE:
       // commutable transitions are now stored in seedPath.commutable.
-
+      
       //
       //
       // COMMUTING TRANSITIONS FIRST ALONG THE CURRENT SAVED SEED PATH
       //
       //
-
+      
       // sim.backtrackTo(seedPath.states.size()-0);
       // System.out.println("Backtrack seedPath.states.size()-0: " + sim.getCurrentState());
       // sim.backtrackTo(seedPath.states.size()-1);
@@ -825,7 +877,7 @@ public class BuildModel
       }
 
       // commute if we're within depth bounds
-      if (depth < MAX_DEPTH) {
+      if ((TERMINATE_DEPTH && depth < MAX_DEPTH) || (TERMINATE_TIME && ((pathTime + prefixTime) < TIME_BOUND))) {
         // for each commutable transition
         for (int ctran = 0; ctran < seedPath.commutable.size(); ctran++) {
 

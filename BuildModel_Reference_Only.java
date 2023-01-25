@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.xml.transform.Source;
+
 // PRISM Parser things
 import parser.Values;
 import parser.ast.Expression;
@@ -33,944 +35,1023 @@ import simulator.SimulatorEngine;
 public class BuildModel
 {
 
-  // Maximum recursion depth
-  public static final int MAX_DEPTH = 2;
-  // turn off printing to save time
-  public static final boolean DO_PRINT = false;
+  // User-passed parameter file, see docs/tool/input.md
+  public static final String OPTION_FILE = "options.txt";
+  
+  // Required parameters
+  public String MODEL_NAME = "model.sm";
+  public String TRACE_LIST_NAME = "forprism.trace";
+  public String PROPERTY = "A=100";
 
+  // Optional parameters
+  public int MAX_DEPTH = 30;
+  public double TIME_BOUND = 200.0;
+  public boolean DO_PRINT = false;
+  public boolean EXPORT_PRISM = true;
+  public boolean EXPORT_STORM = true;
+  
   // By default, call BuildModel().run()
   public static void main(String[] args)
   {
     new BuildModel().run();
   }
 
-  // Store the transitions in their own objects
-  public class Transition {
-    public int from; // transition from this state index
-    public int to; // transition to this state index
-    public double rate; // rate for this transition
-    public int transitionIndex = 0; // if a transition index is assigned, it goes here
-    public String transitionName = "t"; // human-readable name of this transition
-
-    // Initialization function, nothing fancy
-    public Transition(int f, int t, double r, int i, String n) {
-      this.from = f;
-      this.to = t;
-      this.rate = r;
-      this.transitionIndex = i;
-      this.transitionName = n;
-    }
-
-    // Custom string output to give the most detail
-    @Override
-    public String toString() {
-      return this.from + " " + this.to + " " + this.rate + " (" + this.transitionIndex + "_" + this.transitionName;
-    }
-
-    // Output the transition to go in the .tra output file
-    // The format for .tra files is <from> <to> <rate>
-    public String prism() {
-      // subtract 1 from the indices so that the initial state can be 1,
-      // not 0, but PRISM can read it in as state 0.
-      // return (this.from-1) + " " + (this.to-1) + " " + this.rate;
-      return (this.from) + " " + (this.to) + " " + this.rate;
-    }
-
+  // Get options line-by-line
+  public void getParams() {
+	System.out.println("Getting Parameters from input file");
+	try {
+		FileReader fr = new FileReader(OPTION_FILE);
+		BufferedReader br = new BufferedReader(fr);
+		String line;
+		while ((line = br.readLine()) != null) {
+		  String first = line.split(" ")[0];
+		  String parameter = "";
+		  if (line.split(" ").length > 1) {
+			parameter = line.split(" ")[1];
+		  }
+		  if (first.contains("model")) {
+			MODEL_NAME = parameter;
+			System.out.println("Model Name: " + MODEL_NAME);
+		  }
+		  else if (first.contains("trace")) {
+			TRACE_LIST_NAME = parameter;
+			System.out.println("Trace List Name: " + TRACE_LIST_NAME);
+		  }
+		  else if (first.contains("property")) {
+			PROPERTY = "";
+			for (int i = 1; i < line.split(" ").length; i++) {
+				PROPERTY += line.split(" ")[i];
+			}
+			// PROPERTY = parameter;
+			System.out.println("Property: " + PROPERTY);
+		  }
+		  else if (first.contains("timeBound")) {
+			TIME_BOUND = Double.parseDouble(parameter);
+			System.out.println("Time Bound: " + TIME_BOUND);
+		  }
+		  else if (first.contains("recursionBound")) {
+			MAX_DEPTH = Integer.parseInt(parameter);
+			System.out.println("Max Depth: " + MAX_DEPTH);
+		  }
+		  else if (first.contains("export")) {
+			if (parameter.contains("storm")) {
+			  EXPORT_PRISM = false;
+			  System.out.println("Export Storm Only");
+			}
+			else if (parameter.contains("prism")) {
+			  EXPORT_STORM = false;
+			  System.out.println("Export Prism Only");
+			}
+		  }
+		  else if (first.contains("verbose")) {
+			if (parameter.contains("t")) {
+				DO_PRINT = true;
+				System.out.println("Verbose mode enabled");
+			}
+			else {
+				System.out.println("Verbose mode disabled");
+			}
+		  }
+		}
+		br.close();
+	}
+	catch (FileNotFoundException e) {
+		System.out.println("FileNotFoundException Error: " + e.getMessage());
+		System.exit(1);
+	}
+	catch (IOException e) {
+		System.out.println("IOException Error: " + e.getMessage());
+		System.exit(1);
+	}
   }
 
-  // Store states in their own objects
+  public int[] getIntVarVals(Object[] varVals) {
+    int[] retArr = new int[varVals.length];
+    // System.out.printf("getIntVarVals:");
+    for (int i = 0; i < varVals.length; i++) {
+      // Check if Object is an Integer or a String, handle appropriately
+      if (varVals[i] instanceof Integer) {
+        retArr[i] = (Integer) varVals[i];
+        // System.out.printf(" I_%03d", retArr[i]);
+        // intVars.add((Integer) vars.get(i));
+      }
+      else if (varVals[i] instanceof String) {
+        retArr[i] = Integer.parseInt((String) varVals[i]);
+        // System.out.printf(" S_%03d", retArr[i]);
+        // intVars.add(Integer.parseInt((String) vars.get(i)));
+      }
+    }
+    // System.out.println(".");
+    return retArr;
+  }
+
+  // global running state index
+  public int stateCount;
+  public int transitionCount;
+
+  // transition objects store the in-place index and the string name
+  // for a state's outgoing transition in a single object.
+  public class Transition {
+    public int prismIndex;
+    public int from;
+    public int to;
+    public double rate;
+    public String name;
+    public Transition(int prismIndex, String name, int from, int to, double rate) {
+      this.prismIndex = prismIndex;
+      this.name = name;
+      this.from = from;
+      this.to = to;
+      this.rate = rate;
+      transitionCount++;
+    }
+    public String prismTRA() {
+      return (this.from) + " " + (this.to) + " " + (this.rate) + "\n";
+    }
+  }
+
+  // global variable to store number of state variables
+  public int numStateVariables;
+
+  // state objects store the bulk of information about the model
   public class State {
-    public int index; // State index
-    public ArrayList<Integer> vars; // State variable values
-    public double totalRate; // Total outgoing rate at this state
-    public ArrayList<String> enabled; // Set of enabled outgoing transitions
-    public ArrayList<Transition> outgoing; // Set of saved outgoing transitions
+    public int index;
+    public int[] stateVars;
+    public double totalOutgoingRate;
+    public ArrayList<Transition> outgoingTrans;
+    public ArrayList<State> nextStates;
+    public boolean isTarget;
+    public boolean isNewInit;
 
-    // Initialize a state, nothing fancy here
-    public State(int index, ArrayList<Integer> vars, double totalRate) {
-      this.index = index;
-      this.vars = vars;
-      this.totalRate = totalRate;
-      this.enabled = new ArrayList<String>();
-      this.outgoing = new ArrayList<Transition>();
+    public State(Object varVals[]) {
+      this.isTarget = false;
+      this.isNewInit = false;
+      this.index = stateCount;
+      stateCount++;
+      this.stateVars = getIntVarVals(varVals);
+      this.totalOutgoingRate = 0.0;
+      this.outgoingTrans = new ArrayList<Transition>();
+      this.nextStates = new ArrayList<State>();
+      stateList.add(this);
+      if (DO_PRINT) System.out.printf("New state %s", this.prismSTA());
     }
-
-    // State details for printing
-    @Override
-    public String toString() {
-      String temp = index + " [";
-      for (int i=0; i<vars.size(); i++) {
-        if (i>0) temp += ",";
-        temp += vars.get(i); 
+    
+    public State(int varVals[]) {
+      this.isTarget = false;
+      this.isNewInit = false;
+      this.index = stateCount;
+      stateCount++;
+      this.stateVars = new int[numStateVariables];
+      for (int i = 0; i < numStateVariables; i++) {
+        this.stateVars[i] = varVals[i];
       }
-      temp += ("] (" + totalRate + ")");
-      temp += (" + en " + enabled + "\n");
-      return temp;
+      this.totalOutgoingRate = 0.0;
+      this.outgoingTrans = new ArrayList<Transition>();
+      this.nextStates = new ArrayList<State>();
+      stateList.add(this);
+      System.out.printf("New state %s", this.prismSTA());
     }
 
-    // State details for .sta files
-    // Format is <index>:(<state_var>,<state_var>...)
-    public String prism() {
-      String temp = (index) + ":(";
-      for (int i=0; i<vars.size(); i++) {
-        if (i>0) temp += ",";
-        temp += vars.get(i); 
-      }
-      return temp + ")";
-    }
-
-    // Add to the total outgoing rate, and return the new total rate
-    public double addRate(double p) {
-      this.totalRate += p;
-      return this.totalRate;
-    }
-
-    // Check if state variables are all equal (i.e. equivalent states)
-    public boolean equals(State s) {
-      // Different length clearly indicates a difference
-      if (this.vars.size() != s.vars.size()) return false;
-      // Check each value one-by-one
-      for (int i=0; i<this.vars.size(); i++) {
-        if (this.vars.get(i) != s.vars.get(i)) return false;
-      }
-      return true;
-    }
-
-    // Add an outgoing transition to the list
-    public void addTransition(int to, double rate, int transitionIndex, String transitionName) {
-      if (rate > 0.0) { // Experimental: Only add transition if the rate is nonzero
-        outgoing.add(new Transition(this.index, to, rate, transitionIndex, transitionName));
-      }
-    }
-
-    // Get the rate of transitions into the absorbing state
-    // absRate = (total rate) - (sum of outgoing rates)
+    // get outgoing rate not captured by notated transitions
     public double getAbsorbingRate() {
-      double absorbRate = this.totalRate;
-      for (int i = 0; i < outgoing.size(); i++) {
-        absorbRate -= outgoing.get(i).rate;
+      double absorbRate = this.totalOutgoingRate;
+      for (int i = 0; i < this.outgoingTrans.size(); i++) {
+        absorbRate -= this.outgoingTrans.get(i).rate;
       }
       return absorbRate;
     }
 
-    // Add an enabled transition to the list
-    public void addEnabled(String transition_name) {
-      enabled.add(transition_name);
+    // State details for .sta files
+    // Format is <index>:(<state_var>,<state_var>...)
+    public String prismSTA() {
+      String temp = (index) + ":(";
+      for (int i=0; i<numStateVariables; i++) {
+        if (i>0) temp += ",";
+        temp += stateVars[i]; 
+      }
+      return temp + ")\n";
     }
+
+    // State details for .tra files
+    // Format is <index>:(<state_var>,<state_var>...)
+    public String prismTRA() {
+      String temp = "";
+      for (int i=0; i<this.outgoingTrans.size(); i++) {
+        temp += this.outgoingTrans.get(i).prismTRA(); 
+      }
+      return temp;
+    }
+
   }
 
-  // Store a path in an object
-  public class Path {
+  public ArrayList<State> stateList = new ArrayList<State>();
+
+  public void removeDeadEnds() {
+    int s = 0;
+    int statesRemoved = 0;
+    int transitionsRemoved = 0;
+    boolean deadEndsExist = false;
     
-    public int firstState; // first state index
-    public int lastState; // last state index
-    public ArrayList<String> prefix; // list of commutable transitions
-    public ArrayList<String> commutable; // list of commutable transitions
+    do {
+      deadEndsExist = false;
 
-    // Initialization function, nothing fancy
-    public Path(int firstState, int lastState) {
-      this.firstState = firstState;
-      this.lastState = lastState;
-      this.prefix = new ArrayList<String>();
-      this.commutable = new ArrayList<String>();
-    }
-
-    // Initialization function WITH PREFIX, nothing fancy
-    public Path(int firstState, int lastState, ArrayList<String> prefix) {
-      this.firstState = firstState;
-      this.lastState = lastState;
-      this.prefix = prefix;
-      this.commutable = new ArrayList<String>();
-    }
-
-    // Find the intersection of states
-    public void findCommutable(ArrayList<State> states) {
-      // Initialize the arraylists for checking
-      if (DO_PRINT) System.out.println("Starting findCommutable on " + this);
-      ArrayList<String> wasEnabled = new ArrayList<String>();
-      ArrayList<String> isEnabled = states.get(this.firstState).enabled;
-      // System.out.println("wasEnabled: " + wasEnabled);
-      // System.out.println("isEnabled: " + isEnabled);
-      // Loop through the states to check enabled
-      for (int i = this.firstState + 1; i < this.lastState; i++) {
-        wasEnabled = isEnabled;
-        isEnabled = new ArrayList<String>();
-        // System.out.println("wasEnabled: " + wasEnabled);
-        // System.out.println("isEnabled: " + isEnabled);
-        for (int j = 0; j < states.get(i).enabled.size(); j++) {
-          // If the last enabled transitions contain the transition
-          if (wasEnabled.contains(states.get(i).enabled.get(j))) {
-            isEnabled.add(states.get(i).enabled.get(j));
+      while (s < stateList.size()) {
+        stateList.get(s).index = s;
+        if (stateList.get(s).isTarget) {
+          s++;
+          continue;
+        }
+        for (int t = 0; t < stateList.get(s).outgoingTrans.size();) {
+          if (stateList.get(s).outgoingTrans.get(t).to >= stateCount) {
+            if (DO_PRINT) System.out.println("Removing transition to state " + stateList.get(s).outgoingTrans.get(t).to);
+            stateList.get(s).outgoingTrans.remove(t);
+            transitionCount--;
+            transitionsRemoved++;
+            deadEndsExist = true;
+          }
+          else {
+            t++;
           }
         }
-      }
-      this.commutable = isEnabled;
-      if (DO_PRINT) System.out.println("Commutable transitions at this point: " + this.commutable + " on " + this);
-    }
-
-    // Remove a commutable (because it doesn't work)
-    public void removeCommutable(int c) {
-      commutable.remove(c);
-      if (DO_PRINT) System.out.println("Removed commutable at index " + c + " because it did not work.");
-    }
-
-    // Custom string output to give the most detail
-    @Override
-    public String toString() {
-      return "Path object spanning state " + this.firstState + " through state " + this.lastState + " with commutable transitions " + commutable.toString();
-    }
-
-  }
-
-  // Store model information in an object
-  public class Model {
-    
-    public int stateCount;
-    public int currentState;
-    public int lastPathEnded;
-    public ArrayList<State> states;
-    
-    public int n;
-
-    public int pathCount;
-    public ArrayList<Path> paths;
-
-    public int absorbingIndex;
-
-    // Initialization function, nothing fancy
-    public Model() {
-      this.stateCount = 0;
-      this.currentState = -1;
-      this.lastPathEnded = 0;
-      this.n = 0;
-      this.pathCount = 0;
-      this.states = new ArrayList<State>();
-      this.paths = new ArrayList<Path>();
-      this.absorbingIndex = -1;
-    }
-    
-    public void setN(int n) {
-      this.n = n;
-    }
-
-    // Create a new state with a new index
-    public void addState(ArrayList<Object> vars, double totalRate) {
-      ArrayList<Integer> intVars = new ArrayList<Integer>();
-      for (int i = 0; i < vars.size(); i++) {
-        // Check if Object is an Integer or a String, handle appropriately
-        if (vars.get(i) instanceof Integer) {
-          intVars.add((Integer) vars.get(i));
+        if (stateList.get(s).outgoingTrans.size() == 0) {
+          if (DO_PRINT) System.out.println("Removing state " + s);
+          stateList.remove(s);
+          stateCount--;
+          statesRemoved++;
+          deadEndsExist = true;
         }
-        else if (vars.get(i) instanceof String) {
-          intVars.add(Integer.parseInt((String) vars.get(i)));
+        else {
+          s++;
         }
       }
-      this.states.add(new State(stateCount, intVars, totalRate));
-      stateCount++;
-      currentState++;
-    }
-
-    // Add to the total rate of the current state
-    public void addRateToCurrentState(double rate) {
-      states.get(currentState).addRate(rate);
-      // System.out.println("Added rate " + rate + " to state " + currentState);
-    }
-    
-    // Add to the enabled transitions of the current state
-    public void addEnabledToCurrentState(String transition) {
-      states.get(currentState).addEnabled(transition);
-      // System.out.println("Added enabled transition " + transition + " to state " + currentState);
-      // System.out.println("Enabled transitions at state " + currentState + " are now " + states.get(currentState).enabled);
-    }
-
-    // Add a one-step transition to the current state
-    public void addSimpleTransition(int index, String name, double rate) {
-      states.get(currentState).addTransition(currentState + 1, rate, index, name);
-    }
-    
-    // Add a more complicated transition
-    public void addTransition(int from, int to, int index, String name, double rate) {
-      states.get(from).addTransition(to, rate, index, name);
-    }
-
-    // Make a seed path object
-    public void addPath() {
-      this.paths.add(new Path(lastPathEnded, currentState));
-      lastPathEnded = currentState + 1;
-      pathCount++;
-    }
-
-    // Make a seed path object WITH PREFIX
-    public void addPath(ArrayList<String> prefix) {
-      this.paths.add(new Path(lastPathEnded, currentState, prefix));
-      lastPathEnded = currentState + 1;
-      pathCount++;
-    }
-
-    // Check for and merge duplicate states (do this at the end,
-    //  BEFORE we create the absorbing state)
-    // This algorithm was not designed to work once the absorbing state 
-    //  calculations are complete.
-    public void mergeDuplicates() {
-      // for (int i = 0; i < this.states.size(); i++) { // loop through states
-        // System.out.println("State " + i + " outgoing size = " + this.states.get(i).outgoing.size() );
-      //   for (int j = 0; j < this.states.get(i).outgoing.size(); j++) {
-          // System.out.printf("_to %d_ ", this.states.get(i).outgoing.get(j).to);
+  
+      // int t;
+      // for (s = 0; s < stateList.size(); s++) {
+      //   for (t = 0; t < stateList.get(s).outgoingTrans.size(); t++) {
+      //     if (stateList.get(s).outgoingTrans.get(t).to > stateList.size()) {
+      //       stateList.get(s).outgoingTrans.remove(t);
+      //       System.out.println("Removed transition to state " + stateList.get(s).outgoingTrans.get(t).to);
+      //     }
       //   }
-      //   System.out.println("");
       // }
-      for (int i = 0; i < this.states.size(); i++) { // loop through states
-        for (int j = i+1; j < this.states.size(); j++) { // loop through comparable states
-          if (this.states.get(i).equals(this.states.get(j))) { // if states are equal
-            if (DO_PRINT) System.out.println("State " + i + " equals state " + j);
+    } while (deadEndsExist);
 
-            // TODO: Guarantee other attributes are equivalent
+    System.out.printf("Removed %d dead-end states and %d corresponding transitions.\n", statesRemoved, transitionsRemoved);
+  }
 
-            // Combine the outgoing transitions into one set in state i
-            for (int k = 0; k < this.states.get(j).outgoing.size(); k++) {
-              if (DO_PRINT) System.out.println(this.states.get(j).outgoing.size() + " transitions to compare");
-              // transition is this.states.get(j).outgoing.get(k)
-              boolean canAdd = true;
-              for (int l = 0; l < this.states.get(i).outgoing.size(); l++) {
-                // System.out.println("Comparing transition " + l + " of state " + i + " to transition " + k + " of state " + j);
-                // System.out.println(" - " + this.states.get(j).outgoing.get(k).to + " to " + this.states.get(i).outgoing.get(l).to);
-                if (this.states.get(j).outgoing.get(k).to == this.states.get(i).outgoing.get(l).to) {
-                  canAdd = false; // don't add transitions we already have
-                }
-              }
-              if (canAdd) {
-                // System.out.println("Adding transition to state " + k);
-                this.states.get(i).outgoing.add( this.states.get(j).outgoing.get(k) );
-              }
-            }
-
-            // Delete state j 
-            this.states.remove(j);
-            this.stateCount--;
-            if (DO_PRINT) System.out.println("There are now " + stateCount + " states.");
-
-            // Make sure state indices match up
-            for (int k = j; k < this.states.size(); k++) {
-              this.states.get(k).index = k;
-            }
-
-            // Loop through every state to fix outgoing transitions
-            for (int k = 0; k < this.states.size(); k++) {
-              for (int l = 0; l < this.states.get(k).outgoing.size(); l++) {
-                // Change transitions to index j to index i
-                // transition is this.states.get(k).outgoing.get(l)
-                if (this.states.get(k).outgoing.get(l).to == j) {
-                  this.states.get(k).outgoing.get(l).to = i;
-                  // System.out.println("Adjusting outgoing from " + this.states.get(k).outgoing.get(l).to + " to " + i + " at state " + k);
-                }
-                // Change transitions to index a > j to go to index a-1
-                if (this.states.get(k).outgoing.get(l).to > j) {
-                  // System.out.println("Decrementing " + this.states.get(k).outgoing.get(l).to + " at state " + k);
-                  this.states.get(k).outgoing.get(l).to--;
-                }
-                // Make sure all the transition from attributes match
-                this.states.get(k).outgoing.get(l).from = k;
-              }
-            }
-
-          }
-        }
-      }
-      // Merge transitions
-      for (int i = 0; i < this.states.size(); i++) { // loop through states
-        for (int j = 0; j < this.states.get(i).outgoing.size(); j++) {
-          if (this.states.get(i).outgoing.get(j).to == -1) {
-            System.out.println("ERROR -1 at state " + i);
-          }
-          for (int k = j+1; k < this.states.get(i).outgoing.size(); k++) { 
-            if (this.states.get(i).outgoing.get(j).to == this.states.get(i).outgoing.get(k).to) {
-              // if the rates are different don't merge
-              if (this.states.get(i).outgoing.get(j).transitionName.equalsIgnoreCase(this.states.get(i).outgoing.get(k).transitionName)) {
-                if (DO_PRINT) System.out.println("Merging:");
-                if (DO_PRINT) System.out.println(this.states.get(i).outgoing.get(j) + " and " + this.states.get(i).outgoing.get(k));
-                this.states.get(i).outgoing.get(j).rate += this.states.get(i).outgoing.get(k).rate;
-                this.states.get(i).outgoing.remove(k);
-              }
-              else {
-                if (DO_PRINT) System.out.println("Transition names not equivalent. Transitions not merged:");
-                if (DO_PRINT) System.out.println(this.states.get(i).outgoing.get(j) + " and " + this.states.get(i).outgoing.get(k));
-              } 
-            }
-          }
-        }
-      }
-
-      // Print report to debug
-      // for (int i = 0; i < this.states.size(); i++) { // loop through states
-      //   System.out.println("State " + i + " outgoing size = " + this.states.get(i).outgoing.size() );
-      // }
+  public class Path {
+    public ArrayList<State> states;
+    public ArrayList<String> commutable;
+    public Path() {
+      this.states = new ArrayList<State>();
+      this.commutable = new ArrayList<String>();
     }
+  }
 
-    // TODO: Might need to make a custom start/end path builder?
-    
-
-    // Make an absorbing state
-    //  This MUST be the last state you add.
-    public void addAbsorbingState() {
-      int numVars = states.get(0).vars.size();
-      ArrayList<Integer> absorbingVariables = new ArrayList<Integer>();
-      // Set all absorbing variables to -1
-      for (int i = 0; i < numVars; i++) {
-        absorbingVariables.add(Integer.valueOf(-1));
-      }
-      this.absorbingIndex = stateCount;
-      this.states.add(new State(absorbingIndex, absorbingVariables, 0.0));
-      if (DO_PRINT) System.out.println("Absorbing Index: " + absorbingIndex);
-      double absorbRate = 0.0;
-      // for (int i = 0; i < states.size() - 1; i++) {
-        // adjusted to add an absorbing transition to the target state
-      for (int i = 0; i < states.size(); i++) {
-        absorbRate = states.get(i).getAbsorbingRate();
-        if (absorbRate > 0.0) {
-          states.get(i).addTransition(absorbingIndex, states.get(i).getAbsorbingRate(), -1, "ABSORB");
-        }
-      }
+  // object to store state variables in the tree structure
+  public class StateVarNode {
+    public int value;
+    // public int stateIndex; // index of the first discovered state to have this value
+    public ArrayList<Integer> stateIndices;
+    public ArrayList<StateVarNode> children;
+    public StateVarNode parent;
+    public StateVarNode() {
+      this.stateIndices = new ArrayList<Integer>();
+      this.value = -1;
+      this.children = new ArrayList<StateVarNode>();
+      this.parent = null;
     }
-
-    public int countTransitions() {
-      int transitionCount = 0;
-      for (int i = 0; i < states.size() - 1; i++) {
-        transitionCount += states.get(i).outgoing.size();
-      }
-      return transitionCount;
+    public StateVarNode(int value) {
+      this.value = value;
+      this.stateIndices = new ArrayList<Integer>();
+      // this.stateIndices.add((Integer) stateCount-1); // was causing problems due to this line being duplicated
+      // System.out.println("New StateVarNode for State " + (stateCount-1));
+      this.children = new ArrayList<StateVarNode>();
     }
+    // public void addChild(int value) {
+    //   this.children.add(new StateVarNode(value));
+    //   this.children.get(this.children.size()-1).parent = this;
+    //   System.out.println("New parent " + this.children.get(this.children.size()-1).parent.value + " for " + this.children.get(this.children.size()-1).value );
+    //   // maybe sort the list as well eventually?
+    // }
+  }
 
-    // Export model files
-    public void exportFiles(SimulatorEngine sim) {
-      try {
-      // Count transitions
-      int transitionCount = this.countTransitions();
+  // global state variable root is just an empty node
+  public StateVarNode StateVarRoot = new StateVarNode();
 
-      // Initialize transition string
-      String traStr = "";
-      traStr += ((states.size()) + " " + transitionCount + "\n");
+  // public String printUniqueString() {
+  //   String running = "";
+  //   StateVarNode cur = StateVarRoot;
+  //   for (int stateVar = 0; stateVar < numStateVariables; stateVar++) {
+  //     for (int i = 0; i < cur.children.size(); i++) {
+  //       running += (" " + cur.children.get(i).value);
+  //     }
+  //     // running += ("[" + cur.stateIndices.get(0) + "]");
+  //     cur = cur.children.get(0);
+  //   }
+  //   return running;
+  // }
 
-      // Initialize state string
-      String staStr = "";
-      staStr += "(";
+  // function to check uniqueness and update unique state tree
+  public int stateIsUnique(int varVals[]) {
+    // System.out.printf("stateIsUnique? (");
+    // for (int i = 0; i < varVals.length; i++) {
+    //   System.out.printf("%d", varVals[i]);
+    //   if (i == varVals.length-1) System.out.printf(")\n");
+    //   else System.out.printf(",");
+    // }
 
-      // Initialize label string
-      // TODO: Play with deadlock vs sink
-      String labStr = "0=\"init\" 1=\"sink\"\n0: 0\n";
-      labStr += (this.absorbingIndex + ": 1");
-        
-      // Initialize variable name string
-      String varName = "";
+    // loop through all the state variables to see if they exist
+    ArrayList<Integer> possibleStates = new ArrayList<Integer>();
+    StateVarNode cur = StateVarRoot;
+    boolean foundStateVar = false;
+    int foundStateIndex = -1;
 
-      // Get variable names for first line of .sta file
-      // TODO: This might actually be useful early on, to
-      //  get the total variable count?
-      int vari = 0;
-      while (true) {
-        varName = sim.getVariableName(vari);
-        staStr += varName;
-        if (sim.getVariableName(vari+1) == null) {
-          staStr += ")\n";
+    for (int stateVar = 0; stateVar < numStateVariables; stateVar++) {
+      
+      foundStateVar = false;
+      for (int i = 0; i < cur.children.size(); i++) { // new states have 0 kids anyway
+        if (cur.children.get(i).value == varVals[stateVar]) {
+          if (DO_PRINT) {
+            System.out.printf("\nM(");
+            for (int aa = 0; aa < cur.children.get(i).stateIndices.size(); aa++) {
+              System.out.printf("%s.", cur.children.get(i).stateIndices.get(aa));
+            }
+            System.out.printf(") %d and %d", varVals[stateVar], cur.children.get(i).value);
+          }
+          cur = cur.children.get(i);
+          foundStateVar = true;
+          // add all the possibilities as an intersection
+
+          if (stateVar == 0) {
+            for (int a = 0; a < cur.stateIndices.size(); a++) {
+              possibleStates.add(cur.stateIndices.get(a));
+            }
+          }
+          for (int a = 0; a < possibleStates.size(); a++) {
+            // System.out.println("Checking possible state " + possibleStates.get(a));
+            if (!(cur.stateIndices.contains(possibleStates.get(a)))) {
+              // System.out.println("Removed possible state " + possibleStates.get(a));
+              possibleStates.remove(a);
+              a--;
+            }
+          }
+          // foundStateIndex = cur.stateIndex; // TODO: This line breaks things
           break;
         }
-        staStr += ",";
-        vari++;
       }
-
-        // Get state and transition info by looping through states;
-        //  state 0 is a filler state to make for easier math,
-        //  thus, start state loop at index 1, not 0
-        for (int i = 0; i < states.size(); i++) {
-          // Loop through transitions at each state
-          for (int j = 0; j < states.get(i).outgoing.size(); j++) {
-            traStr += states.get(i).outgoing.get(j).prism();
-            traStr += "\n";
-          }
-          staStr += states.get(i).prism();
-          staStr += "\n";
+      if (!foundStateVar) { // if we didn't find it (i.e. state doesn't exist)
+        if (DO_PRINT) {
+          System.out.printf("X() %d\n", varVals[stateVar]);
         }
-
-        // Write the state file to buildModel.sta
-        BufferedWriter staWriter = new BufferedWriter(new FileWriter("buildModel.sta"));
-        staWriter.write(staStr.trim());
-        staWriter.close();
-
-        // Write the transition file to buildModel.tra
-        BufferedWriter traWriter = new BufferedWriter(new FileWriter("buildModel.tra"));
-        traWriter.write(traStr.trim());
-        traWriter.close();
-
-        // Write the label file to buildModel.lab
-        BufferedWriter labWriter = new BufferedWriter(new FileWriter("buildModel.lab"));
-        labWriter.write(labStr.trim());
-        labWriter.close();
-
-        // Alert user of successful termination
-        if (DO_PRINT) System.out.println("Model built. PRISM API ended successfully.");
-      }
-      // Catch common errors and give user the info
-      catch (FileNotFoundException e) {
-        if (DO_PRINT) System.out.println("FileNotFoundException Error: " + e.getMessage());
-        System.exit(1);
-      } 
-      catch (IOException e) {
-        if (DO_PRINT) System.out.println("IOException Error: " + e.getMessage());
-        System.exit(1);
-      }
-    }
-
-  }
-
-  // Build a path following a transition sequence after firing a prefix
-  public boolean buildPath(Prism prism, ArrayList<String> transitions, ArrayList<String> prefix, Model model) {
-  try {
-
-    if (DO_PRINT) System.out.println("buildPath started with prefix " + prefix);
-    int addedThisRun = 0;
-
-    // Create a new simulation
-    SimulatorEngine sim = prism.getSimulator();
-    sim.createNewPath();
-    sim.initialisePath(null);
-
-    int index;
-    
-    // Walk along the prefix to get the new initial state
-    for (int t=0; t < prefix.size(); t++) {
-
-      // Reset the index
-      index = -1;
-
-      if (DO_PRINT) System.out.println("Checking prefix transition " + prefix.get(t));
-
-      // Get information for the current transition
-      String pathTransition = prefix.get(t);
-      for (int i=0; i < sim.getNumTransitions(); i++) {
-        // Get transition strings from path and simulation
-        String simTransition = sim.getTransitionActionString(i);
-        // Update index if we found the right transition
-        if (pathTransition.equalsIgnoreCase(simTransition)) {
-            index = i;
-            break;
+        cur.children.add(new StateVarNode(varVals[stateVar]));
+        cur.children.get(cur.children.size()-1).parent = cur;
+        cur = cur.children.get(cur.children.size()-1);
+        // System.out.println("\nAdded parental relationship " + cur.value + " child of " + cur.parent.value);
+        foundStateIndex = -1;
+        // System.out.println("AAAA");
+        // for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+        //   System.out.println(possibleStates.get(aaa));
+        // }
+        for (int j = 0; j < possibleStates.size(); ) {
+          possibleStates.remove(j);
         }
       }
-
-      if (index == -1) {
-        if (DO_PRINT) System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 01.");
-        index = 0;
-      }
-
-      if (DO_PRINT) System.out.println("Fired prefix (commuted) transition " + sim.getTransitionActionString(index) + " in buildPath");
-      // Fire the prefix transition
-      sim.manualTransition(index);
-
+      // System.out.println("BBBB");
+      // for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+      //   System.out.println(possibleStates.get(aaa));
+      // }
     }
+    // System.out.println("CCCC");
+    // for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+    //   System.out.println(possibleStates.get(aaa));
+    // }
+    // System.out.println("foundStateVar? " + foundStateVar);
 
-
-
-    // Walk along the path and add state info to the model
-    for (int t=0; t < transitions.size(); t++) {
-
-      // Make the current state
-      Object varVals[] = sim.getCurrentState().varValues;
-      ArrayList<Object> stateVariables = new ArrayList<Object>();
-      for (int i = 0; i < varVals.length; i++) {
-        stateVariables.add(varVals[i]);
-      }
-      model.addState(stateVariables, 0.0);
-      addedThisRun++;
-
-      // System.out.println("State added: " + model.states.get(model.states.size()-1));
-
-      // Reset the index
-      index = -1;
-
-      // Get information for the current transition
-      String pathTransition = String.format("[%s]", transitions.get(t));
-      // System.out.println("Checking 02. " + pathTransition);
-      for (int i=0; i < sim.getNumTransitions(); i++) {
-        // Get transition strings from path and simulation
-        String simTransition = sim.getTransitionActionString(i);
-        // Add current state info to model
-        model.addRateToCurrentState(sim.getTransitionProbability(i));
-        model.addEnabledToCurrentState(simTransition);
-        // Update index if we found the right transition
-        if (pathTransition.equalsIgnoreCase(simTransition)) {
-            index = i;
+    if (possibleStates.size() == 0 || !foundStateVar) {
+      foundStateIndex = -1;
+      // if (DO_PRINT) System.out.println(" State not found. Size is 0.");
+      while (cur != null) {
+        if (!cur.stateIndices.contains(stateCount)) {
+          cur.stateIndices.add(stateCount);
+          // if (DO_PRINT) System.out.println("added state " + stateCount + " to state var " + cur.value);
         }
+        cur = cur.parent;
       }
-
-      if (index == -1) {
-        if (DO_PRINT) System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 02.");
-        if (DO_PRINT) System.out.println("Attempting transition: " + pathTransition);
-        if (DO_PRINT) System.out.println("Enabled at current state: ");
-        for (int i=0; i < sim.getNumTransitions(); i++) {
-          // Get transition strings from path and simulation
-          if (DO_PRINT) System.out.printf("%s ", sim.getTransitionActionString(i));
-        }
-        if (DO_PRINT) System.out.println("");
-        // For now, if the transition is not available, return false.
-        // Maybe do something clever later
-        return false;
+    }
+    else if (possibleStates.size() == 1) {
+      foundStateIndex = possibleStates.get(0).intValue();
+      if (DO_PRINT) System.out.println(" State found. Index is " + foundStateIndex);
+      if (DO_PRINT) System.out.printf("State %s", stateList.get(foundStateIndex).prismSTA());
+    }
+    else {
+      foundStateIndex = -1;
+      System.out.println("\n ERROR ");
+      System.out.println(" ERROR ");
+      System.out.println(" Multiple states found. Size is " + possibleStates.size());
+      for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+        System.out.println(possibleStates.get(aaa));
       }
-
-      // Get the rate of the transition we fired
-      double transition_probability = sim.getTransitionProbability(index);
-
-      // If the transition probability is 0, alert the user
-      if (DO_PRINT && transition_probability == 0.0f) {
-        System.out.println(String.format("ZERO PROBABILITY FOR TRANSITION %s (%d)", sim.getTransitionActionString(index), index));
-      }
-
-      // Add the transition to the model
-      model.addSimpleTransition(index, sim.getTransitionActionString(index), sim.getTransitionProbability(index));
-
-      // Fire the transition
-      sim.manualTransition(index);
-
+      System.out.println(" ERROR ");
+      System.out.println(" ERROR ");
     }
 
-    // Make the target state (after firing the final transition)
-    Object varVals[] = sim.getCurrentState().varValues;
-    ArrayList<Object> stateVariables = new ArrayList<Object>();
-    for (int i = 0; i < varVals.length; i++) {
-      stateVariables.add(varVals[i]);
-    }
-    model.addState(stateVariables, 0.0);
-    addedThisRun++;
-
-    // get the absorbing state rate for the target state
-    for (int i=0; i < sim.getNumTransitions(); i++) {
-      model.addRateToCurrentState(sim.getTransitionProbability(i));
-    }
-
-    // Check if it's a target state and alert the user if not
-    // TODO: Implement this
-
-    // Tell the model we finished the seed path
-    model.addPath(prefix);
-
-    if (DO_PRINT) System.out.println("Finished buildPath having added " + addedThisRun + " states to the model.");
-
-    return true;
-  }
-  // Catch common errors and give user the info
-  catch (PrismException e) {
-    if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
-    System.exit(1);
-    return false;
-  }
+    return foundStateIndex;
   }
 
-  // Build parallel commuted paths for a path
-  public void commute(Prism prism, Model model, Path path, ArrayList<String> transitions, int depth) {
-  try {
-
-    if (DO_PRINT) System.out.println("Started commute with depth = " + depth);
-
-    // Maximum recursion depth
-    if (depth == MAX_DEPTH) {
-      return;
-    }
-
-    // Find the commutable transitions along the path
-    path.findCommutable(model.states);
-
-    // Set up array to mark transitions for removal
-    boolean toRemove[] = new boolean[path.commutable.size()];
-    Arrays.fill(toRemove, false);
-
-    // Check the full-lenth parallel path before firing commutable transitions
-    // That is, set the commutable transition as a path prefix
-    //  and build paths following the seed transition sequence.
-    for (int c = 0; c < path.commutable.size(); c++) {
-      ArrayList<String> nextPrefix = new ArrayList<String>();
-      nextPrefix.addAll(path.prefix);
-      nextPrefix.add(path.commutable.get(c));
-      if (DO_PRINT) System.out.println("Sending prefix " + nextPrefix + " to buildPath (c=" + c + ")");
-      // TODO: Also check if we reached a target state within the buildPath function
-      if (buildPath(prism, transitions, nextPrefix, model) == false) {
-        toRemove[c] = true;
-        if (DO_PRINT) System.out.println("Path not built (buildPath returned false)");
-        continue;
-      }
-    }
-    
-    // Remove the necessary transitions from commutable
-    for (int i = toRemove.length - 1; i >= 0 ; i--) {
-      if (toRemove[i]) {
-        path.removeCommutable(i);
-      }
-    }
-
-    // Count how many paths we go back when we look at indices
-    int addedPaths = path.commutable.size();
-    int goBackPaths = addedPaths;
-
-    if (DO_PRINT) System.out.println("We added " + addedPaths + " paths (one per commutable transition)");
-
-    // Fire each commutable transition from each state along the path
-    //  and check that it matches the full-length path
-
-    // Do this for every commutable transition
-    for (int t_alpha = 0; t_alpha < path.commutable.size(); t_alpha++) {
-
-      if (DO_PRINT) System.out.println("Attempting to commute transition " + t_alpha + " of " + path.commutable.size() + "(" + path.commutable.get(t_alpha) + ")");
-
+  // save the number of state variables
+  public int setNumStateVariables(Prism prism) {
+    try {
       // Create a new simulation from the initial state
       SimulatorEngine sim = prism.getSimulator();
       sim.createNewPath();
       sim.initialisePath(null);
-
-      int index;
-
-      // This stores where we are adjacent to in the SEED PATH
-      int seedStateIndex = 0;
-      int simStateIndex = 0;
-
-      // TODO: There may be more math to deal with prefixes.
-      //  Look at this when I have the brain power
-
-      // Walk along the prefix to get the new initial state
-      for (int t=0; t < path.prefix.size(); t++) {
-
-        // Reset the index
-        index = -1;
-
-        // Get information for the current transition
-        String pathTransition = String.format("%s", path.prefix.get(t));
-        if (DO_PRINT) System.out.println("Checking 03. " + pathTransition);
-        for (int i=0; i < sim.getNumTransitions(); i++) {
-          // Get transition strings from path and simulation
-          String simTransition = sim.getTransitionActionString(i);
-          // Update index if we found the right transition
-          if (pathTransition.equalsIgnoreCase(simTransition)) {
-              index = i;
-              break;
-          }
-        }
-
-        if (index == -1) {
-          if (DO_PRINT) System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 03.");
-          index = 0;
-        }
-
-        // Fire the prefix transition
-        sim.manualTransition(index);
-        simStateIndex++;
-
-      }
-
-      if (DO_PRINT) System.out.println("Fired the prefix. Current state is " + sim.getCurrentState());
-
-      // Walk along the path, firing and adding the commutable transition
-      //  then backtracking to the previous state
-      for (int t=0; t < transitions.size(); t++) {
-
-        // Reset the index
-        index = -1;
-        String finalTransition = "";
-
-        // Find and fire the commuted transition
-        String pathTransition = String.format("%s", path.commutable.get(t_alpha));
-        // System.out.println("01. Checking " + pathTransition);
-        for (int i=0; i < sim.getNumTransitions(); i++) {
-          // Get transition strings from path and simulation
-          String simTransition = sim.getTransitionActionString(i);
-          // Update index if we found the right transition
-          if (pathTransition.equalsIgnoreCase(simTransition)) {
-            index = i;
-            finalTransition = simTransition;
-            break;
-          }
-        }
-
-        if (index == -1) {
-          if (DO_PRINT) System.out.println("INDEX NOT CORRECT (STILL -1). SOMETHING WENT TERRIBLY WRONG. PLACE 04.");
-          index = 0;
-        }
-
-        // Fire the transition without incrementing simStateIndex, 
-        //  since we want to store the index of the state we return to
-        sim.manualTransition(index);
-
-        // Check that the commuted transition is independent. If yes, save the transition
-        Object varVals[] = sim.getCurrentState().varValues;
-        ArrayList<Integer> stateVariables = new ArrayList<Integer>();
-        for (int i = 0; i < varVals.length; i++) {
-          if (varVals[i] instanceof Integer) {
-            stateVariables.add((Integer) varVals[i]);
-          }
-          else if (varVals[i] instanceof String) {
-            stateVariables.add(Integer.parseInt((String) varVals[i]));
-          }
-          // stateVariables.add(varVals[i]);
-        }
-
-        State tempState = new State(-5, stateVariables, 0);
-        
-        // Check if the new state is equal to state in pre-calculated path
-
-        // Index of the equivalent state:
-        // (adjacent index) + ( (path id) * (n) )
-        // (adjacent index) + ( ( (path count) - (go back paths) ) * (n) )
-        // Math from back of envelope from Molina
-        
-        int equivalentIndex = seedStateIndex + ( (model.pathCount - goBackPaths) * model.n );
-        for (int p = 0; p < model.pathCount; p++) {
-          if ((p == model.pathCount - goBackPaths) && tempState.equals(model.states.get(equivalentIndex))) {
-            break;
-          }
-          equivalentIndex = seedStateIndex + ( (p) * model.n );
-          if (tempState.equals(model.states.get(equivalentIndex))) {
-            break;
-          }
-        }
-
-        if (DO_PRINT && seedStateIndex == 0) System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
-        
-        // Check is state matches what it should be
-        if (tempState.equals(model.states.get(equivalentIndex))) {
-          if (DO_PRINT && seedStateIndex == 0) System.out.println("STATES EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
-          // Add transition to the relevant state
-          int from = seedStateIndex + path.firstState;
-          int to = equivalentIndex;
-          // index is still index
-          String name = sim.getTransitionActionString(index);
-          double rate = sim.getTransitionProbability(index);
-          model.addTransition(from, to, index, name, rate);
-        }
-        else {
-          // if (seedStateIndex != 0) System.out.println("EQUIVALENT INDEX IS: " + equivalentIndex);
-          if (DO_PRINT && seedStateIndex == 0) System.out.println("STATES NOT EQUIVALENT: " + tempState + " and " + model.states.get(equivalentIndex));
-        }
-
-        // Backtrack
-        sim.backtrackTo(simStateIndex);
-
-        // Find the original path transition
-        pathTransition = String.format("[%s]", transitions.get(t));
-        // System.out.println("02. Checking " + pathTransition);
-        for (int i=0; i < sim.getNumTransitions(); i++) {
-          // Get transition strings from path and simulation
-          String simTransition = sim.getTransitionActionString(i);
-          // Update index if we found the right transition
-          if (pathTransition.equalsIgnoreCase(simTransition)) {
-              index = i;
-          }
-        }
-
-        // Fire the transition
-        sim.manualTransition(index);
-        simStateIndex++;
-        seedStateIndex++;
-
-      }
-      
-      // We're moving on to the next path
-      goBackPaths--;
-
+      Object varVals[] = sim.getCurrentState().varValues;
+      numStateVariables = varVals.length;
+      return varVals.length;
     }
-  
-    for (int i = addedPaths; i > 0; i--) {
-      commute(prism, model, model.paths.get(i), transitions, depth + 1);
-    }
-  }
-  // Catch common errors and give user the info
-  catch (PrismException e) {
-    if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
-    System.exit(1);
-  }
+    catch (PrismException e) {
+			if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
+			System.exit(1);
+		}
+    return -1;
   }
 
-  // Main run function - runs every call
-  public void run()
+  public void buildAndCommute(Prism prism, String[] transitions, String[] prefix, int depth, Path parentPath, Expression target)
   {
     try {
       
-      // Welcome message
-      if (DO_PRINT) System.out.println("Building PRISM Model based on seed path.");
+      if (depth > MAX_DEPTH) {
+        if (DO_PRINT) System.out.println("Max recursion depth reached.");
+        return;
+      }
       
-      // Keep an index available for temporary use
-      int index;
+      int indexOfFoundState = -1;
+      if (DO_PRINT) {
+        if (prefix != null) {
+          System.out.printf("\n%2d Prefix ", depth);
+          for (int i = 0; i < prefix.length; i++) {
+            System.out.printf("%s ", prefix[i]);
+          }
+          System.out.println(".");
+        }
+        else {
+          System.out.println("\n 0 Prefix none");
+        }
+      }
+      
+      
+      // Create a new simulation from the initial state
+      SimulatorEngine sim = prism.getSimulator();
+      sim.createNewPath();
+      sim.initialisePath(null);
+      
+      if (DO_PRINT) System.out.println("Prism simulator initialized successfully.");
+      if (DO_PRINT) System.out.println("Initial state: " + sim.getCurrentState());
+      
+      // temporary found transition index variable
+      int transitionIndex;
+      
+      // initialize to the initial state each time
+      int currentStateIndex = 0;
+      
+      // check if we've created an initial state
+      if (stateList.size() == 0) {
+        if (DO_PRINT) System.out.println("Initial state generated.");
+        new State(sim.getCurrentState().varValues);
+        // we know initial state is unique but we need to log its values with stateIsUnique.
+        stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+        // System.out.println("ROOT " + printUniqueString());
+      }
+      
+      // update current state to be the model's initial state
+      State currentState = stateList.get(0);
+      currentState.isNewInit = true;
+      
+      // Walk along the prefix to get the new initial state
+      int prefixLength = 0;
+      if (prefix != null) prefixLength = prefix.length;
+      for (int path_tran = 0; path_tran < prefixLength; path_tran++) {
+
+        if (DO_PRINT) System.out.printf("Intermediate Prefix State is %s", currentState.prismSTA());
+
+        // start with a fresh transitionIndex
+        transitionIndex = -1;
+        double newTranRate = -1.0f;
+        double totalOutgoingRate = 0.0f;
+        // Compare our transition string with available transition strings
+        for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+          // Update transitionIndex if we found the desired transition (i.e. names match)
+          totalOutgoingRate += sim.getTransitionProbability(sim_tran);
+          if (prefix[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
+            transitionIndex = sim_tran;
+            newTranRate = sim.getTransitionProbability(sim_tran);
+          }
+        }
+        // If we never found the correct transitions, report error
+        if (transitionIndex == -1) {
+          System.out.printf("ERROR: Prefix transition not available from current state: ");
+          System.out.println(sim.getCurrentState());
+          System.exit(10001);
+        }
+        // Take the transition
+        sim.manualTransition(transitionIndex);
+
+        // update the total outgoing rate of the current state
+        currentState.totalOutgoingRate = totalOutgoingRate;
+        
+        // Check if the state exists yet
+        indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+
+        
+        // figure out what state to link here
+        State stateToAdd = null;
+        if (indexOfFoundState == -1) {
+          stateToAdd = new State(sim.getCurrentState().varValues);
+        }
+        else {
+          stateToAdd = stateList.get(indexOfFoundState);
+          // make sure we haven't already made this transition
+          if (currentState.nextStates.contains(stateToAdd)) {
+            currentState = stateToAdd;
+            continue;
+          }
+        }
+        // add the transition to the discovered state
+        currentState.nextStates.add(stateToAdd);
+        Transition newTrans = new Transition(transitionIndex, transitions[path_tran], currentState.index, stateToAdd.index, newTranRate);
+        currentState.outgoingTrans.add(newTrans);
+        
+        // walk along the trace
+        currentState = stateToAdd;
+        
+      } // end walk along path prefix
+
+      if (DO_PRINT) System.out.println("Successfully walked along trace prefix (set of commuted transitions)");
+
+      if (DO_PRINT) System.out.printf("Prefix Terminal State is %s", currentState.prismSTA());
+      if (DO_PRINT) System.out.printf("At sim state %s\n", sim.getCurrentState());
+      
+      // if we already end up in a known state after the prefix, end it here
+      if (indexOfFoundState != -1 && currentState.isNewInit) {
+        // if (DO_PRINT) System.out.println("Prefix Terminal State Exists. End Recursion Branch.\n");
+        if (DO_PRINT) System.out.printf("Prefix Terminal State Exists at State %d. End Recursion Branch.\n", indexOfFoundState);
+        // skip walking along the trace and jump right to terminal state
+        // currentState = stateList.get(currentState.index + transitions.length);
+        // System.out.printf("Jumped to state %s", currentState.prismSTA());
+        return;
+      }
+
+      // Mark we have a new "path initial state", as it were
+      currentState.isNewInit = true;
+
+      // Save these states into a path
+      Path seedPath = new Path();
+
+      // Set up lists to check commutable transitions
+      ArrayList<String> wasEnabled = new ArrayList<String>();
+      
+      // Add initially enabled transitions to start the commutable check
+      for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+        seedPath.commutable.add(sim.getTransitionActionString(sim_tran));
+      }
+
+      // Walk along the actual trace, making new states
+      // and getting commutable transitions
+      for (int path_tran = 0; path_tran < transitions.length; path_tran++) {
+
+        // start with a fresh transitionIndex
+        transitionIndex = -1;
+        double newTranRate = -1.0f;
+        double totalOutgoingRate = 0.0f;
+        if (DO_PRINT) System.out.println(sim.getCurrentState());
+        // Compare our transition string with available transition strings
+        for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+          // Update transitionIndex if we found the desired transition (i.e. names match)
+          totalOutgoingRate += sim.getTransitionProbability(sim_tran);
+          // if (DO_PRINT) System.out.println("Enabled transition " + sim.getTransitionActionString(sim_tran));
+          if (transitions[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
+            transitionIndex = sim_tran;
+            newTranRate = sim.getTransitionProbability(sim_tran);
+            if (DO_PRINT) System.out.println("Found transition " + transitions[path_tran]);
+          }
+        }
+        // If we never found the correct transitions, report error
+        if (transitionIndex == -1) {
+          if (depth > 0) {
+            if (DO_PRINT) System.out.printf("WARNING: Trace transition %s not available from current state %s\n", transitions[path_tran], sim.getCurrentState());
+            return; // basically just skip this path
+          }
+          else { // if we're still at the base seed path
+          System.out.printf("ERROR: Initial trace transition %s not available from current state %s\n", transitions[path_tran], sim.getCurrentState());
+            System.exit(10002);
+          }
+        }
+        // Take the transition
+        sim.manualTransition(transitionIndex);
+        
+        // update the total outgoing rate of the current state
+        currentState.totalOutgoingRate = totalOutgoingRate;
+
+        // Check if the state exists yet
+        indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+        if (DO_PRINT && indexOfFoundState == -1) {
+          // System.out.println("Path state is unique.");
+        }
+
+        // TODO: Since we're trying to commute, if this doesn't work, return
+        
+        // figure out what state to link here
+        State stateToAdd = null;
+        if (indexOfFoundState == -1) {
+          stateToAdd = new State(sim.getCurrentState().varValues);
+        }
+        else {
+          stateToAdd = stateList.get(indexOfFoundState);
+          // make sure we haven't already made this transition
+          if (currentState.nextStates.contains(stateToAdd)) {
+            // System.out.println("NEXT STATE ALREADY FOUND");
+            seedPath.states.add(currentState);
+            currentState = stateToAdd;
+            continue;
+          }
+        }
+        // add the transition to the discovered state
+        currentState.nextStates.add(stateToAdd);
+        Transition newTrans = new Transition(transitionIndex, transitions[path_tran], currentState.index, stateToAdd.index, newTranRate);
+        currentState.outgoingTrans.add(newTrans);
+        
+        // save the current state into the path
+        seedPath.states.add(currentState);
+
+        // if we have reached the target 
+        if (target.evaluateBoolean(sim.getCurrentState())) {
+          if (DO_PRINT) System.out.println("Target Reached");
+          stateToAdd.isTarget = true;
+          seedPath.states.add(stateToAdd);
+        }
+
+        // walk along the trace
+        currentState = stateToAdd;
+        
+        // update commutable transitions based on new state
+        wasEnabled = seedPath.commutable;
+        seedPath.commutable = new ArrayList<String>();
+        for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+          String tempStr = sim.getTransitionActionString(sim_tran);
+          if (wasEnabled.contains(tempStr)) {
+            seedPath.commutable.add(tempStr);
+          }
+        }
+        
+      } // end walk along actual trace
+
+      if (DO_PRINT)  {
+        System.out.println("One path explored: ");
+        for (int i = 0; i < seedPath.states.size(); i++) {
+          System.out.printf("%d ", seedPath.states.get(i).index);
+        }
+        System.out.println(".");
+      }
+      // NOTE:
+      // commutable transitions are now stored in seedPath.commutable.
+
+      //
+      //
+      // COMMUTING TRANSITIONS FIRST ALONG THE CURRENT SAVED SEED PATH
+      //
+      //
+
+      // sim.backtrackTo(seedPath.states.size()-0);
+      // System.out.println("Backtrack seedPath.states.size()-0: " + sim.getCurrentState());
+      // sim.backtrackTo(seedPath.states.size()-1);
+      // System.out.println("Backtrack seedPath.states.size()-1: " + sim.getCurrentState());
+      // sim.backtrackTo(seedPath.states.size()-2);
+      // System.out.println("Backtrack seedPath.states.size()-2: " + sim.getCurrentState());
+      // sim.backtrackTo(seedPath.states.size()-3);
+      // System.out.println("Backtrack seedPath.states.size()-3: " + sim.getCurrentState());
+      // sim.backtrackTo(seedPath.states.size()-4);
+
+
+      if (DO_PRINT) System.out.printf("\n\nEntered commuting phase with %d transitions\n\n\n", seedPath.commutable.size());
+      if (DO_PRINT) {
+        for (int mm = 0; mm < seedPath.commutable.size(); mm++) {
+          System.out.printf(" %s", seedPath.commutable.get(mm));
+        }
+        System.out.println(".\n");
+      }
+
+      // for each state in the seed path, backtracking toward the initial state + prefix
+      for (int seedIndex = seedPath.states.size()-1; seedIndex >= 0; seedIndex--) {
+
+        
+        // for each commutable transition
+        for (int ctran = 0; ctran < seedPath.commutable.size(); ctran++) {
+          
+          // set our current state to the seedpath state
+          currentState = seedPath.states.get(seedIndex);
+          sim.backtrackTo(seedIndex);
+          if (DO_PRINT) System.out.println(seedPath.commutable.get(ctran));
+          if (DO_PRINT) System.out.printf("currentState %s", currentState.prismSTA());
+          
+          // fire the transition
+          transitionIndex = -1;
+          double newTranRate = -1.0f;
+          double totalOutgoingRate = 0.0f;
+          // Compare our transition string with available transition strings
+          for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+            // Update transitionIndex if we found the desired transition (i.e. names match)
+            totalOutgoingRate += sim.getTransitionProbability(sim_tran);
+            if (seedPath.commutable.get(ctran).equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
+              transitionIndex = sim_tran;
+              newTranRate = sim.getTransitionProbability(sim_tran);
+            }
+          }
+          
+          // If we never found the correct transitions, report error
+          if (transitionIndex == -1) {
+            if (DO_PRINT) System.out.printf("WARNING: Commutable transition %s not available from current state %s\n", seedPath.commutable.get(ctran), sim.getCurrentState());
+            continue;
+          }
+          
+          // Take the transition
+          sim.manualTransition(transitionIndex);
+          if (DO_PRINT) System.out.println("sim: " + sim.getCurrentState());
+          
+          // update the total outgoing rate of the current state
+          currentState.totalOutgoingRate = totalOutgoingRate;
+          
+          // Check if the state exists yet
+          indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+
+          if (DO_PRINT) System.out.printf("Sim state after commuting: %s\n", sim.getCurrentState());
+          if (DO_PRINT) System.out.printf("Index of found state: %d\n", indexOfFoundState);
+          
+          // figure out what state to link here
+          State stateToAdd = null;
+          if (indexOfFoundState == -1) {
+            stateToAdd = new State(sim.getCurrentState().varValues);
+          }
+          else {
+            stateToAdd = stateList.get(indexOfFoundState);
+            // make sure we haven't already made this transition
+            if (currentState.nextStates.contains(stateToAdd)) {
+              currentState = stateToAdd;
+              continue;
+            }
+          }
+
+          // add the transition to the discovered state
+          currentState.nextStates.add(stateToAdd);
+
+          Transition newTrans = new Transition(transitionIndex, seedPath.commutable.get(ctran), currentState.index, stateToAdd.index, newTranRate);
+          currentState.outgoingTrans.add(newTrans);
+
+          if (DO_PRINT) System.out.printf("Added transition %s\n", newTrans.prismTRA() );
+
+      }
+    }
+
+    sim = null; // delete the simulator here to free up memory, maybe save time
+
+      
+      // get the length of the prefix
+      int prefixLen;
+      if (prefix == null) {
+        prefixLen = 0;
+      }
+      else {
+        prefixLen = prefix.length;
+      }
+
+      // commute if we're within depth bounds
+      if (depth < MAX_DEPTH) {
+        // for each commutable transition
+        for (int ctran = 0; ctran < seedPath.commutable.size(); ctran++) {
+
+          // append the commutable transition to the existing prefix
+          String[] newPrefix = new String[prefixLen + 1];
+          for (int i = 0; i < prefixLen; i++) {
+            newPrefix[i] = prefix[i];
+          }
+          newPrefix[prefixLen] = seedPath.commutable.get(ctran);
+  
+          if (DO_PRINT) System.out.println("Recursing into next prefix: " + seedPath.commutable.get(ctran) + " with depth " + (depth+1));
+  
+          // build a new path and commute
+          buildAndCommute(prism, transitions, newPrefix, depth+1, seedPath, target);
+        }
+      }
+      if (DO_PRINT) System.out.println("A path has been successfully commuted");
+    }
+    catch (PrismException e) {
+      if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
+      System.exit(1);
+    }
+  }
+
+  public int setAbsorbingState() {
+    // set absorbing state to all -1
+    int[] tempAbsorb = new int[numStateVariables];
+    int absIndex = stateCount;
+    for (int i = 0; i < numStateVariables; i++) {
+      tempAbsorb[i] = -1;
+    }
+    State absorbingState = new State(tempAbsorb);
+    double stateAbsorbRate;
+    for (int i = 0; i < stateList.size(); i++) {
+      stateAbsorbRate = stateList.get(i).getAbsorbingRate();
+      if (stateAbsorbRate > 0) {
+        stateList.get(i).outgoingTrans.add(new Transition(-1, "ABS", i, absIndex, stateAbsorbRate));
+      }
+    }
+    return absIndex;
+  }
+
+  // Top-level function, runs algorithm
+  public void run() 
+  {
+    try
+    {
+	
+      System.out.println("Welcome to the model commutation tool.");
+	  getParams();
+      // start by resetting the state count
+      stateCount = 0;
       
       // give PRISM output a log file
       PrismLog mainLog = new PrismDevNullLog();
-
+      
       // initialise (with an s) PRISM engine
       Prism prism = new Prism(mainLog);
       prism.initialise();
-
+      
+      if (DO_PRINT) System.out.println("Prism initialized successfully.");
       // Parse the prism model
-      // For now, model.sm is the hard-coded model file name
-      ModulesFile modulesFile = prism.parseModelFile(new File("model.sm"));
-
+      // For now, MODEL_NAME is the hard-coded model file name
+      ModulesFile modulesFile = prism.parseModelFile(new File(MODEL_NAME));
+      if (DO_PRINT) System.out.println("Prism model parsed successfully.");
+      
       // Load the prism model for checking
       prism.loadPRISMModel(modulesFile);
-
-      // if the model has unknown constant values, deal with that here.
-      // for now, we assume NO UNDEFINED CONSTANTS
-
+      if (DO_PRINT) System.out.println("Prism model loaded successfully.");
+      
       // Load the model into the simulator engine
       prism.loadModelIntoSimulator();
-
-      // Initialize the model
-      Model model = new Model();
+      if (DO_PRINT) System.out.println("Prism model loaded into simulator successfully.");
+      
+      // Load the target property
+      // TODO: Read the file
+      Expression target = prism.parsePropertiesString(PROPERTY).getProperty(0);
+      // Expression target = prism.parsePropertiesString(targetString).getProperty(0);
+      
+      System.out.println("Prism model and property loaded succesfully.");
+      // set the number of state variables for the model
+      setNumStateVariables(prism);
+      if (DO_PRINT) System.out.printf("Number of state variables: %d\n", numStateVariables);
 
       // Read in the first line of the trace as a string
       // For now, the trace must go in forprism.trace (handled in python script)
-			FileReader fr = new FileReader("forprism.trace");
+			FileReader fr = new FileReader(TRACE_LIST_NAME);
 			BufferedReader br = new BufferedReader(fr);
+      String trace;
+      String[] transitions;
+      int num_transitions;
 
-      String x_transitions;
-      ArrayList<String> transitions;
-      String[] strarr_transitions;
-      int n_seed;
+      int numPaths = 0;
 
-      // loop until we're done reading in the paths
+      // For each input trace
       while (true) {
-          // Read in the seed path line
-          x_transitions = br.readLine();
-          // System.out.println(x_transitions);
-          if (x_transitions == null) break;
-          strarr_transitions = x_transitions.split("\\s+");
-          transitions = new ArrayList<String>();
-          for (int i = 0; i < strarr_transitions.length; i++) {
-            transitions.add(strarr_transitions[i]);
-          }
-          // transitions = Arrays.asList(x_transitions.split("\\s+"));
-          
-          // Let n_seed be the length of the seed path (in STATES, not transitions)
-          n_seed = transitions.size() + 1;
-          if (DO_PRINT) System.out.println("n_seed (states in seed path) = " + n_seed);
-          model.setN(n_seed);
 
-          // Build the seed path, which recursively does everything
-          ArrayList<String> prefix = new ArrayList<String>();
-          buildPath(prism, transitions, prefix, model);
-          commute(prism, model, model.paths.get(0), transitions, 0); 
+        
+        // read in a single seed trace
+        trace = br.readLine();
+        if (trace == null) break;
+        
+        numPaths++;
+
+        if (numPaths % 25 == 0) {
+          System.out.printf("Processed %d paths with a state count of %d\n", numPaths, stateCount);
+        }
+        
+        // TODO: POSSIBLY TERMINATE BASED ON DELTA-STATECOUNT?
+        // i.e. if stateCount hasn't changed in many paths, terminate
+        
+        // break the trace into an array of individual transitions
+        transitions = trace.split("\\s+");
+        for (int i = 0; i < transitions.length; i++) {
+          transitions[i] = String.format("[%s]", transitions[i]);
+        }
+        num_transitions = transitions.length;
+        
+        if (DO_PRINT) System.out.println("Read trace with " + num_transitions + " transitions.");
+        
+        // construct states with transitions along the trace
+        // then commute along the generated path
+        buildAndCommute(prism, transitions, null, 0, null, target);
 
       }
 
-      // Merge duplicate states
-      model.mergeDuplicates();
+      System.out.printf("Processed %d paths with a state count of %d\n", numPaths, stateCount);
 
-      // Configure the absorbing state
-      model.addAbsorbingState();
+      removeDeadEnds();
+      
 
-      // Print to files
+      System.out.printf("\nFinal Count:\n%d states\n%d transitions\n\n", stateCount, transitionCount);
+
+      System.out.println("Establishing an absorbing state.");
+      int absorbIndex = setAbsorbingState();
+
+      System.out.println("Begin printing model files.");
+
+      // Initialize label string
+      // TODO: Play with deadlock vs sink
+      String labStr = "0=\"init\" 1=\"sink\"\n0: 0\n";
+      if (EXPORT_PRISM) labStr += (absorbIndex + ": 1");
+      
+      String labStrS = "#DECLARATION\ninit absorb target\n#END\n0 init\n";
+
+      // Initialize transition string
+      String traStr = "";
+      String traStrS = "ctmc\n";
+      if (EXPORT_PRISM) traStr += ((stateList.size()) + " " + transitionCount + "\n");
+
+      // Initialize state string
+      String staStr = "";
+      if (EXPORT_PRISM) staStr += "(";
+
+      // Create a new simulation from the initial state, to get the var names
       SimulatorEngine sim = prism.getSimulator();
-      model.exportFiles(sim);
+      sim.createNewPath();
+      sim.initialisePath(null);
+      
+      if (EXPORT_PRISM) {
+        // Get variable names for first line of .sta file
+        int vari = 0;
+        String varName = "";
+        while (true) {
+          varName = sim.getVariableName(vari);
+          staStr += varName;
+          if (sim.getVariableName(vari+1) == null) {
+            staStr += ")\n";
+            break;
+          }
+          staStr += ",";
+          vari++;
+        }
+      }
+
+      for (int a = 0; a < stateList.size(); a++) {
+        if (EXPORT_PRISM) staStr += stateList.get(a).prismSTA();
+        if (EXPORT_PRISM) traStr += stateList.get(a).prismTRA();
+        if (EXPORT_STORM) traStrS += stateList.get(a).prismTRA();
+        if (EXPORT_STORM && stateList.get(a).isTarget) {
+          labStrS += (stateList.get(a).index + " target\n");
+        }
+      }
+
+      if (EXPORT_STORM) traStrS += (absorbIndex + " " + absorbIndex + " 0.0");
+      if (EXPORT_STORM) labStrS += (absorbIndex + " absorb");
+
+      if (EXPORT_PRISM) {
+        System.out.println("Now printing " + numPaths + " paths to PRISM model files.");
+        // Write the state file to prism.sta
+        BufferedWriter staWriter = new BufferedWriter(new FileWriter("prism.sta"));
+        staWriter.write(staStr.trim());
+        staWriter.close();
+        
+        // Write the transition file to prism.tra
+        BufferedWriter traWriter = new BufferedWriter(new FileWriter("prism.tra"));
+        traWriter.write(traStr.trim());
+        traWriter.close();
+        
+        // Write the label file to prism.lab
+        BufferedWriter labWriter = new BufferedWriter(new FileWriter("prism.lab"));
+        labWriter.write(labStr.trim());
+        labWriter.close();
+        
+      }
+
+      if (EXPORT_STORM) {
+        System.out.println("Now printing " + numPaths + " paths to STORM model files.");
+        // Write the transition file to storm.tra
+        BufferedWriter traWriterS = new BufferedWriter(new FileWriter("storm.tra"));
+        traWriterS.write(traStrS.trim());
+        traWriterS.close();
+  
+        // Write the label file to storm.lab
+        BufferedWriter labWriterS = new BufferedWriter(new FileWriter("storm.lab"));
+        labWriterS.write(labStrS.trim());
+        labWriterS.close();
+      }
+
+      System.out.println("Finished! Processed " + numPaths + " paths.");
 
       // close PRISM
       prism.closeDown();
 
-      // Exit and alert user
-      if (DO_PRINT) System.out.println("Thank you. Remember to check buildModel.tra,sta,lab and out.sta,tra,lab and final_prism_report.txt if you used the makefile.");
-      if (DO_PRINT) System.out.println("Otherwise, your model is available at buildModel.tra,sta,lab.");
-
-    } 
-    // Catch common errors and give user the info
+    }
+    // Catch exceptions and give user the info
     catch (PrismException e) {
 			if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
 			System.exit(1);
@@ -979,5 +1060,7 @@ public class BuildModel
       if (DO_PRINT) System.out.println("IOException Error: " + e.getMessage());
 			System.exit(1);
     }
+
   }
+
 }

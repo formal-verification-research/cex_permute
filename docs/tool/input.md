@@ -29,11 +29,20 @@ default to a recursion bound of `5` to guarantee termination.
 - `property` (required)
     - Input the desired property without time bounds (e.g. `A = 20`)
 
-- `timeBound` (NOT IMPLEMENTED YET)
+- `timeBound` (required for MRT based termination)
     - Input the desired time bound as a floating point, presumably in seconds 
     (e.g. `200.0`) to provide a heuristic for termination
 
-- `recursionBound` (recommended)
+- `flexibility` (required for MRT based termination)
+    - Input the percentage of the time bound you wish to reach before
+    terminating the algorithm (e.g. 1.2)
+
+- `terminate` (optional, defaults to `both`)
+    - Input `time` to terminate with the MRT heuristic.
+    Input `depth` to use the user-specified max. recursion depth.
+    Input anything else or leave blank to check whichever comes first.
+
+- `recursionBound` (required for recursion depth termination)
     - Input the desired integer bound on recursion depth (e.g. `30`) to guarantee termination
 
 - `export`
