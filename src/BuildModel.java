@@ -382,7 +382,7 @@ public class BuildModel
       for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
         r = sim.getTransitionActionString(sim_tran);
         System.out.printf("%s ", r);
-        reactionList.append(r);
+        reactionList.add(r);
         // if (prefix[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
         //   transitionIndex = sim_tran;
         //   newTranRate = sim.getTransitionProbability(sim_tran);
