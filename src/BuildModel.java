@@ -281,40 +281,25 @@ public class BuildModel
     int s = 0;
     int statesRemoved = 0;
     int transitionsRemoved = 0;
-    boolean deadEndsExist = false;
-    
-    do {
-      deadEndsExist = false;
+    // boolean deadEndsExist = false;
 
-      while (s < stateList.size()) {
-        stateList.get(s).index = s;
-        if (stateList.get(s).isTarget) {
-          s++;
-          continue;
-        }
-        for (int t = 0; t < stateList.get(s).outgoingTrans.size();) {
-          if (stateList.get(s).outgoingTrans.get(t).to >= stateCount) {
-            if (DO_PRINT) System.out.println("Removing transition to state " + stateList.get(s).outgoingTrans.get(t).to);
-            stateList.get(s).outgoingTrans.remove(t);
-            transitionCount--;
-            transitionsRemoved++;
-            deadEndsExist = true;
-          }
-          else {
-            t++;
-          }
-        }
-        if (stateList.get(s).outgoingTrans.size() == 0) {
-          if (DO_PRINT) System.out.println("Removing state " + s);
-          stateList.remove(s);
-          stateCount--;
-          statesRemoved++;
-          deadEndsExist = true;
-        }
-        else {
-          s++;
-        }
+    while (s < stateList.size()) {
+      stateList.get(s).index = s;
+      if (stateList.get(s).isTarget) {
+        s++;
+        continue;
       }
+      if (stateList.get(s).outgoingTrans.size() == 0) {
+        if (DO_PRINT) System.out.println("Removing state " + s);
+        stateList.remove(s);
+        stateCount--;
+        statesRemoved++;
+        // deadEndsExist = true;
+      }
+      else {
+        s++;
+      }
+    }      
   
       // int t;
       // for (s = 0; s < stateList.size(); s++) {
@@ -325,9 +310,29 @@ public class BuildModel
       //     }
       //   }
       // }
-    } while (deadEndsExist);
+    // } while (deadEndsExist);
+
+    if (DO_PRINT) System.out.println("Removed dead ends. Now cleaning up transitions along the whole state space.");
+    
+    for (s = 0; s < stateList.size(); s++) {
+      for (int t = 0; t < stateList.get(s).outgoingTrans.size();) {
+        if (DO_PRINT) System.out.printf("Checking t=%d on state %d\n", t, s);
+        if (stateList.get(s).outgoingTrans.get(t).to >= stateCount) {
+          if (DO_PRINT) System.out.println("Removing transition to state " + stateList.get(s).outgoingTrans.get(t).to);
+          stateList.get(s).outgoingTrans.remove(t);
+          transitionCount--;
+          transitionsRemoved++;
+          // deadEndsExist = true;
+        }
+        else {
+          stateList.get(s).outgoingTrans.get(t).from = s;
+          t++;
+        }
+      }
+    }
 
     System.out.printf("Removed %d dead-end states and %d corresponding transitions.\n", statesRemoved, transitionsRemoved);
+
   }
 
   public class Path {

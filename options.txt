@@ -7,4 +7,4 @@ flexibility 0.2
 terminate depth
 cycleLength 3
 export both
-verbose false
+verbose true
