@@ -367,10 +367,8 @@ public class BuildModel
       
       State zeroState = new State(numStateVariables);
       
-
-      // TODO: Maybe we can do something more clever than just setting them to 5
       for (int i = 0; i < numStateVariables; i++) {
-        zeroState.setValue(i, 5);
+        zeroState.setValue(i, 2*CYCLE_LENGTH); //  
       }
       SimulatorEngine sim = prism.getSimulator();
       sim.createNewPath();
@@ -388,21 +386,13 @@ public class BuildModel
         r = sim.getTransitionActionString(sim_tran);
         System.out.printf("%s ", r);
         reactionList.add(r);
-        // if (prefix[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
-        //   transitionIndex = sim_tran;
-        //   newTranRate = sim.getTransitionProbability(sim_tran);
-        // }
       }
-      // // If we never found the correct transitions, report error
-      // if (transitionIndex == -1) {
-      //   System.out.printf("ERROR: Prefix transition not available from current state: ");
-      //   System.out.println(sim.getCurrentState());
-      //   System.exit(10001);
-      // }
-      // // Take the transition
-      // sim.manualTransition(transitionIndex);
-
+    
+      System.out.printf("Reaction List: ");
       System.out.println(reactionList);
+
+      // Check every combination of reactions for zero-sums
+
 
       System.out.println(" ");
       System.out.println("\n----------------------------------");
