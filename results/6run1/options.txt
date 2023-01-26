@@ -1,0 +1,5 @@
+model models/6react/model.sm
+trace paths/other/6trace_list.txt
+property s5 = 25
+recursion bound 1
+export both

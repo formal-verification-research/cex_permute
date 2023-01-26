@@ -1,8 +1,23 @@
 Storm 1.6.4
 
-Date: Tue Jan 24 12:10:52 2023
-Command line arguments: --explicit storm.tra storm.lab --prop 'P=? [true U[0,100] "target"]'
+Date: Thu Jan 26 10:33:36 2023
+Command line arguments: --explicit results/6run1/storm.tra results/6run1/storm.lab --prop 'P=? [true U[0,20] "target"]'
 Current working directory: /home/bryanti/cex_permute
 
-ERROR (ArgumentValidators.cpp:82): Unable to read from non-existing file 'storm.tra'.
-ERROR (storm.cpp:21): An exception caused Storm to terminate. The message of the exception is: IllegalArgumentValueException: Unable to read from non-existing file 'storm.tra'.
+Time for model construction: 0.000s.
+
+-------------------------------------------------------------- 
+Model type: 	CTMC (sparse)
+States: 	57
+Transitions: 	114
+Reward Models:  none
+State Labels: 	3 labels
+   * target -> 1 item(s)
+   * absorb -> 1 item(s)
+   * init -> 1 item(s)
+Choice Labels: 	none
+-------------------------------------------------------------- 
+
+Model checking property "1": P=? [true U[0, 20] "target"] ...
+Result (for initial states): 3.309997229e-74
+Time for model checking: 0.016s.

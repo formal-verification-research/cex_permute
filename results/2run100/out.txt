@@ -4,7 +4,6 @@ Getting Parameters from input file
 Model Name: models/2react/model.sm
 Trace List Name: paths/other/2trace_list.txt
 Property: s2>=80
-Verbose mode disabled
 Prism model and property loaded succesfully.
 Processed 1 paths with a state count of 102
 Removed 1 dead-end states and 0 corresponding transitions.

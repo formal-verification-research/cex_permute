@@ -1,0 +1,5 @@
+model models/2react/model.sm
+trace paths/other/2trace_list.txt
+property s2 >= 80
+recursion bound 100
+export both

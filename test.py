@@ -4,12 +4,12 @@ import os
 import random
 import sys
 
-react = "2react"
-timeUnits = "100"
-tracePath = "paths/other/2trace_list.txt"
-prop = "s2 >= 80"
-recursion = "100"
-directory = "2run" + recursion
+react = "8react"
+timeUnits = "20"
+tracePath = "paths/other/a.txt"
+prop = "G_bg = 50"
+recursion = "1"
+directory = "8run" + recursion
 
 options = open("options.txt", "w")
 options.write(f"model models/{react}/model.sm\n")
@@ -17,12 +17,12 @@ options.write(f"trace {tracePath}\n")
 options.write(f"property {prop}\n")
 options.write(f"recursion bound {recursion}\n")
 options.write("export both\n")
-#options.write("verbose")
+options.write("verbose")
 
 options.close()
 
 os.system(f"make")
-os.system(f"mkdir results/{directory}")
+#os.system(f"mkdir results/{directory}")
 os.system(f"/usr/bin/time -o results/{directory}/time.txt make test > results/{directory}/out.txt")
 os.system(f"mv prism.* results/{directory}/")
 os.system(f"mv storm.* results/{directory}/")

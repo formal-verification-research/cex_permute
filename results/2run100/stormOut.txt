@@ -1,8 +1,27 @@
 Storm 1.6.4
 
-Date: Tue Jan 24 12:53:24 2023
-Command line arguments: --explicit storm.tra storm.lab --prop 'P=? [true U[0,100] "target"]'
+Date: Wed Jan 25 09:25:40 2023
+Command line arguments: --explicit results/2run100/storm.tra results/2run100/storm.lab --prop 'P=? [true U[0,100] "target"]'
 Current working directory: /home/bryanti/cex_permute
 
-ERROR (ArgumentValidators.cpp:82): Unable to read from non-existing file 'storm.tra'.
-ERROR (storm.cpp:21): An exception caused Storm to terminate. The message of the exception is: IllegalArgumentValueException: Unable to read from non-existing file 'storm.tra'.
+Time for model construction: 0.007s.
+
+-------------------------------------------------------------- 
+Model type: 	CTMC (sparse)
+States: 	102
+Transitions: 	2257
+Reward Models:  none
+State Labels: 	3 labels
+   * target -> 30 item(s)
+   * absorb -> 1 item(s)
+   * init -> 1 item(s)
+Choice Labels: 	none
+-------------------------------------------------------------- 
+
+Model checking property "1": P=? [true U[0, 100] "target"] ...
+ WARN (SparseMatrix.cpp:220): Unordered insertion into matrix builder caused duplicate entries.
+ WARN (SparseMatrix.cpp:220): Unordered insertion into matrix builder caused duplicate entries.
+ERROR (SparseMatrix.cpp:233): Too many entries in matrix, expected only 1717.
+ WARN (model-handling.h:986): Cannot handle property: OutOfRangeException: Too many entries in matrix, expected only 1717.
+ERROR (model-handling.h:946): Property is unsupported by selected engine/settings.
+

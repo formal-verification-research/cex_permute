@@ -1,8 +1,8 @@
 Storm 1.6.4
 
-Date: Tue Jan 24 11:57:11 2023
-Command line arguments: --explicit storm.tra storm.lab --prop 'P=? [true U[0,20] "target"]'
+Date: Thu Jan 26 10:40:00 2023
+Command line arguments: --explicit results/8run1/storm.tra results/8run1/storm.lab --prop 'P=? [true U[0,20] "target"]'
 Current working directory: /home/bryanti/cex_permute
 
-ERROR (ArgumentValidators.cpp:82): Unable to read from non-existing file 'storm.tra'.
-ERROR (storm.cpp:21): An exception caused Storm to terminate. The message of the exception is: IllegalArgumentValueException: Unable to read from non-existing file 'storm.tra'.
+ERROR (SparseMatrix.cpp:157): Adding an element in row 6184, but an element in row 6332 has already been added.
+ERROR (storm.cpp:21): An exception caused Storm to terminate. The message of the exception is: InvalidArgumentException: Adding an element in row 6184, but an element in row 6332 has already been added.

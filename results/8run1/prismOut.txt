@@ -2,7 +2,7 @@ PRISM
 =====
 
 Version: 4.5
-Date: Tue Jan 24 11:57:10 MST 2023
+Date: Thu Jan 26 10:40:00 MST 2023
 Hostname: deeplearning
 Memory limits: cudd=1g, java(heap)=1g
 Command line: prism -importmodel 'results/8run1/prism.tra,sta,lab' -ctmc models/8react/fullPro.csl
