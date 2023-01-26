@@ -415,8 +415,9 @@ public class BuildModel
       // loop through the state vars; see if we made if back to the origin
       if (cycleDepth > 0) {
         for (int i = 0; i < numStateVariables; i++) {
-          diff = CYCLE_INIT - getIntVarVals(sim.getCurrentState().varValues)[i];
-          if (minVals[i] < diff) {
+          System.out.printf("%d ", getIntVarVals(sim.getCurrentState().varValues)[i]);
+          diff = getIntVarVals(sim.getCurrentState().varValues)[i] - CYCLE_INIT;
+          if (diff < minVals[i]) {
             newMinVals[i] = diff;
           }
           else {
@@ -426,6 +427,7 @@ public class BuildModel
             backToBase = false;
           }
         }
+        System.out.println("");
       }
       else {
         backToBase = false;
@@ -433,7 +435,11 @@ public class BuildModel
       
       if (backToBase) {
         cycleArray.add(new Cycle((cycle), newMinVals));
-        System.out.println("Found cycle " + (cycle) + " at state " + sim.getCurrentState());
+        System.out.printf("Found cycle " + (cycle) + " with mins ");
+        for (int i = 0; i < numStateVariables; i++) {
+          System.out.printf("%d(%d) ", minVals[i], newMinVals[i]);
+        }
+        System.out.println("");
         return;
       }
       else {
