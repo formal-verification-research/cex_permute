@@ -398,9 +398,11 @@ public class BuildModel
   // recursively finds cycles within the appropriate length bounds
   public void findCyclePermutations(SimulatorEngine sim, State curState, ArrayList<String> reactionList, int cycleDepth, String cycle, int[] minVals) {
     try{
-      if (cycleDepth == CYCLE_LENGTH) return; // base case
+      if (cycleDepth > CYCLE_LENGTH) return; // base case
 
-      System.out.println("Current State: " + sim.getCurrentState());
+      // System.out.println("Cycle: " + cycle);
+
+      // System.out.println("Current State: " + sim.getCurrentState());
       int[] newMinVals = new int[numStateVariables];
 
       // set up our prism simulator at the desired state
@@ -430,10 +432,12 @@ public class BuildModel
       }
       
       if (backToBase) {
-        cycleArray.add(new Cycle(cycle, newMinVals));
+        cycleArray.add(new Cycle((cycle), newMinVals));
+        System.out.println("Found cycle " + (cycle) + " at state " + sim.getCurrentState());
         return;
       }
       else {
+        // System.out.println("HERE with ");
         int numTransitions = reactionList.size();
         for (int i = 0; i < numTransitions; i++) {
           // simulate each reaction
@@ -452,7 +456,9 @@ public class BuildModel
             continue;
           }
           // Take the transition
+          sim.initialisePath(curState);
           sim.manualTransition(transitionIndex);
+          // System.out.println("Took " + desiredReaction + " to get " + sim.getCurrentState());
 
           // pass in the new state plus the addition to the cycle and keep detecting
           findCyclePermutations(sim, sim.getCurrentState(), reactionList, cycleDepth+1, cycle + desiredReaction, newMinVals);
@@ -494,7 +500,6 @@ public class BuildModel
       System.out.println("Zero State: " + zeroState);
       System.out.println("Zero State: " + sim.getCurrentState());
   
-      
       // Get list of reactions and store in reactionList
 
       ArrayList<String> reactionList = new ArrayList<String>();
