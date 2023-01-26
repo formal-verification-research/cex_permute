@@ -398,6 +398,8 @@ public class BuildModel
   // recursively finds cycles within the appropriate length bounds
   public void findCyclePermutations(SimulatorEngine sim, State curState, ArrayList<String> reactionList, int cycleDepth, String cycle, int[] minVals) {
     try{
+      mm.registerMemoryUsage();
+      
       if (cycleDepth > CYCLE_LENGTH) return; // base case
 
       // System.out.println("Cycle: " + cycle);
@@ -415,7 +417,7 @@ public class BuildModel
       // loop through the state vars; see if we made if back to the origin
       if (cycleDepth > 0) {
         for (int i = 0; i < numStateVariables; i++) {
-          System.out.printf("%d ", getIntVarVals(sim.getCurrentState().varValues)[i]);
+          // System.out.printf("%d ", getIntVarVals(sim.getCurrentState().varValues)[i]);
           diff = getIntVarVals(sim.getCurrentState().varValues)[i] - CYCLE_INIT;
           if (diff < minVals[i]) {
             newMinVals[i] = diff;
@@ -427,7 +429,7 @@ public class BuildModel
             backToBase = false;
           }
         }
-        System.out.println("");
+        // System.out.println("");
       }
       else {
         backToBase = false;
@@ -437,7 +439,7 @@ public class BuildModel
         cycleArray.add(new Cycle((cycle), newMinVals));
         System.out.printf("Found cycle " + (cycle) + " with mins ");
         for (int i = 0; i < numStateVariables; i++) {
-          System.out.printf("%d(%d) ", minVals[i], newMinVals[i]);
+          System.out.printf("%d\t", newMinVals[i]);
         }
         System.out.println("");
         return;
@@ -485,6 +487,8 @@ public class BuildModel
     
     if (CYCLE_LENGTH <= 1) return; // no sense finding 0-cycles and 1-cycles
 
+    // TODO: Check if we repeat ourselves, maybe by checking for previous cycles within cycles
+
     try {
 
       System.out.println("\n----------------------------------");
@@ -529,8 +533,16 @@ public class BuildModel
       findCyclePermutations(sim, zeroState, reactionList, 0, "", minVals);
       // public String findCyclePermutations(SimulatorEngine sim, ArrayList<String> reactionList, int cycleDepth, String cycle, int[] minVals)
 
-      System.out.println("CYCLE LIST:");
-      System.out.println(cycleArray);
+      System.out.println("Successfully detected " + cycleArray.size() + " cycles.");
+      // System.out.println(cycleArray);
+
+      // Tack cycles onto the state space somehow...
+
+      // For each state in the state space:
+        // If all state values are above the min amounts for each cycle:
+          // Simulate the cycle from the state, adding discovered states along the way
+      
+        
 
       System.out.println(" ");
       System.out.println("\n----------------------------------");
