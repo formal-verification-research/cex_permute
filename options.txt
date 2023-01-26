@@ -5,6 +5,6 @@ recursionBound 3
 timeBound 20
 flexibility 0.2
 terminate depth
-cycleLength 0
+cycleLength 2
 export both
-verbose true
+verbose false

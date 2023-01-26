@@ -87,6 +87,7 @@ public class BuildModel
   public boolean TERMINATE_TIME = true;
   public boolean TERMINATE_DEPTH = true;
   public int CYCLE_LENGTH = 0;
+  public int CYCLE_INIT;
   
   // By default, call BuildModel().run()
   public static void main(String[] args)
@@ -168,7 +169,9 @@ public class BuildModel
       }
       else if (first.contains("cycleLength")) {
         CYCLE_LENGTH = Integer.parseInt(parameter);
+        CYCLE_INIT = 2 * CYCLE_LENGTH; // allows stoichiometry constant of 2
         System.out.println("Cycle length: " + CYCLE_LENGTH);
+        System.out.println("Cycle initial values for testing: " + CYCLE_INIT);
       }
 		}
     if (TERMINATE_TIME) TIME_BOUND = TIME_BOUND * FLEXIBILITY;
@@ -384,19 +387,92 @@ public class BuildModel
     public String transitions;
     public int[] minVals;
 
-    public Cycle(String transitions) {
-      this.transitions = "";
-      this.minVals = new int[numStateVariables];
-      for (int i = 0; i < numStateVariables; i++) {
-        this.minVals[i] = 0;
+    public Cycle(String transitions, int[] minVals) {
+      this.transitions = transitions;
+      this.minVals = minVals;
+    }
+  }
+
+  public ArrayList<Cycle> cycleArray;
+
+  // recursively finds cycles within the appropriate length bounds
+  public void findCyclePermutations(SimulatorEngine sim, State curState, ArrayList<String> reactionList, int cycleDepth, String cycle, int[] minVals) {
+    try{
+      if (cycleDepth == CYCLE_LENGTH) return; // base case
+
+      System.out.println("Current State: " + sim.getCurrentState());
+      int[] newMinVals = new int[numStateVariables];
+
+      // set up our prism simulator at the desired state
+      sim.initialisePath(curState);
+
+      // check if we have made it back to our base state
+      boolean backToBase = true;
+      int diff = 0;
+      
+      // loop through the state vars; see if we made if back to the origin
+      if (cycleDepth > 0) {
+        for (int i = 0; i < numStateVariables; i++) {
+          diff = CYCLE_INIT - getIntVarVals(sim.getCurrentState().varValues)[i];
+          if (minVals[i] < diff) {
+            newMinVals[i] = diff;
+          }
+          else {
+            newMinVals[i] = minVals[i];
+          }
+          if (getIntVarVals(sim.getCurrentState().varValues)[i] != CYCLE_INIT) {
+            backToBase = false;
+          }
+        }
+      }
+      else {
+        backToBase = false;
+      }
+      
+      if (backToBase) {
+        cycleArray.add(new Cycle(cycle, newMinVals));
+        return;
+      }
+      else {
+        int numTransitions = reactionList.size();
+        for (int i = 0; i < numTransitions; i++) {
+          // simulate each reaction
+          // start with a fresh transitionIndex
+          int transitionIndex = -1;
+          String desiredReaction = reactionList.get(i);
+          // Compare our transition string with available transition strings
+          for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+            // Update transitionIndex if we found the desired transition (i.e. names match)
+            if (desiredReaction.equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
+              transitionIndex = sim_tran;
+            }
+          }
+          // If we never found the correct transitions, try another reaction
+          if (transitionIndex == -1) {
+            continue;
+          }
+          // Take the transition
+          sim.manualTransition(transitionIndex);
+
+          // pass in the new state plus the addition to the cycle and keep detecting
+          findCyclePermutations(sim, sim.getCurrentState(), reactionList, cycleDepth+1, cycle + desiredReaction, newMinVals);
+          
+        }
       }
     }
+    catch (PrismException e) {
+			if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
+			System.exit(1);
+		}
   }
 
   // add cycles master function
   // relies heavily on https://github.com/prismmodelchecker/prism/blob/master/prism/src/parser/State.java
   // and also https://github.com/prismmodelchecker/prism/blob/master/prism/src/simulator/SimulatorEngine.java
   public void addCycles(Prism prism) {
+    
+    if (CYCLE_LENGTH <= 1) return; // no sense finding 0-cycles and 1-cycles
+
     try {
 
       System.out.println("\n----------------------------------");
@@ -405,35 +481,45 @@ public class BuildModel
       
       // set a zero state
       State zeroState = new State(numStateVariables);
+
+      System.out.println("Setting all state values to " + CYCLE_INIT);
     
       for (int i = 0; i < numStateVariables; i++) {
-        zeroState.setValue(i, 2*CYCLE_LENGTH); //  
+        zeroState.setValue(i, CYCLE_INIT); // lets us have stoichiometry of 2 throughout cycle
       }
       SimulatorEngine sim = prism.getSimulator();
       sim.createNewPath();
       sim.initialisePath(zeroState);
       
       System.out.println("Zero State: " + zeroState);
+      System.out.println("Zero State: " + sim.getCurrentState());
   
       
       // Get list of reactions and store in reactionList
-
-      System.out.printf("Getting reaction list: ");
 
       ArrayList<String> reactionList = new ArrayList<String>();
 
       String r;
       for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
         r = sim.getTransitionActionString(sim_tran);
-        System.out.printf("%s ", r);
         reactionList.add(r);
       }
     
       System.out.printf("Reaction List: ");
       System.out.println(reactionList);
 
-
       // Check every combination of reactions for zero-sums
+      cycleArray = new ArrayList<Cycle>();
+      int[] minVals = new int[numStateVariables];
+      for (int i = 0; i < numStateVariables; i++) {
+        minVals[i] = 0;
+      }
+
+      findCyclePermutations(sim, zeroState, reactionList, 0, "", minVals);
+      // public String findCyclePermutations(SimulatorEngine sim, ArrayList<String> reactionList, int cycleDepth, String cycle, int[] minVals)
+
+      System.out.println("CYCLE LIST:");
+      System.out.println(cycleArray);
 
       System.out.println(" ");
       System.out.println("\n----------------------------------");
