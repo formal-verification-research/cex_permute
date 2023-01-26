@@ -310,7 +310,7 @@ public class BuildModel
     
     for (s = 0; s < stateList.size(); s++) {
       for (int t = 0; t < stateList.get(s).outgoingTrans.size();) {
-        System.out.printf("Checking t=%d on state %d\n", t, s);
+        if (DO_PRINT) System.out.printf("Checking t=%d on state %d\n", t, s);
         if (stateList.get(s).outgoingTrans.get(t).to >= stateCount) {
           if (DO_PRINT) System.out.println("Removing transition to state " + stateList.get(s).outgoingTrans.get(t).to);
           stateList.get(s).outgoingTrans.remove(t);
