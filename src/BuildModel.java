@@ -362,9 +362,8 @@ public class BuildModel
       
       State zeroState = new State(numStateVariables);
       
-      // TODO: Maybe we can do something more clever than just setting them to 10
       for (int i = 0; i < numStateVariables; i++) {
-        zeroState.setValue(i, 10);
+        zeroState.setValue(i, 2*CYCLE_LENGTH); //  
       }
       SimulatorEngine sim = prism.getSimulator();
       sim.createNewPath();
