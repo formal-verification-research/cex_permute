@@ -32,9 +32,42 @@ import prism.PrismPrintStreamLog;
 // PRISM Simulator
 import simulator.SimulatorEngine;
 
+import java.lang.*;
+import java.util.*;
+
 // This class takes care of everything we need the PRISM API for
 public class BuildModel
 {
+
+  public class MemoryMonitor {
+      private int maxUsedMemory;
+      Runtime currentRuntime;
+      /**
+              Constructor to initialize maxUsedMemory to 0
+      */
+      public MemoryMonitor() {
+              maxUsedMemory = 0;
+              currentRuntime = Runtime.getRuntime(); // In Java, everything is a pointer so this won't duplicate memory
+      }
+      /**
+              You will want to call this method whenever you think memory may be peaking,
+              or whenever you allocate something.
+      */
+      public void registerMemoryUsage() {
+              int usedMemory = (int)currentRuntime.totalMemory() - (int)currentRuntime.freeMemory();
+              if (usedMemory > this.maxUsedMemory) {
+                      this.maxUsedMemory = usedMemory;
+              }
+      }
+      /**
+              Call this whenever you wish to see the max used memory of your program up to that point
+      */
+      public int getMaxUsedMemory() {
+              return maxUsedMemory;
+      }
+  }
+
+  MemoryMonitor mm = new MemoryMonitor();
 
   // User-passed parameter file, see docs/tool/input.md
   public static final String OPTION_FILE = "options.txt";
@@ -345,14 +378,19 @@ public class BuildModel
     }
   }
 
-  // object to store a single cycle
-  public class Cycle {
-    public ArrayList<String> transitions;
-    public int[] minVals;
-  }
 
-  public boolean isCycle(Prism prism, String transitions) {
-    return false;
+  // stores a SINGLE cycle without dealing with permutations
+  public class Cycle {
+    public String transitions;
+    public int[] minVals;
+
+    public Cycle(String transitions) {
+      this.transitions = "";
+      this.minVals = new int[numStateVariables];
+      for (int i = 0; i < numStateVariables; i++) {
+        this.minVals[i] = 0;
+      }
+    }
   }
 
   // add cycles master function
@@ -365,8 +403,9 @@ public class BuildModel
       System.out.println("Begin Cycles");
       System.out.println("----------------------------------\n");
       
+      // set a zero state
       State zeroState = new State(numStateVariables);
-      
+    
       for (int i = 0; i < numStateVariables; i++) {
         zeroState.setValue(i, 2*CYCLE_LENGTH); //  
       }
@@ -375,13 +414,15 @@ public class BuildModel
       sim.initialisePath(zeroState);
       
       System.out.println("Zero State: " + zeroState);
+  
       
+      // Get list of reactions and store in reactionList
+
       System.out.printf("Getting reaction list: ");
 
       ArrayList<String> reactionList = new ArrayList<String>();
-      String r;
 
-      // Compare our transition string with available transition strings
+      String r;
       for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
         r = sim.getTransitionActionString(sim_tran);
         System.out.printf("%s ", r);
@@ -391,8 +432,8 @@ public class BuildModel
       System.out.printf("Reaction List: ");
       System.out.println(reactionList);
 
-      // Check every combination of reactions for zero-sums
 
+      // Check every combination of reactions for zero-sums
 
       System.out.println(" ");
       System.out.println("\n----------------------------------");
@@ -566,6 +607,8 @@ public class BuildModel
   public void buildAndCommute(Prism prism, String[] transitions, String[] prefix, int depth, Path parentPath, Expression target)
   {
     try {
+
+      mm.registerMemoryUsage();
       
       if (TERMINATE_DEPTH && depth > MAX_DEPTH) {
         System.out.println("Max recursion depth reached.");
@@ -675,8 +718,6 @@ public class BuildModel
         
         // walk along the trace
         currentState = stateToAdd;
-        
-        
         
       } // end walk along path prefix
       
@@ -985,7 +1026,7 @@ public class BuildModel
   {
     try
     {
-	
+
       System.out.println("Welcome to the model commutation tool.");
 	  getParams();
       // start by resetting the state count
@@ -1163,6 +1204,11 @@ public class BuildModel
 
       // close PRISM
       prism.closeDown();
+
+      System.out.println("Max Memory: " + mm.getMaxUsedMemory() + " bytes");
+      System.out.println("Max Memory: " + (mm.getMaxUsedMemory() / 1000) + " KB");
+      System.out.println("Max Memory: " + (mm.getMaxUsedMemory() / 1000000) + " MB");
+      System.out.println("Max Memory: " + (mm.getMaxUsedMemory() / 1000000000) + " GB");
 
     }
     // Catch exceptions and give user the info
