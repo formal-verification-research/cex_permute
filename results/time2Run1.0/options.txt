@@ -1,0 +1,10 @@
+model models/2react/model.sm
+trace paths/other/2trace_list.txt
+property s2 = 80
+recursionBound 1
+timeBound 100
+flexibility 1.0
+terminate time
+cycleLength 0
+export both
+verbose

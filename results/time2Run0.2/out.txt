@@ -1,0 +1,65 @@
+PRISM_DIR=/home/bryanti/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Getting Parameters from input file
+Model Name: models/2react/model.sm
+Trace List Name: paths/other/2trace_list.txt
+Property: s2=80
+Max Depth: 1
+Time Bound: 100.0
+Flexibility: 0.2
+Terminating with time bound
+Cycle length: 0
+Verbose mode disabled
+Terminating recursion at a time bound of 20.0
+Prism model and property loaded succesfully.
+Mean Time for Prefix 0.000000 	Path 16.302227	Total 16.302227
+Mean Time for Prefix 0.500000 	Path 16.135560	Total 16.635560
+Mean Time for Prefix 0.993827 	Path 15.972312	Total 16.966139
+Mean Time for Prefix 1.481632 	Path 15.812376	Total 17.294008
+Mean Time for Prefix 1.963560 	Path 15.655651	Total 17.619211
+Mean Time for Prefix 2.439750 	Path 15.502041	Total 17.941792
+Mean Time for Prefix 2.910338 	Path 15.351453	Total 18.261792
+Mean Time for Prefix 3.375455 	Path 15.203797	Total 18.579252
+Mean Time for Prefix 3.835225 	Path 15.058988	Total 18.894213
+Mean Time for Prefix 4.289770 	Path 14.916942	Total 19.206713
+Mean Time for Prefix 4.739209 	Path 14.777582	Total 19.516790
+Mean Time for Prefix 5.183653 	Path 14.640829	Total 19.824482
+Mean Time for Prefix 5.623213 	Path 14.506612	Total 20.129826
+Reached time bound recursion threshold at depth 12
+Mean Time for Prefix 0.500000 	Path 16.472422	Total 16.972422
+Mean Time for Prefix 1.006329 	Path 16.646259	Total 17.652588
+Mean Time for Prefix 1.519150 	Path 16.823859	Total 18.343009
+Mean Time for Prefix 2.038630 	Path 17.005348	Total 19.043978
+Mean Time for Prefix 2.564946 	Path 17.190855	Total 19.755801
+Mean Time for Prefix 3.098279 	Path 17.380518	Total 20.478797
+Reached time bound recursion threshold at depth 6
+Processed 1 paths with a state count of 59
+
+----------------------------------
+Begin Cycles
+----------------------------------
+
+Zero State: (0,0)
+Getting reaction list: Reaction List: []
+ 
+
+----------------------------------
+End Cycles
+----------------------------------
+
+Removed 1 dead-end states and 2 corresponding transitions.
+
+Final Count:
+58 states
+615 transitions
+
+Establishing an absorbing state.
+New state 58:(-1,-1)
+Begin printing model files.
+Now printing 1 paths to PRISM model files.
+Now printing 1 paths to STORM model files.
+Finished! Processed 1 paths.
+Max Memory: 25894912 bytes
+Max Memory: 25894 KB
+Max Memory: 25 MB
+Max Memory: 0 GB

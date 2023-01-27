@@ -1,0 +1,74 @@
+PRISM_DIR=/home/bryanti/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Getting Parameters from input file
+Model Name: models/8react/model.sm
+Trace List Name: paths/other/a.txt
+Property: G_bg=50
+Max Depth: 1
+Time Bound: 20.0
+Flexibility: 0.05
+Terminating with time bound
+Cycle length: 0
+Verbose mode disabled
+Terminating recursion at a time bound of 1.0
+Prism model and property loaded succesfully.
+Mean Time for Prefix 0.000000 	Path 0.616550	Total 0.616550
+Mean Time for Prefix 0.134521 	Path 0.610461	Total 0.744982
+Mean Time for Prefix 0.267531 	Path 0.604495	Total 0.872026
+Mean Time for Prefix 0.399065 	Path 0.598647	Total 0.997712
+Mean Time for Prefix 0.529155 	Path 0.592915	Total 1.122070
+Reached time bound recursion threshold at depth 4
+Mean Time for Prefix 0.529155 	Path 0.567882	Total 1.097037
+Reached time bound recursion threshold at depth 4
+Mean Time for Prefix 0.529155 	Path 0.562737	Total 1.091892
+Reached time bound recursion threshold at depth 4
+Mean Time for Prefix 0.399065 	Path 0.573124	Total 0.972190
+Mean Time for Prefix 0.522855 	Path 0.578468	Total 1.101323
+Reached time bound recursion threshold at depth 4
+Mean Time for Prefix 0.522855 	Path 0.544934	Total 1.067789
+Reached time bound recursion threshold at depth 4
+Mean Time for Prefix 0.522855 	Path 0.540207	Total 1.063062
+Reached time bound recursion threshold at depth 4
+Mean Time for Prefix 0.134521 	Path 0.622765	Total 0.757286
+Mean Time for Prefix 0.270586 	Path 0.629111	Total 0.899697
+Mean Time for Prefix 0.408232 	Path 0.635591	Total 1.043823
+Reached time bound recursion threshold at depth 3
+Mean Time for Prefix 0.408232 	Path 0.595132	Total 1.003364
+Reached time bound recursion threshold at depth 3
+Mean Time for Prefix 0.408232 	Path 0.589468	Total 0.997701
+Mean Time for Prefix 0.536028 	Path 0.583914	Total 1.119943
+Reached time bound recursion threshold at depth 4
+Mean Time for Prefix 0.536028 	Path 0.559642	Total 1.095670
+Reached time bound recursion threshold at depth 4
+Mean Time for Prefix 0.536028 	Path 0.554649	Total 1.090677
+Reached time bound recursion threshold at depth 4
+Processed 1 paths with a state count of 2003
+
+----------------------------------
+Begin Cycles
+----------------------------------
+
+Zero State: (0,0,0,0,0,0,0)
+Getting reaction list: [R1] [R8] Reaction List: [[R1], [R8]]
+ 
+
+----------------------------------
+End Cycles
+----------------------------------
+
+Removed 0 dead-end states and 0 corresponding transitions.
+
+Final Count:
+2003 states
+8497 transitions
+
+Establishing an absorbing state.
+New state 2003:(-1,-1,-1,-1,-1,-1,-1)
+Begin printing model files.
+Now printing 1 paths to PRISM model files.
+Now printing 1 paths to STORM model files.
+Finished! Processed 1 paths.
+Max Memory: 97198080 bytes
+Max Memory: 97198 KB
+Max Memory: 97 MB
+Max Memory: 0 GB

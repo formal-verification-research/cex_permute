@@ -1,0 +1,2 @@
+202.29user 3.45system 2:00.78elapsed 170%CPU (0avgtext+0avgdata 5570864maxresident)k
+0inputs+29920outputs (99major+1407977minor)pagefaults 0swaps

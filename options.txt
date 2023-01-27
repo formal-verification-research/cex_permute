@@ -1,8 +1,10 @@
 model models/8react/model.sm
 trace paths/other/a.txt
 property G_bg = 50
-recursion bound 1
+recursionBound 1
 timeBound 20
-flexibility 0.2
-terminate depthcycleLength 0export both
+flexibility 0.3
+terminate time
+cycleLength 0
+export both
 verbose

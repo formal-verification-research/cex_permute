@@ -1,0 +1,716 @@
+PRISM_DIR=/home/bryanti/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Getting Parameters from input file
+Model Name: models/8react/model.sm
+Trace List Name: paths/other/a.txt
+Property: G_bg=50
+Max Depth: 1
+Time Bound: 20.0
+Flexibility: 0.3
+Terminating with time bound
+Cycle length: 0
+Verbose mode disabled
+Terminating recursion at a time bound of 6.0
+Prism model and property loaded succesfully.
+Mean Time for Prefix 0.000000 	Path 0.616550	Total 0.616550
+Mean Time for Prefix 0.134521 	Path 0.610461	Total 0.744982
+Mean Time for Prefix 0.267531 	Path 0.604495	Total 0.872026
+Mean Time for Prefix 0.399065 	Path 0.598647	Total 0.997712
+Mean Time for Prefix 0.529155 	Path 0.592915	Total 1.122070
+Mean Time for Prefix 0.657832 	Path 0.587294	Total 1.245126
+Mean Time for Prefix 0.785126 	Path 0.581783	Total 1.366909
+Mean Time for Prefix 0.911068 	Path 0.576376	Total 1.487444
+Mean Time for Prefix 1.035685 	Path 0.571072	Total 1.606757
+Mean Time for Prefix 1.159004 	Path 0.565868	Total 1.724872
+Mean Time for Prefix 1.281054 	Path 0.560761	Total 1.841814
+Mean Time for Prefix 1.401859 	Path 0.555747	Total 1.957606
+Mean Time for Prefix 1.521445 	Path 0.550825	Total 2.072270
+Mean Time for Prefix 1.639835 	Path 0.545992	Total 2.185828
+Mean Time for Prefix 1.757055 	Path 0.541246	Total 2.298301
+Mean Time for Prefix 1.873126 	Path 0.536584	Total 2.409711
+Mean Time for Prefix 1.988071 	Path 0.532004	Total 2.520076
+Mean Time for Prefix 2.101912 	Path 0.527504	Total 2.629417
+Mean Time for Prefix 2.214670 	Path 0.523082	Total 2.737752
+Mean Time for Prefix 2.326364 	Path 0.518736	Total 2.845100
+Mean Time for Prefix 2.437015 	Path 0.514464	Total 2.951479
+Mean Time for Prefix 2.546643 	Path 0.510263	Total 3.056906
+Mean Time for Prefix 2.655265 	Path 0.506133	Total 3.161398
+Mean Time for Prefix 2.762901 	Path 0.502071	Total 3.264972
+Mean Time for Prefix 2.869568 	Path 0.498076	Total 3.367644
+Mean Time for Prefix 2.975282 	Path 0.494146	Total 3.469429
+Mean Time for Prefix 3.080063 	Path 0.490280	Total 3.570342
+Mean Time for Prefix 3.183924 	Path 0.486475	Total 3.670399
+Mean Time for Prefix 3.286883 	Path 0.482731	Total 3.769614
+Mean Time for Prefix 3.388955 	Path 0.479046	Total 3.868002
+Mean Time for Prefix 3.490155 	Path 0.475419	Total 3.965575
+Mean Time for Prefix 3.590499 	Path 0.471848	Total 4.062347
+Mean Time for Prefix 3.689999 	Path 0.468333	Total 4.158332
+Mean Time for Prefix 3.788671 	Path 0.464870	Total 4.253541
+Mean Time for Prefix 3.886528 	Path 0.461461	Total 4.347989
+Mean Time for Prefix 3.983583 	Path 0.458103	Total 4.441686
+Mean Time for Prefix 4.079850 	Path 0.454795	Total 4.534645
+Mean Time for Prefix 4.175341 	Path 0.451536	Total 4.626877
+Mean Time for Prefix 4.270068 	Path 0.448325	Total 4.718393
+Mean Time for Prefix 4.364045 	Path 0.445161	Total 4.809205
+Mean Time for Prefix 4.457281 	Path 0.442043	Total 4.899324
+Mean Time for Prefix 4.549790 	Path 0.438969	Total 4.988759
+Mean Time for Prefix 4.641582 	Path 0.435940	Total 5.077522
+Mean Time for Prefix 4.732668 	Path 0.432954	Total 5.165622
+Mean Time for Prefix 4.823059 	Path 0.430010	Total 5.253069
+Mean Time for Prefix 4.912767 	Path 0.427107	Total 5.339873
+Mean Time for Prefix 5.001799 	Path 0.424244	Total 5.426043
+Mean Time for Prefix 5.090168 	Path 0.421421	Total 5.511589
+Mean Time for Prefix 5.177883 	Path 0.418636	Total 5.596519
+Mean Time for Prefix 5.264953 	Path 0.415890	Total 5.680843
+Mean Time for Prefix 5.351388 	Path 0.413180	Total 5.764568
+Mean Time for Prefix 5.437197 	Path 0.410507	Total 5.847704
+Mean Time for Prefix 5.522389 	Path 0.407870	Total 5.930259
+Mean Time for Prefix 5.606973 	Path 0.405267	Total 6.012240
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.606973 	Path 0.393702	Total 6.000675
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.606973 	Path 0.391283	Total 5.998256
+Mean Time for Prefix 5.687731 	Path 0.388895	Total 6.076626
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.687731 	Path 0.378267	Total 6.065998
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.687731 	Path 0.376041	Total 6.063772
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.522389 	Path 0.396152	Total 5.918541
+Mean Time for Prefix 5.604263 	Path 0.398634	Total 6.002898
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.604263 	Path 0.382803	Total 5.987066
+Mean Time for Prefix 5.683069 	Path 0.380521	Total 6.063590
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.683069 	Path 0.385113	Total 6.068183
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.683069 	Path 0.370356	Total 6.053426
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.683069 	Path 0.368226	Total 6.051295
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.351388 	Path 0.401149	Total 5.752537
+Mean Time for Prefix 5.434410 	Path 0.403696	Total 5.838106
+Mean Time for Prefix 5.518018 	Path 0.406278	Total 5.924296
+Mean Time for Prefix 5.602220 	Path 0.408894	Total 6.011114
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.602220 	Path 0.392223	Total 5.994443
+Mean Time for Prefix 5.683180 	Path 0.389823	Total 6.073003
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.683180 	Path 0.394654	Total 6.077833
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.683180 	Path 0.379142	Total 6.062322
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.683180 	Path 0.376905	Total 6.060085
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.518018 	Path 0.387453	Total 5.905471
+Mean Time for Prefix 5.597886 	Path 0.374696	Total 5.972582
+Mean Time for Prefix 5.674832 	Path 0.372513	Total 6.047345
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.674832 	Path 0.362783	Total 6.037615
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.674832 	Path 0.360742	Total 6.035574
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.001799 	Path 0.411545	Total 5.413344
+Mean Time for Prefix 5.087215 	Path 0.414232	Total 5.501447
+Mean Time for Prefix 5.173252 	Path 0.416956	Total 5.590208
+Mean Time for Prefix 5.259917 	Path 0.419717	Total 5.679634
+Mean Time for Prefix 5.347222 	Path 0.422516	Total 5.769738
+Mean Time for Prefix 5.435174 	Path 0.425355	Total 5.860529
+Mean Time for Prefix 5.523784 	Path 0.428233	Total 5.952017
+Mean Time for Prefix 5.613062 	Path 0.431152	Total 6.044214
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.613062 	Path 0.412588	Total 6.025650
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.613062 	Path 0.409923	Total 6.022985
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.523784 	Path 0.407293	Total 5.931077
+Mean Time for Prefix 5.608205 	Path 0.404698	Total 6.012903
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.608205 	Path 0.393167	Total 6.001372
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.608205 	Path 0.390755	Total 5.998960
+Mean Time for Prefix 5.688815 	Path 0.388374	Total 6.077189
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.688815 	Path 0.377775	Total 6.066590
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.688815 	Path 0.375554	Total 6.064369
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.347222 	Path 0.402138	Total 5.749359
+Mean Time for Prefix 5.430456 	Path 0.399610	Total 5.830067
+Mean Time for Prefix 5.513111 	Path 0.397116	Total 5.910227
+Mean Time for Prefix 5.595192 	Path 0.383700	Total 5.978892
+Mean Time for Prefix 5.674190 	Path 0.381407	Total 6.055597
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.674190 	Path 0.386022	Total 6.060212
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.674190 	Path 0.371194	Total 6.045384
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.674190 	Path 0.369054	Total 6.043244
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 4.270068 	Path 0.434112	Total 4.704181
+Mean Time for Prefix 4.360712 	Path 0.437115	Total 4.797828
+Mean Time for Prefix 4.452055 	Path 0.440162	Total 4.892216
+Mean Time for Prefix 4.544107 	Path 0.443252	Total 4.987359
+Mean Time for Prefix 4.636880 	Path 0.446388	Total 5.083268
+Mean Time for Prefix 4.730385 	Path 0.449570	Total 5.179955
+Mean Time for Prefix 4.824634 	Path 0.452800	Total 5.277434
+Mean Time for Prefix 4.919639 	Path 0.456078	Total 5.375716
+Mean Time for Prefix 5.015411 	Path 0.459405	Total 5.474816
+Mean Time for Prefix 5.111964 	Path 0.462783	Total 5.574747
+Mean Time for Prefix 5.209311 	Path 0.466213	Total 5.675523
+Mean Time for Prefix 5.307463 	Path 0.469696	Total 5.777159
+Mean Time for Prefix 5.406436 	Path 0.473233	Total 5.879669
+Mean Time for Prefix 5.506242 	Path 0.476825	Total 5.983068
+Mean Time for Prefix 5.606897 	Path 0.480475	Total 6.087371
+Reached time bound recursion threshold at depth 52
+Mean Time for Prefix 5.606897 	Path 0.457368	Total 6.064265
+Reached time bound recursion threshold at depth 52
+Mean Time for Prefix 5.606897 	Path 0.454071	Total 6.060968
+Reached time bound recursion threshold at depth 52
+Mean Time for Prefix 5.506242 	Path 0.450823	Total 5.957065
+Mean Time for Prefix 5.600766 	Path 0.447622	Total 6.048388
+Reached time bound recursion threshold at depth 52
+Mean Time for Prefix 5.600766 	Path 0.433456	Total 6.034222
+Reached time bound recursion threshold at depth 52
+Mean Time for Prefix 5.600766 	Path 0.430505	Total 6.031270
+Reached time bound recursion threshold at depth 52
+Mean Time for Prefix 5.307463 	Path 0.444469	Total 5.751932
+Mean Time for Prefix 5.400502 	Path 0.441361	Total 5.841863
+Mean Time for Prefix 5.492816 	Path 0.438297	Total 5.931113
+Mean Time for Prefix 5.584416 	Path 0.435278	Total 6.019694
+Reached time bound recursion threshold at depth 52
+Mean Time for Prefix 5.584416 	Path 0.421896	Total 6.006312
+Reached time bound recursion threshold at depth 52
+Mean Time for Prefix 5.584416 	Path 0.419105	Total 6.003521
+Reached time bound recursion threshold at depth 52
+Mean Time for Prefix 5.492816 	Path 0.424726	Total 5.917542
+Mean Time for Prefix 5.581248 	Path 0.427595	Total 6.008842
+Reached time bound recursion threshold at depth 52
+Mean Time for Prefix 5.581248 	Path 0.409340	Total 5.990588
+Mean Time for Prefix 5.666110 	Path 0.406719	Total 6.072829
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.666110 	Path 0.411998	Total 6.078107
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.666110 	Path 0.395069	Total 6.061179
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.666110 	Path 0.392633	Total 6.058743
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 4.919639 	Path 0.432301	Total 5.351939
+Mean Time for Prefix 5.009844 	Path 0.429366	Total 5.439210
+Mean Time for Prefix 5.099368 	Path 0.426472	Total 5.525840
+Mean Time for Prefix 5.188221 	Path 0.423618	Total 5.611839
+Mean Time for Prefix 5.276412 	Path 0.420803	Total 5.697215
+Mean Time for Prefix 5.363951 	Path 0.418027	Total 5.781979
+Mean Time for Prefix 5.450849 	Path 0.415289	Total 5.866138
+Mean Time for Prefix 5.537114 	Path 0.400592	Total 5.937706
+Mean Time for Prefix 5.619979 	Path 0.398085	Total 6.018064
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.619979 	Path 0.403132	Total 6.023111
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.619979 	Path 0.386936	Total 6.006915
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.619979 	Path 0.384602	Total 6.004581
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.363951 	Path 0.405706	Total 5.769657
+Mean Time for Prefix 5.447992 	Path 0.408314	Total 5.856306
+Mean Time for Prefix 5.532633 	Path 0.410957	Total 5.943591
+Mean Time for Prefix 5.617883 	Path 0.413637	Total 6.031520
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.617883 	Path 0.396571	Total 6.014454
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.617883 	Path 0.394116	Total 6.011999
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.532633 	Path 0.391692	Total 5.924325
+Mean Time for Prefix 5.613444 	Path 0.389298	Total 6.002742
+Reached time bound recursion threshold at depth 53
+Mean Time for Prefix 5.613444 	Path 0.378648	Total 5.992092
+Mean Time for Prefix 5.691264 	Path 0.376417	Total 6.067681
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.691264 	Path 0.380906	Total 6.072170
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.691264 	Path 0.366477	Total 6.057740
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.691264 	Path 0.364392	Total 6.055656
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.009844 	Path 0.416352	Total 5.426196
+Mean Time for Prefix 5.096339 	Path 0.401578	Total 5.497917
+Mean Time for Prefix 5.179416 	Path 0.399058	Total 5.578474
+Mean Time for Prefix 5.261915 	Path 0.385509	Total 5.647423
+Mean Time for Prefix 5.341299 	Path 0.383193	Total 5.724492
+Mean Time for Prefix 5.420154 	Path 0.370721	Total 5.790876
+Mean Time for Prefix 5.496160 	Path 0.368586	Total 5.864746
+Mean Time for Prefix 5.571680 	Path 0.357069	Total 5.928749
+Mean Time for Prefix 5.644583 	Path 0.355094	Total 5.999676
+Mean Time for Prefix 5.717039 	Path 0.353141	Total 6.070180
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.717039 	Path 0.344424	Total 6.061463
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.717039 	Path 0.342592	Total 6.059631
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.644583 	Path 0.359066	Total 6.003649
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.644583 	Path 0.346277	Total 5.990859
+Mean Time for Prefix 5.715042 	Path 0.348150	Total 6.063192
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.715042 	Path 0.336144	Total 6.051186
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.715042 	Path 0.334403	Total 6.049445
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.496160 	Path 0.372882	Total 5.869042
+Mean Time for Prefix 5.572655 	Path 0.375070	Total 5.947725
+Mean Time for Prefix 5.649648 	Path 0.377284	Total 6.026932
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.649648 	Path 0.363133	Total 6.012781
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.649648 	Path 0.387853	Total 6.037502
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.649648 	Path 0.361088	Total 6.010736
+Reached time bound recursion threshold at depth 54
+Mean Time for Prefix 5.179416 	Path 0.404131	Total 5.583548
+Mean Time for Prefix 5.263080 	Path 0.390228	Total 5.653308
+Mean Time for Prefix 2.762901 	Path 0.484182	Total 3.247083
+Mean Time for Prefix 2.865295 	Path 0.487950	Total 3.353244
+Mean Time for Prefix 2.968581 	Path 0.491778	Total 3.460359
+Mean Time for Prefix 3.072776 	Path 0.495669	Total 3.568445
+Mean Time for Prefix 3.177896 	Path 0.499624	Total 3.677520
+Mean Time for Prefix 3.283956 	Path 0.503645	Total 3.787601
+Mean Time for Prefix 3.390974 	Path 0.507733	Total 3.898707
+Mean Time for Prefix 3.498968 	Path 0.511890	Total 4.010858
+Mean Time for Prefix 3.607955 	Path 0.516118	Total 4.124073
+Mean Time for Prefix 3.717954 	Path 0.520419	Total 4.238373
+Mean Time for Prefix 3.828983 	Path 0.524795	Total 4.353778
+Mean Time for Prefix 3.941063 	Path 0.529247	Total 4.470310
+Mean Time for Prefix 4.054214 	Path 0.533778	Total 4.587992
+Mean Time for Prefix 4.168455 	Path 0.538389	Total 4.706844
+Mean Time for Prefix 4.283809 	Path 0.543084	Total 4.826892
+Mean Time for Prefix 4.400296 	Path 0.547863	Total 4.948160
+Mean Time for Prefix 4.517941 	Path 0.552730	Total 5.070671
+Mean Time for Prefix 4.636765 	Path 0.557687	Total 5.194452
+Mean Time for Prefix 4.756793 	Path 0.562737	Total 5.319530
+Mean Time for Prefix 4.878049 	Path 0.567882	Total 5.445931
+Mean Time for Prefix 5.000559 	Path 0.573124	Total 5.573683
+Mean Time for Prefix 5.124349 	Path 0.578468	Total 5.702816
+Mean Time for Prefix 5.249446 	Path 0.583914	Total 5.833360
+Mean Time for Prefix 5.375878 	Path 0.589468	Total 5.965346
+Mean Time for Prefix 5.503673 	Path 0.595132	Total 6.098805
+Reached time bound recursion threshold at depth 47
+Mean Time for Prefix 5.503673 	Path 0.559642	Total 6.063315
+Reached time bound recursion threshold at depth 47
+Mean Time for Prefix 5.503673 	Path 0.622765	Total 6.126438
+Reached time bound recursion threshold at depth 47
+Mean Time for Prefix 5.503673 	Path 0.554649	Total 6.058322
+Reached time bound recursion threshold at depth 47
+Mean Time for Prefix 5.375878 	Path 0.549747	Total 5.925625
+Mean Time for Prefix 5.493950 	Path 0.544934	Total 6.038884
+Reached time bound recursion threshold at depth 47
+Mean Time for Prefix 5.493950 	Path 0.523820	Total 6.017770
+Reached time bound recursion threshold at depth 47
+Mean Time for Prefix 5.493950 	Path 0.519462	Total 6.013411
+Reached time bound recursion threshold at depth 47
+Mean Time for Prefix 5.124349 	Path 0.540207	Total 5.664556
+Mean Time for Prefix 5.240114 	Path 0.535563	Total 5.775677
+Mean Time for Prefix 5.354758 	Path 0.531002	Total 5.885760
+Mean Time for Prefix 5.468304 	Path 0.526519	Total 5.994824
+Mean Time for Prefix 5.580773 	Path 0.522114	Total 6.102887
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 5.580773 	Path 0.502750	Total 6.083523
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 5.580773 	Path 0.498744	Total 6.079517
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 5.468304 	Path 0.506823	Total 5.975128
+Mean Time for Prefix 5.576033 	Path 0.510965	Total 6.086998
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 5.576033 	Path 0.484814	Total 6.060846
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 5.576033 	Path 0.481096	Total 6.057129
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 5.240114 	Path 0.515177	Total 5.755291
+Mean Time for Prefix 5.349837 	Path 0.492429	Total 5.842267
+Mean Time for Prefix 5.454119 	Path 0.488591	Total 5.942710
+Mean Time for Prefix 5.557491 	Path 0.468151	Total 6.025643
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 5.557491 	Path 0.464692	Total 6.022184
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 5.454119 	Path 0.496331	Total 5.950450
+Mean Time for Prefix 5.559327 	Path 0.500297	Total 6.059624
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 5.559327 	Path 0.475232	Total 6.034559
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 5.559327 	Path 0.471664	Total 6.030991
+Reached time bound recursion threshold at depth 48
+Mean Time for Prefix 4.517941 	Path 0.517784	Total 5.035725
+Mean Time for Prefix 4.628313 	Path 0.513528	Total 5.141842
+Mean Time for Prefix 4.737668 	Path 0.509344	Total 5.247011
+Mean Time for Prefix 4.846022 	Path 0.505229	Total 5.351250
+Mean Time for Prefix 4.953394 	Path 0.501182	Total 5.454576
+Mean Time for Prefix 5.059802 	Path 0.497202	Total 5.557003
+Mean Time for Prefix 5.165263 	Path 0.493286	Total 5.658548
+Mean Time for Prefix 5.269793 	Path 0.489433	Total 5.759226
+Mean Time for Prefix 5.373409 	Path 0.485643	Total 5.859052
+Mean Time for Prefix 5.476127 	Path 0.481912	Total 5.958039
+Mean Time for Prefix 5.577962 	Path 0.478240	Total 6.056202
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.577962 	Path 0.462033	Total 6.039995
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.577962 	Path 0.458666	Total 6.036628
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.476127 	Path 0.465451	Total 5.941578
+Mean Time for Prefix 5.574061 	Path 0.468922	Total 6.042983
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.574061 	Path 0.446923	Total 6.020983
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.574061 	Path 0.443779	Total 6.017840
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.269793 	Path 0.472447	Total 5.742240
+Mean Time for Prefix 5.369373 	Path 0.476027	Total 5.845400
+Mean Time for Prefix 5.469796 	Path 0.479664	Total 5.949460
+Mean Time for Prefix 5.571079 	Path 0.483358	Total 6.054437
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.571079 	Path 0.459972	Total 6.031051
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.571079 	Path 0.456636	Total 6.027715
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.469796 	Path 0.453350	Total 5.923147
+Mean Time for Prefix 5.564873 	Path 0.450113	Total 6.014986
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.564873 	Path 0.435786	Total 6.000659
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.564873 	Path 0.432802	Total 5.997675
+Mean Time for Prefix 5.655144 	Path 0.429860	Total 6.085004
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.655144 	Path 0.416816	Total 6.071960
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.655144 	Path 0.414095	Total 6.069239
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 4.846022 	Path 0.487112	Total 5.333134
+Mean Time for Prefix 4.949066 	Path 0.490927	Total 5.439992
+Mean Time for Prefix 5.053014 	Path 0.494804	Total 5.547817
+Mean Time for Prefix 5.157882 	Path 0.473835	Total 5.631717
+Mean Time for Prefix 5.257768 	Path 0.470289	Total 5.728057
+Mean Time for Prefix 5.356819 	Path 0.466797	Total 5.823616
+Mean Time for Prefix 5.455049 	Path 0.463359	Total 5.918407
+Mean Time for Prefix 5.552471 	Path 0.444999	Total 5.997470
+Mean Time for Prefix 5.645579 	Path 0.441883	Total 6.087462
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.645579 	Path 0.448161	Total 6.093740
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.645579 	Path 0.428085	Total 6.073664
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.645579 	Path 0.425209	Total 6.070788
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.356819 	Path 0.451369	Total 5.808188
+Mean Time for Prefix 5.451414 	Path 0.454625	Total 5.906039
+Mean Time for Prefix 5.546770 	Path 0.457930	Total 6.004700
+Reached time bound recursion threshold at depth 49
+Mean Time for Prefix 5.546770 	Path 0.436961	Total 5.983730
+Mean Time for Prefix 5.637989 	Path 0.433960	Total 6.071949
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.637989 	Path 0.440004	Total 6.077993
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.637989 	Path 0.420662	Total 6.058651
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.637989 	Path 0.417888	Total 6.055877
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.451414 	Path 0.431002	Total 5.882415
+Mean Time for Prefix 5.541250 	Path 0.415152	Total 5.956401
+Mean Time for Prefix 5.627405 	Path 0.412452	Total 6.039857
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.627405 	Path 0.400465	Total 6.027870
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.627405 	Path 0.397960	Total 6.025364
+Reached time bound recursion threshold at depth 50
+Mean Time for Prefix 5.257768 	Path 0.477437	Total 5.735205
+Mean Time for Prefix 3.283956 	Path 0.474625	Total 3.758581
+Mean Time for Prefix 3.384070 	Path 0.471067	Total 3.855137
+Mean Time for Prefix 3.483345 	Path 0.467563	Total 3.950909
+Mean Time for Prefix 3.581796 	Path 0.464113	Total 4.045909
+Mean Time for Prefix 3.679435 	Path 0.460715	Total 4.140150
+Mean Time for Prefix 3.776276 	Path 0.442566	Total 4.218842
+Mean Time for Prefix 3.868853 	Path 0.439486	Total 4.308339
+Mean Time for Prefix 3.960712 	Path 0.436449	Total 4.397162
+Mean Time for Prefix 4.051865 	Path 0.420188	Total 4.472053
+Mean Time for Prefix 4.139230 	Path 0.417421	Total 4.556651
+Mean Time for Prefix 4.225956 	Path 0.414691	Total 4.640647
+Mean Time for Prefix 4.312052 	Path 0.400037	Total 4.712089
+Mean Time for Prefix 4.394761 	Path 0.397537	Total 4.792298
+Mean Time for Prefix 4.476896 	Path 0.384093	Total 4.860989
+Mean Time for Prefix 4.555944 	Path 0.381795	Total 4.937739
+Mean Time for Prefix 4.634467 	Path 0.379525	Total 5.013993
+Mean Time for Prefix 4.712474 	Path 0.367297	Total 5.079771
+Mean Time for Prefix 4.787690 	Path 0.365203	Total 5.152893
+Mean Time for Prefix 4.862432 	Path 0.353900	Total 5.216333
+Mean Time for Prefix 4.934608 	Path 0.351962	Total 5.286570
+Mean Time for Prefix 5.006347 	Path 0.350045	Total 5.356393
+Mean Time for Prefix 5.077655 	Path 0.339685	Total 5.417340
+Mean Time for Prefix 5.146623 	Path 0.337905	Total 5.484528
+Mean Time for Prefix 5.215192 	Path 0.328270	Total 5.543463
+Mean Time for Prefix 5.281596 	Path 0.326613	Total 5.608209
+Mean Time for Prefix 5.347630 	Path 0.324973	Total 5.672602
+Mean Time for Prefix 5.413297 	Path 0.323350	Total 5.736647
+Mean Time for Prefix 5.478603 	Path 0.321743	Total 5.800347
+Mean Time for Prefix 5.543551 	Path 0.320154	Total 5.863705
+Mean Time for Prefix 5.608144 	Path 0.318581	Total 5.926725
+Mean Time for Prefix 5.672388 	Path 0.317024	Total 5.989412
+Mean Time for Prefix 5.736285 	Path 0.315483	Total 6.051767
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.736285 	Path 0.308577	Total 6.044861
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.736285 	Path 0.325970	Total 6.062255
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.736285 	Path 0.307120	Total 6.043405
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.672388 	Path 0.310048	Total 5.982436
+Mean Time for Prefix 5.734727 	Path 0.311534	Total 6.046260
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.734727 	Path 0.301980	Total 6.036707
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.734727 	Path 0.300588	Total 6.035315
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.672388 	Path 0.327621	Total 6.000009
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.608144 	Path 0.329290	Total 5.937434
+Mean Time for Prefix 5.674785 	Path 0.330976	Total 6.005761
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.674785 	Path 0.338988	Total 6.013773
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.543551 	Path 0.313035	Total 5.856585
+Mean Time for Prefix 5.606552 	Path 0.314551	Total 5.921103
+Mean Time for Prefix 5.669891 	Path 0.316082	Total 5.985973
+Mean Time for Prefix 5.733570 	Path 0.317630	Total 6.051199
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.733570 	Path 0.307687	Total 6.041257
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.733570 	Path 0.306239	Total 6.039809
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.669891 	Path 0.304806	Total 5.974697
+Mean Time for Prefix 5.731060 	Path 0.303386	Total 6.034446
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.731060 	Path 0.297018	Total 6.028078
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.731060 	Path 0.295673	Total 6.026733
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.478603 	Path 0.332680	Total 5.811283
+Mean Time for Prefix 5.281596 	Path 0.329946	Total 5.611542
+Mean Time for Prefix 5.348374 	Path 0.331639	Total 5.680013
+Mean Time for Prefix 5.415531 	Path 0.333350	Total 5.748881
+Mean Time for Prefix 5.483070 	Path 0.335080	Total 5.818150
+Mean Time for Prefix 5.550996 	Path 0.336829	Total 5.887826
+Mean Time for Prefix 5.619314 	Path 0.338597	Total 5.957912
+Mean Time for Prefix 5.688029 	Path 0.340385	Total 6.028414
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.688029 	Path 0.328922	Total 6.016951
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.688029 	Path 0.348887	Total 6.036916
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.688029 	Path 0.327258	Total 6.015286
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.619314 	Path 0.347005	Total 5.966320
+Mean Time for Prefix 5.689927 	Path 0.345145	Total 6.035072
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.689927 	Path 0.357845	Total 6.047772
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.619314 	Path 0.325611	Total 5.944925
+Mean Time for Prefix 5.685115 	Path 0.323981	Total 6.009096
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.685115 	Path 0.316685	Total 6.001800
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.685115 	Path 0.315147	Total 6.000262
+Reached time bound recursion threshold at depth 58
+Mean Time for Prefix 5.483070 	Path 0.343304	Total 5.826374
+Mean Time for Prefix 5.552851 	Path 0.341485	Total 5.894335
+Mean Time for Prefix 5.483070 	Path 0.322368	Total 5.805438
+Mean Time for Prefix 5.548148 	Path 0.320772	Total 5.868920
+Mean Time for Prefix 5.612870 	Path 0.319193	Total 5.932063
+Mean Time for Prefix 5.677241 	Path 0.310626	Total 5.987867
+Mean Time for Prefix 5.739700 	Path 0.309149	Total 6.048849
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.739700 	Path 0.312118	Total 6.051817
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.739700 	Path 0.302528	Total 6.042227
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.739700 	Path 0.301130	Total 6.040830
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.548148 	Path 0.313625	Total 5.861772
+Mean Time for Prefix 5.611272 	Path 0.305364	Total 5.916636
+Mean Time for Prefix 5.672556 	Path 0.303939	Total 5.976495
+Mean Time for Prefix 5.733525 	Path 0.296197	Total 6.029722
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.733525 	Path 0.294860	Total 6.028385
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.672556 	Path 0.306803	Total 5.979359
+Mean Time for Prefix 5.734159 	Path 0.308256	Total 6.042415
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.734159 	Path 0.298909	Total 6.033068
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 5.734159 	Path 0.297547	Total 6.031706
+Reached time bound recursion threshold at depth 59
+Mean Time for Prefix 4.934608 	Path 0.355861	Total 5.290470
+Mean Time for Prefix 4.787690 	Path 0.369416	Total 5.157107
+Mean Time for Prefix 4.863387 	Path 0.371561	Total 5.234949
+Mean Time for Prefix 4.939571 	Path 0.373732	Total 5.313303
+Mean Time for Prefix 5.016247 	Path 0.375930	Total 5.392177
+Mean Time for Prefix 5.093423 	Path 0.378155	Total 5.471578
+Mean Time for Prefix 5.171105 	Path 0.380407	Total 5.551513
+Mean Time for Prefix 5.249300 	Path 0.382688	Total 5.631988
+Mean Time for Prefix 5.328014 	Path 0.384997	Total 5.713011
+Mean Time for Prefix 5.407255 	Path 0.387335	Total 5.794590
+Mean Time for Prefix 5.487029 	Path 0.389703	Total 5.876732
+Mean Time for Prefix 5.567344 	Path 0.392101	Total 5.959445
+Mean Time for Prefix 5.648206 	Path 0.394531	Total 6.042737
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.648206 	Path 0.379030	Total 6.027237
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.648206 	Path 0.406146	Total 6.054353
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.648206 	Path 0.376795	Total 6.025001
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.567344 	Path 0.403566	Total 5.970910
+Mean Time for Prefix 5.650848 	Path 0.401021	Total 6.051869
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.650848 	Path 0.418495	Total 6.069343
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.567344 	Path 0.374587	Total 5.941930
+Mean Time for Prefix 5.644202 	Path 0.372405	Total 6.016607
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.644202 	Path 0.362682	Total 6.006883
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.644202 	Path 0.360642	Total 6.004843
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.407255 	Path 0.398508	Total 5.805763
+Mean Time for Prefix 5.489598 	Path 0.396028	Total 5.885626
+Mean Time for Prefix 5.571374 	Path 0.393579	Total 5.964953
+Mean Time for Prefix 5.652589 	Path 0.391162	Total 6.043751
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.652589 	Path 0.407737	Total 6.060326
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.571374 	Path 0.410372	Total 5.981746
+Mean Time for Prefix 5.656459 	Path 0.413043	Total 6.069502
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.656459 	Path 0.425839	Total 6.082298
+Reached time bound recursion threshold at depth 56
+Mean Time for Prefix 5.407255 	Path 0.370250	Total 5.777505
+Mean Time for Prefix 5.483128 	Path 0.368121	Total 5.851249
+Mean Time for Prefix 5.558519 	Path 0.366017	Total 5.924536
+Mean Time for Prefix 5.633433 	Path 0.363937	Total 5.997371
+Mean Time for Prefix 5.707877 	Path 0.361883	Total 6.069760
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.707877 	Path 0.352716	Total 6.060593
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.707877 	Path 0.350791	Total 6.058668
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.633433 	Path 0.354663	Total 5.988096
+Mean Time for Prefix 5.705770 	Path 0.356633	Total 6.062403
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.705770 	Path 0.344020	Total 6.049790
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.705770 	Path 0.342193	Total 6.047963
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.483128 	Path 0.358626	Total 5.841754
+Mean Time for Prefix 5.556359 	Path 0.347737	Total 5.904097
+Mean Time for Prefix 5.627126 	Path 0.345868	Total 5.972994
+Mean Time for Prefix 5.697472 	Path 0.335761	Total 6.033233
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.697472 	Path 0.334023	Total 6.031495
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.627126 	Path 0.349627	Total 5.976753
+Mean Time for Prefix 5.698317 	Path 0.351539	Total 6.049857
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.698317 	Path 0.339293	Total 6.037610
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.698317 	Path 0.337517	Total 6.035834
+Reached time bound recursion threshold at depth 57
+Mean Time for Prefix 5.093423 	Path 0.388776	Total 5.482199
+Mean Time for Prefix 5.173540 	Path 0.386420	Total 5.559960
+Mean Time for Prefix 5.173540 	Path 0.402570	Total 5.576110
+Mean Time for Prefix 5.256830 	Path 0.405136	Total 5.661966
+Mean Time for Prefix 5.016247 	Path 0.359852	Total 5.376100
+Mean Time for Prefix 4.139230 	Path 0.422994	Total 4.562225
+Mean Time for Prefix 3.868853 	Path 0.445692	Total 4.314545
+Mean Time for Prefix 3.962159 	Path 0.448864	Total 4.411023
+Mean Time for Prefix 4.056206 	Path 0.452083	Total 4.508289
+Mean Time for Prefix 4.151005 	Path 0.455350	Total 4.606355
+Mean Time for Prefix 4.246569 	Path 0.437628	Total 4.684197
+Mean Time for Prefix 4.337979 	Path 0.434618	Total 4.772596
+Mean Time for Prefix 4.428688 	Path 0.431650	Total 4.860338
+Mean Time for Prefix 4.518708 	Path 0.428724	Total 4.947433
+Mean Time for Prefix 4.518708 	Path 0.415751	Total 4.934459
+Mean Time for Prefix 4.337979 	Path 0.440681	Total 4.778660
+Mean Time for Prefix 4.430099 	Path 0.424099	Total 4.854197
+Mean Time for Prefix 4.518352 	Path 0.421278	Total 4.939630
+Mean Time for Prefix 4.518352 	Path 0.426959	Total 4.945311
+Mean Time for Prefix 4.607268 	Path 0.411409	Total 5.018677
+Mean Time for Prefix 4.692576 	Path 0.408760	Total 5.101336
+Mean Time for Prefix 4.692576 	Path 0.396991	Total 5.089567
+Mean Time for Prefix 4.774558 	Path 0.399484	Total 5.174042
+Mean Time for Prefix 4.857111 	Path 0.402010	Total 5.259121
+Mean Time for Prefix 4.940244 	Path 0.404568	Total 5.344812
+Mean Time for Prefix 5.023964 	Path 0.407161	Total 5.431125
+Mean Time for Prefix 5.108279 	Path 0.409789	Total 5.518068
+Mean Time for Prefix 5.193199 	Path 0.395487	Total 5.588686
+Mean Time for Prefix 5.274822 	Path 0.393045	Total 5.667868
+Mean Time for Prefix 5.355887 	Path 0.390635	Total 5.746522
+Mean Time for Prefix 5.436401 	Path 0.388255	Total 5.824657
+Mean Time for Prefix 5.516372 	Path 0.385905	Total 5.902277
+Mean Time for Prefix 5.595806 	Path 0.383585	Total 5.979391
+Mean Time for Prefix 5.674712 	Path 0.381293	Total 6.056005
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.674712 	Path 0.371088	Total 6.045799
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.674712 	Path 0.368948	Total 6.043660
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.595806 	Path 0.373253	Total 5.969059
+Mean Time for Prefix 5.672349 	Path 0.375445	Total 6.047794
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.672349 	Path 0.361435	Total 6.033784
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.672349 	Path 0.359410	Total 6.031759
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.436401 	Path 0.377664	Total 5.814065
+Mean Time for Prefix 5.513946 	Path 0.379910	Total 5.893856
+Mean Time for Prefix 5.592001 	Path 0.382184	Total 5.974185
+Mean Time for Prefix 5.670575 	Path 0.384487	Total 6.055061
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.670575 	Path 0.369780	Total 6.040355
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.670575 	Path 0.367656	Total 6.038231
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.592001 	Path 0.365558	Total 5.957559
+Mean Time for Prefix 5.666788 	Path 0.363484	Total 6.030272
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.666788 	Path 0.354234	Total 6.021021
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.666788 	Path 0.352291	Total 6.019079
+Reached time bound recursion threshold at depth 55
+Mean Time for Prefix 5.108279 	Path 0.422373	Total 5.530652
+Mean Time for Prefix 5.196117 	Path 0.419576	Total 5.615693
+Mean Time for Prefix 5.196117 	Path 0.438813	Total 5.634930
+Processed 1 paths with a state count of 38362
+
+----------------------------------
+Begin Cycles
+----------------------------------
+
+Zero State: (0,0,0,0,0,0,0)
+Getting reaction list: [R1] [R8] Reaction List: [[R1], [R8]]
+ 
+
+----------------------------------
+End Cycles
+----------------------------------
+
+Removed 0 dead-end states and 0 corresponding transitions.
+
+Final Count:
+38362 states
+313693 transitions
+
+Establishing an absorbing state.
+New state 38362:(-1,-1,-1,-1,-1,-1,-1)
+Begin printing model files.
+Now printing 1 paths to PRISM model files.
+Now printing 1 paths to STORM model files.
+Finished! Processed 1 paths.
+Max Memory: 1322218344 bytes
+Max Memory: 1322218 KB
+Max Memory: 1322 MB
+Max Memory: 1 GB
