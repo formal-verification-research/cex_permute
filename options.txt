@@ -3,8 +3,8 @@ trace paths/other/a.txt
 property G_bg = 50
 recursionBound 1
 timeBound 20
-flexibility 0.3
-terminate time
+flexibility 0.2
+terminate depth
 cycleLength 0
 export both
-verbose
+verbose true
