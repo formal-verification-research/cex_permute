@@ -1,0 +1,66 @@
+PRISM
+=====
+
+Version: 4.5
+Date: Thu Jan 26 17:38:44 MST 2023
+Hostname: deeplearning
+Memory limits: cudd=1g, java(heap)=1g
+Command line: prism -importmodel 'results/time2Run0.2/prism.tra,sta,lab' -ctmc models/2react/fullPro.csl
+
+Importing model (CTMC) from "results/time2Run0.2/prism.tra", "results/time2Run0.2/prism.sta", "results/time2Run0.2/prism.lab"...
+
+Parsing properties file "models/2react/fullPro.csl"...
+
+1 property:
+(1) P=? [ true U[0,100] s2>=80 ]
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ true U[0,100] s2>=80 ]
+
+Building model...
+
+Computing reachable states...
+
+Reachability (BFS): 53 iterations in 0.01 seconds (average 0.000189, setup 0.00)
+
+Time for model construction: 0.036 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        CTMC
+States:      59 (1 initial)
+Transitions: 618
+
+Rate matrix: 413 nodes (48 terminal), 618 minterms, vars: 9r/9c
+
+Computing probabilities...
+Engine: Hybrid
+
+Number of non-absorbing states: 47 of 59 (79.7%)
+
+Building hybrid MTBDD matrix... [levels=9, nodes=402] [18.8 KB]
+Adding explicit sparse matrices... [levels=9, num=1, compact] [2.4 KB]
+Creating vector for diagonals... [dist=47, compact] [0.5 KB]
+Allocating iteration vectors... [3 x 0.5 KB]
+TOTAL: [23.1 KB]
+
+Uniformisation: q.t = 24.531000 x 100.000000 = 2453.100000
+Fox-Glynn: left = 2104, right = 2875
+
+Starting iterations...
+
+Steady state detected at iteration 724
+
+Iterative method: 724 iterations in 0.02 seconds (average 0.000029, setup 0.00)
+
+Value in the initial state: 6.687084354878402E-46
+
+Time for model checking: 0.006 seconds.
+
+Result: 6.687084354878402E-46 (value in the initial state)
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+

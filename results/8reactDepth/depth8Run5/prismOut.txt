@@ -1,0 +1,72 @@
+PRISM
+=====
+
+Version: 4.5
+Date: Thu Jan 26 15:39:26 MST 2023
+Hostname: deeplearning
+Memory limits: cudd=1g, java(heap)=1g
+Command line: prism -importmodel 'results/depth8Run5/prism.tra,sta,lab' -ctmc models/8react/fullPro.csl
+
+Importing model (CTMC) from "results/depth8Run5/prism.tra", "results/depth8Run5/prism.sta", "results/depth8Run5/prism.lab"...
+
+Parsing properties file "models/8react/fullPro.csl"...
+
+1 property:
+(1) P=? [ true U[0,20] G_bg=50 ]
+
+---------------------------------------------------------------------
+
+Model checking: P=? [ true U[0,20] G_bg=50 ]
+
+Building model...
+
+Computing reachable states...
+
+Reachability (BFS): 12 iterations in 0.25 seconds (average 0.020917, setup 0.00)
+
+Time for model construction: 2.544 seconds.
+
+Warning: Deadlocks detected and fixed in 1 states
+
+Type:        CTMC
+States:      2147 (1 initial)
+Transitions: 16736
+
+Rate matrix: 339246 nodes (2117 terminal), 16736 minterms, vars: 38r/38c
+
+Computing probabilities...
+Engine: Hybrid
+
+Number of non-absorbing states: 2127 of 2147 (99.1%)
+
+Building hybrid MTBDD matrix... [levels=38, nodes=391271] [17.9 MB]
+Adding explicit sparse matrices... [levels=38, num=1, compact] [89.8 KB]
+Creating vector for diagonals... [dist=1576, compact] [16.5 KB]
+Allocating iteration vectors... [3 x 16.8 KB]
+TOTAL: [18.1 MB]
+
+Uniformisation: q.t = 822541.455636 x 20.000000 = 16450829.112720
+Fox-Glynn: left = 16422435, right = 16485247
+
+Starting iterations...
+Iteration 147614 (of 16485247): max relative diff=0.000015, 5.00 sec so far
+Iteration 294973 (of 16485247): max relative diff=0.000004, 10.00 sec so far
+Iteration 442223 (of 16485247): max relative diff=0.000001, 15.00 sec so far
+Iteration 590078 (of 16485247): max relative diff=0.000001, 20.00 sec so far
+Iteration 737711 (of 16485247): max relative diff=0.000000, 25.00 sec so far
+Iteration 884837 (of 16485247): max relative diff=0.000000, 30.01 sec so far
+
+Steady state detected at iteration 908009
+
+Iterative method: 908009 iterations in 85.52 seconds (average 0.000034, setup 54.73)
+
+Value in the initial state: 3.5007434564793247E-14
+
+Time for model checking: 85.93 seconds.
+
+Result: 3.5007434564793247E-14 (value in the initial state)
+
+---------------------------------------------------------------------
+
+Note: There was 1 warning during computation.
+

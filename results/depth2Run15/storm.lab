@@ -1,6 +1,0 @@
-#DECLARATION
-init absorb target
-#END
-0 init
-40 target
-70 absorb
