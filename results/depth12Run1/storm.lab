@@ -1,0 +1,12 @@
+#DECLARATION
+init absorb target
+#END
+0 init
+10 target
+11 target
+12 target
+13 target
+14 target
+15 target
+16 target
+98 absorb

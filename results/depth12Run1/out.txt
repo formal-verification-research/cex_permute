@@ -1,0 +1,31 @@
+PRISM_DIR=/home/bryanti/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Getting Parameters from input file
+Model Name: models/12react/model.sm
+Trace List Name: paths/other/12trace_list.txt
+Property: CodY=20
+Max Depth: 1
+Time Bound: 10.0
+Flexibility: 0.3
+Terminating with depth bound
+Cycle length: 0
+Cycle initial values for testing: 0
+Verbose mode disabled
+Prism model and property loaded succesfully.
+Processed 1 paths with a state count of 404
+Removed 306 dead-end states and 548 corresponding transitions.
+
+Final Count:
+98 states
+486 transitions
+
+Establishing an absorbing state.
+New state 98:(-1,-1,-1,-1,-1,-1,-1,-1,-1)
+Begin printing model files.
+Now printing 1 paths to PRISM model files.
+Now printing 1 paths to STORM model files.
+Finished! Processed 1 paths.
+Max Memory: 27994112 bytes
+Max Memory: 27994 KB
+Max Memory: 27 MB
+Max Memory: 0 GB
