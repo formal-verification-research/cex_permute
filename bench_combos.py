@@ -66,7 +66,7 @@ for cycleLength in cycleLengths:
             timeFileName = fileName + "_time.txt"
             commuteFileName = fileName + "_commute.txt"
             prismFileName = fileName + "_prism.txt"
-            os.system("echo REPLACE ME IN THE CODE") #replace this with something like the next lines
+            #os.system("echo REPLACE ME IN THE CODE") #replace this with something like the next lines
             os.system("/usr/bin/time -o {timeFileName} make test > {commuteFileName}") 
             os.system("mv prism.tra {fileName}.tra")
             os.system("mv prism.sta {fileName}.sta")
@@ -84,6 +84,10 @@ for cycleLength in cycleLengths:
             timeFileName = fileName + "_time.txt"
             commuteFileName = fileName + "_commute.txt"
             prismFileName = fileName + "_prism.txt"
-            os.system("echo REPLACE ME IN THE CODE") #replace this with your list of commands to run on a model
-
+            #os.system("echo REPLACE ME IN THE CODE") #replace this with your list of commands to run on a model
+            os.system("/usr/bin/time -o {timeFileName} make test > {commuteFileName}") 
+            os.system("mv prism.tra {fileName}.tra")
+            os.system("mv prism.sta {fileName}.sta")
+            os.system("mv prism.lab {fileName}.lab")
+            os.system("prism -importmodel {fileName}.tra,sta,lab -ctmc {propertyFile.csl} > {prismFileName}")
 
