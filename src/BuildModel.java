@@ -88,7 +88,7 @@ public class BuildModel
   public boolean TERMINATE_TIME = true;
   public boolean TERMINATE_DEPTH = true;
   public int CYCLE_LENGTH = 0;
-  public double REMOVE_TOLERANCE = 1;
+  public double REMOVE_TOLERANCE = 0.0f;
   public int CYCLE_INIT;
   
   // By default, call BuildModel().run()
