@@ -67,11 +67,11 @@ for cycleLength in cycleLengths:
             commuteFileName = fileName + "_commute.txt"
             prismFileName = fileName + "_prism.txt"
             os.system("echo REPLACE ME IN THE CODE") #replace this with something like the next lines
-            # /usr/bin/time -o {timeFileName} make test > {commuteFileName}; 
-            # mv prism.tra {fileName}.tra
-            # mv prism.sta {fileName}.sta
-            # mv prism.lab {fileName}.lab
-            # prism -importmodel {fileName}.tra,sta,lab -ctmc {propertyFile.csl} > {prismFileName}
+            os.system("/usr/bin/time -o {timeFileName} make test > {commuteFileName}") 
+            os.system("mv prism.tra {fileName}.tra")
+            os.system("mv prism.sta {fileName}.sta")
+            os.system("mv prism.lab {fileName}.lab")
+            os.system("prism -importmodel {fileName}.tra,sta,lab -ctmc {propertyFile.csl} > {prismFileName}")
 
         # then test time-based termination flexibility
         for flexibility in flexibilities:
