@@ -1,0 +1,107 @@
+
+-----
+model models/toy/model.sm
+trace models/toy/forprism.trace
+property AA = 15
+recursionBound 1
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 0
+export prism
+verbose true
+
+gave 0.37937880749327235
+
+-----
+
+model models/toy/model.sm
+trace models/toy/forprism.trace
+property AA = 15
+recursionBound 1
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 2
+export prism
+verbose false
+
+gave 0.37937880749327235
+
+-----
+
+model models/toy/model.sm
+trace models/toy/forprism.trace
+property AA = 15
+recursionBound 1
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 4
+export prism
+verbose false
+
+gave 0.3650918453732831
+
+-----
+
+model models/toy/model.sm
+trace models/toy/forprism.trace
+property AA = 15
+recursionBound 1
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 5
+export prism
+verbose false
+
+gave 0.3650918453732831
+
+-----
+
+model models/toy/model.sm
+trace models/toy/forprism.trace
+property AA = 15
+recursionBound 1TARGET 
+trace models/toy/forprism.trace
+property AA = 15
+recursionBound 1
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 10
+export prism
+verbose false
+
+gave 0.41134004183572914
+
+-----
+
+model models/toy/model.sm
+trace models/toy/forprism.trace
+property AA = 15
+recursionBound 1
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 12
+export prism
+verbose false
+
+gave 0.5776450944110378
+
+-----
+
+model models/toy/model.sm
+trace models/toy/forprism.trace
+property AA = 15
+recursionBound 1
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 15
+export prism
+verbose false
+
+gave 

@@ -76,6 +76,7 @@ public class BuildModel
   public String MODEL_NAME = "model.sm";
   public String TRACE_LIST_NAME = "forprism.trace";
   public String PROPERTY = "A=100";
+  public Expression target;
 
   // Optional parameters
   public int MAX_DEPTH = 30;
@@ -87,6 +88,7 @@ public class BuildModel
   public boolean TERMINATE_TIME = true;
   public boolean TERMINATE_DEPTH = true;
   public int CYCLE_LENGTH = 0;
+  public double REMOVE_TOLERANCE = 1;
   public int CYCLE_INIT;
   
   // By default, call BuildModel().run()
@@ -172,6 +174,10 @@ public class BuildModel
         CYCLE_INIT = 2 * CYCLE_LENGTH; // allows stoichiometry constant of 2
         System.out.println("Cycle length: " + CYCLE_LENGTH);
         System.out.println("Cycle initial values for testing: " + CYCLE_INIT);
+      }
+      else if (first.contains("removeTolerance")) {
+        REMOVE_TOLERANCE = Double.parseDouble(parameter);
+        System.out.println("Removal tolerance: " + REMOVE_TOLERANCE);
       }
 		}
     if (TERMINATE_TIME) TIME_BOUND = TIME_BOUND * FLEXIBILITY;
@@ -296,6 +302,10 @@ public class BuildModel
         if (i>0) temp += ",";
         temp += stateVars[i]; 
       }
+      // if (this.isTarget) {
+      //   return temp + ") [ " + this.totalOutgoingRate + " TARGET ]\n";
+      // }
+      // return temp + ") [ " + this.totalOutgoingRate + " ]\n";
       return temp + ")\n";
     }
 
@@ -313,68 +323,155 @@ public class BuildModel
 
   public ArrayList<My_State> stateList = new ArrayList<My_State>();
 
+  // TODO: FIX THIS ALGORITHM
+  // add a parameter for how much pruning we want to do based on absorbing ratio
   public void removeDeadEnds() {
-    int s = 0;
+
+    boolean deadEndsExist = true;
     int statesRemoved = 0;
+    int deadEndStatesRemoved = 0;
+    int sinkStatesRemoved = 0;
     int transitionsRemoved = 0;
-    // boolean deadEndsExist = false;
 
-    while (s < stateList.size()) {
-      stateList.get(s).index = s;
-      if (stateList.get(s).isTarget) {
-        s++;
-        continue;
-      }
-      if (stateList.get(s).outgoingTrans.size() == 0) {
-        if (DO_PRINT) System.out.println("Removing state " + s);
-        stateList.remove(s);
-        stateCount--;
-        statesRemoved++;
-        // deadEndsExist = true;
-      }
-      else {
-        s++;
-      }
-    }      
-  
-      // int t;
-      // for (s = 0; s < stateList.size(); s++) {
-      //   for (t = 0; t < stateList.get(s).outgoingTrans.size(); t++) {
-      //     if (stateList.get(s).outgoingTrans.get(t).to > stateList.size()) {
-      //       stateList.get(s).outgoingTrans.remove(t);
-      //       System.out.println("Removed transition to state " + stateList.get(s).outgoingTrans.get(t).to);
-      //     }
-      //   }
-      // }
-    // } while (deadEndsExist);
+    boolean shouldRemoveDE = false;
+    boolean shouldRemoveSINK = false;
+    boolean shouldRemove = false;
 
-    if (DO_PRINT) System.out.println("Removed dead ends. Now cleaning up transitions along the whole state space.");
-    
-    for (s = 0; s < stateList.size(); s++) {
-      for (int t = 0; t < stateList.get(s).outgoingTrans.size();) {
-        if (DO_PRINT) System.out.printf("Checking t=%d on state %d\n", t, s);
-        if (stateList.get(s).outgoingTrans.get(t).to >= stateCount) {
-          if (DO_PRINT) System.out.println("Removing transition to state " + stateList.get(s).outgoingTrans.get(t).to);
-          stateList.get(s).outgoingTrans.remove(t);
-          transitionCount--;
-          transitionsRemoved++;
-          // deadEndsExist = true;
+    double averageRatio = 0.0f;
+    double minRatio = 0.0f;
+    double maxRatio = 0.0f;
+
+    while (deadEndsExist) {
+      if (DO_PRINT) System.out.println("\n\nDEAD ENDS EXIST LOOP BEGINS\n\n");
+      deadEndsExist = false;
+      for (int s = stateCount - 1; s > 0; s--) {
+        if (stateList.get(s).isTarget) {
+          continue;
         }
-        else {
-          stateList.get(s).outgoingTrans.get(t).from = s;
-          t++;
+        shouldRemoveDE = (stateList.get(s).outgoingTrans.size() == 0);
+        double removeRatio = (stateList.get(s).getAbsorbingRate() / stateList.get(s).totalOutgoingRate);
+        shouldRemoveSINK = REMOVE_TOLERANCE > 0.0f && removeRatio > REMOVE_TOLERANCE;
+        shouldRemove = shouldRemoveDE || shouldRemoveSINK;
+
+        if (shouldRemoveSINK) {
+          if (DO_PRINT) System.out.println("Remove tolerance of " + REMOVE_TOLERANCE + " does not allow state " + s + " with ratio " + removeRatio);
+          if (averageRatio == 0.0f) averageRatio = removeRatio;
+          if (minRatio == 0.0f || removeRatio < minRatio) minRatio = removeRatio;
+          if (maxRatio == 0.0f || removeRatio > maxRatio) maxRatio = removeRatio;
+          else averageRatio = ((averageRatio * sinkStatesRemoved) + removeRatio) / (sinkStatesRemoved + 1);
         }
+        if (shouldRemove) {
+          if (DO_PRINT) System.out.println("\n\nRemoving state " + s);
+            // remove transitions that led to this state
+            // and decrement greater "to" indices
+            for (int i = 0; i < stateCount; i++) {
+              if (DO_PRINT) System.out.printf("  Checking state " + i + " or " + stateList.get(i).prismSTA());
+              for (int j = 0; j < stateList.get(i).outgoingTrans.size(); j++) {
+                if (DO_PRINT) System.out.printf("    Checking transition " + stateList.get(i).outgoingTrans.get(j).prismTRA());
+                // System.out.printf("i: %d, j: %d\n", i, j);
+                if (stateList.get(i).outgoingTrans.get(j).to == s) {
+                  stateList.get(i).outgoingTrans.remove(j);
+                  if (DO_PRINT) System.out.println("      Removed transition from state " + i + " to state " + s);
+                  transitionsRemoved++;
+                  transitionCount--;
+                }
+                else if (stateList.get(i).outgoingTrans.get(j).to > s) {
+                  stateList.get(i).outgoingTrans.get(j).to--;
+                  if (DO_PRINT) System.out.println("      Changed transition from state " + i + " to state " + (stateList.get(i).outgoingTrans.get(j).to+1) + ", now to state " + stateList.get(i).outgoingTrans.get(j).to);
+                }
+              }
+            }
+            // count the transitions that are removed with the state
+            transitionsRemoved += stateList.get(s).outgoingTrans.size();
+            transitionCount -= stateList.get(s).outgoingTrans.size();
+            // remove the actual state
+            stateList.remove(s);
+            statesRemoved++;
+            if (shouldRemoveSINK) {
+              sinkStatesRemoved++;
+            }
+            else if (shouldRemoveSINK) {
+              deadEndStatesRemoved++;
+            }
+            stateCount--;
+            deadEndsExist = true;
+        }
+      }
+      // update the from indices
+      for (int i = 0; i < stateCount; i++) {
+        for (int j = 0; j < stateList.get(i).outgoingTrans.size(); j++) {
+          if (!(stateList.get(i).outgoingTrans.get(j).from == i)) {
+            if (DO_PRINT) System.out.println("stateList.get(i).outgoingTrans.get(j).from = " + stateList.get(i).outgoingTrans.get(j).from + ", i = " + i);
+          }
+          stateList.get(i).outgoingTrans.get(j).from = i;
+        }
+        stateList.get(i).index = i;
       }
     }
 
-    System.out.printf("Removed %d dead-end states and %d corresponding transitions.\n", statesRemoved, transitionsRemoved);
+    System.out.printf("Removed %d dead-end states and %d probability sink states (total %d states).\n", deadEndStatesRemoved, sinkStatesRemoved, statesRemoved);
+    System.out.printf("Removed %d corresponding transitions.\n", transitionsRemoved);
+    if (sinkStatesRemoved > 0) System.out.printf("Average ratio among removed states was %.4f (min %.4f and max %.4f).\nUser-provided tolerance was %.4f\n", averageRatio, minRatio, maxRatio, REMOVE_TOLERANCE);
+
+    // int s = 0;
+    // int statesRemoved = 0;
+    // int transitionsRemoved = 0;
+    // // boolean deadEndsExist = false;
+
+    // while (s < stateList.size()) {
+    //   stateList.get(s).index = s;
+    //   if (stateList.get(s).isTarget) {
+    //     s++;
+    //     continue;
+    //   }
+    //   if (stateList.get(s).outgoingTrans.size() == 0) {
+    //     if (DO_PRINT) System.out.println("Removing state " + s);
+    //     stateList.remove(s);
+    //     stateCount--;
+    //     statesRemoved++;
+    //     // deadEndsExist = true;
+    //   }
+    //   else {
+    //     s++;
+    //   }
+    // }      
+  
+    //   // int t;
+    //   // for (s = 0; s < stateList.size(); s++) {
+    //   //   for (t = 0; t < stateList.get(s).outgoingTrans.size(); t++) {
+    //   //     if (stateList.get(s).outgoingTrans.get(t).to > stateList.size()) {
+    //   //       stateList.get(s).outgoingTrans.remove(t);
+    //   //       System.out.println("Removed transition to state " + stateList.get(s).outgoingTrans.get(t).to);
+    //   //     }
+    //   //   }
+    //   // }
+    // // } while (deadEndsExist);
+
+    // if (DO_PRINT) System.out.println("Removed dead ends. Now cleaning up transitions along the whole state space.");
+    
+    // for (s = 0; s < stateList.size(); s++) {
+    //   for (int t = 0; t < stateList.get(s).outgoingTrans.size();) {
+    //     if (DO_PRINT) System.out.printf("Checking t=%d on state %d\n", t, s);
+    //     if (stateList.get(s).outgoingTrans.get(t).to >= stateCount) {
+    //       if (DO_PRINT) System.out.println("Removing transition to state " + stateList.get(s).outgoingTrans.get(t).to);
+    //       stateList.get(s).outgoingTrans.remove(t);
+    //       transitionCount--;
+    //       transitionsRemoved++;
+    //       // deadEndsExist = true;
+    //     }
+    //     else {
+    //       stateList.get(s).outgoingTrans.get(t).from = s;
+    //       t++;
+    //     }
+    //   }
+    // }
+
 
   }
 
   public class Path {
     public ArrayList<My_State> states;
     public ArrayList<String> commutable;
-    public double pathMRT;
     public Path() {
       this.states = new ArrayList<My_State>();
       this.commutable = new ArrayList<String>();
@@ -399,7 +496,7 @@ public class BuildModel
   public void findCyclePermutations(SimulatorEngine sim, State curState, ArrayList<String> reactionList, int cycleDepth, String cycle, int[] minVals) {
     try{
       mm.registerMemoryUsage();
-      
+
       if (cycleDepth > CYCLE_LENGTH) return; // base case
 
       // System.out.println("Cycle: " + cycle);
@@ -409,6 +506,7 @@ public class BuildModel
 
       // set up our prism simulator at the desired state
       sim.initialisePath(curState);
+      mm.registerMemoryUsage();
 
       // check if we have made it back to our base state
       boolean backToBase = true;
@@ -437,11 +535,12 @@ public class BuildModel
       
       if (backToBase) {
         cycleArray.add(new Cycle((cycle), newMinVals));
-        System.out.printf("Found cycle " + (cycle) + " with mins ");
+        mm.registerMemoryUsage();
+        if (DO_PRINT) System.out.printf("Found cycle " + (cycle) + " with mins ");
         for (int i = 0; i < numStateVariables; i++) {
-          System.out.printf("%d\t", newMinVals[i]);
+          if (DO_PRINT) System.out.printf("%d\t", newMinVals[i]);
         }
-        System.out.println("");
+        if (DO_PRINT) System.out.println("");
         return;
       }
       else {
@@ -469,7 +568,7 @@ public class BuildModel
           // System.out.println("Took " + desiredReaction + " to get " + sim.getCurrentState());
 
           // pass in the new state plus the addition to the cycle and keep detecting
-          findCyclePermutations(sim, sim.getCurrentState(), reactionList, cycleDepth+1, cycle + desiredReaction, newMinVals);
+          findCyclePermutations(sim, sim.getCurrentState(), reactionList, cycleDepth+1, cycle + desiredReaction + "\t", newMinVals);
           
         }
       }
@@ -479,6 +578,126 @@ public class BuildModel
 			System.exit(1);
 		}
   }
+
+  public void simulateCycles(SimulatorEngine sim) {
+    try {
+      
+      int existingStates = stateCount; // maybe look into adjusting this to grow as we add cycles, but need to guarantee termination
+      
+      //TODO: DEBUGGING ONLY
+      int startScanning = 0;
+      existingStates = startScanning + stateCount;
+
+      int loopRuns = 0;
+
+      // loop over every state
+      for (int i = startScanning; i < existingStates; i++) {
+      // for (int i = 0; i < existingStates; i++) {
+        loopRuns++;
+        My_State currentState = stateList.get(i);
+        // loop over every cycle
+        for (int j = 0; j < 1; j++) {
+        // for (int j = 0; j < cycleArray.size(); j++) {
+          // check state variables against min values
+          boolean minValOK = true;
+          for (int k = 0; k < numStateVariables; k++) {
+            // check min value against current state
+            if (stateList.get(i).stateVars[k] + cycleArray.get(j).minVals[k] < 0) {
+              minValOK = false;
+              break;
+            }
+          }
+          if (minValOK) {
+            // set the prism state to the current state
+            State cState = new State(numStateVariables);
+            mm.registerMemoryUsage();
+            for (int l = 0; l < numStateVariables; l++) {
+              cState.setValue(l, stateList.get(i).stateVars[l]);
+            }
+            sim.initialisePath(cState);
+
+            if (DO_PRINT) System.out.println("Cycle insertion at state " + sim.getCurrentState());
+  
+            // simulate the cycle and add states and transitions
+            int transitionIndex = -1;
+            String[] cTrans = cycleArray.get(j).transitions.split("\\s+");
+            for (int path_tran = 0; path_tran < cTrans.length; path_tran++) {
+              // System.out.println("Attempting: " + cTrans[path_tran] + " - " + path_tran);
+              transitionIndex = -1;
+              double newTranRate = -1.0f;
+              double totalOutgoingRate = 0.0f;
+              // Compare our transition string with available transition strings
+              for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+                // Update transitionIndex if we found the desired transition (i.e. names match)
+                totalOutgoingRate += sim.getTransitionProbability(sim_tran);
+                // if (DO_PRINT) System.out.println("Enabled transition " + sim.getTransitionActionString(sim_tran));
+                if (cTrans[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
+                  transitionIndex = sim_tran;
+                  newTranRate = sim.getTransitionProbability(sim_tran);
+                  // System.out.println("Found transition " + cTrans[path_tran]);
+                }
+              }
+              if (transitionIndex == -1) {
+                if (DO_PRINT) System.out.printf("WARNING: Trace transition %s not available from current state %s\n", cTrans[path_tran], sim.getCurrentState());
+                continue; // basically just skip this path
+              }
+              // Take the transition
+              sim.manualTransition(transitionIndex);
+              
+              // update the total outgoing rate of the current state
+              currentState.totalOutgoingRate = totalOutgoingRate; //TODO
+              
+              // Check if the state exists yet
+              int indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+              // System.out.println("indexOfFoundState: " + indexOfFoundState);
+  
+              // figure out what state to link here (at cycle insertion)
+              My_State stateToAdd = null;
+              if (indexOfFoundState == -1) {
+                stateToAdd = new My_State(sim.getCurrentState().varValues);
+                mm.registerMemoryUsage();
+                if (DO_PRINT) System.out.printf("Added previously undiscovered state %s", stateToAdd.prismSTA());
+              }
+              else {
+                stateToAdd = stateList.get(indexOfFoundState);
+                // make sure we haven't already made this transition
+                if (currentState.nextStates.contains(stateToAdd)) {
+                  // System.out.println("NEXT STATE ALREADY FOUND");
+                  currentState = stateToAdd;
+                  continue;
+                }
+              }
+  
+              // add the transition to the discovered state
+              currentState.nextStates.add(stateToAdd);
+              Transition newTrans = new Transition(transitionIndex, cTrans[path_tran], currentState.index, stateToAdd.index, newTranRate);
+              if (newTrans.from == newTrans.to) {
+                System.out.println("1 newTrans.to == newTrans.from == " + newTrans.to);
+              }
+              mm.registerMemoryUsage();
+              currentState.outgoingTrans.add(newTrans);
+              
+              // if we have reached the target 
+              if (target.evaluateBoolean(sim.getCurrentState())) {
+                if (DO_PRINT) System.out.println("Target Reached");
+                stateToAdd.isTarget = true;
+              }
+        
+              // walk along the cycle
+              currentState = stateToAdd;
+            }
+          }
+        }
+      }
+      System.out.println("Ran " + loopRuns);
+    }
+    // Catch exceptions and give user the info
+    catch (PrismException e) {
+			if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
+			System.exit(1);
+		}
+  }
+
 
   // add cycles master function
   // relies heavily on https://github.com/prismmodelchecker/prism/blob/master/prism/src/parser/State.java
@@ -491,14 +710,15 @@ public class BuildModel
 
     try {
 
-      System.out.println("\n----------------------------------");
-      System.out.println("Begin Cycles");
-      System.out.println("----------------------------------\n");
+      if (DO_PRINT) System.out.println("\n----------------------------------");
+      if (DO_PRINT) System.out.println("Begin Cycles");
+      if (DO_PRINT) System.out.println("----------------------------------\n");
       
       // set a zero state
       State zeroState = new State(numStateVariables);
+      mm.registerMemoryUsage();
 
-      System.out.println("Setting all state values to " + CYCLE_INIT);
+      if (DO_PRINT) System.out.println("Setting all state values to " + CYCLE_INIT);
     
       for (int i = 0; i < numStateVariables; i++) {
         zeroState.setValue(i, CYCLE_INIT); // lets us have stoichiometry of 2 throughout cycle
@@ -507,12 +727,13 @@ public class BuildModel
       sim.createNewPath();
       sim.initialisePath(zeroState);
       
-      System.out.println("Zero State: " + zeroState);
-      System.out.println("Zero State: " + sim.getCurrentState());
+      if (DO_PRINT) System.out.println("Zero State: " + zeroState);
+      if (DO_PRINT) System.out.println("Zero State: " + sim.getCurrentState());
   
       // Get list of reactions and store in reactionList
 
       ArrayList<String> reactionList = new ArrayList<String>();
+      mm.registerMemoryUsage();
 
       String r;
       for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
@@ -520,8 +741,8 @@ public class BuildModel
         reactionList.add(r);
       }
     
-      System.out.printf("Reaction List: ");
-      System.out.println(reactionList);
+      if (DO_PRINT) System.out.printf("Reaction List: ");
+      if (DO_PRINT) System.out.println(reactionList);
 
       // Check every combination of reactions for zero-sums
       cycleArray = new ArrayList<Cycle>();
@@ -529,11 +750,12 @@ public class BuildModel
       for (int i = 0; i < numStateVariables; i++) {
         minVals[i] = 0;
       }
+      mm.registerMemoryUsage();
 
       findCyclePermutations(sim, zeroState, reactionList, 0, "", minVals);
       // public String findCyclePermutations(SimulatorEngine sim, ArrayList<String> reactionList, int cycleDepth, String cycle, int[] minVals)
 
-      System.out.println("Successfully detected " + cycleArray.size() + " cycles.");
+      if (DO_PRINT) System.out.println("Successfully detected " + cycleArray.size() + " cycles.");
       // System.out.println(cycleArray);
 
       // Tack cycles onto the state space somehow...
@@ -542,12 +764,13 @@ public class BuildModel
         // If all state values are above the min amounts for each cycle:
           // Simulate the cycle from the state, adding discovered states along the way
       
+      simulateCycles(sim);
         
 
-      System.out.println(" ");
-      System.out.println("\n----------------------------------");
-      System.out.println("End Cycles");
-      System.out.println("----------------------------------\n");
+      if (DO_PRINT) System.out.println(" ");
+      if (DO_PRINT) System.out.println("\n----------------------------------");
+      if (DO_PRINT) System.out.println("End Cycles");
+      if (DO_PRINT) System.out.println("----------------------------------\n");
     }
     // Catch exceptions and give user the info
     catch (PrismException e) {
@@ -762,6 +985,9 @@ public class BuildModel
         // System.out.println("ROOT " + printUniqueString());
       }
       
+      // Save these states into a path
+      Path seedPath = new Path();
+
       // update current state to be the model's initial state
       My_State currentState = stateList.get(0);
       currentState.isNewInit = true;
@@ -806,7 +1032,6 @@ public class BuildModel
         // Check if the state exists yet
         indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
         
-        
         // figure out what state to link here
         My_State stateToAdd = null;
         if (indexOfFoundState == -1) {
@@ -816,6 +1041,7 @@ public class BuildModel
           stateToAdd = stateList.get(indexOfFoundState);
           // make sure we haven't already made this transition
           if (currentState.nextStates.contains(stateToAdd)) {
+            seedPath.states.add(currentState);
             currentState = stateToAdd;
             continue;
           }
@@ -823,7 +1049,13 @@ public class BuildModel
         // add the transition to the discovered state
         currentState.nextStates.add(stateToAdd);
         Transition newTrans = new Transition(transitionIndex, prefix[path_tran], currentState.index, stateToAdd.index, newTranRate);
+        if (newTrans.from == newTrans.to) {
+          System.out.println("2 newTrans.to == newTrans.from == " + newTrans.to);
+        }
         currentState.outgoingTrans.add(newTrans);
+
+        // save the current state into the path
+        seedPath.states.add(currentState);
         
         // walk along the trace
         currentState = stateToAdd;
@@ -851,8 +1083,6 @@ public class BuildModel
       // Mark we have a new "path initial state", as it were
       currentState.isNewInit = true;
 
-      // Save these states into a path
-      Path seedPath = new Path();
 
       // Set up lists to check commutable transitions
       ArrayList<String> wasEnabled = new ArrayList<String>();
@@ -932,6 +1162,9 @@ public class BuildModel
         // add the transition to the discovered state
         currentState.nextStates.add(stateToAdd);
         Transition newTrans = new Transition(transitionIndex, transitions[path_tran], currentState.index, stateToAdd.index, newTranRate);
+        if (newTrans.from == newTrans.to) {
+          System.out.println("3 newTrans.to == newTrans.from == " + newTrans.to);
+        }
         currentState.outgoingTrans.add(newTrans);
         
         // save the current state into the path
@@ -960,12 +1193,12 @@ public class BuildModel
       } // end walk along actual trace
 
       if (DO_PRINT && TERMINATE_TIME) System.out.println("Path time is " + pathTime);
-      if (DO_PRINT || TERMINATE_TIME) System.out.printf("Mean Time for Prefix %2.6f \tPath %2.6f\tTotal %2.6f\n", prefixTime, pathTime, (prefixTime + pathTime));
+      if (DO_PRINT && TERMINATE_TIME) System.out.printf("Mean Time for Prefix %2.6f \tPath %2.6f\tTotal %2.6f\n", prefixTime, pathTime, (prefixTime + pathTime));
 
       // end recursion based on mean residence time
       if (TERMINATE_TIME && ((prefixTime + pathTime) > TIME_BOUND)) {
         System.out.println("Reached time bound recursion threshold at depth " + depth);
-        return;
+        // continue;
       }
 
       if (DO_PRINT)  {
@@ -1012,8 +1245,14 @@ public class BuildModel
           
           // set our current state to the seedpath state
           currentState = seedPath.states.get(seedIndex);
+          if (DO_PRINT) System.out.printf("backtrackTo %d\n", seedIndex);
+          if (DO_PRINT) for (int aa = 0; aa < seedPath.states.size(); aa++) {
+              System.out.printf(aa + " -- " + seedPath.states.get(aa).prismSTA());
+          }
+          if (DO_PRINT) System.out.printf("seedPath.states.size() = %d\n", seedPath.states.size());
           sim.backtrackTo(seedIndex);
-          if (DO_PRINT) System.out.println(seedPath.commutable.get(ctran));
+          if (DO_PRINT) System.out.printf("backtracked to %s\n", sim.getCurrentState());
+          if (DO_PRINT) System.out.println("attempting to commute " + seedPath.commutable.get(ctran));
           if (DO_PRINT) System.out.printf("currentState %s", currentState.prismSTA());
           
           // fire the transition
@@ -1037,14 +1276,23 @@ public class BuildModel
           }
           
           // Take the transition
+          boolean test1 = false;
+          if (DO_PRINT && sim.getTransitionActionString(transitionIndex).equalsIgnoreCase("[R1]")) {
+            test1 = true;
+            if (DO_PRINT) System.out.println("before: " + sim.getCurrentState());
+          }
+
           sim.manualTransition(transitionIndex);
-          if (DO_PRINT) System.out.println("sim: " + sim.getCurrentState());
+
+          // if (DO_PRINT) System.out.println("sim: " + sim.getCurrentState());
+          if (DO_PRINT && test1) System.out.println("after: " + sim.getCurrentState());
           
           // update the total outgoing rate of the current state
           currentState.totalOutgoingRate = totalOutgoingRate;
           
           // Check if the state exists yet
           indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+          if (DO_PRINT && test1 && indexOfFoundState > -1) System.out.printf("Index of found state: %d -- %s", indexOfFoundState, stateList.get(indexOfFoundState).prismSTA());
 
           if (DO_PRINT) System.out.printf("Sim state after commuting: %s\n", sim.getCurrentState());
           if (DO_PRINT) System.out.printf("Index of found state: %d\n", indexOfFoundState);
@@ -1067,6 +1315,12 @@ public class BuildModel
           currentState.nextStates.add(stateToAdd);
 
           Transition newTrans = new Transition(transitionIndex, seedPath.commutable.get(ctran), currentState.index, stateToAdd.index, newTranRate);
+          if (newTrans.from == newTrans.to) {
+            System.out.println("4 newTrans.to == newTrans.from == " + newTrans.to + newTrans.name);
+            if (DO_PRINT) for (int aa = 0; aa < stateList.size(); aa++) {
+              System.out.printf(aa + " -- " + stateList.get(aa).prismSTA());
+            }
+          }
           currentState.outgoingTrans.add(newTrans);
 
           if (DO_PRINT) System.out.printf("Added transition %s\n", newTrans.prismTRA() );
@@ -1163,8 +1417,7 @@ public class BuildModel
       if (DO_PRINT) System.out.println("Prism model loaded into simulator successfully.");
       
       // Load the target property
-      // TODO: Read the file
-      Expression target = prism.parsePropertiesString(PROPERTY).getProperty(0);
+      target = prism.parsePropertiesString(PROPERTY).getProperty(0);
       // Expression target = prism.parsePropertiesString(targetString).getProperty(0);
       
       System.out.println("Prism model and property loaded succesfully.");
@@ -1217,9 +1470,8 @@ public class BuildModel
       System.out.printf("Processed %d paths with a state count of %d\n", numPaths, stateCount);
 
       addCycles(prism);
-
-      removeDeadEnds();
       
+      removeDeadEnds();      
 
       System.out.printf("\nFinal Count:\n%d states\n%d transitions\n\n", stateCount, transitionCount);
 

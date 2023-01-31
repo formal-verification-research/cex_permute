@@ -1,0 +1,35 @@
+PRISM_DIR=/usr/local/prism-src/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Getting Parameters from input file
+Model Name: models/toy/model.sm
+Trace List Name: models/toy/forprism.trace
+Property: AA=15
+Max Depth: 5
+Time Bound: 20.0
+Flexibility: 0.2
+Terminating with depth bound
+Cycle length: 0
+Cycle initial values for testing: 0
+Removal tolerance: 0.9
+Verbose mode disabled
+Prism model and property loaded succesfully.
+Processed 1 paths with a state count of 123
+Removed 0 dead-end states and 11 probability sink states (total 35 states).
+Removed 56 corresponding transitions.
+Average ratio among removed states was 1.0000 (min 1.0000 and max 1.0000).
+User-provided tolerance was 0.9000
+
+Final Count:
+88 states
+240 transitions
+
+Establishing an absorbing state.
+New state 88:(-1,-1,-1)
+Begin printing model files.
+Now printing 1 paths to PRISM model files.
+Now printing 1 paths to STORM model files.
+Finished! Processed 1 paths.
+Max Memory: 19567696 bytes
+Max Memory: 19567 KB
+Max Memory: 19 MB
+Max Memory: 0 GB

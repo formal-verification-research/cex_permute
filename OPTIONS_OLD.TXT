@@ -1,0 +1,114 @@
+model models/8react/model.sm
+trace paths/other/a.txt
+property G_bg = 50
+recursionBound 5
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 2
+export both
+verbose false
+
+
+model models/8react/model.sm
+trace paths/other/a.txt
+property G_bg = 50
+recursionBound 1
+terminate depth
+cycleLength 4
+export both
+verbose false
+
+
+
+
+model models/toy/model.sm
+trace models/toy/forprism.trace
+property AA = 15
+recursionBound 1
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 0
+export both
+verbose true
+
+
+
+
+
+-----
+
+model models/8react/model.sm
+trace paths/other/a.txt
+property G_bg = 50
+recursionBound 5
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 0
+export prism
+verbose false
+
+This gave a probability of 3.5e-14
+
+-----
+
+model models/8react/model.sm
+trace paths/other/a.txt
+property G_bg = 50
+recursionBound 5
+timeBound 20
+flexibility 0.07
+terminate time
+cycleLength 0
+export prism
+verbose false
+
+This gave a probability of 1.7e-7
+
+-----
+
+model models/8react/model.sm
+trace paths/other/a.txt
+property G_bg = 50
+recursionBound 5
+timeBound 20
+flexibility 0.08
+terminate time
+cycleLength 0
+export prism
+verbose false
+
+This gave a probability of 2.85e-12
+
+-----
+
+model models/8react/model.sm
+trace paths/other/a.txt
+property G_bg = 50
+recursionBound 5
+timeBound 20
+flexibility 0.09
+terminate time
+cycleLength 0
+export prism
+verbose false
+
+This gave a probability of 1.2844369534346798E-6
+
+-----
+
+model models/toy/model.sm
+trace models/toy/forprism.trace
+property AA = 15
+recursionBound 5
+timeBound 20
+flexibility 0.2
+terminate depth
+cycleLength 0
+export both
+removeTolerance 0.9
+verbose false
+
+this worked

@@ -1,0 +1,42 @@
+ctmc
+
+const double k1 = .02;
+const double k2 = .03;
+const double k3 = .04;
+
+const int MAX_AMOUNT = 200;
+
+module A_def
+
+    AA: [0..MAX_AMOUNT] init 5;
+
+    [R1] AA<=MAX_AMOUNT-1    -> (AA' = AA + 1);
+    [R2] AA>0                -> (AA' = AA - 1);
+
+endmodule
+
+module B_def
+
+    BB: [0..MAX_AMOUNT] init 100;
+
+    [R1] BB>0    -> (BB' = BB - 1);
+    [R2] BB<=MAX_AMOUNT-1                -> (BB' = BB + 1);
+
+endmodule
+
+module C_def
+
+    CC: [0..MAX_AMOUNT] init 0;
+
+    [R1] CC<=MAX_AMOUNT-1    -> (CC' = CC + 1);
+    [R3] CC>0    -> (CC' = CC - 1);
+
+endmodule
+
+// Empty set rate reaction represented by 1??
+module reactionRates
+    [R1] (k1*BB)>0       -> (k1*BB) : true;
+    [R2] (k2*AA)>0       -> (k2*AA) : true;
+    [R3] (k3*CC)>0       -> (k2*CC) : true;
+
+endmodule
