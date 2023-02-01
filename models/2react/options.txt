@@ -1,0 +1,13 @@
+model models/2react/model.sm
+trace models/2react/trace.txt
+property s2 >= 80
+recursionBound 8000
+timeBound 20
+flexibility 0.08
+terminate depth
+cycleLength 0
+removeTolerance 0.0
+export prism
+verbose false
+
+model checking gave Result: 2.985960514333562E-7

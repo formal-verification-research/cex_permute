@@ -1,11 +1,11 @@
 model models/8react/model.sm
-trace paths/other/a.txt
+trace models/8react/forprism.trace
 property G_bg = 50
-recursionBound 5
+recursionBound 20
 timeBound 20
-flexibility 0.08
-terminate time
-cycleLength 2
-removeTolerance 0.97
+flexibility 0.4
+terminate both
+cycleLength 4
+removeTolerance 0.5
 export prism
 verbose false

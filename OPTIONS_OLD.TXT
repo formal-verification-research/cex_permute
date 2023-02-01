@@ -112,3 +112,52 @@ removeTolerance 0.9
 verbose false
 
 this worked
+
+
+
+
+---------
+
+
+model models/8react/model.sm
+trace paths/other/a.txt
+property G_bg = 50
+recursionBound 4
+timeBound 20
+flexibility 0.08
+terminate depth
+cycleLength 0
+removeTolerance 0.0
+export prism
+verbose true
+
+gave probability e-4
+
+-----------
+
+model models/2react/model.sm
+trace models/2react/trace.txt
+property s2>=80
+recursionBound 4
+timeBound 100
+flexibility 0.08
+terminate depth
+cycleLength 0
+removeTolerance 0.0
+export prism
+verbose true
+
+----
+
+
+model models/8react/model.sm
+trace paths/other/shortest.txt
+property G_bg = 50
+recursionBound 30
+timeBound 20
+flexibility 0.8
+terminate depth
+cycleLength 4
+removeTolerance 0.0
+export prism
+verbose false

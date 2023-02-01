@@ -251,17 +251,23 @@ public class BuildModel
     public ArrayList<My_State> nextStates;
     public boolean isTarget;
     public boolean isNewInit;
+    public boolean isCycleState;
 
     public My_State(Object varVals[]) {
       this.isTarget = false;
       this.isNewInit = false;
       this.index = stateCount;
+      // if (this.index == 709) { // strange debug procedure
+      //   System.out.println("\n\n------------------------------------------------------------------------------------------\nAT STATE 709\n------------------------------------------------------------------------------------------\n\n");
+      // }
       stateCount++;
       this.stateVars = getIntVarVals(varVals);
       this.totalOutgoingRate = 0.0;
       this.outgoingTrans = new ArrayList<Transition>();
       this.nextStates = new ArrayList<My_State>();
+      this.isCycleState = false;
       stateList.add(this);
+
       if (DO_PRINT) System.out.printf("New state %s", this.prismSTA());
     }
     
@@ -281,8 +287,9 @@ public class BuildModel
       this.totalOutgoingRate = 0.0;
       this.outgoingTrans = new ArrayList<Transition>();
       this.nextStates = new ArrayList<My_State>();
+      this.isCycleState = false;
       stateList.add(this);
-      System.out.printf("New state %s", this.prismSTA());
+      if (DO_PRINT) System.out.printf("New state %s", this.prismSTA());
     }
 
     // get outgoing rate not captured by notated transitions
@@ -302,11 +309,11 @@ public class BuildModel
         if (i>0) temp += ",";
         temp += stateVars[i]; 
       }
-      // if (this.isTarget) {
-      //   return temp + ") [ " + this.totalOutgoingRate + " TARGET ]\n";
-      // }
-      // return temp + ") [ " + this.totalOutgoingRate + " ]\n";
-      return temp + ")\n";
+      if (this.isTarget) {
+        return temp + ") [ " + this.totalOutgoingRate + " TARGET ]\n";
+      }
+      return temp + ") [ " + this.totalOutgoingRate + " ]\n";
+      // return temp + ")\n";
     }
 
     // My_State details for .tra files
@@ -341,6 +348,9 @@ public class BuildModel
     double minRatio = 0.0f;
     double maxRatio = 0.0f;
 
+    // uncomment to just debug the dead end removal
+    // DO_PRINT = true;
+
     while (deadEndsExist) {
       if (DO_PRINT) System.out.println("\n\nDEAD ENDS EXIST LOOP BEGINS\n\n");
       deadEndsExist = false;
@@ -350,7 +360,8 @@ public class BuildModel
         }
         shouldRemoveDE = (stateList.get(s).outgoingTrans.size() == 0);
         double removeRatio = (stateList.get(s).getAbsorbingRate() / stateList.get(s).totalOutgoingRate);
-        shouldRemoveSINK = REMOVE_TOLERANCE > 0.0f && removeRatio > REMOVE_TOLERANCE;
+        // try only removing the additional cycle states for probability sinks
+        shouldRemoveSINK = (stateList.get(s).isCycleState) && (REMOVE_TOLERANCE > 0.0f) && (removeRatio > REMOVE_TOLERANCE);
         shouldRemove = shouldRemoveDE || shouldRemoveSINK;
 
         if (shouldRemoveSINK) {
@@ -361,113 +372,81 @@ public class BuildModel
           else averageRatio = ((averageRatio * sinkStatesRemoved) + removeRatio) / (sinkStatesRemoved + 1);
         }
         if (shouldRemove) {
-          if (DO_PRINT) System.out.println("\n\nRemoving state " + s);
-            // remove transitions that led to this state
-            // and decrement greater "to" indices
-            for (int i = 0; i < stateCount; i++) {
-              if (DO_PRINT) System.out.printf("  Checking state " + i + " or " + stateList.get(i).prismSTA());
-              for (int j = 0; j < stateList.get(i).outgoingTrans.size(); j++) {
-                if (DO_PRINT) System.out.printf("    Checking transition " + stateList.get(i).outgoingTrans.get(j).prismTRA());
-                // System.out.printf("i: %d, j: %d\n", i, j);
-                if (stateList.get(i).outgoingTrans.get(j).to == s) {
-                  stateList.get(i).outgoingTrans.remove(j);
-                  if (DO_PRINT) System.out.println("      Removed transition from state " + i + " to state " + s);
-                  transitionsRemoved++;
-                  transitionCount--;
-                }
-                else if (stateList.get(i).outgoingTrans.get(j).to > s) {
-                  stateList.get(i).outgoingTrans.get(j).to--;
-                  if (DO_PRINT) System.out.println("      Changed transition from state " + i + " to state " + (stateList.get(i).outgoingTrans.get(j).to+1) + ", now to state " + stateList.get(i).outgoingTrans.get(j).to);
-                }
-              }
-            }
-            // count the transitions that are removed with the state
-            transitionsRemoved += stateList.get(s).outgoingTrans.size();
-            transitionCount -= stateList.get(s).outgoingTrans.size();
-            // remove the actual state
-            stateList.remove(s);
-            statesRemoved++;
-            if (shouldRemoveSINK) {
-              sinkStatesRemoved++;
-            }
-            else if (shouldRemoveSINK) {
-              deadEndStatesRemoved++;
-            }
-            stateCount--;
-            deadEndsExist = true;
-        }
-      }
-      // update the from indices
-      for (int i = 0; i < stateCount; i++) {
-        for (int j = 0; j < stateList.get(i).outgoingTrans.size(); j++) {
-          if (!(stateList.get(i).outgoingTrans.get(j).from == i)) {
-            if (DO_PRINT) System.out.println("stateList.get(i).outgoingTrans.get(j).from = " + stateList.get(i).outgoingTrans.get(j).from + ", i = " + i);
+          if (DO_PRINT) System.out.printf("\n\nRemoving state " + s + " -- " + stateList.get(s).prismSTA());
+          
+          // remove any applicable transitions from state s (only applies for probability sinks)
+          while (stateList.get(s).outgoingTrans.size() > 0) {
+            if (DO_PRINT) System.out.printf("  Remove corresponding transition " + stateList.get(s).outgoingTrans.get(0).prismTRA());
+            stateList.get(s).outgoingTrans.remove(0);
+            transitionCount--;
+            transitionsRemoved++;
           }
-          stateList.get(i).outgoingTrans.get(j).from = i;
+          
+          // loop through whole state space
+          for (int i = 0; i < stateCount; i++) {
+            
+            for (int j = 0; j < stateList.get(i).outgoingTrans.size(); j++) {
+              
+              // remove all s_i -> s_s
+              if (stateList.get(i).outgoingTrans.get(j).to == s) {
+                if (DO_PRINT) System.out.printf("  Remove %d->%d\n", stateList.get(i).outgoingTrans.get(j).from, stateList.get(i).outgoingTrans.get(j).to);
+                stateList.get(i).outgoingTrans.remove(j);
+                transitionCount--;
+                transitionsRemoved++;
+                j--; // (the index needs to correspond now that we removed one)
+                continue;
+              }
+              
+              // shift all s_i -> s_(>s) down by 1
+              else if (stateList.get(i).outgoingTrans.get(j).to > s) {
+                stateList.get(i).outgoingTrans.get(j).to--;
+              }
+              
+              // shift all shift all s_(>s) -> s_l down by 1
+              if (stateList.get(i).outgoingTrans.get(j).from > s) {
+                stateList.get(i).outgoingTrans.get(j).from--;
+              }
+              
+            }
+
+            // set all s_(i>s) to s_(i-1)
+            if (i > s) {
+              stateList.get(i).index--;
+              if (i-1 != stateList.get(i).index) System.out.println("INDICES NOT EQUAL. i=" + i + ", index=" + stateList.get(i).index);
+            }
+            
+          }
+          
+          // remove state s
+          stateList.remove(s);
+          stateCount--;
+          statesRemoved++;
+          if (shouldRemoveDE) {
+            deadEndStatesRemoved++;
+          }
+          else if (shouldRemoveSINK) {
+            sinkStatesRemoved++;
+          }
+
+          if (DO_PRINT) {
+            if (stateCount > s) {
+              System.out.printf("Removed state " + s + ". State " + s + " is now " + stateList.get(s).prismSTA());
+            }
+            else {
+              System.out.printf("Removed state " + s + ". End of state list.\n");
+            }
+          }
+
+          deadEndsExist = true;
+
         }
-        stateList.get(i).index = i;
       }
     }
-
     System.out.printf("Removed %d dead-end states and %d probability sink states (total %d states).\n", deadEndStatesRemoved, sinkStatesRemoved, statesRemoved);
     System.out.printf("Removed %d corresponding transitions.\n", transitionsRemoved);
     if (sinkStatesRemoved > 0) System.out.printf("Average ratio among removed states was %.4f (min %.4f and max %.4f).\nUser-provided tolerance was %.4f\n", averageRatio, minRatio, maxRatio, REMOVE_TOLERANCE);
-
-    // int s = 0;
-    // int statesRemoved = 0;
-    // int transitionsRemoved = 0;
-    // // boolean deadEndsExist = false;
-
-    // while (s < stateList.size()) {
-    //   stateList.get(s).index = s;
-    //   if (stateList.get(s).isTarget) {
-    //     s++;
-    //     continue;
-    //   }
-    //   if (stateList.get(s).outgoingTrans.size() == 0) {
-    //     if (DO_PRINT) System.out.println("Removing state " + s);
-    //     stateList.remove(s);
-    //     stateCount--;
-    //     statesRemoved++;
-    //     // deadEndsExist = true;
-    //   }
-    //   else {
-    //     s++;
-    //   }
-    // }      
-  
-    //   // int t;
-    //   // for (s = 0; s < stateList.size(); s++) {
-    //   //   for (t = 0; t < stateList.get(s).outgoingTrans.size(); t++) {
-    //   //     if (stateList.get(s).outgoingTrans.get(t).to > stateList.size()) {
-    //   //       stateList.get(s).outgoingTrans.remove(t);
-    //   //       System.out.println("Removed transition to state " + stateList.get(s).outgoingTrans.get(t).to);
-    //   //     }
-    //   //   }
-    //   // }
-    // // } while (deadEndsExist);
-
-    // if (DO_PRINT) System.out.println("Removed dead ends. Now cleaning up transitions along the whole state space.");
-    
-    // for (s = 0; s < stateList.size(); s++) {
-    //   for (int t = 0; t < stateList.get(s).outgoingTrans.size();) {
-    //     if (DO_PRINT) System.out.printf("Checking t=%d on state %d\n", t, s);
-    //     if (stateList.get(s).outgoingTrans.get(t).to >= stateCount) {
-    //       if (DO_PRINT) System.out.println("Removing transition to state " + stateList.get(s).outgoingTrans.get(t).to);
-    //       stateList.get(s).outgoingTrans.remove(t);
-    //       transitionCount--;
-    //       transitionsRemoved++;
-    //       // deadEndsExist = true;
-    //     }
-    //     else {
-    //       stateList.get(s).outgoingTrans.get(t).from = s;
-    //       t++;
-    //     }
-    //   }
-    // }
-
-
   }
+
 
   public class Path {
     public ArrayList<My_State> states;
@@ -491,6 +470,9 @@ public class BuildModel
   }
 
   public ArrayList<Cycle> cycleArray;
+  public int cyclesAdded;
+  public int newCycleStates;
+  public int newCycleTrans;
 
   // recursively finds cycles within the appropriate length bounds
   public void findCyclePermutations(SimulatorEngine sim, State curState, ArrayList<String> reactionList, int cycleDepth, String cycle, int[] minVals) {
@@ -579,6 +561,7 @@ public class BuildModel
 		}
   }
 
+  // adds the cycles to the states
   public void simulateCycles(SimulatorEngine sim) {
     try {
       
@@ -588,12 +571,9 @@ public class BuildModel
       int startScanning = 0;
       existingStates = startScanning + stateCount;
 
-      int loopRuns = 0;
-
       // loop over every state
       for (int i = startScanning; i < existingStates; i++) {
       // for (int i = 0; i < existingStates; i++) {
-        loopRuns++;
         My_State currentState = stateList.get(i);
         // loop over every cycle
         for (int j = 0; j < 1; j++) {
@@ -615,6 +595,8 @@ public class BuildModel
               cState.setValue(l, stateList.get(i).stateVars[l]);
             }
             sim.initialisePath(cState);
+
+            cyclesAdded++;
 
             if (DO_PRINT) System.out.println("Cycle insertion at state " + sim.getCurrentState());
   
@@ -639,7 +621,8 @@ public class BuildModel
               }
               if (transitionIndex == -1) {
                 if (DO_PRINT) System.out.printf("WARNING: Trace transition %s not available from current state %s\n", cTrans[path_tran], sim.getCurrentState());
-                continue; // basically just skip this path
+                cyclesAdded--;
+                break; // basically just skip this path
               }
               // Take the transition
               sim.manualTransition(transitionIndex);
@@ -655,6 +638,18 @@ public class BuildModel
               My_State stateToAdd = null;
               if (indexOfFoundState == -1) {
                 stateToAdd = new My_State(sim.getCurrentState().varValues);
+                // need to get total outgoing rates for the newly discovered states!
+                totalOutgoingRate = 0.0f;
+                // Compare our transition string with available transition strings
+                for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+                  // Update transitionIndex if we found the desired transition (i.e. names match)
+                  totalOutgoingRate += sim.getTransitionProbability(sim_tran);
+                }
+                stateToAdd.totalOutgoingRate = totalOutgoingRate;
+                stateToAdd.isCycleState = true;
+                if (DO_PRINT) System.out.println("State outgoing rate changed to " + totalOutgoingRate + ". State is " + stateToAdd.prismSTA());
+                // stateToAdd.addedWithCycle = true;
+                newCycleStates++;
                 mm.registerMemoryUsage();
                 if (DO_PRINT) System.out.printf("Added previously undiscovered state %s", stateToAdd.prismSTA());
               }
@@ -677,6 +672,8 @@ public class BuildModel
               mm.registerMemoryUsage();
               currentState.outgoingTrans.add(newTrans);
               
+              newCycleTrans++;
+
               // if we have reached the target 
               if (target.evaluateBoolean(sim.getCurrentState())) {
                 if (DO_PRINT) System.out.println("Target Reached");
@@ -689,7 +686,6 @@ public class BuildModel
           }
         }
       }
-      System.out.println("Ran " + loopRuns);
     }
     // Catch exceptions and give user the info
     catch (PrismException e) {
@@ -703,8 +699,14 @@ public class BuildModel
   // relies heavily on https://github.com/prismmodelchecker/prism/blob/master/prism/src/parser/State.java
   // and also https://github.com/prismmodelchecker/prism/blob/master/prism/src/simulator/SimulatorEngine.java
   public void addCycles(Prism prism) {
+
+    cyclesAdded = 0;
+    newCycleStates = 0;
+    newCycleTrans = 0;
     
     if (CYCLE_LENGTH <= 1) return; // no sense finding 0-cycles and 1-cycles
+
+    System.out.println("State graph built. Appending cycles where allowable.");
 
     // TODO: Check if we repeat ourselves, maybe by checking for previous cycles within cycles
 
@@ -778,6 +780,8 @@ public class BuildModel
 			System.exit(1);
 		}
 
+    System.out.println("Added " + cyclesAdded + " cycles, with " + newCycleStates + " new states and " + newCycleTrans + " transitions.");
+
   }
 
   // object to store state variables in the tree structure
@@ -811,33 +815,39 @@ public class BuildModel
   // global state variable root is just an empty node
   public StateVarNode StateVarRoot = new StateVarNode();
 
-  // function to check uniqueness and update unique state tree
   public int stateIsUnique(int varVals[]) {
+    return stateIsUnique(varVals, false);
+  }
+
+  // function to check uniqueness and update unique state tree
+  public int stateIsUnique(int varVals[], boolean printUnique) {
     // System.out.printf("stateIsUnique? (");
     // for (int i = 0; i < varVals.length; i++) {
     //   System.out.printf("%d", varVals[i]);
     //   if (i == varVals.length-1) System.out.printf(")\n");
     //   else System.out.printf(",");
     // }
-
+ 
     // loop through all the state variables to see if they exist
     ArrayList<Integer> possibleStates = new ArrayList<Integer>();
     StateVarNode cur = StateVarRoot;
     boolean foundStateVar = false;
     int foundStateIndex = -1;
 
+    if (DO_PRINT) System.out.println("Check uniqueness of " + stateCount);
+
     for (int stateVar = 0; stateVar < numStateVariables; stateVar++) {
       
       foundStateVar = false;
       for (int i = 0; i < cur.children.size(); i++) { // new states have 0 kids anyway
         if (cur.children.get(i).value == varVals[stateVar]) {
-          // if (DO_PRINT) {
-          //   System.out.printf("\nM(");
-          //   for (int aa = 0; aa < cur.children.get(i).stateIndices.size(); aa++) {
-          //     System.out.printf("%s.", cur.children.get(i).stateIndices.get(aa));
-          //   }
-          //   System.out.printf(") %d and %d", varVals[stateVar], cur.children.get(i).value);
-          // }
+          if (DO_PRINT) {
+            if (printUnique && DO_PRINT) System.out.printf("\nM(");
+            for (int aa = 0; aa < cur.children.get(i).stateIndices.size(); aa++) {
+              if (printUnique && DO_PRINT) System.out.printf("%s.", cur.children.get(i).stateIndices.get(aa));
+            }
+            if (printUnique && DO_PRINT) System.out.printf(") %d and %d", varVals[stateVar], cur.children.get(i).value);
+          }
           cur = cur.children.get(i);
           foundStateVar = true;
           // add all the possibilities as an intersection
@@ -861,31 +871,31 @@ public class BuildModel
       }
       if (!foundStateVar) { // if we didn't find it (i.e. state doesn't exist)
         if (DO_PRINT) {
-          System.out.printf("X() %d\n", varVals[stateVar]);
+          if (printUnique && DO_PRINT) System.out.printf("X() %d\n", varVals[stateVar]);
         }
         cur.children.add(new StateVarNode(varVals[stateVar]));
         cur.children.get(cur.children.size()-1).parent = cur;
         cur = cur.children.get(cur.children.size()-1);
         // System.out.println("\nAdded parental relationship " + cur.value + " child of " + cur.parent.value);
         foundStateIndex = -1;
-        // System.out.println("AAAA");
-        // for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
-        //   System.out.println(possibleStates.get(aaa));
-        // }
+        if (printUnique && DO_PRINT) System.out.println("AAAA");
+        for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+          if (printUnique && DO_PRINT) System.out.println(possibleStates.get(aaa));
+        }
         for (int j = 0; j < possibleStates.size(); ) {
           possibleStates.remove(j);
         }
       }
-      // System.out.println("BBBB");
-      // for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
-      //   System.out.println(possibleStates.get(aaa));
-      // }
+      if (printUnique && DO_PRINT) System.out.println("BBBB");
+      for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+        if (printUnique && DO_PRINT) System.out.println(possibleStates.get(aaa));
+      }
     }
-    // System.out.println("CCCC");
-    // for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
-    //   System.out.println(possibleStates.get(aaa));
-    // }
-    // System.out.println("foundStateVar? " + foundStateVar);
+    if (printUnique && DO_PRINT) System.out.println("CCCC");
+    for (int aaa = 0; aaa < possibleStates.size(); aaa++) {
+      if (printUnique && DO_PRINT) System.out.println(possibleStates.get(aaa));
+    }
+    if (printUnique && DO_PRINT) System.out.println("foundStateVar? " + foundStateVar);
 
     if (possibleStates.size() == 0 || !foundStateVar) {
       foundStateIndex = -1;
@@ -936,14 +946,21 @@ public class BuildModel
     return -1;
   }
 
+  public int deepestDepth;
+
   public void buildAndCommute(Prism prism, String[] transitions, String[] prefix, int depth, Path parentPath, Expression target)
   {
     try {
 
+      boolean terminatedByMaxDepth = false;
       mm.registerMemoryUsage();
+
+      if (depth == 0) deepestDepth = 0;
+      else if (deepestDepth < depth) deepestDepth = depth;
       
       if (TERMINATE_DEPTH && depth > MAX_DEPTH) {
-        System.out.println("Max recursion depth reached.");
+        if (DO_PRINT) System.out.println("Max recursion depth reached.");
+        terminatedByMaxDepth = true;
         return;
       }
       
@@ -981,7 +998,9 @@ public class BuildModel
         if (DO_PRINT) System.out.println("Initial state generated.");
         new My_State(sim.getCurrentState().varValues);
         // we know initial state is unique but we need to log its values with stateIsUnique.
+        stateCount--;
         stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+        stateCount++;
         // System.out.println("ROOT " + printUniqueString());
       }
       
@@ -1012,6 +1031,7 @@ public class BuildModel
           if (prefix[path_tran].equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
             transitionIndex = sim_tran;
             newTranRate = sim.getTransitionProbability(sim_tran);
+            if (DO_PRINT) System.out.println("Transition " + sim.getTransitionActionString(sim_tran));
           }
         }
         // If we never found the correct transitions, report error
@@ -1020,8 +1040,11 @@ public class BuildModel
           System.out.println(sim.getCurrentState());
           System.exit(10001);
         }
+
+        if (DO_PRINT) System.out.println("Prism state before firing: " + sim.getCurrentState());
         // Take the transition
         sim.manualTransition(transitionIndex);
+        if (DO_PRINT) System.out.println("Prism state after firing: " + sim.getCurrentState());
 
         // update the total outgoing rate of the current state
         currentState.totalOutgoingRate = totalOutgoingRate;
@@ -1030,7 +1053,7 @@ public class BuildModel
         if (TERMINATE_TIME) prefixTime += currentState.getMRT();
         
         // Check if the state exists yet
-        indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues));
+        indexOfFoundState = stateIsUnique(getIntVarVals(sim.getCurrentState().varValues), false);
         
         // figure out what state to link here
         My_State stateToAdd = null;
@@ -1196,17 +1219,17 @@ public class BuildModel
       if (DO_PRINT && TERMINATE_TIME) System.out.printf("Mean Time for Prefix %2.6f \tPath %2.6f\tTotal %2.6f\n", prefixTime, pathTime, (prefixTime + pathTime));
 
       // end recursion based on mean residence time
-      if (TERMINATE_TIME && ((prefixTime + pathTime) > TIME_BOUND)) {
-        System.out.println("Reached time bound recursion threshold at depth " + depth);
-        // continue;
-      }
+      // if (TERMINATE_TIME && ((prefixTime + pathTime) > TIME_BOUND)) {
+      //   System.out.println("Reached time bound recursion threshold at depth " + depth);
+      //   // continue;
+      // }
 
       if (DO_PRINT)  {
         System.out.println("One path explored: ");
-        for (int i = 0; i < seedPath.states.size(); i++) {
-          System.out.printf("%d ", seedPath.states.get(i).index);
-        }
-        System.out.println(".");
+        // for (int i = 0; i < seedPath.states.size(); i++) {
+        //   System.out.printf("%d ", seedPath.states.get(i).index);
+        // }
+        // System.out.println(".");
       }
       // NOTE:
       // commutable transitions are now stored in seedPath.commutable.
@@ -1246,9 +1269,9 @@ public class BuildModel
           // set our current state to the seedpath state
           currentState = seedPath.states.get(seedIndex);
           if (DO_PRINT) System.out.printf("backtrackTo %d\n", seedIndex);
-          if (DO_PRINT) for (int aa = 0; aa < seedPath.states.size(); aa++) {
-              System.out.printf(aa + " -- " + seedPath.states.get(aa).prismSTA());
-          }
+          // if (DO_PRINT) for (int aa = 0; aa < seedPath.states.size(); aa++) {
+          //     System.out.printf(aa + " -- " + seedPath.states.get(aa).prismSTA());
+          // }
           if (DO_PRINT) System.out.printf("seedPath.states.size() = %d\n", seedPath.states.size());
           sim.backtrackTo(seedIndex);
           if (DO_PRINT) System.out.printf("backtracked to %s\n", sim.getCurrentState());
@@ -1284,6 +1307,7 @@ public class BuildModel
 
           sim.manualTransition(transitionIndex);
 
+
           // if (DO_PRINT) System.out.println("sim: " + sim.getCurrentState());
           if (DO_PRINT && test1) System.out.println("after: " + sim.getCurrentState());
           
@@ -1301,6 +1325,15 @@ public class BuildModel
           My_State stateToAdd = null;
           if (indexOfFoundState == -1) {
             stateToAdd = new My_State(sim.getCurrentState().varValues);
+            // need to get total outgoing rates for the newly discovered states!
+            totalOutgoingRate = 0.0f;
+            // Compare our transition string with available transition strings
+            for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+              // Update transitionIndex if we found the desired transition (i.e. names match)
+              totalOutgoingRate += sim.getTransitionProbability(sim_tran);
+            }
+            stateToAdd.totalOutgoingRate = totalOutgoingRate;
+            if (DO_PRINT) System.out.println("State outgoing rate changed to " + totalOutgoingRate + ". State is " + stateToAdd.prismSTA());
           }
           else {
             stateToAdd = stateList.get(indexOfFoundState);
@@ -1317,9 +1350,9 @@ public class BuildModel
           Transition newTrans = new Transition(transitionIndex, seedPath.commutable.get(ctran), currentState.index, stateToAdd.index, newTranRate);
           if (newTrans.from == newTrans.to) {
             System.out.println("4 newTrans.to == newTrans.from == " + newTrans.to + newTrans.name);
-            if (DO_PRINT) for (int aa = 0; aa < stateList.size(); aa++) {
-              System.out.printf(aa + " -- " + stateList.get(aa).prismSTA());
-            }
+            // if (DO_PRINT) for (int aa = 0; aa < stateList.size(); aa++) {
+            //   System.out.printf(aa + " -- " + stateList.get(aa).prismSTA());
+            // }
           }
           currentState.outgoingTrans.add(newTrans);
 
@@ -1359,6 +1392,12 @@ public class BuildModel
         }
       }
       if (DO_PRINT) System.out.println("A path has been successfully commuted");
+      if (TERMINATE_TIME && terminatedByMaxDepth && depth == 0) {
+        System.out.println("Terminated by maximum recursion depth.");
+      }
+      if (TERMINATE_TIME && !terminatedByMaxDepth && depth == 0) {
+        System.out.println("Terminated by time bound * flexibility only with max depth " + deepestDepth + ".");
+      }
     }
     catch (PrismException e) {
       if (DO_PRINT) System.out.println("PrismException Error: " + e.getMessage());
@@ -1434,6 +1473,9 @@ public class BuildModel
       int num_transitions;
 
       int numPaths = 0;
+
+      System.out.println("Iterating through each input trace.");
+      System.out.println("Expect this to run silently for a moment.");
 
       // For each input trace
       while (true) {
@@ -1561,11 +1603,80 @@ public class BuildModel
         labWriterS.close();
       }
 
-      System.out.println("Finished! Processed " + numPaths + " paths.");
+      State zeroState = new State(numStateVariables);
+      sim.createNewPath();
+      double prismTotalOutgoing = 0.0f;
 
+      System.out.println("---------------------------------------");
+      System.out.println("BEGIN ERROR CHECKING");
+      System.out.println("If an inconsistency is found in the state space, its details will be provided here.");
+      System.out.println("Otherwise, assume the generated state-space is error-free.");
+      System.out.println("This is an added confidence booster for the probability results.");
+      
+      for (int i = 0; i < stateCount; i++) {
+        for (int k = 0; k < numStateVariables; k++) {
+          zeroState.setValue(k, stateList.get(i).stateVars[k]); // lets us have stoichiometry of 2 throughout cycle
+        }
+        // if (DO_PRINT) System.out.println("Checking state " + i);
+        for (int j = 0; j < stateList.get(i).outgoingTrans.size(); j++) {
+          if (stateList.get(i).outgoingTrans.get(j).name == "ABS") continue; // skip absorbing state
+
+          sim.initialisePath(zeroState);
+          // fire the transition
+          int transitionIndex = -1;
+          double newTranRate = -1.0f;
+          double totalOutgoingRate = 0.0f;
+          
+          // Compare our transition string with available transition strings
+          for (int sim_tran = 0; sim_tran < sim.getNumTransitions(); sim_tran++) {
+            // Update transitionIndex if we found the desired transition (i.e. names match)
+            totalOutgoingRate += sim.getTransitionProbability(sim_tran);
+            if (stateList.get(i).outgoingTrans.get(j).name.equalsIgnoreCase(sim.getTransitionActionString(sim_tran))) {
+              transitionIndex = sim_tran;
+              newTranRate = sim.getTransitionProbability(sim_tran);
+            }
+          }
+          
+          // If we never found the correct transitions, report error
+          if (transitionIndex == -1) {
+            System.out.println("\nChecking state " + i);
+            System.out.printf("ERROR: Commutable transition %s not available from current state %s\n", stateList.get(i).outgoingTrans.get(j).name, sim.getCurrentState());
+          }
+          
+          if (totalOutgoingRate != stateList.get(i).totalOutgoingRate) {
+            System.out.println("\nChecking state " + i);
+            System.out.println("ERROR: totalOutgoingRate (" + totalOutgoingRate + ") NOT EQUAL TO stateList.get(" + i + ").totalOutgoingRate (" + stateList.get(i).totalOutgoingRate);
+          }
+          
+          if (newTranRate != stateList.get(i).outgoingTrans.get(j).rate) {
+            System.out.println("\nChecking state " + i);
+            System.out.println("ERROR: newTranRate (" + newTranRate + ") NOT EQUAL TO stateList.get(" + i + ").outgoingTrans.get(" + j + ").rate (" + stateList.get(i).outgoingTrans.get(j).rate);
+          }
+          
+          sim.manualTransition(transitionIndex);
+          
+          int[] newStateVarVals = getIntVarVals(sim.getCurrentState().varValues);
+          for (int l = 0; l < numStateVariables; l++) {
+            if (newStateVarVals[l] != stateList.get(stateList.get(i).outgoingTrans.get(j).to).stateVars[l]) {
+              System.out.println("\nChecking state " + i);
+              System.out.println("ERROR: newStateVarVals[" + l + "] (" + newStateVarVals[l] + ") NOT EQUAL TO stateList.get(stateList.get(" + i + ").outgoingTrans.get(" + j + ").to).stateVars[" + l + "] (" + stateList.get(stateList.get(i).outgoingTrans.get(j).to).stateVars[l] + ")" );
+              System.out.printf("From state " + stateList.get(i).prismSTA());
+              System.out.println("Transition " + stateList.get(i).outgoingTrans.get(j).name);
+              System.out.printf("Intended for state " + stateList.get(stateList.get(i).outgoingTrans.get(j).to).prismSTA());
+              System.out.println("Arrived at state " + sim.getCurrentState());
+            }
+          }
+        }
+      }
+      
+      System.out.println("\nEND ERROR CHECKING");
+      System.out.println("---------------------------------------");
+
+      System.out.println("Finished! Processed " + numPaths + " paths.");
+      
       // close PRISM
       prism.closeDown();
-
+      
       System.out.println("Max Memory: " + mm.getMaxUsedMemory() + " bytes");
       System.out.println("Max Memory: " + (mm.getMaxUsedMemory() / 1000) + " KB");
       System.out.println("Max Memory: " + (mm.getMaxUsedMemory() / 1000000) + " MB");
