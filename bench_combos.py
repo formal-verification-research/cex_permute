@@ -23,14 +23,14 @@ The values here are optimized for the 8-reaction model.
 '''
 
 # EDIT THE FOLLOWING FOR EACH MODEL
-shortModelName = "2reaction" #for file name generation
-modelFile = "models/2react/model.sm"
-traceFile = "paths/other/2trace_list.txt" #ideally this contains both traces (see step 1 above) separated by a newline
-cslProperty = "s2 >= 80"
+shortModelName = "6reaction" #for file name generation
+modelFile = "models/6react/model.sm"
+traceFile = "paths/other/6trace_list.txt" #ideally this contains both traces (see step 1 above) separated by a newline
+cslProperty = "s5 = 25"
 modelTimeBound = 100 
 export = "prism" #change to "storm" or "both" if you need to, but we should just be OK to check prism
 verbose = "false"
-cslFile = "models/2react/fullPro.csl"
+cslFile = "models/6react/fullPro.csl"
 
 # for the termination based on depth
 recursionBounds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 20, 25, 30]

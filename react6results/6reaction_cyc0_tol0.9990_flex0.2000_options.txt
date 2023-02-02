@@ -1,0 +1,8 @@
+model models/6react/model.sm
+trace paths/other/6trace_list.txt
+property s5 = 25
+export prism
+verbose false
+flexibility 0.2000
+cycleLength 0
+removeTolerance 0.9990
