@@ -23,13 +23,14 @@ The values here are optimized for the 8-reaction model.
 '''
 
 # EDIT THE FOLLOWING FOR EACH MODEL
-shortModelName = "8reaction" #for file name generation
-modelFile = "models/8react/model.sm"
-traceFile = "paths/other/a.txt" #ideally this contains both traces (see step 1 above) separated by a newline
-cslProperty = "G_bg = 50"
-modelTimeBound = 20 
+shortModelName = "2reaction" #for file name generation
+modelFile = "models/2react/model.sm"
+traceFile = "paths/other/2trace_list.txt" #ideally this contains both traces (see step 1 above) separated by a newline
+cslProperty = "s2 >= 80"
+modelTimeBound = 100 
 export = "prism" #change to "storm" or "both" if you need to, but we should just be OK to check prism
 verbose = "false"
+cslFile = "models/2react/fullPro.csl"
 
 # for the termination based on depth
 recursionBounds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 20, 25, 30]
@@ -67,11 +68,12 @@ for cycleLength in cycleLengths:
             commuteFileName = fileName + "_commute.txt"
             prismFileName = fileName + "_prism.txt"
             #os.system("echo REPLACE ME IN THE CODE") #replace this with something like the next lines
-            os.system("/usr/bin/time -o {timeFileName} make test > {commuteFileName}")
-            os.system("mv prism.tra {fileName}.tra")
-            os.system("mv prism.sta {fileName}.sta")
-            os.system("mv prism.lab {fileName}.lab")
-            os.system("prism -importmodel {fileName}.tra,sta,lab -ctmc {propertyFile.csl} > {prismFileName}")
+            os.system("make")
+            os.system(f"/usr/bin/time -o {timeFileName} make test > {commuteFileName}")
+            os.system(f"mv prism.tra {fileName}.tra")
+            os.system(f"mv prism.sta {fileName}.sta")
+            os.system(f"mv prism.lab {fileName}.lab")
+            os.system(f"prism -importmodel {fileName}.tra,sta,lab -ctmc {cslFile} > {prismFileName}")
 
         # then test time-based termination flexibility
         for flexibility in flexibilities:
@@ -85,10 +87,11 @@ for cycleLength in cycleLengths:
             commuteFileName = fileName + "_commute.txt"
             prismFileName = fileName + "_prism.txt"
             #os.system("echo REPLACE ME IN THE CODE") #replace this with something like the next lines
-            os.system("/usr/bin/time -o {timeFileName} make test > {commuteFileName}")
-            os.system("mv prism.tra {fileName}.tra")
-            os.system("mv prism.sta {fileName}.sta")
-            os.system("mv prism.lab {fileName}.lab")
-            os.system("prism -importmodel {fileName}.tra,sta,lab -ctmc {propertyFile.csl} > {prismFileName}")
+            os.system("make")
+            os.system(f"/usr/bin/time -o {timeFileName} make test > {commuteFileName}")
+            os.system(f"mv prism.tra {fileName}.tra")
+            os.system(f"mv prism.sta {fileName}.sta")
+            os.system(f"mv prism.lab {fileName}.lab")
+            os.system(f"prism -importmodel {fileName}.tra,sta,lab -ctmc {cslFile} > {prismFileName}")
 
 

@@ -1,0 +1,8 @@
+model models/2react/model.sm
+trace paths/other/2trace_list.txt
+property s2 >= 80
+export prism
+verbose false
+recursionBound 6
+cycleLength 4
+removeTolerance 0.9000
