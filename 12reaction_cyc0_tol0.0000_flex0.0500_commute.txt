@@ -1,0 +1,5 @@
+PRISM_DIR=/home/bryanti/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Getting Parameters from input file
+Model Name: models/12react/model.sm
+Trace List Name: paths/other/12trace_list.txt

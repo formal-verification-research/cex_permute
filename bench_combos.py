@@ -23,26 +23,26 @@ The values here are optimized for the 8-reaction model.
 '''
 
 # EDIT THE FOLLOWING FOR EACH MODEL
-shortModelName = "2reaction" #for file name generation
-modelFile = "models/2react/model.sm"
-traceFile = "paths/other/2trace_list.txt" #ideally this contains both traces (see step 1 above) separated by a newline
-cslProperty = "s2 >= 80"
-modelTimeBound = 100 
+shortModelName = "12reaction" #for file name generation
+modelFile = "models/12react/model.sm"
+traceFile = "paths/other/12trace_list.txt" #ideally this contains both traces (see step 1 above) separated by a newline
+cslProperty = "CodY >= 20"
+modelTimeBound = 10 
 export = "prism" #change to "storm" or "both" if you need to, but we should just be OK to check prism
 verbose = "false"
-cslFile = "models/2react/fullPro.csl"
+cslFile = "models/12react/fullPro.csl"
 
 # for the termination based on depth
-recursionBounds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 20, 25, 30]
+recursionBounds = [0, 1, 2, 4]
 
 # for the termination based on time (remember to input the model's time bound)
-flexibilities = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2]
+flexibilities = [0.01, 0.05, 0.1]
 
 # for cycle addition
-cycleLengths = [0, 2, 4, 6, 8]
+cycleLengths = [0, 2]
 
 # tolerance for removing probability sinks
-removeTolerances = [0.0, 0.001, 0.01, 0.05, 0.1, 0.3, 0.5, 0.7, 0.9, 0.91, 0.93, 0.95, 0.97, 0.98, 0.99, 0.999]
+removeTolerances = [0.0, 0.7, 0.99]
 
 
 # build the default case
@@ -68,7 +68,7 @@ for cycleLength in cycleLengths:
             commuteFileName = fileName + "_commute.txt"
             prismFileName = fileName + "_prism.txt"
             #os.system("echo REPLACE ME IN THE CODE") #replace this with something like the next lines
-            os.system("make")
+            #os.system("make")
             os.system(f"/usr/bin/time -o {timeFileName} make test > {commuteFileName}")
             os.system(f"mv prism.tra {fileName}.tra")
             os.system(f"mv prism.sta {fileName}.sta")
@@ -87,7 +87,7 @@ for cycleLength in cycleLengths:
             commuteFileName = fileName + "_commute.txt"
             prismFileName = fileName + "_prism.txt"
             #os.system("echo REPLACE ME IN THE CODE") #replace this with something like the next lines
-            os.system("make")
+            #os.system("make")
             os.system(f"/usr/bin/time -o {timeFileName} make test > {commuteFileName}")
             os.system(f"mv prism.tra {fileName}.tra")
             os.system(f"mv prism.sta {fileName}.sta")

@@ -4,5 +4,5 @@ property CodY >= 20
 export prism
 verbose false
 recursionBound 0
-cycleLength 2
-removeTolerance 0.9900
+cycleLength 0
+removeTolerance 0.0000

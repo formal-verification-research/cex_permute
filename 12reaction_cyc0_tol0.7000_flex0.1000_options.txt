@@ -3,6 +3,6 @@ trace paths/other/12trace_list.txt
 property CodY >= 20
 export prism
 verbose false
-recursionBound 0
-cycleLength 2
-removeTolerance 0.9900
+flexibility 0.1000
+cycleLength 0
+removeTolerance 0.7000

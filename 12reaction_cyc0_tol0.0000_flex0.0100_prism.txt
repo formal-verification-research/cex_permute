@@ -1,0 +1,12 @@
+PRISM
+=====
+
+Version: 4.5
+Date: Fri Feb 03 09:38:37 MST 2023
+Hostname: deeplearning
+Memory limits: cudd=1g, java(heap)=1g
+Command line: prism -importmodel '12reaction_cyc0_tol0.0000_flex0.0100.tra,sta,lab' -ctmc models/12react/fullPro.csl
+
+Importing model (CTMC) from "12reaction_cyc0_tol0.0000_flex0.0100.tra", "12reaction_cyc0_tol0.0000_flex0.0100.sta", "12reaction_cyc0_tol0.0000_flex0.0100.lab"...
+
+Error: File I/O error reading from "12reaction_cyc0_tol0.0000_flex0.0100.sta".
