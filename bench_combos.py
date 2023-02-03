@@ -39,7 +39,7 @@ recursionBounds = [0, 1, 2, 6]
 flexibilities = [0.01, 0.05, 0.1, 0.2]
 
 # for cycle addition
-cycleLengths = [0, 2]
+cycleLengths = [0, 2, 4]
 
 # tolerance for removing probability sinks
 removeTolerances = [0.0, 0.5, 0.9, 0.99]
@@ -53,28 +53,28 @@ optionsString = optionsString + "verbose " + verbose + "\n"
 
 # run the tests
 for cycleLength in cycleLengths:
-    for removeTolerance in removeTolerances:
+    removeTolerance = 0
         
-        # first test recursion depth termination
-        for recursionBound in recursionBounds:
-            optionsFile = optionsString + ("recursionBound %d\ncycleLength %d\nremoveTolerance %1.4f" % (recursionBound, cycleLength, removeTolerance))
-            fileName = shortModelName + ("_cyc%d_tol%1.4f_depth%d" % (cycleLength, removeTolerance, recursionBound))
-            with open(fileName + "_options.txt", "w") as thisOptions:
-                thisOptions.write(optionsFile)
-            with open("options.txt", "w") as genOptions:
-                genOptions.write(optionsFile)
-            timeFileName = fileName + "_time.txt"
-            commuteFileName = fileName + "_commute.txt"
-            prismFileName = fileName + "_prism.txt"
-            #os.system("echo REPLACE ME IN THE CODE") #replace this with something like the next lines
-            #os.system("make")
-            os.system(f"/usr/bin/time -o {timeFileName} make test > {commuteFileName}")
-            os.system(f"mv prism.tra {fileName}.tra")
-            os.system(f"mv prism.sta {fileName}.sta")
-            os.system(f"mv prism.lab {fileName}.lab")
-            os.system(f"prism -importmodel {fileName}.tra,sta,lab -ctmc {cslFile} > {prismFileName}")
+    # first test recursion depth termination
+    recursionBound = 1
+    optionsFile = optionsString + ("recursionBound %d\ncycleLength %d\nremoveTolerance %1.4f" % (recursionBound, cycleLength, removeTolerance))
+    fileName = shortModelName + ("_cyc%d_tol%1.4f_depth%d" % (cycleLength, removeTolerance, recursionBound))
+    with open(fileName + "_options.txt", "w") as thisOptions:
+        thisOptions.write(optionsFile)
+    with open("options.txt", "w") as genOptions:
+        genOptions.write(optionsFile)
+    timeFileName = fileName + "_time.txt"
+    commuteFileName = fileName + "_commute.txt"
+    prismFileName = fileName + "_prism.txt"
+    #os.system("echo REPLACE ME IN THE CODE") #replace this with something like the next lines
+    #os.system("make")
+    os.system(f"/usr/bin/time -o {timeFileName} make test > {commuteFileName}")
+    os.system(f"mv prism.tra {fileName}.tra")
+    os.system(f"mv prism.sta {fileName}.sta")
+    os.system(f"mv prism.lab {fileName}.lab")
+    os.system(f"prism -importmodel {fileName}.tra,sta,lab -ctmc {cslFile} > {prismFileName}")
 
-        # then test time-based termination flexibility
+    '''    # then test time-based termination flexibility
         for flexibility in flexibilities:
             optionsFile = optionsString + ("flexibility %1.4f\ncycleLength %d\nremoveTolerance %1.4f" % (flexibility, cycleLength, removeTolerance))
             fileName = shortModelName + ("_cyc%d_tol%1.4f_flex%1.4f" % (cycleLength, removeTolerance, flexibility))
@@ -92,5 +92,5 @@ for cycleLength in cycleLengths:
             os.system(f"mv prism.sta {fileName}.sta")
             os.system(f"mv prism.lab {fileName}.lab")
             os.system(f"prism -importmodel {fileName}.tra,sta,lab -ctmc {cslFile} > {prismFileName}")
-
+'''
 
