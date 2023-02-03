@@ -1,0 +1,1 @@
+PRISM_DIR=/home/bryanti/prism PRISM_MAINCLASS=simulate.BuildModel bin/run

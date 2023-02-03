@@ -1,0 +1,16 @@
+PRISM_DIR=/home/bryanti/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Getting Parameters from input file
+Model Name: models/8react/model.sm
+Trace List Name: paths/other/a.txt
+Property: G_bg=50
+Export Prism Only
+Verbose mode disabled
+Max Depth: 2
+Cycle length: 2
+Cycle initial values for testing: 4
+Removal tolerance: 0.5
+Terminating recursion at a time bound of 200.0
+Prism model and property loaded succesfully.
+Iterating through each input trace.
+Expect this to run silently for a moment.

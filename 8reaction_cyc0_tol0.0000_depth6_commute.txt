@@ -1,0 +1,42 @@
+PRISM_DIR=/home/bryanti/prism PRISM_MAINCLASS=simulate.BuildModel bin/run
+Welcome to the model commutation tool.
+Getting Parameters from input file
+Model Name: models/8react/model.sm
+Trace List Name: paths/other/a.txt
+Property: G_bg=50
+Export Prism Only
+Verbose mode disabled
+Max Depth: 6
+Cycle length: 0
+Cycle initial values for testing: 0
+Removal tolerance: 0.0
+Terminating recursion at a time bound of 200.0
+Prism model and property loaded succesfully.
+Iterating through each input trace.
+Expect this to run silently for a moment.
+Terminated by time bound * flexibility only with max depth 7.
+Terminated by time bound * flexibility only with max depth 1.
+Processed 2 paths with a state count of 5390
+Removed 1839 dead-end states and 0 probability sink states (total 1839 states).
+Removed 3101 corresponding transitions.
+
+Final Count:
+3551 states
+16010 transitions
+
+Establishing an absorbing state.
+Begin printing model files.
+Now printing 2 paths to PRISM model files.
+---------------------------------------
+BEGIN ERROR CHECKING
+If an inconsistency is found in the state space, its details will be provided here.
+Otherwise, assume the generated state-space is error-free.
+This is an added confidence booster for the probability results.
+
+END ERROR CHECKING
+---------------------------------------
+Finished! Processed 2 paths.
+Max Memory: 430931360 bytes
+Max Memory: 430931 KB
+Max Memory: 430 MB
+Max Memory: 0 GB

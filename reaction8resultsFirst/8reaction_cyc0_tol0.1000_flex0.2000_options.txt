@@ -1,0 +1,8 @@
+model models/8react/model.sm
+trace paths/other/a.txt
+property G_bg = 50
+export prism
+verbose false
+flexibility 0.2000
+cycleLength 0
+removeTolerance 0.1000
