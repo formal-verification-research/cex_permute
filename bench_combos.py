@@ -44,7 +44,6 @@ cycleLengths = [0, 2]
 # tolerance for removing probability sinks
 removeTolerances = [0.0, 0.5, 0.9, 0.99]
 
-
 # build the default case
 optionsString = "model " + modelFile + "\n"
 optionsString = optionsString + "trace " + traceFile + "\n"
