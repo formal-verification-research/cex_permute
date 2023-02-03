@@ -3,6 +3,6 @@ trace paths/other/a.txt
 property G_bg = 50
 export prism
 verbose false
-flexibility 0.2000
+recursionBound 6
 cycleLength 2
-removeTolerance 0.9900
+removeTolerance 0.5000
